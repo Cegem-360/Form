@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProjectStatus;
 use App\Filament\Resources\FormQuestionResource\Pages;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
@@ -19,6 +20,7 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -33,10 +35,23 @@ class FormQuestionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Projects';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Select::make('project_id')
+                    ->relationship('project', 'name')
+                    ->createOptionForm([
+                        TextInput::make('name')
+                            ->required(),
+                        ToggleButtons::make('status')
+                            ->options(ProjectStatus::class)->required(),
+                    ])
+                    ->searchable()
+                    ->preload()
+                    ->columns(4),
                 Split::make([
                     Section::make('website')->schema([
                         Section::make('Company basic informations')

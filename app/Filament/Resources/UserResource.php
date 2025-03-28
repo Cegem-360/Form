@@ -7,6 +7,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,14 +24,18 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->maxLength(255),
+                Select::make('roles')->multiple()->relationship('roles', 'name'),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required(),
+                    ->required()
+                    ->maxLength(255),
             ]);
     }
 
@@ -58,6 +63,7 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -79,6 +85,7 @@ class UserResource extends Resource
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
+            'view' => Pages\ViewUser::route('/{record}'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }

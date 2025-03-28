@@ -12,6 +12,7 @@ use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class EditFormQuestion extends EditRecord
 {
@@ -23,14 +24,16 @@ class EditFormQuestion extends EditRecord
             Actions\DeleteAction::make(),
             Action::make('Generate and View pdf')
                 ->action(function (FormQuestion $formQuestion) {
-                    //
                     $pdf = App::make('dompdf.wrapper');
 
-                    // return $pdf->loadView('pdf.form-question', ['formQuestion' => $formQuestion])->stream();
+                    $pdfContent = $pdf->loadView('pdf.form-question', ['formQuestion' => $formQuestion])->output();
 
-                    return response()->streamDownload(function () use ($pdf, $formQuestion) {
-                        echo $pdf->loadView('pdf.form-question', ['formQuestion' => $formQuestion])->stream();
-                    }, 'name.pdf');
+                    // Save the PDF to a temporary location
+                    $filePath = 'pdfs/' . uniqid() . '.pdf';
+                    Storage::disk('public')->put($filePath, $pdfContent);
+
+                    // Return the URL to the frontend
+                    return redirect(Storage::disk('public')->url($filePath));
                 }),
             Action::make('Send selected data to (ai) process')
                 ->form([

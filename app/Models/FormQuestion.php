@@ -22,6 +22,7 @@ class FormQuestion extends Model
         // base informations
 
         'domain_id',
+        'project_id',
         'token',
         'company_name',
         'contact_name',
@@ -96,6 +97,11 @@ class FormQuestion extends Model
     public function visibility(): HasOne
     {
         return $this->hasOne(FormQuestionVisibility::class);
+    }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 
     protected function casts(): array

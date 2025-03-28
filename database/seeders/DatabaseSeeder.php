@@ -10,6 +10,7 @@ use App\Models\Form;
 use App\Models\SystemChatParameter;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use Artisan;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
 
@@ -51,6 +52,8 @@ class DatabaseSeeder extends Seeder
                 'content' => 'Egy WordPress oldalt szerkesztő asszisztens vagy. Egy megadott szöveg alapján egy weboldal új oldalához tartozó tartalmat kell elkészítened.',
             ]);
         }
+
+        Artisan::call('permissions:sync');
 
     }
 }

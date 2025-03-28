@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Models\Domain;
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +18,7 @@ return new class extends Migration
         Schema::create('form_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Domain::class)->nullable();
+            $table->foreignIdFor(Project::class)->nullable();
 
             $table->text('token')->nullable();
             // Common information

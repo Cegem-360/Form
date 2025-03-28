@@ -17,6 +17,26 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\ContactChannelFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereUpdatedAt($value)
+ */
+	class ContactChannel extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
  * @property string $url
  * @property string $description
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -42,6 +62,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property int|null $domain_id
+ * @property int|null $project_id
  * @property string|null $token
  * @property string|null $company_name
  * @property string|null $contact_name
@@ -95,6 +116,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Domain|null $domain
+ * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\FormQuestionVisibility|null $visibility
  * @method static \Database\Factories\FormQuestionFactory factory($count = null, $state = [])
@@ -147,6 +169,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion wherePrimaryColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereProductCatalog($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereProductsCsvFile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereProjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereSecondaryColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereShippingAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereStoreAddress($value)
@@ -285,6 +308,107 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property int $project_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\IdeaFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Idea whereUpdatedAt($value)
+ */
+	class Idea extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property string $name
+ * @property string $description
+ * @property ProjectStatus $status
+ * @property \Carbon\Carbon $start_date
+ * @property \Carbon\Carbon $end_date
+ * @property int $created_by
+ * @property int $updated_by
+ * @property int $id
+ * @property string|null $project_goal
+ * @property array<array-key, mixed>|null $original_project_goals
+ * @property array<array-key, mixed>|null $completed_project_elements
+ * @property array<array-key, mixed>|null $project_not_contained_elements
+ * @property array<array-key, mixed>|null $completed_elements
+ * @property array<array-key, mixed>|null $solved_problems
+ * @property int|null $garanty
+ * @property string|null $garanty_end_date
+ * @property \App\Models\User|null $contact
+ * @property int|null $support_pack_id
+ * @property int|null $contact_channel_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\ContactChannel|null $contactChannel
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\FormQuestion> $formQuestions
+ * @property-read int|null $form_questions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Idea> $ideas
+ * @property-read int|null $ideas_count
+ * @property-read \App\Models\SupportPack|null $supportPack
+ * @method static \Database\Factories\ProjectFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCompletedElements($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCompletedProjectElements($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContact($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContactChannelId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereGaranty($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereGarantyEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOriginalProjectGoals($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectGoal($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectNotContainedElements($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSolvedProblems($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSupportPackId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedAt($value)
+ */
+	class Project extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\SupportPackFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereUpdatedAt($value)
+ */
+	class SupportPack extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $form_field_name
  * @property int $form_field_id
  * @property \App\Enums\OpenAIRole $role
@@ -320,10 +444,16 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
@@ -332,6 +462,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }

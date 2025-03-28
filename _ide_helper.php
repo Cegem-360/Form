@@ -22547,6 +22547,175 @@ namespace Illuminate\Support\Facades {
             }
     }
 
+namespace Althinect\FilamentSpatieRolesPermissions {
+    /**
+     * 
+     *
+     */
+    class FilamentSpatieRolesPermissionsFacade {
+        /**
+         * Run a Closure when the facade has been resolved.
+         *
+         * @param \Closure $callback
+         * @return void 
+         * @static 
+         */
+        public static function resolved($callback)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::resolved($callback);
+        }
+
+        /**
+         * Convert the facade into a Mockery spy.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function spy()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::spy();
+        }
+
+        /**
+         * Initiate a partial mock on the facade.
+         *
+         * @return \Mockery\MockInterface 
+         * @static 
+         */
+        public static function partialMock()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::partialMock();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function shouldReceive()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::shouldReceive();
+        }
+
+        /**
+         * Initiate a mock expectation on the facade.
+         *
+         * @return \Mockery\Expectation 
+         * @static 
+         */
+        public static function expects()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::expects();
+        }
+
+        /**
+         * Hotswap the underlying instance behind the facade.
+         *
+         * @param mixed $instance
+         * @return void 
+         * @static 
+         */
+        public static function swap($instance)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::swap($instance);
+        }
+
+        /**
+         * Determines whether a "fake" has been set as the facade instance.
+         *
+         * @return bool 
+         * @static 
+         */
+        public static function isFake()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::isFake();
+        }
+
+        /**
+         * Get the root object behind the facade.
+         *
+         * @return mixed 
+         * @static 
+         */
+        public static function getFacadeRoot()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::getFacadeRoot();
+        }
+
+        /**
+         * Clear a resolved facade instance.
+         *
+         * @param string $name
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstance($name)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::clearResolvedInstance($name);
+        }
+
+        /**
+         * Clear all of the resolved instances.
+         *
+         * @return void 
+         * @static 
+         */
+        public static function clearResolvedInstances()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::clearResolvedInstances();
+        }
+
+        /**
+         * Get the application default aliases.
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */
+        public static function defaultAliases()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::defaultAliases();
+        }
+
+        /**
+         * Get the application instance behind the facade.
+         *
+         * @return \Illuminate\Contracts\Foundation\Application|null 
+         * @static 
+         */
+        public static function getFacadeApplication()
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            return \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::getFacadeApplication();
+        }
+
+        /**
+         * Set the application instance.
+         *
+         * @param \Illuminate\Contracts\Foundation\Application|null $app
+         * @return void 
+         * @static 
+         */
+        public static function setFacadeApplication($app)
+        {
+            //Method inherited from \Illuminate\Support\Facades\Facade 
+            \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade::setFacadeApplication($app);
+        }
+
+            }
+    }
+
 namespace AnourValar\EloquentSerialize\Facades {
     /**
      * 
@@ -22556,8 +22725,9 @@ namespace AnourValar\EloquentSerialize\Facades {
         /**
          * Pack
          *
-         * @param \Illuminate\Database\Eloquent\Builder $builder
+         * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
          * @return string 
+         * @throws \RuntimeException
          * @static 
          */
         public static function serialize($builder)
@@ -24102,6 +24272,30 @@ namespace Illuminate\Routing {
         public static function lazy($enabled = true)
         {
             return \Illuminate\Routing\Route::lazy($enabled);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $roles
+         * @static 
+         */
+        public static function role($roles = [])
+        {
+            return \Illuminate\Routing\Route::role($roles);
+        }
+
+        /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $permissions
+         * @static 
+         */
+        public static function permission($permissions = [])
+        {
+            return \Illuminate\Routing\Route::permission($permissions);
         }
 
             }
@@ -32217,6 +32411,7 @@ namespace  {
     class Validator extends \Illuminate\Support\Facades\Validator {}
     class View extends \Illuminate\Support\Facades\View {}
     class Vite extends \Illuminate\Support\Facades\Vite {}
+    class FilamentSpatieRolesPermissions extends \Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsFacade {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
