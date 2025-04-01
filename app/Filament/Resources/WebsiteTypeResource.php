@@ -4,36 +4,29 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\IdeaResource\Pages;
-use App\Models\Idea;
-use Filament\Forms;
+use App\Filament\Resources\WebsiteTypeResource\Pages;
+use App\Models\WebsiteType;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class IdeaResource extends Resource
+class WebsiteTypeResource extends Resource
 {
-    protected static ?string $model = Idea::class;
+    protected static ?string $model = WebsiteType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Project';
-
-    protected static ?string $navigationParentItem = 'Projects';
+    protected static ?string $navigationGroup = 'Request Quote';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('project_id')
-                    ->required()
-                    ->numeric(),
             ]);
     }
 
@@ -43,9 +36,6 @@ class IdeaResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('project_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -79,10 +69,10 @@ class IdeaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListIdeas::route('/'),
-            'create' => Pages\CreateIdea::route('/create'),
-            'view' => Pages\ViewIdea::route('/{record}'),
-            'edit' => Pages\EditIdea::route('/{record}/edit'),
+            'index' => Pages\ListWebsiteTypes::route('/'),
+            'create' => Pages\CreateWebsiteType::route('/create'),
+            'view' => Pages\ViewWebsiteType::route('/{record}'),
+            'edit' => Pages\EditWebsiteType::route('/{record}/edit'),
         ];
     }
 }

@@ -33,7 +33,7 @@ class EditFormQuestion extends EditRecord
                     Storage::disk('public')->put($filePath, $pdfContent);
 
                     // Return the URL to the frontend
-                    return redirect(Storage::disk('public')->url($filePath));
+                    return redirect(Storage::url($filePath));
                 }),
             Action::make('Send selected data to (ai) process')
                 ->form([

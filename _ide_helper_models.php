@@ -388,6 +388,19 @@ namespace App\Models{
 /**
  * 
  *
+ * @property-read \App\Models\WebsiteType|null $websiteType
+ * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote query()
+ */
+	class RequestQuote extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -466,5 +479,19 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
+ * @property-read int|null $request_quotes_count
+ * @method static \Database\Factories\WebsiteTypeFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType query()
+ */
+	class WebsiteType extends \Eloquent {}
 }
 
