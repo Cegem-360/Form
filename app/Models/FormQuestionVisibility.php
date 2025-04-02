@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * 
- *
  * @property int $id
  * @property int $form_question_id
  * @property bool $token_visible
@@ -66,6 +64,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\FormQuestion|null $formQuestion
+ *
  * @method static \Database\Factories\FormQuestionVisibilityFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility newQuery()
@@ -124,6 +123,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereUseVideoOrAnimationVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereVisualFeelingVisible($value)
+ *
  * @mixin \Eloquent
  */
 class FormQuestionVisibility extends Model

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\SupportPack;
 use Illuminate\Database\Seeder;
 
 class SupportPackSeeder extends Seeder
@@ -12,6 +14,14 @@ class SupportPackSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        SupportPack::factory()->create([
+            'name' => 'Basic',
+        ]);
+        SupportPack::factory()->create([
+            'name' => 'Standard',
+        ]);
+        SupportPack::factory()->create([
+            'name' => 'Premium',
+        ]);
     }
 }

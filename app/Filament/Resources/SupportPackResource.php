@@ -18,9 +18,7 @@ class SupportPackResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // protected static ?string $navigationParentItem = 'Projects';
-
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'Project';
 
     public static function form(Form $form): Form
     {

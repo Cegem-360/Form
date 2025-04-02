@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -26,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\WebsiteType|null $websiteType
+ *
  * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
@@ -45,6 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsites($value)
+ *
  * @mixin \Eloquent
  */
 class RequestQuote extends Model
@@ -65,6 +65,7 @@ class RequestQuote extends Model
         'languages',
         'is_ecommerce',
         'ecommerce_functionalities',
+        'website_engine',
     ];
 
     protected $casts = [
@@ -72,6 +73,9 @@ class RequestQuote extends Model
         'functionalities' => 'array',
         'languages' => 'array',
         'ecommerce_functionalities' => 'array',
+        'is_multilangual' => 'boolean',
+        'is_ecommerce' => 'boolean',
+        'have_website_graphic' => 'boolean',
     ];
 
     public function websiteType()

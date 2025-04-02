@@ -53,6 +53,13 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        $this->call([
+            WebsiteLanguageSeeder::class,
+            SupportPackSeeder::class,
+            WebsiteTypeSeeder::class,
+            RequestQuoteSeeder::class,
+        ]);
+
         Artisan::call('permissions:sync');
 
     }

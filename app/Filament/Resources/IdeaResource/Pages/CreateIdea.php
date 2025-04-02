@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\IdeaResource\Pages;
 
 use App\Filament\Resources\IdeaResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateIdea extends CreateRecord

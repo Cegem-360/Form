@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property string $form_field_name
  * @property int $form_field_id
@@ -18,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $content
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Database\Factories\SystemChatParameterFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newQuery()
@@ -29,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class SystemChatParameter extends Model

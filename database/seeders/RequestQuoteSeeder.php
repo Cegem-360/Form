@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Request;
 
 class RequestQuoteSeeder extends Seeder
 {
@@ -12,6 +14,6 @@ class RequestQuoteSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Request::factory()->count(100)->create();
     }
 }

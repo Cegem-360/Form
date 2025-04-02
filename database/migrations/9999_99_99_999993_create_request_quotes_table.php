@@ -16,18 +16,19 @@ return new class extends Migration
     {
         Schema::create('request_quotes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(false);
-            $table->string('email')->nullable(false);
-            $table->string('phone')->nullable(false);
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->string('company_name')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
+            $table->string('website_engine')->nullable();
             $table->json('websites')->nullable();
-            $table->boolean('have_website_graphic')->default(false);
-            $table->json('functionalities')->nullable();
-            $table->boolean('is_multilangual')->default(false);
+            $table->boolean('have_website_graphic')->default(false)->nullable();
+            $table->boolean('is_multilangual')->default(false)->nullable();
             $table->json('languages')->nullable();
-            $table->boolean('is_ecommerce')->default(false);
+            $table->json('functionalities')->nullable();
+            $table->boolean('is_ecommerce')->default(false)->nullable();
             $table->json('ecommerce_functionalities')->nullable();
             $table->timestamps();
         });

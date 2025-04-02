@@ -13,8 +13,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(FormQuestionObserver::class)]
 /**
- * 
- *
  * @property int $id
  * @property int|null $domain_id
  * @property int|null $project_id
@@ -74,6 +72,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\FormQuestionVisibility|null $visibility
+ *
  * @method static \Database\Factories\FormQuestionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion newQuery()
@@ -133,6 +132,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUseVideoOrAnimation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereVisualFeeling($value)
+ *
  * @mixin \Eloquent
  */
 class FormQuestion extends Model

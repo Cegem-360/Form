@@ -6,14 +6,21 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RequestQuoteResource\Pages;
 use App\Models\RequestQuote;
-use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
+use App\Models\WebsiteLanguage;
+use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
 
@@ -29,59 +36,138 @@ class RequestQuoteResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('company_name')
-                    ->maxLength(255),
-                Select::make('website_type_id')
-                    ->required()
-                    ->relationship('websiteType', 'name')
-                    ->preload()
-                    ->createOptionForm([
+                Grid::make(2)
+                    ->schema([
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                    ])
-                    ->searchable(),
-                Repeater::make('websites')->schema([
-                    TextInput::make('name')->required(),
-                    ToggleButtons::make('Length')
-                        ->options([
-                            'short' => 'Short',
-                            'medium' => 'Medium',
-                            'long' => 'Long',
+                        TextInput::make('email')
+                            ->email()
+                            ->maxLength(255),
+                        TextInput::make('phone')
+                            ->tel()
+                            ->maxLength(255),
+                        TextInput::make('company_name')
+                            ->maxLength(255),
+                        Select::make('website_type_id')
+                            ->relationship('websiteType', 'name')
+                            ->preload()
+                            ->createOptionForm([
+                                TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255),
+                            ])
+                            ->searchable(),
+                        Select::make('website_engine')
+                            ->options([
+                                'wordpress' => 'WordPress',
+                                'Laravel' => 'Laravel',
+                                'shopify' => 'Shopify',
+                            ])->required()
+                            ->searchable(),
+                    ]),
+
+                Grid::make(1)
+                    ->schema([
+                        Repeater::make('websites')->schema([
+                            Grid::make(2)->columnSpan(1)
+                                ->schema([
+                                    Grid::make(1)->columnSpan(1)
+                                        ->schema([
+                                            TextInput::make('name')->required(),
+                                            ToggleButtons::make('length')
+                                                ->live()
+                                                ->options([
+                                                    'short' => 'Short',
+                                                    'medium' => 'Medium',
+                                                    'long' => 'Long',
+                                                ])
+                                                ->inline()
+                                                ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                                    $set('image', match ($state) {
+                                                        'short' => 'website_previews/short_preview.png',
+                                                        'medium' => 'medium_preview.jpg',
+                                                        'long' => 'long_preview.jpg',
+                                                        default => null,
+                                                    });
+                                                })
+                                                ->required(),
+
+                                        ]),
+                                    Grid::make(1)->columnSpan(1)
+                                        ->schema([
+                                            ViewField::make('image')
+                                                ->view('filament.forms.components.image')
+                                                ->viewData(
+                                                    [
+                                                        function (Get $get) { // adds the initial state on page load
+                                                            return $get('image');
+                                                        },
+                                                    ]
+                                                )
+                                                ->formatStateUsing(function (Get $get) {
+                                                    return match ($get('length')) {
+                                                        'short' => 'website_previews/short_preview.png',
+                                                        'medium' => 'website_previews/medium_preview.jpg',
+                                                        'long' => 'website_previews/long_preview.jpg',
+                                                        default => null,
+                                                    };
+                                                }),
+                                        ]),
+                                ]),
+
+                        ]),
+
+                    ]),
+                Grid::make(1)->schema(
+                    [
+                        Toggle::make('have_website_graphic')
+                            ->default(false)
+                            ->label('Do you have a website graphic?')
+                            ->disabled(),
+                        Actions::make([
+                            Action::make('yes')
+                                ->translateLabel()
+                                ->requiresConfirmation()
+                                ->modalHeading('Website graphic')
+                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
+                                ->modalSubmitActionLabel('Yes, I have a website graphic')
+                                ->modalAlignment(Alignment::Center)
+                                ->action(function (Set $set) {
+                                    $set('have_website_graphic', true);
+                                }),
+                            Action::make('no')
+                                ->translateLabel()
+                                ->requiresConfirmation()
+                                ->modalHeading('Website graphic')
+                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
+                                ->modalSubmitActionLabel('No, I don\'t have a website graphic')
+                                ->modalAlignment(Alignment::Center)
+                                ->action(function (Set $set) {
+                                    $set('have_website_graphic', false);
+                                }),
                         ])
-                        ->inline()
-                        ->required(),
-                    // preview img for each length and description
-                    FileUpload::make('preview_img')
-                        ->label('Preview Image')
-                        ->image()
-                        ->disk('public')
-                        ->directory('website_previews')
-                        ->required(),
-                    Forms\Components\TextInput::make('description')
-                        ->required()
-                        ->maxLength(255),
-                ]),
-                Forms\Components\Toggle::make('have_website_graphic')
-                    ->required(),
-                Forms\Components\TextInput::make('functionalities'),
-                Forms\Components\Toggle::make('is_multilangual')
-                    ->required(),
-                Forms\Components\TextInput::make('languages'),
-                Forms\Components\Toggle::make('is_ecommerce')
-                    ->required(),
-                Forms\Components\TextInput::make('ecommerce_functionalities'),
+                            ->label('Do you have a website graphic?'),
+
+                    ]),
+                Select::make('functionalities')->multiple()
+                    ->options([
+                        'contact-form' => 'Contact Form',
+                        'advanced-form' => 'Advanced Form',
+                        'simple-appointment' => 'Simple Appointment',
+                        'advanced-appointment' => 'Advanced Appointment',
+                        'newsletter-with-connection' => 'Newsletter with Connection',
+                        'pop-up' => 'Pop Up',
+                    ]),
+
+                Toggle::make('is_multilangual'),
+                Select::make('languages')
+                    ->options(WebsiteLanguage::all()->pluck('name', 'id'))
+                    ->multiple()
+                    ->preload()->searchable(),
+                Toggle::make('is_ecommerce'),
+                TextInput::make('ecommerce_functionalities'),
+
             ]);
     }
 

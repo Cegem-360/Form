@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ContactChannelResource\Pages;
 
 use App\Filament\Resources\ContactChannelResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateContactChannel extends CreateRecord

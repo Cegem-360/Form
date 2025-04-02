@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $start_date
@@ -35,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Idea> $ideas
  * @property-read int|null $ideas_count
  * @property-read \App\Models\SupportPack|null $supportPack
+ *
  * @method static \Database\Factories\ProjectFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newQuery()
@@ -57,6 +56,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSupportPackId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Project extends Model
