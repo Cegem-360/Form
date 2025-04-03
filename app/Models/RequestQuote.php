@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ClientType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,7 @@ class RequestQuote extends Model
         'name',
         'email',
         'phone',
+        'client_type',
         'company_name',
         'website_type_id',
         'websites',
@@ -35,6 +37,7 @@ class RequestQuote extends Model
         'is_multilangual' => 'boolean',
         'is_ecommerce' => 'boolean',
         'have_website_graphic' => 'boolean',
+        'client_type' => ClientType::class,
     ];
 
     public function websiteType()

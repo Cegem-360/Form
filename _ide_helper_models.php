@@ -406,6 +406,7 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $ecommerce_functionalities
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \App\Enums\ClientType $client_type
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \App\Models\WebsiteType|null $websiteType

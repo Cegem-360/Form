@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Enums\ClientType;
 use App\Models\WebsiteType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Schema; // Import the new enum
 
 return new class extends Migration
 {
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->enum('client_type', array_column(ClientType::cases(), 'value'))->nullable();
             $table->string('company_name')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
