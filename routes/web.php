@@ -32,3 +32,9 @@ Route::get('/quotation/preview', function () {
 
     return $pdf->stream('quotation-preview.pdf');
 })->name('quotation.preview');
+
+Route::get('/quotation/preview/{requestQuote}', function (RequestQuote $requestQuote) {
+    $pdf = PDF::loadView('pdf.quotation-user', ['requestQuote' => $requestQuote]);
+
+    return $pdf->stream('quotation-preview.pdf');
+})->name('quotation.preview.id');

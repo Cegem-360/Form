@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\ClientType;
 use App\Filament\Resources\RequestQuoteResource\Pages;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
@@ -36,90 +37,97 @@ class RequestQuoteResource extends Resource
     {
         return $form
             ->schema([
-                Grid::make(2)
-                    ->schema([
-                        TextInput::make('name')
-                            ->required()
-                            ->maxLength(255),
-                        TextInput::make('email')
-                            ->email()
-                            ->maxLength(255),
-                        TextInput::make('phone')
-                            ->tel()
-                            ->maxLength(255),
-                        TextInput::make('company_name')
-                            ->maxLength(255),
-                        Select::make('website_type_id')
-                            ->required()
-                            ->relationship('websiteType', 'name')
-                            ->preload()
-                            ->createOptionForm([
-                                TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255),
-                            ])
-                            ->searchable(),
-                        Select::make('website_engine')
-                            ->options([
-                                'wordpress' => 'WordPress',
-                                'Laravel' => 'Laravel',
-                                'shopify' => 'Shopify',
-                            ])->required()
-                            ->searchable(),
-                    ]),
+                Grid::make(2)->schema([
+                    TextInput::make('quotation_name')
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('name')
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('email')
+                        ->required()
+                        ->email()
+                        ->maxLength(255),
+                    TextInput::make('phone')
+                        ->required()
+                        ->tel()
+                        ->maxLength(255),
+                    Select::make('client_type')
+                        ->required()
+                        ->options(ClientType::class)
+                        ->preload()
+                        ->searchable(),
+                    TextInput::make('company_name')
+                        ->maxLength(255),
+                    TextInput::make('company_address')
+                        ->maxLength(255),
+                    TextInput::make('company_vat_number')
+                        ->maxLength(255),
+                    TextInput::make('company_contact_name')
+                        ->maxLength(255),
+                    Select::make('website_type_id')
+                        ->required()
+                        ->relationship('websiteType', 'name')
+                        ->preload()
+                        ->createOptionForm([
+                            TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                        ])
+                        ->searchable(),
+                    Select::make('website_engine')
+                        ->options([
+                            'wordpress' => 'WordPress',
+                            'Laravel' => 'Laravel',
+                            'shopify' => 'Shopify',
+                        ])->required()
+                        ->searchable(),
+                ]),
+                Grid::make(1)->schema([
+                    Repeater::make('websites')->schema([
+                        Grid::make(2)->columnSpan(1)->schema([
+                            Grid::make(1)->columnSpan(1)->schema([
+                                TextInput::make('name')->required(),
+                                ToggleButtons::make('length')
+                                    ->live()
+                                    ->options([
+                                        'short' => 'Short',
+                                        'medium' => 'Medium',
+                                        'long' => 'Long',
+                                    ])
+                                    ->inline()
+                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                        $set('image', match ($state) {
+                                            'short' => 'website_previews/short_preview.png',
+                                            'medium' => 'website_previews/medium_preview.jpg',
+                                            'long' => 'website_previews/long_preview.jpg',
+                                            default => null,
+                                        });
+                                    })
+                                    ->required(),
 
-                Grid::make(1)
-                    ->schema([
-                        Repeater::make('websites')->schema([
-                            Grid::make(2)->columnSpan(1)
-                                ->schema([
-                                    Grid::make(1)->columnSpan(1)
-                                        ->schema([
-                                            TextInput::make('name')->required(),
-                                            ToggleButtons::make('length')
-                                                ->live()
-                                                ->options([
-                                                    'short' => 'Short',
-                                                    'medium' => 'Medium',
-                                                    'long' => 'Long',
-                                                ])
-                                                ->inline()
-                                                ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                                                    $set('image', match ($state) {
-                                                        'short' => 'website_previews/short_preview.png',
-                                                        'medium' => 'medium_preview.jpg',
-                                                        'long' => 'long_preview.jpg',
-                                                        default => null,
-                                                    });
-                                                })
-                                                ->required(),
-
-                                        ]),
-                                    Grid::make(1)->columnSpan(1)
-                                        ->schema([
-                                            ViewField::make('image')
-                                                ->view('filament.forms.components.image')
-                                                ->viewData(
-                                                    [
-                                                        function (Get $get) { // adds the initial state on page load
-                                                            return $get('image');
-                                                        },
-                                                    ]
-                                                )
-                                                ->formatStateUsing(function (Get $get) {
-                                                    return match ($get('length')) {
-                                                        'short' => 'website_previews/short_preview.png',
-                                                        'medium' => 'website_previews/medium_preview.jpg',
-                                                        'long' => 'website_previews/long_preview.jpg',
-                                                        default => null,
-                                                    };
-                                                }),
-                                        ]),
-                                ]),
-
+                            ]),
+                            Grid::make(1)->columnSpan(1)->schema([
+                                ViewField::make('image')->view('filament.forms.components.image')->viewData(
+                                    [
+                                        function (Get $get) { // adds the initial state on page load
+                                            return $get('image');
+                                        },
+                                    ]
+                                )->formatStateUsing(function (Get $get) {
+                                    return match ($get('length')) {
+                                        'short' => 'website_previews/short_preview.png',
+                                        'medium' => 'website_previews/medium_preview.jpg',
+                                        'long' => 'website_previews/long_preview.jpg',
+                                        default => null,
+                                    };
+                                }),
+                            ]),
                         ]),
 
                     ]),
+
+                ]),
                 Grid::make(1)->schema(
                     [
                         Toggle::make('have_website_graphic')
@@ -147,18 +155,17 @@ class RequestQuoteResource extends Resource
                                 ->action(function (Set $set) {
                                     $set('have_website_graphic', false);
                                 }),
-                        ])
-                            ->label('Do you have a website graphic?'),
-
+                        ])->label('Do you have a website graphic?'),
                     ]),
                 Select::make('requestQuoteFunctionalities')->multiple()
-                    ->relationship('requestQuoteFunctionalities', 'name')->preload(),
-
+                    ->relationship('requestQuoteFunctionalities', 'name')
+                    ->preload(),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                     ->multiple()
-                    ->preload()->searchable(),
+                    ->preload()
+                    ->searchable(),
                 Toggle::make('is_ecommerce'),
                 TextInput::make('ecommerce_functionalities'),
 
@@ -169,6 +176,8 @@ class RequestQuoteResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('quotation_name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
