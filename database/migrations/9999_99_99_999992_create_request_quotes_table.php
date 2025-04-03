@@ -17,11 +17,15 @@ return new class extends Migration
     {
         Schema::create('request_quotes', function (Blueprint $table) {
             $table->id();
+            $table->string('quotation_name')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->enum('client_type', array_column(ClientType::cases(), 'value'))->nullable();
             $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
+            $table->string('company_vat_number')->nullable(); // HU tax number
+            $table->string('company_contact_name')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
             $table->string('website_engine')->nullable();

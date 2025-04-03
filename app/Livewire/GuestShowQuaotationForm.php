@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Enums\ClientType;
 use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\User;
@@ -75,7 +76,27 @@ class GuestShowQuaotationForm extends Component implements HasForms
                     TextInput::make('phone')
                         ->tel()
                         ->maxLength(255),
+                    Select::make('client_type')
+                        ->live()
+                        ->required()
+                        ->options(ClientType::class)
+                        ->preload()
+                        ->searchable(),
                     TextInput::make('company_name')
+                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->maxLength(255),
+                    TextInput::make('company_address')
+                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->maxLength(255),
+                    TextInput::make('company_vat_number')
+                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->maxLength(255),
+                    TextInput::make('company_contact_name')
+                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->required()

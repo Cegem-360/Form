@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\ClientType;
 use App\Models\RequestQuote;
 use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -38,10 +39,16 @@ class RequestQuoteFactory extends Factory
         }
 
         return [
+            'quotation_name' => $this->faker->name(),
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
             'phone' => $this->faker->phoneNumber(),
+            'client_type' => $this->faker->randomElement(array_column(ClientType::cases(), 'value')),
             'company_name' => $this->faker->company(),
+            'company_address' => $this->faker->address(),
+            'company_vat_number' => $this->faker->word(),
+            'company_contact_name' => $this->faker->name(),
+            // website type
             'website_type_id' => WebsiteType::factory(),
             'website_engine' => $this->faker->word(),
             'websites' => $websites,

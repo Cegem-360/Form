@@ -395,6 +395,7 @@ namespace App\Models{
  * @property string|null $name
  * @property string|null $email
  * @property string|null $phone
+ * @property \App\Enums\ClientType|null $client_type
  * @property string|null $company_name
  * @property int $website_type_id
  * @property string|null $website_engine
@@ -406,7 +407,6 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $ecommerce_functionalities
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Enums\ClientType $client_type
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \App\Models\WebsiteType|null $websiteType
@@ -414,6 +414,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEcommerceFunctionalities($value)

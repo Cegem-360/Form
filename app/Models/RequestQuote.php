@@ -14,11 +14,15 @@ class RequestQuote extends Model
     use HasFactory;
 
     protected $fillable = [
+        'quotation_name',
         'name',
         'email',
         'phone',
         'client_type',
         'company_name',
+        'company_address',
+        'company_vat_number',
+        'company_contact_name',
         'website_type_id',
         'websites',
         'have_website_graphic',
