@@ -392,11 +392,15 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string|null $quotation_name
  * @property string|null $name
  * @property string|null $email
  * @property string|null $phone
  * @property \App\Enums\ClientType|null $client_type
  * @property string|null $company_name
+ * @property string|null $company_address
+ * @property string|null $company_vat_number
+ * @property string|null $company_contact_name
  * @property int $website_type_id
  * @property string|null $website_engine
  * @property array<array-key, mixed>|null $websites
@@ -415,7 +419,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereClientType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyContactName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyVatNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEcommerceFunctionalities($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEmail($value)
@@ -426,6 +433,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereQuotationName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteEngine($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteTypeId($value)

@@ -33,16 +33,19 @@ class RequestQuote extends Model
         'website_engine',
     ];
 
-    protected $casts = [
-        'websites' => 'array',
-        'functionalities' => 'array',
-        'languages' => 'array',
-        'ecommerce_functionalities' => 'array',
-        'is_multilangual' => 'boolean',
-        'is_ecommerce' => 'boolean',
-        'have_website_graphic' => 'boolean',
-        'client_type' => ClientType::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'websites' => 'array',
+            'functionalities' => 'array',
+            'languages' => 'array',
+            'ecommerce_functionalities' => 'array',
+            'is_multilangual' => 'boolean',
+            'is_ecommerce' => 'boolean',
+            'have_website_graphic' => 'boolean',
+            'client_type' => ClientType::class,
+        ];
+    }
 
     public function websiteType()
     {

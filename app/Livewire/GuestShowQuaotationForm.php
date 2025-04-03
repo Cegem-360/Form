@@ -72,6 +72,7 @@ class GuestShowQuaotationForm extends Component implements HasForms
                         ->maxLength(255),
                     TextInput::make('email')
                         ->email()
+                        ->required()
                         ->maxLength(255),
                     TextInput::make('phone')
                         ->tel()
@@ -130,12 +131,13 @@ class GuestShowQuaotationForm extends Component implements HasForms
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set, Get $get) {
-                                        $set('image', match ($state) {
-                                            'short' => 'website_previews/short_preview.png',
-                                            'medium' => 'website_previews/medium_preview.jpg',
-                                            'long' => 'website_previews/long_preview.jpg',
-                                            default => 'medium',
-                                        });
+                                        $set('image',
+                                            match ($state) {
+                                                'short' => 'website_previews/short_preview.png',
+                                                'medium' => 'website_previews/medium_preview.jpg',
+                                                'long' => 'website_previews/long_preview.jpg',
+                                                default => 'medium',
+                                            });
                                     })
                                     ->required(),
 
