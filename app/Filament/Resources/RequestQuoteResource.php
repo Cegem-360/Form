@@ -50,6 +50,7 @@ class RequestQuoteResource extends Resource
                         TextInput::make('company_name')
                             ->maxLength(255),
                         Select::make('website_type_id')
+                            ->required()
                             ->relationship('websiteType', 'name')
                             ->preload()
                             ->createOptionForm([
@@ -150,15 +151,8 @@ class RequestQuoteResource extends Resource
                             ->label('Do you have a website graphic?'),
 
                     ]),
-                Select::make('functionalities')->multiple()
-                    ->options([
-                        'contact-form' => 'Contact Form',
-                        'advanced-form' => 'Advanced Form',
-                        'simple-appointment' => 'Simple Appointment',
-                        'advanced-appointment' => 'Advanced Appointment',
-                        'newsletter-with-connection' => 'Newsletter with Connection',
-                        'pop-up' => 'Pop Up',
-                    ]),
+                Select::make('requestQuoteFunctionalities')->multiple()
+                    ->relationship('requestQuoteFunctionalities', 'name')->preload(),
 
                 Toggle::make('is_multilangual'),
                 Select::make('languages')

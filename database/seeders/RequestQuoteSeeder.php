@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use App\Models\RequestQuote;
 use Illuminate\Database\Seeder;
-use Request;
 
 class RequestQuoteSeeder extends Seeder
 {
@@ -14,6 +14,6 @@ class RequestQuoteSeeder extends Seeder
      */
     public function run(): void
     {
-        Request::factory()->count(100)->create();
+        RequestQuote::factory()->count(100)->create();
     }
 }

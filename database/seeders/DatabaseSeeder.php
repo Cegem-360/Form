@@ -10,8 +10,8 @@ use App\Models\Form;
 use App\Models\SystemChatParameter;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
-use Artisan;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 
 class DatabaseSeeder extends Seeder
@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
             WebsiteLanguageSeeder::class,
             SupportPackSeeder::class,
             WebsiteTypeSeeder::class,
+            RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
         ]);
 

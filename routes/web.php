@@ -6,6 +6,8 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
+use App\Models\RequestQuote;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,3 +21,14 @@ Route::get('/form-review/{form}', [FormSubmissionController::class, 'review'])->
 Route::get('/form/expired', [FormController::class, 'expired'])->name('form.expired');
 
 Route::get('quotation', GuestShowQuaotationForm::class)->name('quotation');
+Route::get('/quotation/preview', function () {
+
+    $pdf = PDF::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
+        'id' => 1,
+        'company_name' => 'Test Company',
+        'name' => 'Test Name',
+        'email' => 'test@test.com',
+    ])]);
+
+    return $pdf->stream('quotation-preview.pdf');
+})->name('quotation.preview');

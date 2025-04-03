@@ -27,7 +27,6 @@ return new class extends Migration
             $table->boolean('have_website_graphic')->default(false)->nullable();
             $table->boolean('is_multilangual')->default(false)->nullable();
             $table->json('languages')->nullable();
-            $table->json('functionalities')->nullable();
             $table->boolean('is_ecommerce')->default(false)->nullable();
             $table->json('ecommerce_functionalities')->nullable();
             $table->timestamps();

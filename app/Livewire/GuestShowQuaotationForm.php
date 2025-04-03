@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
@@ -21,11 +22,12 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Notifications\Livewire\Notifications;
+use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -44,8 +46,8 @@ class GuestShowQuaotationForm extends Component implements HasForms
         'data.websites.*.name' => ['required', 'string', 'max:255'],
         'data.websites.*.length' => ['required', 'string', 'in:short,medium,long'],
         'data.have_website_graphic' => ['boolean'],
-        'data.functionalities' => ['array'],
-        'data.functionalities.*' => ['string', 'in:contact-form,advanced-form,simple-appointment,advanced-appointment,newsletter-with-connection,pop-up'],
+        'data.requestQuoteFunctionalities' => ['array'],
+        'data.requestQuoteFunctionalities.*' => ['exists:request_quote_functionalities,id'],
         'data.is_multilangual' => ['nullable', 'boolean'],
         'data.languages' => ['array'],
         'data.languages.*' => ['exists:website_languages,id'],
@@ -168,16 +170,9 @@ class GuestShowQuaotationForm extends Component implements HasForms
                                 }),
                         ])->label('Do you have a website graphic?'),
                     ]),
-                Select::make('functionalities')->multiple()
-                    ->options([
-                        'contact-form' => 'Contact Form',
-                        'advanced-form' => 'Advanced Form',
-                        'simple-appointment' => 'Simple Appointment',
-                        'advanced-appointment' => 'Advanced Appointment',
-                        'newsletter-with-connection' => 'Newsletter with Connection',
-                        'pop-up' => 'Pop Up',
-                    ]),
 
+                Select::make('requestQuoteFunctionalities')->multiple()
+                    ->relationship('requestQuoteFunctionalities', 'name')->preload(),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
@@ -193,21 +188,25 @@ class GuestShowQuaotationForm extends Component implements HasForms
     public function submitAndSendEmail(): void
     {
         $data = $this->form->getState();
-
+        $validatedData = $this->validate();
+        dump($validatedData);
         $record = RequestQuote::create($data);
-        Notifications::make()
+        Notification::make()
             ->title('Quotation created and email sent')
             ->success()
             ->send();
         $this->form->model($record)->saveRelationships();
+
+        // TODO - send email with quotation
+
+        Mail::to($data['email'])->send(new QuotationSendedToUser($record));
     }
 
     public function order(): void
     {
         $data = $this->form->getState();
-
         $record = RequestQuote::create($data);
-        Notifications::make()
+        Notification::make()
             ->title('Quotation created and order placed')
             ->success()
             ->send();
@@ -220,21 +219,20 @@ class GuestShowQuaotationForm extends Component implements HasForms
 
         // user create and login and navigate to guestViewQuotationOrder
 
-        $validatedData = $data->validate();
         /**
          * TODO - add email verification
          * TODO - add permissions and roles
          * TODO - add email verification
          */
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
+            'name' => $data['name'],
+            'email' => $data['email'],
             'password' => Hash::make('password'), // or use a random password
         ]);
         Auth::loginUsingId($user->id, true);
-        $record = RequestQuote::create($validatedData);
+        $record = RequestQuote::create($data);
 
-        Notifications::make()
+        Notification::make()
             ->title('Quotation created and order placed')
             ->success()
             ->send();
