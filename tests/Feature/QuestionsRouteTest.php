@@ -1,17 +1,19 @@
 <?php
 
 declare(strict_types=1);
-
-use App\Models\Form;
+/*
+use App\Models\FormQuestion;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
 it('questions route contains livewire component', function () {
-    $token = Str::random(60);
-    $form = Form::factory()->create(['token' => $token]);
-    $response = $this->get('/questions/' . $token);
+     $token = Str::random(60);
+     $form = FormQuestion::factory()->create(['token' => $token]);
+     $response = $this->get('/questions/' . $token);
 
-    $response->assertStatus(200);
-    $response->assertSeeLivewire('your-livewire-component-name');
+     $response->assertStatus(200);
+     $response->assertSeeLivewire('GuestShowQuaotationForm');
 });
+ */

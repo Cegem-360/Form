@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use App\Models\Domain;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FormQuestion>
@@ -22,19 +23,14 @@ class FormQuestionFactory extends Factory
     {
         return [
             'domain_id' => Domain::factory(),
+            'project_id' => Project::factory(),
             'token' => Str::random(60),
-            'name' => $this->faker->name,
-            'email' => $this->faker->email,
-            'phone' => $this->faker->phoneNumber,
             'company_name' => $this->faker->company,
-            'website' => $this->faker->url,
-            'introduction' => $this->faker->text,
-            'company_history' => $this->faker->text,
-            'company_mission' => $this->faker->text,
-            'company_goals' => $this->faker->text,
-            'presentation_text' => $this->faker->text,
-            'team_introduction' => $this->faker->text,
-            'company_values' => $this->faker->text,
+            'contact_name' => $this->faker->name,
+            'contact_email' => $this->faker->email,
+            'contact_phone' => $this->faker->phoneNumber,
+            'contact_positsion' => $this->faker->jobTitle,
+
         ];
     }
 }

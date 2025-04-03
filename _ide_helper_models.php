@@ -180,7 +180,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUseVideoOrAnimation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereVisualFeeling($value)
- * @mixin \Eloquent
  */
 	class FormQuestion extends \Eloquent {}
 }
