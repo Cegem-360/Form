@@ -27,6 +27,7 @@ use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -107,21 +108,14 @@ class GuestShowQuaotationForm extends Component implements HasForms
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->required()
-                        ->relationship('websiteType', 'name')
-                        ->preload()
-                        ->createOptionForm([
-                            TextInput::make('name')
-                                ->required()
-                                ->maxLength(255),
-                        ])
-                        ->searchable(),
+                        ->live()
+                        ->preload(),
                     Select::make('website_engine')
                         ->options([
                             'wordpress' => 'Wordpress',
                             'Laravel' => 'Laravel',
                             'shopify' => 'Shopify',
-                        ])->required()
-                        ->searchable(),
+                        ])->required(),
                 ]),
                 Grid::make(1)->schema([
                     Repeater::make('websites')->schema([
@@ -203,15 +197,15 @@ class GuestShowQuaotationForm extends Component implements HasForms
                         ])->label('Do you have a website graphic?'),
                     ]),
 
-                Select::make('requestQuoteFunctionalities')->multiple()
-                    ->relationship('requestQuoteFunctionalities', 'name')->preload(),
+                Select::make('request_quote_functionalities')->multiple()
+                    ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
+                        return $query->where('website_type_id', $get('website_type_id'));
+                    }),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                     ->multiple()
                     ->preload()->searchable(),
-                Toggle::make('is_ecommerce'),
-                TextInput::make('ecommerce_functionalities'),
             ])
             ->statePath('data')
             ->model(RequestQuote::class);

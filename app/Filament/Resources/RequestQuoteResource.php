@@ -172,7 +172,7 @@ class RequestQuoteResource extends Resource
                                 }),
                         ])->label('Do you have a website graphic?'),
                     ]),
-                Select::make('requestQuoteFunctionalities')->multiple()
+                Select::make('request_quote_functionalities')->multiple()
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
@@ -184,8 +184,6 @@ class RequestQuoteResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable(),
-                Toggle::make('is_ecommerce'),
-                TextInput::make('ecommerce_functionalities'),
 
             ]);
     }
