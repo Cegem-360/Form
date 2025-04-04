@@ -117,7 +117,7 @@ class GuestShowQuaotationForm extends Component implements HasForms
                         ->searchable(),
                     Select::make('website_engine')
                         ->options([
-                            'wordpress' => 'WordPress',
+                            'wordpress' => 'Wordpress',
                             'Laravel' => 'Laravel',
                             'shopify' => 'Shopify',
                         ])->required()

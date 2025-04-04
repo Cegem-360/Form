@@ -15,6 +15,7 @@ class RequestQuoteFunctionality extends Model
     protected $fillable = [
         'name',
         'price',
+        'website_type_id',
     ];
 
     protected $casts = [
@@ -24,5 +25,10 @@ class RequestQuoteFunctionality extends Model
     public function requestQuotes()
     {
         return $this->belongsToMany(RequestQuote::class);
+    }
+
+    public function websiteType()
+    {
+        return $this->belongsTo(WebsiteType::class);
     }
 }

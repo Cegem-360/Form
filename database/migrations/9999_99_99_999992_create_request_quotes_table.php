@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('company_address')->nullable();
             $table->string('company_vat_number')->nullable(); // HU tax number
             $table->string('company_contact_name')->nullable();
+            $table->longText('project_description')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
             $table->string('website_engine')->nullable();
@@ -33,8 +34,6 @@ return new class extends Migration
             $table->boolean('have_website_graphic')->default(false)->nullable();
             $table->boolean('is_multilangual')->default(false)->nullable();
             $table->json('languages')->nullable();
-            $table->boolean('is_ecommerce')->default(false)->nullable();
-            $table->json('ecommerce_functionalities')->nullable();
             $table->timestamps();
         });
     }

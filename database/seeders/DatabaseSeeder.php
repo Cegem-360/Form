@@ -53,10 +53,22 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        // website types
+
+        $websiteTypes = [
+            'Website',
+            'Webshop',
+            'Landing page',
+            'Weboldal',
+            'Webáruház',
+            'Landing oldal',
+        ];
+
         $this->call([
+            WebsiteTypeSeeder::class,
             WebsiteLanguageSeeder::class,
             SupportPackSeeder::class,
-            WebsiteTypeSeeder::class,
+
             RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
         ]);

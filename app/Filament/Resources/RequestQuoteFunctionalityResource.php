@@ -6,7 +6,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages;
 use App\Models\RequestQuoteFunctionality;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -24,13 +25,20 @@ class RequestQuoteFunctionalityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('price')
+                TextInput::make('price')
                     ->numeric()
                     ->default(0)
                     ->prefix('$'),
+
+                Select::make('website_type_id')
+                    ->relationship('websiteType', 'name')
+                    ->required()
+                    ->preload()
+                    ->searchable()
+                    ->placeholder('Select a website type'),
             ]);
     }
 
@@ -43,6 +51,11 @@ class RequestQuoteFunctionalityResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->money()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('websiteType.name')
+                    ->label('Website Type')
+                    ->sortable()
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

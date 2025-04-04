@@ -48,15 +48,14 @@ class RequestQuoteFactory extends Factory
             'company_address' => $this->faker->address(),
             'company_vat_number' => $this->faker->word(),
             'company_contact_name' => $this->faker->name(),
+            'project_description' => $this->faker->randomHtml(),
             // website type
             'website_type_id' => WebsiteType::factory(),
-            'website_engine' => $this->faker->word(),
+            'website_engine' => $this->faker->randomElement(['wordpress', 'shopify', 'laravel']),
             'websites' => $websites,
             'have_website_graphic' => $this->faker->boolean(),
             'is_multilangual' => $this->faker->boolean(),
             'languages' => [$this->faker->word()],
-            'is_ecommerce' => $this->faker->boolean(),
-            'ecommerce_functionalities' => [$this->faker->word()],
         ];
     }
 }

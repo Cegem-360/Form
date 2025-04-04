@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WebsiteTypeResource\Pages;
+use App\Filament\Resources\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
 use App\Models\WebsiteType;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -62,7 +63,7 @@ class WebsiteTypeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RequestQuoteFunctionalitiesRelationManager::class,
         ];
     }
 

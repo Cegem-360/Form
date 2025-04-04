@@ -404,14 +404,15 @@ namespace App\Models{
  * @property string|null $company_address
  * @property string|null $company_vat_number
  * @property string|null $company_contact_name
+ * @property string|null $project_description
  * @property int $website_type_id
  * @property string|null $website_engine
  * @property array<array-key, mixed>|null $websites
  * @property bool|null $have_website_graphic
  * @property bool|null $is_multilangual
  * @property array<array-key, mixed>|null $languages
- * @property bool|null $is_ecommerce
- * @property array<array-key, mixed>|null $ecommerce_functionalities
+ * @property int|null $is_ecommerce
+ * @property string|null $ecommerce_functionalities
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
@@ -436,6 +437,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereProjectDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereQuotationName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteEngine($value)
@@ -452,10 +454,12 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property int|null $price
+ * @property int $website_type_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
  * @property-read int|null $request_quotes_count
+ * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\RequestQuoteFunctionalityFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality newQuery()
@@ -465,6 +469,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereWebsiteTypeId($value)
  */
 	class RequestQuoteFunctionality extends \Eloquent {}
 }
@@ -585,6 +590,8 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
+ * @property-read int|null $request_quote_functionalities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
  * @property-read int|null $request_quotes_count
  * @method static \Database\Factories\WebsiteTypeFactory factory($count = null, $state = [])
@@ -595,7 +602,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 	class WebsiteType extends \Eloquent {}
 }

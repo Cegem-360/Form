@@ -12,6 +12,7 @@ use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -24,6 +25,8 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class RequestQuoteResource extends Resource
 {
@@ -52,6 +55,16 @@ class RequestQuoteResource extends Resource
                         ->required()
                         ->tel()
                         ->maxLength(255),
+                    RichEditor::make('project_description')
+                        ->required()
+                        ->maxLength(65535)
+                        ->disableToolbarButtons([
+                            'attachFiles',
+                            'codeBlock',
+                            'italic',
+                            'strikeThrough',
+                            'underline',
+                        ])->columnSpanFull(),
                     Select::make('client_type')
                         ->required()
                         ->options(ClientType::class)
@@ -66,6 +79,7 @@ class RequestQuoteResource extends Resource
                     TextInput::make('company_contact_name')
                         ->maxLength(255),
                     Select::make('website_type_id')
+                        ->live()
                         ->required()
                         ->relationship('websiteType', 'name')
                         ->preload()
@@ -77,7 +91,7 @@ class RequestQuoteResource extends Resource
                         ->searchable(),
                     Select::make('website_engine')
                         ->options([
-                            'wordpress' => 'WordPress',
+                            'wordpress' => 'Wordpress',
                             'Laravel' => 'Laravel',
                             'shopify' => 'Shopify',
                         ])->required()
@@ -159,7 +173,10 @@ class RequestQuoteResource extends Resource
                         ])->label('Do you have a website graphic?'),
                     ]),
                 Select::make('requestQuoteFunctionalities')->multiple()
-                    ->relationship('requestQuoteFunctionalities', 'name')
+                    ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
+                        return $query->where('website_type_id', $get('website_type_id'));
+                    })
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}")
                     ->preload(),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')

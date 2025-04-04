@@ -18,22 +18,10 @@ class WebsiteTypeSeeder extends Seeder
             'name' => 'Landing Page',
         ]);
         WebsiteType::factory()->create([
-            'name' => 'Exist Page upgarade or redesign',
-        ]);
-        WebsiteType::factory()->create([
             'name' => 'Webshop',
         ]);
         WebsiteType::factory()->create([
             'name' => 'Weboldal',
-        ]);
-        WebsiteType::factory()->create([
-            'name' => 'Weboldal + Webshop',
-        ]);
-        WebsiteType::factory()->create([
-            'name' => 'Weboldal + Webshop + Landing Page',
-        ]);
-        WebsiteType::factory()->create([
-            'name' => 'Weboldal + Landing Page',
         ]);
 
     }

@@ -28,8 +28,6 @@ class RequestQuote extends Model
         'have_website_graphic',
         'is_multilangual',
         'languages',
-        'is_ecommerce',
-        'ecommerce_functionalities',
         'website_engine',
     ];
 
@@ -39,9 +37,7 @@ class RequestQuote extends Model
             'websites' => 'array',
             'functionalities' => 'array',
             'languages' => 'array',
-            'ecommerce_functionalities' => 'array',
             'is_multilangual' => 'boolean',
-            'is_ecommerce' => 'boolean',
             'have_website_graphic' => 'boolean',
             'client_type' => ClientType::class,
         ];
