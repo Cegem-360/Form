@@ -1,3 +1,6 @@
-.my-color {
-    color: #3498db;
+ul {
+    background-color: #3498db!important;
+}
+li {
+    color: red!important;
 }

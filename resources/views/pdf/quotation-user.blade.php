@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quotation</title>
-    <link rel="stylesheet" href="Vite::asset('resources/css/app.css')">
-    <link rel="stylesheet" href="Vite::asset('resources/css/style.css')">
+    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/css/style.css') }}">
+    <link rel="stylesheet" href="resource_path('css/style.css')">
+    @vite('resources/css/style.css') --}}
     <style>
-        /* Inline CSS from your app's styles */
         html {
             margin: 0;
         }
@@ -18,6 +18,10 @@
             margin: 100px 0;
             padding: 0;
             line-height: 1.6;
+        }
+
+        .main-content {
+            margin: 100px 0;
         }
 
         .container {
@@ -35,6 +39,7 @@
             right: 0;
             width: 100%;
             padding: 30px 60px;
+            z-index: -1;
         }
 
         .logo-wrapper {
@@ -73,6 +78,13 @@
             letter-spacing: 2px;
         }
 
+        h2 {
+            margin-top: 60px;
+            padding-bottom: 3px;
+            border-bottom: 1px solid #aaa;
+            font-size: 20px;
+        }
+
         h3 {
             color: #39A2DB;
         }
@@ -98,6 +110,44 @@
             margin: 5px 0;
         }
 
+        #price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #price-table thead {
+            background-color: #39A2DB;
+            color: white;
+        }
+
+        #price-table th,
+        #price-table td {
+            padding: 5px 10px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 12px;
+        }
+
+        #price-table th {
+            font-size: 12px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        #price-table td {
+            border-bottom: 1px solid #aaa;
+        }
+
+        #price-table tbody tr {
+            border-bottom: 3px solid #aaa;
+        }
+
+        #price-table tbody tr:last-child {
+            border-bottom: none;
+            /* Remove border for the last row */
+        }
+
         .footer {
             position: fixed;
             bottom: 0;
@@ -110,10 +160,25 @@
             font-size: 12px;
             color: #777;
             background-color: #ccc;
+            z-index: -1;
         }
 
         .page-break {
             page-break-after: always;
+        }
+
+        .page-cover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .page-cover-image {
+            /* margin: -100px 0; */
+            width: 100%;
+            height: 100%;
         }
     </style>
     @vite(['resources/js/app.js'])
@@ -121,6 +186,37 @@
 </head>
 
 <body>
+    <div class="page-cover">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-01.jpg'))) }}"
+            alt="Borító" class="page-cover-image">
+    </div>
+    <div class="cover-text" style="z-index: 10; color: white;">
+        <p style="position: absolute; top: 100px; left: 100px; font-size: 24px; font-weight: bold;">cégem360</p>
+        <p style="position: absolute; top: 100px; right: 50px; font-size: 24px; text-transform: uppercase;">
+            Prémium weboldal készítés</p>
+        <p style="position: absolute; top: 500px; left: 100px; font-size: 48px; font-weight: bold;">
+            Ügyfél neve {{ $requestQuote->customer_name }} részére</p>
+        <p style="position: absolute; top: 580px; left: 100px; font-size: 32px;">
+            Árajánlat weboldal fejlesztésre</p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="page-cover">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-02.jpg'))) }}"
+            alt="Tartalom" class="page-cover-image">
+    </div>
+
+    <div class="page-break"></div>
+
+    <div class="page-cover">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-03.jpg'))) }}"
+            alt="Rólunk" class="page-cover-image">
+    </div>
+
+    <div class="page-break"></div>
+
+    {{-- <div class="main-content"> --}}
     <div class="page-header">
         <div class="logo-wrapper">
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/cegem360-logo.png'))) }}"
@@ -136,7 +232,8 @@
             <div class="header-content-wrapper">
                 <div class="header-left">
                     <h4>Tárgy</h4>
-                    <p>Árajánlat {{ $requestQuote->company_name }} {{ $requestQuote->website_engine }} készítésére</p>
+                    <p>Árajánlat {{ $requestQuote->company_name }} {{ $requestQuote->website_engine }} készítésére
+                    </p>
                     <h4>AJÁNLATTEVŐ CÉG:</h4>
                     <p>Cégem 360 Kft.<br />
                         Székhely: 1182 Budapest, Gulipán utca 6.<br />
@@ -188,7 +285,8 @@
             <p><strong>Languages:</strong> {{ implode(', ', $requestQuote->languages ?? []) }}</p>
             <p><strong>Is E-commerce:</strong> {{ $requestQuote->is_ecommerce ? 'Yes' : 'No' }}</p>
             <p><strong>E-commerce Functionalities:</strong>
-                {{ implode(', ', $requestQuote->ecommerce_functionalities ?? []) }}</p>
+                {{ implode(', ', is_array($requestQuote->ecommerce_functionalities) ? $requestQuote->ecommerce_functionalities : []) }}
+            </p>
             <p><strong>Website Engine:</strong> {{ $requestQuote->website_engine }}</p>
         </div>
 
@@ -213,14 +311,17 @@
                 <ul>
                     <li>Drótvázak készítése: Alapvető vázlatok, amelyek bemutatják az oldal elrendezését és a
                         navigációt.</li>
-                    <li>UI design: A vizuális tervek elkészítése, színek, betűtípusok, gombok, ikonok tervezése. Fontos,
-                        hogy az ügyfél itt véglegesítse a designt, hogy a későbbi szakaszok gördülékenyen haladhassanak.
+                    <li>UI design: A vizuális tervek elkészítése, színek, betűtípusok, gombok, ikonok tervezése.
+                        Fontos,
+                        hogy az ügyfél itt véglegesítse a designt, hogy a későbbi szakaszok gördülékenyen
+                        haladhassanak.
                     </li>
                     <li>Design visszajelzések beépítése, véglegesítés.</li>
                 </ul>
                 <li>Prototípus bemutatása:</li>
                 <ul>
-                    <li>Kattintható prototípus, amellyel az ügyfél előre látja, hogyan fog kinézni és működni az oldal.
+                    <li>Kattintható prototípus, amellyel az ügyfél előre látja, hogyan fog kinézni és működni az
+                        oldal.
                         Ennek elfogadása után lehet továbblépni a fejlesztésre.</li>
                 </ul>
             </ul>
@@ -304,19 +405,111 @@
                 </ul>
                 <li>Folyamatos karbantartás:</li>
                 <ul>
-                    <li>Havi vagy éves díjas konstrukció, amely tartalmazza az oldal frissítését, biztonsági mentéseket,
+                    <li>Havi vagy éves díjas konstrukció, amely tartalmazza az oldal frissítését, biztonsági
+                        mentéseket,
                         valamint kisebb fejlesztéseket.</li>
                 </ul>
             </ul>
             <h2>Vállalási határidő</h2>
-            <p>A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő 30 munkanapon
+            <p>A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő 30
+                munkanapon
                 belül elkészül.</p>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div id="price-table">
+            <h2>A feladat díjazása</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>MEGNEVEZÉS</th>
+                        <th>MENNYISÉG</th>
+                        <th>EGYSÉGDÍJ</th>
+                        <th>ÖSSZESEN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>WordPress alapú weboldal készítés</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Keretrendszer beállítása (védelmi, GDPR, süti elfogadás, Analytics, Webmester eszközök)
+                        </td>
+                        <td>1 db</td>
+                        <td>80000 Ft</td>
+                        <td>80000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td>UI tervezés (drótváz, design)</td>
+                        <td>1 db</td>
+                        <td>80000 Ft</td>
+                        <td>80000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td>Főoldal</td>
+                        <td>nagy</td>
+                        <td>70000 Ft</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Rólunk</td>
+                        <td>közepes</td>
+                        <td>40000 Ft</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Kapcsolat</td>
+                        <td>kicsi</td>
+                        <td>20000 Ft</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Űrlap beállítás</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: right;">
+                            <h3><b>+ ÁFA</b></h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Nyelvesítés</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Angol</td>
+                        <td>1 db</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Német</td>
+                        <td>5 db</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: right;">
+                            <h3><b>+ ÁFA</b></h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="calculation">
             <h3>Cost Calculation</h3>
 
             @dump ($requestQuote)
+
             @foreach ($requestQuote->websites as $page)
                 <p><strong>{{ $page['name'] }}:</strong> <strong>Cost:</strong>
                     {{ match ($page['length']) {
@@ -333,6 +526,7 @@
     <div class="footer">
         <p>FOOTER</p>
     </div>
+    {{-- </div> --}}
 </body>
 
 </html>
