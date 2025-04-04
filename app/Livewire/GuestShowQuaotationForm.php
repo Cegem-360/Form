@@ -25,6 +25,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -68,14 +69,19 @@ class GuestShowQuaotationForm extends Component implements HasForms
             ->schema([
                 Grid::make(2)->schema([
                     TextInput::make('name')
+                        ->label('Full Name')
+                        ->live()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('email')
                         ->email()
+                        ->live()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('phone')
                         ->tel()
+                        ->live()
+                        ->required()
                         ->maxLength(255),
                     Select::make('client_type')
                         ->live()
@@ -172,20 +178,23 @@ class GuestShowQuaotationForm extends Component implements HasForms
                             ->disabled(),
                         Actions::make([
                             Action::make('yes')
+                                ->visible(fn ($get) => $get('have_website_graphic') === false)
                                 ->translateLabel()
                                 ->requiresConfirmation()
-                                ->modalHeading('Website graphic')
-                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
-                                ->modalSubmitActionLabel('Yes, I have a website graphic')
+                                ->modalHeading(__('Website graphic'))
+                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                                ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
+                                ->modalCancelActionLabel(__("No, I don't have a website graphic"))
                                 ->modalAlignment(Alignment::Center)
                                 ->action(function (Set $set) {
                                     $set('have_website_graphic', true);
                                 }),
                             Action::make('no')
+                                ->visible(fn ($get) => $get('have_website_graphic') === true)
                                 ->translateLabel()
                                 ->requiresConfirmation()
-                                ->modalHeading('Website graphic')
-                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
+                                ->modalHeading(__('Website graphic'))
+                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
                                 ->modalSubmitActionLabel('No, I don\'t have a website graphic')
                                 ->modalAlignment(Alignment::Center)
                                 ->action(function (Set $set) {
@@ -252,6 +261,8 @@ class GuestShowQuaotationForm extends Component implements HasForms
             'email' => $data['email'],
             'password' => Hash::make('password'), // or use a random password
         ]);
+
+        event(new Registered($user));
         Auth::loginUsingId($user->id, true);
         $record = RequestQuote::create($data);
 

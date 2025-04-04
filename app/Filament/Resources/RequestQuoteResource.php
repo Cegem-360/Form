@@ -136,11 +136,12 @@ class RequestQuoteResource extends Resource
                             ->disabled(),
                         Actions::make([
                             Action::make('yes')
+
                                 ->translateLabel()
                                 ->requiresConfirmation()
-                                ->modalHeading('Website graphic')
-                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
-                                ->modalSubmitActionLabel('Yes, I have a website graphic')
+                                ->modalHeading(__('Website graphic'))
+                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                                ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
                                 ->modalAlignment(Alignment::Center)
                                 ->action(function (Set $set) {
                                     $set('have_website_graphic', true);
@@ -148,8 +149,8 @@ class RequestQuoteResource extends Resource
                             Action::make('no')
                                 ->translateLabel()
                                 ->requiresConfirmation()
-                                ->modalHeading('Website graphic')
-                                ->modalDescription('Are you sure you\'d have website graphic form UI/UX designer?')
+                                ->modalHeading(__('Website graphic'))
+                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
                                 ->modalSubmitActionLabel('No, I don\'t have a website graphic')
                                 ->modalAlignment(Alignment::Center)
                                 ->action(function (Set $set) {

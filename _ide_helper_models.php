@@ -70,7 +70,7 @@ namespace App\Models{
  * @property string|null $contact_name
  * @property string|null $contact_email
  * @property string|null $contact_phone
- * @property string|null $contact_position
+ * @property string|null $contact_positsion
  * @property string|null $logo
  * @property array<array-key, mixed>|null $activities
  * @property bool $have_exist_website
@@ -134,7 +134,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContactEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContactName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContactPhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContactPosition($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContactPositsion($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereContractedAccountants($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereDeadline($value)
@@ -382,6 +382,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSupportPackId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $created_by
+ * @property int|null $updated_by
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedBy($value)
  */
 	class Project extends \Eloquent {}
 }
@@ -515,7 +519,7 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * User
+ * 
  *
  * @property int $id
  * @property string $name
@@ -547,7 +551,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
- * @mixin \Eloquent
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }

@@ -46,6 +46,15 @@
     "Call to actions":"Inspirációs szöveg",
     "Other expectation or request" : "Egyéb elvárások vagy kérések",
     "Website page basics start":"Weboldal tartalmi alapok",
-    "Use media types" : "Média elemek amiket fel lehet használni"
+    "Use media types" : "Média elemek amiket fel lehet használni",
+    "Order" : "Megrendelés",
+    "Register And Order" : "Regisztráció és rendelés",
+    "Submit and send to me in Email" : "Megrendelem és elküldöm emailben",
+    "Yes, I have a website graphic": "Igen, van weboldal grafikám",
+    "Are you sure you'd have website graphic form UI/UX designer?": "Biztos vagy benne, hogy UI/UX dizájnertől szeretnél weboldal grafikát?",
+    "No, I don't have a website graphic": "Nem, nincs weboldal grafikám",
+    "Yes": "Igen",
+    "No": "Nem",
+    "Website graphic": "Weboldal grafika"
 
 }
