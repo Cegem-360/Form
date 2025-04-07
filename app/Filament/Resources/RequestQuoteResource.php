@@ -113,8 +113,8 @@ class RequestQuoteResource extends Resource
                                     ->afterStateUpdated(function ($state, Set $set, Get $get) {
                                         $set('image', match ($state) {
                                             'short' => 'website_previews/short_preview.png',
-                                            'medium' => 'website_previews/medium_preview.jpg',
-                                            'long' => 'website_previews/long_preview.jpg',
+                                            'medium' => 'website_previews/medium_preview.png',
+                                            'long' => 'website_previews/long_preview.png',
                                             default => null,
                                         });
                                     })
@@ -131,8 +131,8 @@ class RequestQuoteResource extends Resource
                                 )->formatStateUsing(function (Get $get) {
                                     return match ($get('length')) {
                                         'short' => 'website_previews/short_preview.png',
-                                        'medium' => 'website_previews/medium_preview.jpg',
-                                        'long' => 'website_previews/long_preview.jpg',
+                                        'medium' => 'website_previews/medium_preview.png',
+                                        'long' => 'website_previews/long_preview.png',
                                         default => null,
                                     };
                                 }),
@@ -142,36 +142,35 @@ class RequestQuoteResource extends Resource
                     ]),
 
                 ]),
-                Grid::make(1)->schema(
-                    [
-                        Toggle::make('have_website_graphic')
-                            ->default(false)
-                            ->label('Do you have a website graphic?')
-                            ->disabled(),
-                        Actions::make([
-                            Action::make('yes')
+                Grid::make(1)->schema([
+                    Toggle::make('have_website_graphic')
+                        ->default(false)
+                        ->label('Do you have a website graphic?')
+                        ->disabled(),
+                    Actions::make([
+                        Action::make('yes')
 
-                                ->translateLabel()
-                                ->requiresConfirmation()
-                                ->modalHeading(__('Website graphic'))
-                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                                ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
-                                ->modalAlignment(Alignment::Center)
-                                ->action(function (Set $set) {
-                                    $set('have_website_graphic', true);
-                                }),
-                            Action::make('no')
-                                ->translateLabel()
-                                ->requiresConfirmation()
-                                ->modalHeading(__('Website graphic'))
-                                ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                                ->modalSubmitActionLabel('No, I don\'t have a website graphic')
-                                ->modalAlignment(Alignment::Center)
-                                ->action(function (Set $set) {
-                                    $set('have_website_graphic', false);
-                                }),
-                        ])->label('Do you have a website graphic?'),
-                    ]),
+                            ->translateLabel()
+                            ->requiresConfirmation()
+                            ->modalHeading(__('Website graphic'))
+                            ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                            ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
+                            ->modalAlignment(Alignment::Center)
+                            ->action(function (Set $set) {
+                                $set('have_website_graphic', true);
+                            }),
+                        Action::make('no')
+                            ->translateLabel()
+                            ->requiresConfirmation()
+                            ->modalHeading(__('Website graphic'))
+                            ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                            ->modalSubmitActionLabel('No, I don\'t have a website graphic')
+                            ->modalAlignment(Alignment::Center)
+                            ->action(function (Set $set) {
+                                $set('have_website_graphic', false);
+                            }),
+                    ])->label('Do you have a website graphic?'),
+                ]),
                 Select::make('request_quote_functionalities')->multiple()
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));

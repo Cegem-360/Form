@@ -9,9 +9,7 @@ use App\Models\Domain;
 use App\Models\Form;
 use App\Models\SystemChatParameter;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 
 class DatabaseSeeder extends Seeder
@@ -21,18 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('password'),
-            'email_verified_at' => now(),
-        ]);
 
         // Form::factory(20)->create();
         Domain::factory()->create([
@@ -65,6 +51,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         $this->call([
+            UserAndRolesSeeder::class,
             WebsiteTypeSeeder::class,
             WebsiteLanguageSeeder::class,
             SupportPackSeeder::class,
@@ -72,8 +59,6 @@ class DatabaseSeeder extends Seeder
             RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
         ]);
-
-        Artisan::call('permissions:sync');
 
     }
 }

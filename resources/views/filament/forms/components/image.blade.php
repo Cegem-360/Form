@@ -5,7 +5,7 @@
         Csak szöveget tartalmaz egyszerü szerkezetben. Elrendezés és formázaást tartalmaz de képeket vizuális anyagokat
         nélkül.
     </p>
-@elseif ($getState() == 'website_previews/medium_preview.jpg')
+@elseif ($getState() == 'website_previews/medium_preview.png')
     <p>
         Már tartalmaz képeket és formázott szöveget, de mennyiségben korlátozott.
         Ez a fájl mérete kisebb, és gyorsabban betöltődik, mint a teljes képernyős előnézet.
