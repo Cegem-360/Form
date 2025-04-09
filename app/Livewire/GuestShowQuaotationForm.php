@@ -155,7 +155,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     Select::make('website_engine')
                         ->options([
                             'wordpress' => 'Wordpress',
-                            'Laravel' => 'Laravel',
+                            'laravel' => 'Laravel',
                             'shopify' => 'Shopify',
                         ])->required(),
                     RichEditor::make('project_description')
