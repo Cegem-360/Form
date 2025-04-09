@@ -1,5 +1,12 @@
 @use('Illuminate\Support\Facades\Storage')
-
+@php
+    $image = match ($getState()) {
+        'short' => 'website_previews/short_preview.png',
+        'medium' => 'website_previews/medium_preview.png',
+        'large' => 'website_previews/large_preview.png',
+        default => 'website_previews/medium_preview.png',
+    };
+@endphp
 @if ($getState() == 'website_previews/short_preview.png')
     <p>
         Csak szöveget tartalmaz egyszerü szerkezetben. Elrendezés és formázaást tartalmaz de képeket vizuális anyagokat
@@ -23,4 +30,17 @@
     </p>
 @endif
 
-<img src='{{ Storage::url($getState()) }}' size="w-16 h-16" class="rounded" />
+<!-- Modal -->
+<div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    onclick="this.classList.add('hidden')">
+    <div class="relative bg-transparent" onclick="event.stopPropagation(); event.preventDefault();">
+        <button onclick="document.getElementById('imageModal').classList.add('hidden')"
+            class="absolute text-xl text-white bg-black top-2 right-2">&times;</button>
+        <img src="{{ Storage::url($image) }}" class="max-w-full max-h-[90vh] rounded" />
+    </div>
+</div>
+
+<div class="flex justify-center">
+    <img src='{{ Storage::url($image) }}' class="w-auto h-[200px] max-h-[200px] rounded cursor-pointer"
+        onclick="document.getElementById('imageModal').classList.remove('hidden')" />
+</div>

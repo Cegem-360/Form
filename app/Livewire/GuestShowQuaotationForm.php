@@ -9,6 +9,9 @@ use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
+use Filament\Actions\Action as SubbmitButon;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Grid;
@@ -38,8 +41,9 @@ use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class GuestShowQuaotationForm extends Component implements HasForms
+class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     #[Validate([
@@ -78,11 +82,23 @@ class GuestShowQuaotationForm extends Component implements HasForms
                     $this->getGraphicsInformationSchema(),
                     $this->getConstentSchema(),
                 ])
-                    ->skippable(),
-
+                    ->skippable()
+                    ->submitAction($this->subbmitButtonAction()),
             ])
             ->statePath('data')
             ->model(RequestQuote::class);
+    }
+
+    public function subbmitButtonAction(): SubbmitButon
+    {
+        $form = $this->data;
+
+        return SubbmitButon::make('submit')
+            ->view('filament.forms.components.quotation-submit-button', ['data' => $form])
+            ->label(__('Submit'))
+            ->action('submitAndSendEmail')
+            ->color('success')
+            ->icon('heroicon-o-paper-airplane');
     }
 
     private function getClientInformationSchema(): Step
@@ -143,7 +159,6 @@ class GuestShowQuaotationForm extends Component implements HasForms
                             'shopify' => 'Shopify',
                         ])->required(),
                     RichEditor::make('project_description')
-                        ->required()
                         ->maxLength(65535)
                         ->disableToolbarButtons([
                             'attachFiles',
@@ -182,17 +197,11 @@ class GuestShowQuaotationForm extends Component implements HasForms
                                     ->options([
                                         'short' => 'Short',
                                         'medium' => 'Medium',
-                                        'long' => 'Long',
+                                        'large' => 'Large',
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set) {
-                                        $set('image',
-                                            match ($state) {
-                                                'short' => 'website_previews/short_preview.png',
-                                                'medium' => 'website_previews/medium_preview.png',
-                                                'long' => 'website_previews/long_preview.png',
-                                                default => 'medium',
-                                            });
+                                        $set('image', $state);
                                     })
                                     ->required(),
 
@@ -206,15 +215,7 @@ class GuestShowQuaotationForm extends Component implements HasForms
                                                 return $get('image');
                                             },
                                         ]
-                                    )
-                                    ->formatStateUsing(function (Get $get) {
-                                        return match ($get('length')) {
-                                            'short' => 'website_previews/short_preview.png',
-                                            'medium' => 'website_previews/medium_preview.png',
-                                            'long' => 'website_previews/long_preview.png',
-                                            default => 'website_previews/medium_preview.png',
-                                        };
-                                    }),
+                                    ),
                             ]),
                         ]),
                     ])
@@ -306,12 +307,14 @@ class GuestShowQuaotationForm extends Component implements HasForms
                         }),
                 ])->label('Do you have a website graphic?'),
             ]),
-            Select::make('request_quote_functionalities')->multiple()
+            Select::make('request_quote_functionalities')
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'));
                 })
                 ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}")
-                ->preload(),
+                ->multiple()
+                ->preload()
+                ->disabled(fn ($get) => $get('website_type_id') === null),
             Toggle::make('is_multilangual'),
             Select::make('languages')
                 ->options(WebsiteLanguage::all()->pluck('name', 'id'))
@@ -326,6 +329,8 @@ class GuestShowQuaotationForm extends Component implements HasForms
         return Step::make('Consent')->schema([
             Grid::make(1)->schema([
                 Toggle::make('consent')
+                    ->live()
+                    ->default(false)
                     ->label('I agree to the terms and conditions')
                     ->required()
                     ->helperText('You must agree to the terms and conditions to proceed.')
@@ -353,7 +358,7 @@ class GuestShowQuaotationForm extends Component implements HasForms
     {
         $data = $this->form->getState();
         $validatedData = $this->validate();
-        dump($validatedData);
+        // dump($validatedData);
         $record = RequestQuote::create($data);
         Notification::make()
             ->title('Quotation created and email sent')
