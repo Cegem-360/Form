@@ -24,4 +24,3 @@
         {{ __('Submit and send to me in Email') }}
     </x-filament::button>
 @endif
-@dump($data)
