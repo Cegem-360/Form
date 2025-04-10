@@ -370,7 +370,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         Mail::to($data['email'])->send(new QuotationSendedToUser($record));
     }
 
-    public function order(): void
+    public function order()
     {
         $data = $this->form->getState();
         $record = RequestQuote::create($data);
@@ -379,9 +379,12 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
             ->success()
             ->send();
         $this->form->model($record)->saveRelationships();
+
+        // Redirect to Cart summary page
+        return redirect()->route('cart.summary', ['record' => $record->id]);
     }
 
-    public function registerAndOrder(): void
+    public function registerAndOrder()
     {
         $data = $this->form->getState();
 
@@ -409,6 +412,8 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 
         $this->form->model($record)->saveRelationships();
 
+        // Redirect to Cart summary page
+        return redirect()->route('cart.summary', ['record' => $record->id]);
     }
 
     public function render(): View

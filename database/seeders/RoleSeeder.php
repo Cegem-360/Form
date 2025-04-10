@@ -16,16 +16,22 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $roles = [
-            'admin',
-            'guest',
-            'super-admin',
-            'project-manager',
-            'project-editor',
-            'project-viewer',
-            'request-quote-user',
-            'request-quote-admin',
-            'partner',
-            'b2b-user',
+            'super-admin', // all modules
+            'admin', // all modules, but not all permissions like a Boss
+
+            'guest', // Quotation(s)->own module(edit only status),  Normal register but not order (can send and then cant edit)
+
+            'user', // Quotation(s)->own module, Invoice(s)->own module, Payment(s)->own module,
+
+            'project-manager', // quotation module, ?invoice module, ?payment module, Project(s) module, can view all, can edit/view all
+
+            'project-editor', // quotation module, ?invoice module, ?payment module, Project(s) module, can view all, can edit/view own
+            'project-viewer', // quotation module, ?invoice module, ?payment module, Project(s) module, can view all, can view own
+            'request-quote-user', // Quotation(s)->own module, Invoice(s)->own module, Payment(s)->own module
+            'request-quote-admin', // quotation module, ?invoice module, ?payment module,
+            'partner', // quotation module, ?invoice module, ?payment module,
+            'b2b-user', // quotation module, ?invoice module, ?payment module,
+
         ];
 
         foreach ($roles as $role) {

@@ -47,6 +47,8 @@ class DatabaseSeeder extends Seeder
 
             RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
+            OrderSeeder::class,
+            OrderItemSeeder::class,
         ]);
 
     }
