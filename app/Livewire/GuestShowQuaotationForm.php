@@ -211,9 +211,8 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->view('filament.forms.components.image')
                                     ->viewData(
                                         [
-                                            function (Get $get) { // adds the initial state on page load
-                                                return $get('image');
-                                            },
+                                            'image' => fn (Get $get) => $get('image'), // gets the image from the state
+                                            'show_image' => true, // hides the image
                                         ]
                                     ),
                             ]),

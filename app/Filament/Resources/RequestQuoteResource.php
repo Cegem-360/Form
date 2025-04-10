@@ -10,6 +10,7 @@ use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -88,6 +89,9 @@ class RequestQuoteResource extends Resource
                                 ->required()
                                 ->maxLength(255),
                         ])
+                        ->afterStateUpdated(function (Set $set) {
+                            $set('request_quote_functionalities', []);
+                        })
                         ->searchable(),
                     Select::make('website_engine')
                         ->options([
@@ -124,9 +128,8 @@ class RequestQuoteResource extends Resource
                             Grid::make(1)->columnSpan(1)->schema([
                                 ViewField::make('image')->view('filament.forms.components.image')->viewData(
                                     [
-                                        function (Get $get) { // adds the initial state on page load
-                                            return $get('image');
-                                        },
+                                        'image' => fn (Get $get) => $get('image'), // gets the image from the state
+                                        'show_image' => false, // hides the image
                                     ]
                                 )->formatStateUsing(function (Get $get) {
                                     return match ($get('length')) {
@@ -171,12 +174,11 @@ class RequestQuoteResource extends Resource
                             }),
                     ])->label('Do you have a website graphic?'),
                 ]),
-                Select::make('request_quote_functionalities')->multiple()
+                CheckboxList::make('request_quote_functionalities')
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}")
-                    ->preload(),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}"),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))

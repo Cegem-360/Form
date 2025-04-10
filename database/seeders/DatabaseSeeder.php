@@ -39,17 +39,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // website types
-
-        $websiteTypes = [
-            'Website',
-            'Webshop',
-            'Landing page',
-            'Weboldal',
-            'Webáruház',
-            'Landing oldal',
-        ];
-
         $this->call([
             UserAndRolesSeeder::class,
             WebsiteTypeSeeder::class,
