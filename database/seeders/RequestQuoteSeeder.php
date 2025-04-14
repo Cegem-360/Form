@@ -17,6 +17,7 @@ class RequestQuoteSeeder extends Seeder
     {
         $websiteTypes = WebsiteType::all();
         RequestQuote::factory()->count(100)->create([
+            'user_id' => null,
             'website_type_id' => $websiteTypes->random()->id,
         ]);
     }

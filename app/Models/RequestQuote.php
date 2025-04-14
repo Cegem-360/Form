@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Enums\ClientType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RequestQuote extends Model
 {
@@ -14,6 +15,7 @@ class RequestQuote extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'quotation_name',
         'name',
         'email',
@@ -51,5 +53,10 @@ class RequestQuote extends Model
     public function requestQuoteFunctionalities()
     {
         return $this->belongsToMany(RequestQuoteFunctionality::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

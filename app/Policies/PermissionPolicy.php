@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\RequestQuote;
 use App\Models\User;
+use Spatie\Permission\Models\Permission;
 
-class RequestQuotePolicy
+class PermissionPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->checkPermissionTo('view-any RequestQuote');
+        return $user->checkPermissionTo('view-any Permission');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, RequestQuote $requestquote): bool
+    public function view(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('view RequestQuote');
+        return $user->checkPermissionTo('view Permission');
     }
 
     /**
@@ -30,23 +30,23 @@ class RequestQuotePolicy
      */
     public function create(User $user): bool
     {
-        return $user->checkPermissionTo('create RequestQuote');
+        return $user->checkPermissionTo('create Permission');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, RequestQuote $requestquote): bool
+    public function update(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('update RequestQuote');
+        return $user->checkPermissionTo('update Permission');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, RequestQuote $requestquote): bool
+    public function delete(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('delete RequestQuote');
+        return $user->checkPermissionTo('delete Permission');
     }
 
     /**
@@ -54,15 +54,15 @@ class RequestQuotePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('delete-any RequestQuote');
+        return $user->checkPermissionTo('delete-any Permission');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, RequestQuote $requestquote): bool
+    public function restore(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('restore RequestQuote');
+        return $user->checkPermissionTo('restore Permission');
     }
 
     /**
@@ -70,15 +70,15 @@ class RequestQuotePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->checkPermissionTo('restore-any RequestQuote');
+        return $user->checkPermissionTo('restore-any Permission');
     }
 
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, RequestQuote $requestquote): bool
+    public function replicate(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('replicate RequestQuote');
+        return $user->checkPermissionTo('replicate Permission');
     }
 
     /**
@@ -86,15 +86,15 @@ class RequestQuotePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->checkPermissionTo('reorder RequestQuote');
+        return $user->checkPermissionTo('reorder Permission');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, RequestQuote $requestquote): bool
+    public function forceDelete(User $user, Permission $permission): bool
     {
-        return $user->checkPermissionTo('force-delete RequestQuote');
+        return $user->checkPermissionTo('force-delete Permission');
     }
 
     /**
@@ -102,6 +102,6 @@ class RequestQuotePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->checkPermissionTo('force-delete-any RequestQuote');
+        return $user->checkPermissionTo('force-delete-any Permission');
     }
 }

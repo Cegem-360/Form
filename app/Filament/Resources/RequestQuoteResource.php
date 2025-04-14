@@ -28,6 +28,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class RequestQuoteResource extends Resource
 {
@@ -42,6 +43,12 @@ class RequestQuoteResource extends Resource
         return $form
             ->schema([
                 Grid::make(2)->schema([
+                    Select::make('user_id')
+                        ->visible(Auth::user()->hasRole(['admin', 'super-admin']))
+                        ->relationship('user', 'name')
+                        ->preload()
+                        ->searchable()
+                        ->default(Auth::user()->id),
                     TextInput::make('quotation_name')
                         ->required()
                         ->maxLength(255),
@@ -191,7 +198,17 @@ class RequestQuoteResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $user = Auth::user();
+        $userId = $user->id;
+
         return $table
+            ->modifyQueryUsing(function (Builder $query) use ($userId) {
+                if (Auth::user()->hasRole(['admin', 'super-admin'])) {
+                    return $query;
+                }
+
+                return $query->whereUserId($userId);
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('quotation_name')
                     ->searchable(),

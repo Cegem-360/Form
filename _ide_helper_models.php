@@ -483,6 +483,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
+ * @property-read \App\Models\User|null $user
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
@@ -616,6 +617,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string|null $phone
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
@@ -648,6 +650,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmLastFour($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)

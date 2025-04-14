@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\ClientType;
 use App\Models\RequestQuote;
+use App\Models\User;
 use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -39,6 +40,7 @@ class RequestQuoteFactory extends Factory
         }
 
         return [
+            'user_id' => User::factory(),
             'quotation_name' => $this->faker->name(),
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
