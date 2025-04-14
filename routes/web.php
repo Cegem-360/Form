@@ -5,7 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\PaymentController;
-use App\Livewire\CartSummary;
+use App\Livewire\Cart\CartShow;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Livewire\PaymentPage;
@@ -43,7 +43,7 @@ Route::get('/quotation/preview/{requestQuote}', function (RequestQuote $requestQ
     return $pdf->stream('quotation-preview.pdf');
 })->name('quotation.preview.id');
 
-Route::get('/cart/summary/{record}', CartSummary::class)->name('cart.summary');
+Route::get('/cart/summary', CartShow::class)->name('cart.summary');
 Route::get('/payment/{record}', PaymentPage::class)->name('payment.page');
 /* Route::post('/payment/stripe', [PaymentController::class, 'stripePayment'])->name('stripe.payment');
 Route::get('/order/finalize', [PaymentController::class, 'finalizeOrder'])->name('order.finalize'); */

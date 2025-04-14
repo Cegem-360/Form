@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Session;
 
 class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 {
@@ -370,18 +371,28 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         Mail::to($data['email'])->send(new QuotationSendedToUser($record));
     }
 
-    public function order()
+    public function orderAction(): SubbmitButon
     {
-        $data = $this->form->getState();
-        $record = RequestQuote::create($data);
-        Notification::make()
-            ->title('Quotation created and order placed')
-            ->success()
-            ->send();
-        $this->form->model($record)->saveRelationships();
 
         // Redirect to Cart summary page
-        return redirect()->route('cart.summary', ['record' => $record->id]);
+        // return redirect()->route('cart.summary')->with(['requestQuote' => $record->id]);
+
+        return SubbmitButon::make('order')
+            ->action(function () {
+                $data = $this->form->getState();
+                $record = RequestQuote::create($data);
+
+                Notification::make()
+                    ->title('Quotation created and order placed')
+                    ->success()
+                    ->send();
+
+                $this->form->model($record)->saveRelationships();
+                // save to session
+                Session::put('requestQuote', $record->id);
+                $this->redirect(route('cart.summary'), true);
+            })
+            ->label(__('Order'));
     }
 
     public function registerAndOrder()
@@ -413,7 +424,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         $this->form->model($record)->saveRelationships();
 
         // Redirect to Cart summary page
-        return redirect()->route('cart.summary', ['record' => $record->id]);
+        $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
     }
 
     public function render(): View

@@ -7,12 +7,9 @@
         $data['phone'] &&
         $data['consent']
 )
-    <x-filament::button wire:click="order" type="button" class="mt-4" color="primary" icon="heroicon-o-paper-airplane"
-        size="lg" spinner="submit" spinner-color="white">
-        {{ __('Order') }}
-    </x-filament::button>
-
+    {{ $this->orderAction }}
     @guest
+
         <x-filament::button wire:click="registerAndOrder" type="button" class="mt-4" color="primary"
             icon="heroicon-s-user-plus" size="lg" spinner="submit" spinner-color="white">
             {{ __('Register And Order') }}
