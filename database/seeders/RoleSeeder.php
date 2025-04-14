@@ -17,6 +17,7 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             'super-admin', // all modules
+
             'admin', // all modules, but not all permissions like a Boss
 
             'guest', // Quotation(s)->own module(edit only status),  Normal register but not order (can send and then cant edit)

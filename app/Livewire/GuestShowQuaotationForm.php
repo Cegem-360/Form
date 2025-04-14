@@ -9,7 +9,7 @@ use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
-use Filament\Actions\Action as SubbmitButon;
+use Filament\Actions\Action as SubbmitButton;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions;
@@ -38,9 +38,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Session;
 
 class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 {
@@ -90,16 +90,142 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
             ->model(RequestQuote::class);
     }
 
-    public function subbmitButtonAction(): SubbmitButon
+    public function subbmitButtonAction(): SubbmitButton
     {
         $form = $this->data;
 
-        return SubbmitButon::make('submit')
-            ->view('filament.forms.components.quotation-submit-button', ['data' => $form])
-            ->label(__('Submit'))
-            ->action('submitAndSendEmail')
+        return SubbmitButton::make('submit')
+            ->view('filament.forms.components.quotation-submit-button', ['data' => $form]);
+    }
+
+    public function orderAction(): SubbmitButton
+    {
+        return SubbmitButton::make('order')
+            ->action(function (): void {
+                $data = $this->form->getState();
+                $record = RequestQuote::create($data);
+
+                Notification::make()
+                    ->title('Quotation created and order placed')
+                    ->success()
+                    ->send();
+
+                $this->form->model($record)->saveRelationships();
+                // save to session
+                Session::put('requestQuote', $record->id);
+                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]), true);
+            })
+            ->label(__('Order'))
+            ->color('primary')
+            ->icon('heroicon-o-paper-airplane');
+    }
+
+    public function orderAndRegisterAction(): SubbmitButton
+    {
+        return SubbmitButton::make('orderAndRegister')
+            ->action(function (array $data): void {
+                $fillForRegister = $data;
+                $data = $this->form->getState();
+                // user create and login and navigate to guestViewQuotationOrder
+
+                /**
+                 * TODO - add email verification
+                 * TODO - add permissions and roles
+                 * TODO - add email verification
+                 */
+                $user = User::create([
+                    'name' => $fillForRegister['name'],
+                    'email' => $fillForRegister['email'],
+                    'password' => Hash::make('password'), // or use a random password
+                ]);
+
+                event(new Registered($user));
+                Auth::loginUsingId($user->id, true);
+                $record = RequestQuote::create($data);
+
+                Notification::make()
+                    ->title('Quotation created and order placed')
+                    ->success()
+                    ->send();
+
+                $this->form->model($record)->saveRelationships();
+
+                // Redirect to Cart summary page
+                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]), true);
+            })
+            ->requiresConfirmation()
+            ->modalHeading(__('Register'))
+            ->modalDescription(__('Are you sure you want to register and order?'))
+            ->modalSubmitActionLabel(__('Register and Order'))
+            ->modalCancelActionLabel(__('Cancel'))
+            ->modalAlignment(Alignment::Center)
+            ->fillForm(function (): array {
+                $data = $this->form->getState();
+                if (User::where('email', $data['email'])->exists()) {
+                    Notification::make()
+                        ->title('Email already registered')
+                        ->body('This email is already registered. Please use a different email address.')
+                        ->danger()
+                        ->send();
+
+                    return [
+                        'name' => $data['name'],
+                        'phone' => $data['phone'],
+                    ];
+                }
+
+                return [
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                ];
+            })
+            ->form(
+                [
+                    TextInput::make('name')
+                        ->label('Full Name')
+                        ->live()
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('email')
+                        ->email()
+                        ->unique(User::class, 'email')
+                        ->live()
+                        ->required()
+                        ->maxLength(255),
+                    TextInput::make('phone')
+                        ->tel()
+                        ->live()
+                        ->required()
+                        ->maxLength(255),
+                ]
+            )
+            ->label(__('Order and Register'))
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
+
+    }
+
+    public function sendEmailToMeAction(): SubbmitButton
+    {
+        return SubbmitButton::make('sendEmailToMeAction')
+            ->action(function (): void {
+                $data = $this->form->getState();
+                $record = RequestQuote::create($data);
+                Notification::make()
+                    ->title('Quotation created and email sent')
+                    ->success()
+                    ->send();
+                $this->form->model($record)->saveRelationships();
+
+                // TODO - send email with quotation
+
+                Mail::to($data['email'])->send(new QuotationSendedToUser($record));
+                $this->redirect(route('email-sended-to-user'), true);
+            })
+            ->label(__('Send email to me'))
+            ->color('success')
+            ->icon('heroicon-o-envelope');
     }
 
     private function getClientInformationSchema(): Step
@@ -180,7 +306,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     Repeater::make('websites')->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(2)->columnSpan(1)->schema([
-                                TextInput::make('name')->required(),
+                                TextInput::make('name')->required()->distinct(),
                                 ToggleButtons::make('required')
                                     ->live()
                                     ->options([
@@ -218,7 +344,10 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ),
                             ]),
                         ]),
-                    ])
+                    ])->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                        ->minItems(1)
+                        ->maxItems(30)
+                        ->collapsible()
                         ->defaultItems(10)
                         ->default([
                             [
@@ -331,100 +460,12 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 Toggle::make('consent')
                     ->live()
                     ->default(false)
-                    ->label('I agree to the terms and conditions')
+                    ->label('I agree to the terms and conditions(note:later has link)')
                     ->required()
                     ->helperText('You must agree to the terms and conditions to proceed.')
                     ->rules(['accepted']),
             ]),
         ]);
-    }
-
-    /*     private function getMultilangualInformationSchema(): array
-        {
-            return [
-                Grid::make(1)->schema([
-                    Toggle::make('is_multilangual')
-                        ->label('Is it a multilingual website?')
-                        ->default(false)
-                        ->reactive(),
-                    Select::make('languages')
-                        ->options(WebsiteLanguage::all()->pluck('name', 'id'))
-                        ->multiple()
-                        ->preload()->searchable(),
-                ]),
-            ];
-        } */
-    public function submitAndSendEmail(): void
-    {
-        $data = $this->form->getState();
-        $validatedData = $this->validate();
-        // dump($validatedData);
-        $record = RequestQuote::create($data);
-        Notification::make()
-            ->title('Quotation created and email sent')
-            ->success()
-            ->send();
-        $this->form->model($record)->saveRelationships();
-
-        // TODO - send email with quotation
-
-        Mail::to($data['email'])->send(new QuotationSendedToUser($record));
-    }
-
-    public function orderAction(): SubbmitButon
-    {
-
-        // Redirect to Cart summary page
-        // return redirect()->route('cart.summary')->with(['requestQuote' => $record->id]);
-
-        return SubbmitButon::make('order')
-            ->action(function () {
-                $data = $this->form->getState();
-                $record = RequestQuote::create($data);
-
-                Notification::make()
-                    ->title('Quotation created and order placed')
-                    ->success()
-                    ->send();
-
-                $this->form->model($record)->saveRelationships();
-                // save to session
-                Session::put('requestQuote', $record->id);
-                $this->redirect(route('cart.summary'), true);
-            })
-            ->label(__('Order'));
-    }
-
-    public function registerAndOrder()
-    {
-        $data = $this->form->getState();
-
-        // user create and login and navigate to guestViewQuotationOrder
-
-        /**
-         * TODO - add email verification
-         * TODO - add permissions and roles
-         * TODO - add email verification
-         */
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make('password'), // or use a random password
-        ]);
-
-        event(new Registered($user));
-        Auth::loginUsingId($user->id, true);
-        $record = RequestQuote::create($data);
-
-        Notification::make()
-            ->title('Quotation created and order placed')
-            ->success()
-            ->send();
-
-        $this->form->model($record)->saveRelationships();
-
-        // Redirect to Cart summary page
-        $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
     }
 
     public function render(): View

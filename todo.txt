@@ -1,0 +1,62 @@
+# TODO List for Form
+
+    ## Invoice
+    - [ ] Create invoice template
+    - [ ] Add customer details section
+    - [ ] Implement tax calculation
+    - [ ] Test invoice generation
+
+    ## Order
+    - [ ] Design order form
+    - [ ] Add product selection dropdown
+    - [ ] Implement order validation
+    - [ ] Test order submission process
+
+    ## Project Creation
+    - [ ] Define project creation workflow
+    - [ ] Add project metadata fields
+    - [ ] Implement project save functionality
+    - [ ] Test project creation end-to-end
+
+    ## Testing
+    - [ ] Write unit tests for invoice module
+    - [ ] Write unit tests for order module
+    - [ ] Write unit tests for project creation module
+    - [ ] Perform integration testing
+
+    ## Frontend Page 3 Actions
+    - [ ] Implement "Order -> Pay" functionality
+    - [ ] Implement "Order and Register -> Pay" functionality
+    - [ ] Add "Send Email to Self" feature without placing an order
+    - [ ] Test "Order -> Pay" action
+    - [ ] Test "Order and Register -> Pay" action
+    - [ ] Test "Send Email to Self" feature
+
+# Test Cases for TODO List
+
+    ## Frontend Page 3 Actions
+    - [ ] Test "Order -> Pay" functionality
+        - Verify that the "Order -> Pay" button is visible and clickable.
+        - Ensure that clicking the button transitions the user to the payment page.
+        - Validate that the correct order details are passed to the payment page.
+        - Simulate a successful payment and confirm the order status is updated.
+
+    - [ ] Test "Order and Register -> Pay" functionality
+        - Check that the "Order and Register -> Pay" button is displayed correctly.
+        - Confirm that clicking the button initiates both order creation and user registration.
+        - Validate that the user is redirected to the payment page with the correct details.
+        - Simulate a successful payment and verify that both the order and user account are created.
+
+    - [ ] Test "Send Email to Self" feature
+        - Ensure the "Send Email to Self" button is visible and functional.
+        - Verify that clicking the button opens an email input dialog.
+        - Test that entering a valid email address sends the email successfully.
+        - Confirm that no order is placed when using this feature.
+        - Validate error handling for invalid email addresses or network issues.
+
+# Permissions and Roles
+    - [ ] Define user roles and their permissions
+    - [ ] Implement role-based access control (RBAC)
+    - [ ] Add UI for managing roles and permissions
+    - [ ] Test role assignment functionality
+    - [ ] Validate permission enforcement across the application
