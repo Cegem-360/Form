@@ -11,6 +11,7 @@ use App\Models\SystemChatParameter;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Http;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,6 +50,13 @@ class DatabaseSeeder extends Seeder
             RequestQuoteSeeder::class,
             OrderSeeder::class,
             OrderItemSeeder::class,
+        ]);
+
+        Role::findByName('super-admin')->givePermissionTo([
+            'view-any User',
+            'create User',
+            'update User',
+            'delete User',
         ]);
 
     }

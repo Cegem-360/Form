@@ -543,6 +543,30 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string $stripe_product_id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\StripeProductFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereStripeProductId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereUpdatedAt($value)
+ */
+	class StripeProduct extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

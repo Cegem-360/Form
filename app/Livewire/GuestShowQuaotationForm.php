@@ -218,8 +218,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->send();
                 $this->form->model($record)->saveRelationships();
 
-                // TODO - send email with quotation
-
                 Mail::to($data['email'])->send(new QuotationSendedToUser($record));
                 $this->redirect(route('email-sended-to-user'), true);
             })

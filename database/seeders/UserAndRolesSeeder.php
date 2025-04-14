@@ -25,6 +25,7 @@ class UserAndRolesSeeder extends Seeder
             UserRolePermissionSeeder::class, */
 
         ]);
+        Artisan::call('permissions:sync');
 
         User::factory(10)->create();
 
@@ -43,5 +44,6 @@ class UserAndRolesSeeder extends Seeder
         ]);
 
         Artisan::call('permissions:sync');
+
     }
 }

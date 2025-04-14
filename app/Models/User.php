@@ -34,6 +34,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -62,7 +63,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '@admin.com');
+        return str_ends_with($this->email, '');
     }
 
     public function roles(): BelongsToMany
