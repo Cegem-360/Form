@@ -155,8 +155,8 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
             })
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
-            ->modalDescription(__('Are you sure you want to register and order?'))
-            ->modalSubmitActionLabel(__('Register and Order'))
+            ->modalDescription(__('Are you sure you want to register?'))
+            ->modalSubmitActionLabel(__('Register'))
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {

@@ -57,6 +57,10 @@
     "No": "Nem",
     "Website graphic": "Weboldal grafika",
     "Add Website": "Weboldal hozzáadása",
-    "Submit": "Küldés"
+    "Submit": "Küldés",
+    "Send email to me": "Magamnak küldés",
+    "Register": "Regisztráció",
+    "Cancel": "Mégse",
+    "Are you sure you want to register?": "Biztos vagy benne, hogy regisztrálni szeretnél?"
 
 }
