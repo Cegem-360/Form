@@ -20,9 +20,9 @@ class RoleSeeder extends Seeder
 
             'admin', // all modules, but not all permissions like a Boss
 
-            'guest', // Quotation(s)->own module(edit only status),  Normal register but not order (can send and then cant edit)
+            'guest', // Quotation(s)->own module(edit only status),  Normal register but not ordered yet (can send and then cant edit) no project
 
-            'user', // Quotation(s)->own module, Invoice(s)->own module, Payment(s)->own module,
+            'user', // Quotation(s)->own module, Invoice(s)->own module, Payment(s)->own module, Project->own
 
             'project-manager', // quotation module, ?invoice module, ?payment module, Project(s) module, can view all, can edit/view all
 

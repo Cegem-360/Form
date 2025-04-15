@@ -60,3 +60,11 @@
     - [ ] Add UI for managing roles and permissions
     - [ ] Test role assignment functionality
     - [ ] Validate permission enforcement across the application
+
+
+
+    #Request quote kedvezmény
+
+
+    #Project
+        -[ ] project indító gomb a szerkesztés oldalon

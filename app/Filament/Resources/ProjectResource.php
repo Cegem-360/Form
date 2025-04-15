@@ -4,13 +4,19 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProjectStatus;
+use App\Enums\UserRole;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
-use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectResource extends Resource
 {
@@ -24,28 +30,32 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Select::make('user_id')
+                    ->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN]))
+                    ->relationship('user', 'name'),
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('start_date'),
-                Forms\Components\DatePicker::make('end_date'),
-                Forms\Components\TextInput::make('status')
+                DatePicker::make('start_date'),
+                DatePicker::make('end_date'),
+                Select::make('status')
+                    ->options(ProjectStatus::class)
                     ->required(),
-                Forms\Components\Textarea::make('project_goal')
+                RichEditor::make('project_goal')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('original_project_goals'),
-                Forms\Components\TextInput::make('completed_project_elements'),
-                Forms\Components\TextInput::make('project_not_contained_elements'),
-                Forms\Components\TextInput::make('completed_elements'),
-                Forms\Components\TextInput::make('solved_problems'),
-                Forms\Components\TextInput::make('garanty')
+                TextInput::make('original_project_goals'),
+                TextInput::make('completed_project_elements'),
+                TextInput::make('project_not_contained_elements'),
+                TextInput::make('completed_elements'),
+                TextInput::make('solved_problems'),
+                TextInput::make('garanty')
                     ->numeric(),
-                Forms\Components\DatePicker::make('garanty_end_date'),
-                Forms\Components\TextInput::make('contact')
+                DatePicker::make('garanty_end_date'),
+                Select::make('contact')
+                    ->relationship('contact', 'name'),
+                TextInput::make('support_pack_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('support_pack_id')
-                    ->numeric(),
-                Forms\Components\TextInput::make('contact_channel_id')
+                TextInput::make('contact_channel_id')
                     ->numeric(),
             ]);
     }

@@ -63,6 +63,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int|null $user_id
  * @property int|null $domain_id
  * @property int|null $project_id
  * @property string|null $token
@@ -179,6 +180,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereToneOfWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUseVideoOrAnimation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereVisualFeeling($value)
  */
 	class FormQuestion extends \Eloquent {}
@@ -404,10 +406,11 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int|null $user_id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $start_date
  * @property \Illuminate\Support\Carbon|null $end_date
- * @property ProjectStatus $status
+ * @property \App\Enums\ProjectStatus $status
  * @property string|null $project_goal
  * @property array<array-key, mixed>|null $original_project_goals
  * @property array<array-key, mixed>|null $completed_project_elements
@@ -419,6 +422,8 @@ namespace App\Models{
  * @property \App\Models\User|null $contact
  * @property int|null $support_pack_id
  * @property int|null $contact_channel_id
+ * @property int|null $created_by
+ * @property int|null $updated_by
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\ContactChannel|null $contactChannel
@@ -426,7 +431,9 @@ namespace App\Models{
  * @property-read int|null $form_questions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Idea> $ideas
  * @property-read int|null $ideas_count
+ * @property-read \App\Models\RequestQuote|null $requestQuote
  * @property-read \App\Models\SupportPack|null $supportPack
+ * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ProjectFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newQuery()
@@ -436,6 +443,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContact($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContactChannelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereEndDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereGaranty($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereGarantyEndDate($value)
@@ -449,11 +457,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSupportPackId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedAt($value)
- * @mixin \Eloquent
- * @property int|null $created_by
- * @property int|null $updated_by
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCreatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUserId($value)
  */
 	class Project extends \Eloquent {}
 }
@@ -463,6 +468,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int|null $user_id
  * @property string|null $quotation_name
  * @property string|null $name
  * @property string|null $email
@@ -505,6 +511,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereProjectDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereQuotationName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteEngine($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsites($value)

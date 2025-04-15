@@ -21,7 +21,7 @@ class FormQuestion extends Model
     protected $fillable = [
 
         // base informations
-
+        'user_id',
         'domain_id',
         'project_id',
         'token',

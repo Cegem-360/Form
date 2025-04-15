@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources;
 
 use App\Enums\ProjectStatus;
+use App\Enums\UserRole;
 use App\Filament\Resources\FormQuestionResource\Pages;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
@@ -26,6 +27,7 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
 
@@ -41,17 +43,22 @@ class FormQuestionResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('project_id')
-                    ->relationship('project', 'name')
-                    ->createOptionForm([
-                        TextInput::make('name')
-                            ->required(),
-                        ToggleButtons::make('status')
-                            ->options(ProjectStatus::class)->required(),
-                    ])
-                    ->searchable()
-                    ->preload()
-                    ->columns(4),
+                Section::make('ProjectUser')->columns(2)->schema([
+                    Select::make('project_id')
+                        ->relationship('project', 'name')
+                        ->createOptionForm([
+                            TextInput::make('name')
+                                ->required(),
+                            ToggleButtons::make('status')
+                                ->options(ProjectStatus::class)->required(),
+                        ])
+                        ->searchable()
+                        ->preload()
+                        ->columns(2),
+                    Select::make('user_id')
+                        ->relationship('user', 'name'),
+                ])->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN])),
+
                 Split::make([
                     Section::make('website')->schema([
                         Section::make('Company basic informations')

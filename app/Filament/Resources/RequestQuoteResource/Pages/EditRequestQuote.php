@@ -46,6 +46,7 @@ class EditRequestQuote extends EditRecord
                     ->action(function (array $data, RequestQuote $record) {
 
                         $project = Project::create([
+                            'user_id' => $record->user_id,
                             'name' => $data['project_name'],
                             'start_date' => now(),
                             'end_date' => now()->addDays(30), // Example: 30 days from now

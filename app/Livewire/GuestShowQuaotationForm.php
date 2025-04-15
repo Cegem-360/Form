@@ -122,7 +122,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 
     public function orderAndRegisterAction(): SubbmitButton
     {
-        return SubbmitButton::make('orderAndRegister')
+        return SubbmitButton::make('Register')
             ->action(function (array $data): void {
                 $fillForRegister = $data;
                 $data = $this->form->getState();
@@ -138,7 +138,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     'email' => $fillForRegister['email'],
                     'password' => Hash::make('password'), // or use a random password
                 ]);
-
+                $user->assignRole('guest');
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $record = RequestQuote::create($data);
@@ -179,28 +179,25 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     'email' => $data['email'],
                     'phone' => $data['phone'],
                 ];
-            })
-            ->form(
-                [
-                    TextInput::make('name')
-                        ->label('Full Name')
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('email')
-                        ->email()
-                        ->unique(User::class, 'email')
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('phone')
-                        ->tel()
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                ]
-            )
-            ->label(__('Order and Register'))
+            })->form([
+                TextInput::make('name')
+                    ->label('Full Name')
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('email')
+                    ->email()
+                    ->unique(User::class, 'email')
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('phone')
+                    ->tel()
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+            ])
+            ->label(__('Register'))
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
 
@@ -328,7 +325,20 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->afterStateUpdated(function ($state, Set $set) {
                                         $set('image', $state);
                                     })
-                                    ->required(),
+                                    ->required()
+                                    ->columnSpanFull(),
+                                RichEditor::make('description')
+                                    ->label('Részletes leírás')
+                                    ->required(fn ($get) => $get('required') === 'yes')
+                                    ->maxLength(65535)
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                        'codeBlock',
+                                        'italic',
+                                        'strikeThrough',
+                                        'underline',
+                                    ])
+                                    ->columnSpanFull(),
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([
