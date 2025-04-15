@@ -305,17 +305,17 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                 ToggleButtons::make('required')
                                     ->live()
                                     ->options([
-                                        'yes' => 'Yes',
-                                        'no' => 'No',
+                                        '1' => 'Yes',
+                                        '0' => 'No',
                                     ])
                                     ->inline()
                                     ->required(),
                                 ToggleButtons::make('length')
                                     ->live()
-                                    ->visible(fn ($get) => $get('required') === 'yes')
+                                    ->visible(fn ($get) => $get('required'))
                                     ->label('Length')
                                     ->default('medium')
-                                    ->required(fn ($get) => $get('required') === 'yes')
+                                    ->required(fn ($get) => $get('required'))
                                     ->options([
                                         'short' => 'Short',
                                         'medium' => 'Medium',
@@ -329,7 +329,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->columnSpanFull(),
                                 RichEditor::make('description')
                                     ->label('Részletes leírás')
-                                    ->required(fn ($get) => $get('required') === 'yes')
+                                    ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
                                         'attachFiles',

@@ -33,6 +33,9 @@ class ProjectResource extends Resource
                 Select::make('user_id')
                     ->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN]))
                     ->relationship('user', 'name'),
+                Select::make('request_quote_id')
+                    ->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN]))
+                    ->relationship('requestQuote', 'name'),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),

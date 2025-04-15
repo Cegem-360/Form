@@ -18,7 +18,7 @@ require_once __DIR__ . '/auth.php';
 
 Route::get('/', function () {
     return redirect()->route('filament.admin.auth.login');
-});
+})->name('home');
 
 Route::get('/kerdoiv/{token?}', FormQuestionForm::class)->name('kerdoiv');
 

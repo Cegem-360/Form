@@ -35,7 +35,9 @@ class RequestQuoteFactory extends Factory
         foreach ($this->faker->words(3) as $word) {
             $websites[] = [
                 'name' => $word,
+                'required' => $this->faker->boolean(),
                 'length' => $this->faker->randomElement(['short', 'medium', 'long']),
+                'description' => $this->faker->randomHtml(),
             ];
         }
 

@@ -113,6 +113,14 @@ class RequestQuoteResource extends Resource
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(1)->columnSpan(1)->schema([
                                 TextInput::make('name')->required(),
+                                ToggleButtons::make('required')
+                                    ->live()
+                                    ->options([
+                                        '1' => 'Yes',
+                                        '0' => 'No',
+                                    ])
+                                    ->inline()
+                                    ->required(),
                                 ToggleButtons::make('length')
                                     ->live()
                                     ->options([
@@ -129,7 +137,17 @@ class RequestQuoteResource extends Resource
                                             default => null,
                                         });
                                     })
-                                    ->required(),
+                                    ->required(fn ($get) => $get('required')),
+                                RichEditor::make('description')
+                                    ->required(fn ($get) => $get('required'))
+                                    ->maxLength(65535)
+                                    ->disableToolbarButtons([
+                                        'attachFiles',
+                                        'codeBlock',
+                                        'italic',
+                                        'strikeThrough',
+                                        'underline',
+                                    ]),
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([

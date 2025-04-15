@@ -28,11 +28,18 @@ class EditProject extends EditRecord
                         // formquestion
                     ])
                     ->action(function (array $data, Project $record) {
-
+                        dump($record->requestQuote);
+                        $pages = collect($record->requestQuote->websites)->map(function ($page) {
+                            return [
+                                'description' => $page['description'],
+                                'name' => $page['name'],
+                            ];
+                        })->toArray();
                         $formQuestion = FormQuestion::create([
                             'project_id' => $record->id,
                             'user_id' => $record->user_id,
-                            'company_name' => $record->requ,
+                            'company_name' => $record->requestQuote->company_name,
+                            'main_pages' => $pages,
                         ]);
 
                         return redirect()->route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]);

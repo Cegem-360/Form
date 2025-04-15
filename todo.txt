@@ -1,5 +1,7 @@
 # TODO List for Form
 
+    [ ] connect all background data request quote [ ] -> project [ ] -> form question [ ]
+
     ## Invoice
     - [ ] Create invoice template
     - [ ] Add customer details section
@@ -13,10 +15,10 @@
     - [ ] Test order submission process
 
     ## Project Creation
-    - [ ] Define project creation workflow
-    - [ ] Add project metadata fields
-    - [ ] Implement project save functionality
-    - [ ] Test project creation end-to-end
+    - [x] Define project creation workflow
+    - [x] Add project metadata fields
+    - [x] Implement project save functionality
+    - [x] Test project creation end-to-end
 
     ## Testing
     - [ ] Write unit tests for invoice module
@@ -25,12 +27,12 @@
     - [ ] Perform integration testing
 
     ## Frontend Page 3 Actions
-    - [ ] Implement "Order -> Pay" functionality
-    - [ ] Implement "Order and Register -> Pay" functionality
-    - [ ] Add "Send Email to Self" feature without placing an order
-    - [ ] Test "Order -> Pay" action
+    - [x] Implement "Order -> Pay" functionality
+    - [x] Implement "Order and Register -> Pay" functionality
+    - [x] Add "Send Email to Self" feature without placing an order
+    - [x] Test "Order -> Pay" action
     - [ ] Test "Order and Register -> Pay" action
-    - [ ] Test "Send Email to Self" feature
+    - [x] Test "Send Email to Self" feature
 
 # Test Cases for TODO List
 
@@ -55,11 +57,11 @@
         - Validate error handling for invalid email addresses or network issues.
 
 # Permissions and Roles
-    - [ ] Define user roles and their permissions
-    - [ ] Implement role-based access control (RBAC)
-    - [ ] Add UI for managing roles and permissions
-    - [ ] Test role assignment functionality
-    - [ ] Validate permission enforcement across the application
+    - [x] Define user roles and their permissions
+    - [x] Implement role-based access control (RBAC)
+    - [x] Add UI for managing roles and permissions
+    - [x] Test role assignment functionality
+    - [x] Validate permission enforcement across the application
 
 
 

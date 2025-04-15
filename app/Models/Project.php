@@ -18,6 +18,7 @@ class Project extends Model
     protected $fillable = [
         // 1
         'user_id',
+        'request_quote_id',
         'name',
         'contact',
         'start_date',
