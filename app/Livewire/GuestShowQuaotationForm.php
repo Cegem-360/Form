@@ -204,20 +204,20 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->preload()
                     ->searchable(),
                 TextInput::make('company_name')
-                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
-                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_vat_number')
-                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_registration_number')
-                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('name')
                     ->label('Full Name')
@@ -337,7 +337,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         return Step::make('Website Informations')
             ->schema([
                 Grid::make(1)->schema([
-                    Repeater::make('websites')->schema([
+                    Repeater::make('websites')->deletable(false)->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(2)->columnSpan(1)->schema([
                                 TextInput::make('name')->required()->distinct(),
@@ -369,7 +369,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                 RichEditor::make('description')
                                     ->visible(fn ($get) => $get('required'))
                                     ->label('Részletes leírás')
-                                    ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
                                         'attachFiles',
@@ -501,13 +500,11 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     $set('languages', []);
                 })
                 ->searchable(),
-            Select::make('languages')
+            CheckboxList::make('languages')
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->options(function (Get $get) {
                     return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
                 })
-                ->multiple()
-                ->preload()
                 ->searchable(),
         ]);
     }

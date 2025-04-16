@@ -6,6 +6,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\PaymentController;
 use App\Livewire\Cart\CartShow;
+use App\Livewire\CheckoutSuccess;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Livewire\PaymentPage;
@@ -59,7 +60,7 @@ Route::get('/checkout', function (Request $request) {
         'cancel_url' => route('checkout-cancel'),
     ]);
 })->name('checkout');
-Route::view('/checkout/success', 'livewire.success')->name('checkout-success');
+Route::get('/checkout/success', CheckoutSuccess::class)->name('checkout-success');
 Route::view('/checkout/cancel', 'livewire.cancel')->name('checkout-cancel');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');
