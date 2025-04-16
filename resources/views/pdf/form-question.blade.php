@@ -67,14 +67,14 @@
             <li><span class="label">Have Existing Design:</span> {{ $formQuestion->have_exist_design }}</li>
             <li><span class="label">Inspire Websites:</span>
                 <ul>
-                    @foreach ($formQuestion->inspire_websites as $website)
+                    @foreach ($formQuestion->inspire_websites ?? [] as $website)
                         <li>{{ $website }}</li>
                     @endforeach
                 </ul>
             </li>
             <li><span class="label">Banned Elements:</span>
                 <ul>
-                    @foreach ($formQuestion->banned_elements as $element)
+                    @foreach ($formQuestion->banned_elements ?? [] as $element)
                         <li>{{ $element }}</li>
                     @endforeach
                 </ul>
@@ -83,14 +83,14 @@
             <li><span class="label">Secondary Color:</span> {{ $formQuestion->secondary_color }}</li>
             <li><span class="label">Additional Colors:</span>
                 <ul>
-                    @foreach ($formQuestion->additional_colors as $color)
+                    @foreach ($formQuestion->additional_colors ?? [] as $color)
                         <li>{{ $color }}</li>
                     @endforeach
                 </ul>
             </li>
             <li><span class="label">Preferred Font Types:</span>
                 <ul>
-                    @foreach ($formQuestion->prefered_font_types as $font)
+                    @foreach ($formQuestion->prefered_font_types ?? [] as $font)
                         <li>{{ $font }}</li>
                     @endforeach
                 </ul>
@@ -98,17 +98,17 @@
             <li><span class="label">Use Video or Animation:</span> {{ $formQuestion->use_video_or_animation }}</li>
             <li><span class="label">Own Company Videos:</span>
                 <ul>
-                    @foreach ($formQuestion->own_company_videos as $video)
+                    @foreach ($formQuestion->own_company_videos ?? [] as $video)
                         <li>{{ $video }}</li>
                     @endforeach
                 </ul>
             </li>
             <li><span class="label">Main Pages:</span>
                 <ul>
-                    @foreach ($formQuestion->main_pages as $pages)
+                    @foreach ($formQuestion->main_pages ?? [] as $pages)
                         <li>
                             <ul>
-                                @foreach ($pages as $page)
+                                @foreach ($pages ?? [] as $page)
                                     <li>{{ $page }}</li>
                                 @endforeach
                             </ul>
@@ -120,7 +120,7 @@
             <li><span class="label">Have Product Catalog:</span> {{ $formQuestion->have_product_catalog }}</li>
             <li><span class="label">Product Catalog:</span>
                 <ul>
-                    @foreach ($formQuestion->product_catalog as $catalog)
+                    @foreach ($formQuestion->product_catalog ?? [] as $catalog)
                         <li>{{ $catalog }}</li>
                     @endforeach
                 </ul>
@@ -137,7 +137,7 @@
             <li><span class="label">Products CSV File:</span> {{ $formQuestion->products_csv_file }}</li>
             <li><span class="label">Highlighted Categories:</span>
                 <ul>
-                    @foreach ($formQuestion->highlighted_categories as $category)
+                    @foreach ($formQuestion->highlighted_categories ?? [] as $category)
                         <li>{{ $category }}</li>
                     @endforeach
                 </ul>
@@ -147,7 +147,7 @@
             <li><span class="label">Shipping Address:</span> {{ $formQuestion->shipping_address }}</li>
             <li><span class="label">Parcel Points:</span>
                 <ul>
-                    @foreach ($formQuestion->parcel_points as $point)
+                    @foreach ($formQuestion->parcel_points ?? [] as $point)
                         <li>{{ $point }}</li>
                     @endforeach
                 </ul>
@@ -156,14 +156,14 @@
             </li>
             <li><span class="label">Contracted Accountants:</span>
                 <ul>
-                    @foreach ($formQuestion->contracted_accountants as $accountant)
+                    @foreach ($formQuestion->contracted_accountants ?? [] as $accountant)
                         <li>{{ $accountant }}</li>
                     @endforeach
                 </ul>
             </li>
             <li><span class="label">Payment Methods:</span>
                 <ul>
-                    @foreach ($formQuestion->payment_methods as $method)
+                    @foreach ($formQuestion->payment_methods ?? [] as $method)
                         <li>{{ $method }}</li>
                     @endforeach
                 </ul>
@@ -172,7 +172,7 @@
                 {{ $formQuestion->have_contracted_online_bank_card_payment }}</li>
             <li><span class="label">Online Bank Card Payment Options:</span>
                 <ul>
-                    @foreach ($formQuestion->online_bank_card_payment_options as $option)
+                    @foreach ($formQuestion->online_bank_card_payment_options ?? [] as $option)
                         <li>{{ $option }}</li>
                     @endforeach
                 </ul>

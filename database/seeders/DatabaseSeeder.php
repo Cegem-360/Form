@@ -77,15 +77,9 @@ class DatabaseSeeder extends Seeder
         });
 
         Role::findByName('guest')->givePermissionTo([
-            'view-any Project',
-            'view Project',
-            'create Project',
-            'update Project',
             'view-any RequestQuote',
             'view RequestQuote',
             'create RequestQuote',
-            'update RequestQuote',
-
         ]);
 
         $superAdmin = User::factory()->create([

@@ -14,6 +14,8 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -136,6 +138,11 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 $user = User::create([
                     'name' => $fillForRegister['name'],
                     'email' => $fillForRegister['email'],
+                    'phone' => $fillForRegister['phone'],
+                    'company_name' => $fillForRegister['company_name'] ?? null,
+                    'company_address' => $fillForRegister['company_address'] ?? null,
+                    'company_vat_number' => $fillForRegister['company_vat_number'] ?? null,
+                    'company_registration_number' => $fillForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make('password'), // or use a random password
                 ]);
                 $user->assignRole('guest');
@@ -171,6 +178,11 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     return [
                         'name' => $data['name'],
                         'phone' => $data['phone'],
+                        'company_name' => $data['company_name'] ?? null,
+                        'company_address' => $data['company_address'] ?? null,
+                        'company_vat_number' => $data['company_vat_number'] ?? null,
+                        'company_registration_number' => $data['company_registration_number'] ?? null,
+                        'client_type' => $data['client_type'] ?? null,
                     ];
                 }
 
@@ -178,8 +190,35 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'phone' => $data['phone'],
+                    'company_name' => $data['company_name'] ?? null,
+                    'company_address' => $data['company_address'] ?? null,
+                    'company_vat_number' => $data['company_vat_number'] ?? null,
+                    'company_registration_number' => $data['company_registration_number'] ?? null,
+                    'client_type' => $data['client_type'] ?? null,
                 ];
             })->form([
+                Select::make('client_type')
+                    ->live()
+                    ->required()
+                    ->options(ClientType::class)
+                    ->preload()
+                    ->searchable(),
+                TextInput::make('company_name')
+                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
+                TextInput::make('company_address')
+                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
+                TextInput::make('company_vat_number')
+                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
+                TextInput::make('company_registration_number')
+                    ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
                 TextInput::make('name')
                     ->label('Full Name')
                     ->live()
@@ -328,6 +367,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->required()
                                     ->columnSpanFull(),
                                 RichEditor::make('description')
+                                    ->visible(fn ($get) => $get('required'))
                                     ->label('Részletes leírás')
                                     ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
@@ -361,47 +401,47 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                             [
                                 'name' => 'Főoldal',
                                 'length' => 'medium',
-                                'required' => 'yes',
+                                'required' => '1',
                             ],
                             [
                                 'name' => 'Kapcsolati',
                                 'length' => 'medium',
-                                'required' => 'yes',
+                                'required' => '1',
                             ],
                             [
                                 'name' => 'Rólunk',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Szolgáltatások',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Blog',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Gyakori kérdések',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Adatvédelmi nyilatkozat',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Általános szerződési feltételek',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
                             [
                                 'name' => 'Webshop',
                                 'length' => 'medium',
-                                'required' => 'no',
+                                'required' => '0',
                             ],
 
                         ])
@@ -444,17 +484,28 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         }),
                 ])->label('Do you have a website graphic?'),
             ]),
-            Select::make('request_quote_functionalities')
+            CheckboxList::make('request_quote_functionalities')
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'));
                 })
                 ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}")
-                ->multiple()
-                ->preload()
                 ->disabled(fn ($get) => $get('website_type_id') === null),
-            Toggle::make('is_multilangual'),
-            Select::make('languages')
+            Toggle::make('is_multilangual')->live(),
+            Select::make('default_language')
+                ->live()
+                ->visible(fn ($get) => $get('is_multilangual'))
+                ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
                 ->options(WebsiteLanguage::all()->pluck('name', 'id'))
+                ->preload()
+                ->afterStateUpdated(function (Set $set) {
+                    $set('languages', []);
+                })
+                ->searchable(),
+            Select::make('languages')
+                ->visible(fn ($get) => $get('is_multilangual'))
+                ->options(function (Get $get) {
+                    return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
+                })
                 ->multiple()
                 ->preload()
                 ->searchable(),
@@ -465,12 +516,19 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
     {
         return Step::make('Consent')->schema([
             Grid::make(1)->schema([
-                Toggle::make('consent')
+                Checkbox::make('consent')
                     ->live()
                     ->default(false)
                     ->label('I agree to the terms and conditions(note:later has link)')
                     ->required()
                     ->helperText('You must agree to the terms and conditions to proceed.')
+                    ->rules(['accepted']),
+                Checkbox::make('privacy_policy')
+                    ->live()
+                    ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
+                    ->default(false)
+                    ->helperText('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.')
+                    ->required()
                     ->rules(['accepted']),
             ]),
         ]);

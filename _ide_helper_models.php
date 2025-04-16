@@ -407,6 +407,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property int|null $user_id
+ * @property int|null $request_quote_id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $start_date
  * @property \Illuminate\Support\Carbon|null $end_date
@@ -452,6 +453,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOriginalProjectGoals($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectGoal($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectNotContainedElements($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereRequestQuoteId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereSolvedProblems($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereStatus($value)
