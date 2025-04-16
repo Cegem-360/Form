@@ -80,7 +80,9 @@ class CartShow extends Component implements HasActions, HasForms
                         'password' => Hash::make('password'),
                         'email_verified_at' => now(),
                     ]);
+                    $user->assignRole('user');
                     Auth::login($user);
+
                 }
 
                 return Auth::user()->checkoutCharge($this->total * 100, 'Árajánlat', 1, [
