@@ -112,6 +112,7 @@ class FormQuestionResource extends Resource
                                     ->maxFiles(1)
                                     ->downloadable(),
                                 Textarea::make('activities')// serveces etc. 1. page
+                                    ->label('Szolgáltatásaink')
                                     ->columnSpanFull(),
                             ])
                             ->description('The Company basic informations')
@@ -126,7 +127,7 @@ class FormQuestionResource extends Resource
                                 Toggle::make('is_exact_deadline')
                                     ->required(),
                                 DatePicker::make('deadline'),
-                                MarkdownEditor::make('formating_milestone')
+                                MarkdownEditor::make('formating_milestone')->label('Kiemelt értékeink')
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('attachments')
                                     ->fileAttachmentsVisibility('public'),
