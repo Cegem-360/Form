@@ -70,3 +70,7 @@
 
     #Project
         -[ ] project indító gomb a szerkesztés oldalon
+
+
+
+

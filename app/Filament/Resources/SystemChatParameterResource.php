@@ -30,6 +30,10 @@ class SystemChatParameterResource extends Resource
                 TextInput::make('form_field_name')
                     ->required()
                     ->maxLength(255),
+                TextInput::make('form_field_id')
+                    ->required()
+                    ->numeric()
+                    ->unique(ignoreRecord: true),
                 Select::make('role')->enum(OpenAIRole::class)->options(OpenAIRole::class)
                     ->required(),
                 RichEditor::make('content')

@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.8.1.
+ * Generated for Laravel 12.9.2.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -4372,6 +4372,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Cache\CacheManager $instance */
             return $instance->driver($driver);
+        }
+
+        /**
+         * Get a memoized cache driver instance.
+         *
+         * @param string|null $driver
+         * @return \Illuminate\Contracts\Cache\Repository 
+         * @static 
+         */
+        public static function memo($driver = null)
+        {
+            /** @var \Illuminate\Cache\CacheManager $instance */
+            return $instance->memo($driver);
         }
 
         /**
@@ -17940,7 +17953,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the schemas that belong to the connection.
          *
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, path: string|null, default: bool}>
          * @static 
          */
         public static function getSchemas()
@@ -17982,7 +17995,7 @@ namespace Illuminate\Support\Facades {
          * Get the tables that belong to the connection.
          *
          * @param string|string[]|null $schema
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, schema: string|null, schema_qualified_name: string, size: int|null, comment: string|null, collation: string|null, engine: string|null}>
          * @static 
          */
         public static function getTables($schema = null)
@@ -17997,7 +18010,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|string[]|null $schema
          * @param bool $schemaQualified
-         * @return array 
+         * @return list<string> 
          * @static 
          */
         public static function getTableListing($schema = null, $schemaQualified = true)
@@ -18011,7 +18024,7 @@ namespace Illuminate\Support\Facades {
          * Get the views that belong to the connection.
          *
          * @param string|string[]|null $schema
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, schema: string|null, schema_qualified_name: string, definition: string}>
          * @static 
          */
         public static function getViews($schema = null)
@@ -18025,7 +18038,7 @@ namespace Illuminate\Support\Facades {
          * Get the user-defined types that belong to the connection.
          *
          * @param string|string[]|null $schema
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, schema: string, type: string, type: string, category: string, implicit: bool}>
          * @static 
          */
         public static function getTypes($schema = null)
@@ -18054,7 +18067,7 @@ namespace Illuminate\Support\Facades {
          * Determine if the given table has given columns.
          *
          * @param string $table
-         * @param array $columns
+         * @param array<string> $columns
          * @return bool 
          * @static 
          */
@@ -18117,7 +18130,7 @@ namespace Illuminate\Support\Facades {
          * Get the column listing for a given table.
          *
          * @param string $table
-         * @return array 
+         * @return list<string> 
          * @static 
          */
         public static function getColumnListing($table)
@@ -18131,7 +18144,7 @@ namespace Illuminate\Support\Facades {
          * Get the columns for a given table.
          *
          * @param string $table
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, type: string, type_name: string, nullable: bool, default: mixed, auto_increment: bool, comment: string|null, generation: array{type: string, expression: string|null}|null}>
          * @static 
          */
         public static function getColumns($table)
@@ -18145,7 +18158,7 @@ namespace Illuminate\Support\Facades {
          * Get the indexes for a given table.
          *
          * @param string $table
-         * @return array 
+         * @return \Illuminate\Database\Schema\list<array{name: string, columns: list<string>, type: string, unique: bool, primary: bool}>
          * @static 
          */
         public static function getIndexes($table)
@@ -18159,7 +18172,7 @@ namespace Illuminate\Support\Facades {
          * Get the names of the indexes for a given table.
          *
          * @param string $table
-         * @return array 
+         * @return list<string> 
          * @static 
          */
         public static function getIndexListing($table)
@@ -18261,7 +18274,7 @@ namespace Illuminate\Support\Facades {
          * Drop columns from a table schema.
          *
          * @param string $table
-         * @param string|array $columns
+         * @param string|array<string> $columns
          * @return void 
          * @static 
          */

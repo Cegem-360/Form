@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'end-website',
             'url' => 'https://end-website.cegem360.hu/',
         ]);
-        Domain::factory(10)->create();
+        // Domain::factory(10)->create();
 
         $uxBlocks = Http::withBasicAuth('tothtamas', 'Ttoth2020!')->get('https://end-website.cegem360.hu/wp-json/wp/v2/ux-blocks?per_page=50');
 

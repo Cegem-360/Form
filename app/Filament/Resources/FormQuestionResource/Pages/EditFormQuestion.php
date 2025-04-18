@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Resources\FormQuestionResource\Pages;
 
 use App\Filament\Resources\FormQuestionResource;
+use App\Jobs\UpdateAllWebsiteDataByDomain;
 use App\Models\FormQuestion;
 use App\Models\SystemChatParameter;
 use Filament\Actions;
@@ -41,9 +42,10 @@ class EditFormQuestion extends EditRecord
                         ->options(SystemChatParameter::all()->pluck('form_field_name', 'form_field_id'))
                         ->multiple(),
                 ])
-                ->action(function (array $data): void {
+                ->action(function (array $data, FormQuestion $formQuestion): void {
                     // dispatc job with data
-                    dump($data);
+                    UpdateAllWebsiteDataByDomain::dispatch($formQuestion->domain_id);
+                    // $form = FormQuestion::find($data['fields']);
                 })
                 ->slideOver(),
             Action::make('Send all data to (ai) process')

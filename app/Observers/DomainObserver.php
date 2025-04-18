@@ -13,26 +13,28 @@ class DomainObserver
     {
         FormQuestion::create([
             'domain_id' => $domain->id,
+            'activities' => [
+                ['name' => 'Web development'],
+                ['name' => 'Web design'],
+                ['name' => 'SEO'],
+                ['name' => 'Content writing'],
+            ],
             'main_pages' => [
                 [
-                    'name' => 'Home',
-                    'description' => 'This is the Home page of the website',
+                    'name' => 'Főoldal',
+                    'description' => 'This is the Főoldal page of the website',
                 ],
                 [
-                    'name' => 'About',
-                    'description' => 'This is the About page of the website',
+                    'name' => 'Rólunk',
+                    'description' => 'This is the Rólunk page of the website',
                 ],
                 [
-                    'name' => 'Contact',
-                    'description' => 'This is the Contact page of the website',
+                    'name' => 'Kapcsolat',
+                    'description' => 'This is the Kapcsolat page of the website',
                 ],
                 [
-                    'name' => 'Services',
-                    'description' => 'This is the Services page of the website',
-                ],
-                [
-                    'name' => 'Blog',
-                    'description' => 'This is the Blog page of the website',
+                    'name' => 'Szolgáltatások',
+                    'description' => 'This is the Szolgáltatások page of the website',
                 ],
             ],
         ]);

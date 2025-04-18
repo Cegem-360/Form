@@ -111,9 +111,16 @@ class FormQuestionResource extends Resource
                                     ->maxSize(2048)
                                     ->maxFiles(1)
                                     ->downloadable(),
-                                Textarea::make('activities')// serveces etc. 1. page
-                                    ->label('Szolgáltatásaink')
-                                    ->columnSpanFull(),
+                                Repeater::make('activities')// serveces etc. 1. page
+                                    ->defaultItems(3)
+                                    ->collapsible()
+                                    ->collapsed()
+                                    ->reorderableWithDragAndDrop()
+                                    ->schema([
+                                        TextInput::make('name')
+                                            ->maxLength(255)
+                                            ->required(),
+                                    ]),
                             ])
                             ->description('The Company basic informations')
                             ->collapsible()
