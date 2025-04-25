@@ -9,7 +9,7 @@ use App\Models\FormQuestion;
 
 class DomainObserver
 {
-    public function created(Domain $domain)
+    public function created(Domain $domain): void
     {
         FormQuestion::create([
             'domain_id' => $domain->id,

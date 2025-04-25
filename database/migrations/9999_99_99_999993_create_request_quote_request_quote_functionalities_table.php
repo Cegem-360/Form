@@ -15,7 +15,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('request_quote_request_quote_functionality', function (Blueprint $table) {
+        Schema::create('request_quote_request_quote_functionality', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(RequestQuote::class);
             $table->foreignIdFor(RequestQuoteFunctionality::class);

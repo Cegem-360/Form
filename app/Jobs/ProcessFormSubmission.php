@@ -33,10 +33,8 @@ class ProcessFormSubmission implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             dump('Job processing... Form ID:' . $this->data->id);

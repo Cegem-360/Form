@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
-use Rector\TypeDeclaration\Rector\Property\TypedPropertyFromStrictConstructorRector;
 
 return RectorConfig::configure()
-    // register single rule
-    ->withRules([
-        TypedPropertyFromStrictConstructorRector::class,
-    ])
+
     ->withPaths([
         __DIR__ . '/app',
         __DIR__ . '/tests',

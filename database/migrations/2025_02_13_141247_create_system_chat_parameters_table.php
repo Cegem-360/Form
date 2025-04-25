@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('system_chat_parameters', function (Blueprint $table) {
+        Schema::create('system_chat_parameters', function (Blueprint $table): void {
             $table->id();
             $table->string('form_field_name')->nullable(false);
             $table->integer('form_field_id')->nullable(false);

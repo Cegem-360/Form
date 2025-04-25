@@ -49,7 +49,7 @@ class EditFormQuestion extends EditRecord
                 })
                 ->slideOver(),
             Action::make('Send all data to (ai) process')
-                ->action(function (FormQuestion $form) {})
+                ->action(function (FormQuestion $form): void {})
                 ->requiresConfirmation(),
 
         ];

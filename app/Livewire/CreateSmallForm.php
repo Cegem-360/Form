@@ -36,7 +36,7 @@ class CreateSmallForm extends Component implements HasForms
      *
      * @param [type] $token
      */
-    public function mount($token = null)
+    public function mount(?string $token = null): void
     {
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
@@ -65,7 +65,7 @@ class CreateSmallForm extends Component implements HasForms
                     Step::make('Theme')->translateLabel()
                         ->schema([
                             Toggle::make('have_exist_design')->translateLabel()->live(),
-                            FileUpload::make('design_files')->translateLabel()->multiple()->visible(fn (Get $get) => $get('have_exist_design')),
+                            FileUpload::make('design_files')->translateLabel()->multiple()->visible(fn (Get $get): mixed => $get('have_exist_design')),
                             Repeater::make('inspire_websites')->schema([
                                 TextInput::make('name')
                                     ->maxLength(255)->translateLabel(),
@@ -90,7 +90,7 @@ class CreateSmallForm extends Component implements HasForms
                             Toggle::make('use_video_or_animation')
                                 ->translateLabel(),
                             Toggle::make('have_product_catalog')->translateLabel()->live(),
-                            FileUpload::make('product_catalog')->translateLabel()->multiple()->visible(fn (Get $get) => $get('have_product_catalog')),
+                            FileUpload::make('product_catalog')->translateLabel()->multiple()->visible(fn (Get $get): mixed => $get('have_product_catalog')),
 
                         ]),
                     Step::make('Website page basics start')->translateLabel()

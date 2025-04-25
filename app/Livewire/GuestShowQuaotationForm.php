@@ -204,20 +204,20 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->preload()
                     ->searchable(),
                 TextInput::make('company_name')
-                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
-                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_vat_number')
-                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_registration_number')
-                    ->visible(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get) => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('name')
                     ->label('Full Name')
@@ -290,26 +290,26 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->preload()
                         ->searchable(),
                     TextInput::make('company_name')
-                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_address')
-                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_vat_number')
-                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_contact_name')
-                        ->visible(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get) => $get('client_type') === ClientType::COMPANY->value)
+                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->live()
                         ->required()
                         ->relationship('websiteType', 'name')
-                        ->afterStateUpdated(function (Set $set) {
+                        ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
                         ->preload(),
@@ -361,7 +361,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                         'large' => 'Large',
                                     ])
                                     ->inline()
-                                    ->afterStateUpdated(function ($state, Set $set) {
+                                    ->afterStateUpdated(function ($state, Set $set): void {
                                         $set('image', $state);
                                     })
                                     ->required()
@@ -385,7 +385,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->view('filament.forms.components.image')
                                     ->viewData(
                                         [
-                                            'image' => fn (Get $get) => $get('image'), // gets the image from the state
+                                            'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
                                             'show_image' => true, // hides the image
                                         ]
                                     ),
@@ -459,7 +459,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->disabled(),
                 Actions::make([
                     Action::make('yes')
-                        ->visible(fn ($get) => $get('have_website_graphic') === false)
+                        ->visible(fn ($get): bool => $get('have_website_graphic') === false)
                         ->translateLabel()
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
@@ -467,18 +467,18 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
                         ->modalCancelActionLabel(__("No, I don't have a website graphic"))
                         ->modalAlignment(Alignment::Center)
-                        ->action(function (Set $set) {
+                        ->action(function (Set $set): void {
                             $set('have_website_graphic', true);
                         }),
                     Action::make('no')
-                        ->visible(fn ($get) => $get('have_website_graphic') === true)
+                        ->visible(fn ($get): bool => $get('have_website_graphic') === true)
                         ->translateLabel()
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
                         ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
                         ->modalSubmitActionLabel("No, I don't have a website graphic")
                         ->modalAlignment(Alignment::Center)
-                        ->action(function (Set $set) {
+                        ->action(function (Set $set): void {
                             $set('have_website_graphic', false);
                         }),
                 ])->label('Do you have a website graphic?'),
@@ -487,8 +487,8 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'));
                 })
-                ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
-                ->disabled(fn ($get) => $get('website_type_id') === null),
+                ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
+                ->disabled(fn ($get): bool => $get('website_type_id') === null),
             Toggle::make('is_multilangual')->live(),
             Select::make('default_language')
                 ->live()
@@ -496,7 +496,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
                 ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                 ->preload()
-                ->afterStateUpdated(function (Set $set) {
+                ->afterStateUpdated(function (Set $set): void {
                     $set('languages', []);
                 })
                 ->searchable(),

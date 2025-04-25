@@ -40,7 +40,7 @@ class CartShow extends Component implements HasActions, HasForms
         }
 
         $this->requestQuote = RequestQuote::find(Session::get('requestQuote'));
-        collect($this->requestQuote->websites)->each(function ($page) use (&$total) {
+        collect($this->requestQuote->websites)->each(function (array $page) use (&$total): void {
             if ($page['required']) {
                 $this->total += match ($page['length']) {
                     'short' => 20000,

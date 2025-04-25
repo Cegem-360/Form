@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_questions', function (Blueprint $table) {
+        Schema::create('form_questions', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(User::class)->nullable();
             $table->foreignIdFor(Domain::class)->nullable();

@@ -69,10 +69,10 @@ class DatabaseSeeder extends Seeder
             Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value . ' Permission']);
         }
 
-        Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission) {
+        Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission): void {
             $permission->assignRole('super-admin');
         });
-        Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission) {
+        Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission): void {
             $permission->assignRole('admin');
         });
 

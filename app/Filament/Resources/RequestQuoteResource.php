@@ -96,7 +96,7 @@ class RequestQuoteResource extends Resource
                                 ->required()
                                 ->maxLength(255),
                         ])
-                        ->afterStateUpdated(function (Set $set) {
+                        ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
                         ->searchable(),
@@ -129,7 +129,7 @@ class RequestQuoteResource extends Resource
                                         'long' => 'Long',
                                     ])
                                     ->inline()
-                                    ->afterStateUpdated(function ($state, Set $set, Get $get) {
+                                    ->afterStateUpdated(function ($state, Set $set, Get $get): void {
                                         $set('image', match ($state) {
                                             'short' => 'website_previews/short_preview.png',
                                             'medium' => 'website_previews/medium_preview.png',
@@ -153,10 +153,10 @@ class RequestQuoteResource extends Resource
                             Grid::make(1)->columnSpan(1)->schema([
                                 ViewField::make('image')->view('filament.forms.components.image')->viewData(
                                     [
-                                        'image' => fn (Get $get) => $get('image'), // gets the image from the state
+                                        'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
                                         'show_image' => false, // hides the image
                                     ]
-                                )->formatStateUsing(function (Get $get) {
+                                )->formatStateUsing(function (Get $get): ?string {
                                     return match ($get('length')) {
                                         'short' => 'website_previews/short_preview.png',
                                         'medium' => 'website_previews/medium_preview.png',
@@ -184,7 +184,7 @@ class RequestQuoteResource extends Resource
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
                             ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
                             ->modalAlignment(Alignment::Center)
-                            ->action(function (Set $set) {
+                            ->action(function (Set $set): void {
                                 $set('have_website_graphic', true);
                             }),
                         Action::make('no')
@@ -194,7 +194,7 @@ class RequestQuoteResource extends Resource
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
                             ->modalSubmitActionLabel("No, I don't have a website graphic")
                             ->modalAlignment(Alignment::Center)
-                            ->action(function (Set $set) {
+                            ->action(function (Set $set): void {
                                 $set('have_website_graphic', false);
                             }),
                     ])->label('Do you have a website graphic?'),
@@ -203,7 +203,7 @@ class RequestQuoteResource extends Resource
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf('%s %s', $record->name, $record->websiteType()->first()->name)),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name)),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))

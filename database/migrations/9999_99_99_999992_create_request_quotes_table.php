@@ -16,7 +16,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('request_quotes', function (Blueprint $table) {
+        Schema::create('request_quotes', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(User::class)->nullable();
             $table->string('quotation_name')->nullable();

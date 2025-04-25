@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
-it('has fillable attributes', function () {
+it('has fillable attributes', function (): void {
     $form = new FormQuestion;
 
     $expected = [
@@ -70,7 +70,7 @@ it('has fillable attributes', function () {
     expect($form->getFillable())->toEqual($expected);
 });
 
-it('belongs to a domain', function () {
+it('belongs to a domain', function (): void {
     $domain = Domain::factory()->create();
     $form = FormQuestion::factory()->create(['domain_id' => $domain->id]);
 
@@ -78,7 +78,7 @@ it('belongs to a domain', function () {
     expect($form->domain()->first()->id)->toBe($domain->id);
 });
 
-it('can generate a token', function () {
+it('can generate a token', function (): void {
     $form = FormQuestion::factory()->create();
     $form->token = Str::random(60);
     $form->save();
@@ -86,19 +86,19 @@ it('can generate a token', function () {
     expect($form->token)->toHaveLength(60);
 });
 
-it('can fill name field', function () {
+it('can fill name field', function (): void {
     $form = FormQuestion::factory()->create(['contact_name' => 'Test Name']);
 
     expect($form->contact_name)->toBe('Test Name');
 });
 
-it('can fill email field', function () {
+it('can fill email field', function (): void {
     $form = FormQuestion::factory()->create(['contact_email' => 'test@example.com']);
 
     expect($form->contact_email)->toBe('test@example.com');
 });
 
-it('can fill phone field', function () {
+it('can fill phone field', function (): void {
     $form = FormQuestion::factory()->create(['contact_phone' => '123456789']);
 
     expect($form->contact_phone)->toBe('123456789');

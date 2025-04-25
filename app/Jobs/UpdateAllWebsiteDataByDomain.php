@@ -25,7 +25,7 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct($id, $fieldIds = null)
+    public function __construct($id, ?array $fieldIds = null)
     {
         $this->fieldIds = $fieldIds;
         $this->domain = Domain::find($id);

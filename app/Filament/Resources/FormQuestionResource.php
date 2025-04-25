@@ -366,7 +366,7 @@ class FormQuestionResource extends Resource
                                 ->headerActions([
                                     Action::make('all_set_true')
                                         ->label('All set to true')
-                                        ->action(function (Set $set) {
+                                        ->action(function (Set $set): void {
                                             $set('company_name_visible', true);
                                             $set('company_name_visible', true);
                                             $set('contact_name_visible', true);
@@ -392,7 +392,7 @@ class FormQuestionResource extends Resource
                                 ->headerActions([
                                     Action::make('all_set_true')
                                         ->label('All set to true')
-                                        ->action(function (Set $set) {
+                                        ->action(function (Set $set): void {
 
                                             $set('have_exist_website_visible', true);
                                             $set('exist_website_url_visible', true);
@@ -437,7 +437,7 @@ class FormQuestionResource extends Resource
                                 ->headerActions([
                                     Action::make('all_set_true')
                                         ->label('All set to true')
-                                        ->action(function (Set $set) {
+                                        ->action(function (Set $set): void {
 
                                             $set('own_company_images_visible', true);
                                             $set('use_video_or_animation_visible', true);
@@ -480,7 +480,7 @@ class FormQuestionResource extends Resource
                                 ->headerActions([
                                     Action::make('all_set_true')
                                         ->label('All set to true')
-                                        ->action(function (Set $set) {
+                                        ->action(function (Set $set): void {
                                             $set('products_csv_file_visible', true);
                                             $set('highlighted_categories_visible', true);
                                             $set('bruto_netto_visible', true);

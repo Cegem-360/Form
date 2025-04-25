@@ -11,10 +11,8 @@ class FormQuestionObserver
 {
     /**
      * Handle the FormQuestion "deleted" event.
-     *
-     * @return void
      */
-    public function deleted(FormQuestion $formQuestion)
+    public function deleted(FormQuestion $formQuestion): void
     {
         // Delete the logo file
         if ($formQuestion->logo) {

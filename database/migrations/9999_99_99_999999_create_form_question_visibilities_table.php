@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_question_visibilities', function (Blueprint $table) {
+        Schema::create('form_question_visibilities', function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(FormQuestion::class)->nullable(false);
             $table->boolean('token_visible')->default(true);

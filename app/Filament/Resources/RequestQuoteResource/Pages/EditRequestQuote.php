@@ -77,7 +77,7 @@ class EditRequestQuote extends EditRecord
         return redirect()->route('quotation.preview.id', ['requestQuote' => $record->id]);
     }
 
-    public function createPdfAndSendToCurrentUser()
+    public function createPdfAndSendToCurrentUser(): void
     {
         $record = $this->record;
         Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($record));

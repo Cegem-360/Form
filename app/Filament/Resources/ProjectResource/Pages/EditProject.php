@@ -29,7 +29,7 @@ class EditProject extends EditRecord
                     ])
                     ->action(function (array $data, Project $record) {
                         dump($record->requestQuote);
-                        $pages = collect($record->requestQuote->websites)->map(function ($page) {
+                        $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
                             return [
                                 'description' => $page['description'],
                                 'name' => $page['name'],

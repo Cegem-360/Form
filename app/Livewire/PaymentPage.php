@@ -10,17 +10,17 @@ class PaymentPage extends Component
 {
     public $order;
 
-    public function mount($record)
+    public function mount($record): void
     {
         $this->order = $record; // Load order details
     }
 
-    public function payWithStripe()
+    public function payWithStripe(): void
     {
         // Handle Stripe payment logic here
     }
 
-    public function finalizeOrder()
+    public function finalizeOrder(): void
     {
         // Handle order finalization logic here
     }

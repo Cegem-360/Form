@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stripe_products', function (Blueprint $table) {
+        Schema::create('stripe_products', function (Blueprint $table): void {
             $table->id();
             $table->string('stripe_product_id')->unique();
             $table->string('name');
