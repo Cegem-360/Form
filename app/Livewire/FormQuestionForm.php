@@ -40,7 +40,7 @@ class FormQuestionForm extends Component implements HasForms
     {
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
-        if ($this->post === null) {
+        if ($this->post instanceof FormQuestion) {
             $this->redirect(route('form.expired'));
         }
 

@@ -630,6 +630,10 @@ namespace App\Models{
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
+ * @property string|null $company_name
+ * @property string|null $company_address
+ * @property string|null $company_vat_number
+ * @property string|null $company_registration_number
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -653,6 +657,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyRegistrationNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyVatNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)

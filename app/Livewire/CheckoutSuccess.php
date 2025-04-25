@@ -29,8 +29,10 @@ class CheckoutSuccess extends Component
 
         $session = Cashier::stripe()->checkout->sessions->retrieve($this->sessionId);
 
-        if ($session->payment_status !== 'paid') {
-            return view('livewire.checkout.checkout-success');
+        if ($session->payment_status != 'paid') {
+            return view('livewire.checkout.checkout-unsuccess', [
+                'error' => 'Payment not completed.',
+            ]);
         }
 
         return view('livewire.checkout.checkout-success');

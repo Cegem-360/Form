@@ -10,14 +10,13 @@ class ContentBuilder
 
     public static function buildContent(string|int $id, array $data): string
     {
-        $content = '';
-        $content = match (true) {
+
+        return match (true) {
             $id == 53 => self::buildContentToHomeHeroTitle($data['companyName']),
             $id == 58 => self::buildContentToHomeHeroDesciption(),
-            default => $content,
+            default => '',
         };
 
-        return $content;
     }
 
     public function getContent(): string

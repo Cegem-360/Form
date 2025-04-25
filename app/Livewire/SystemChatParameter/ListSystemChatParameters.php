@@ -61,6 +61,7 @@ class ListSystemChatParameters extends Component implements HasForms, HasTable
                                 ->send();
                             $action->halt();
                         }
+
                         $record->update($data);
 
                         return $record;

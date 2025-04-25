@@ -86,6 +86,7 @@ class FormQuestionResource extends Resource
                                                 if ($state == null) {
                                                     $set('token', $token);
                                                 }
+
                                                 if ($state != null) {
                                                     $token = $state;
                                                 }

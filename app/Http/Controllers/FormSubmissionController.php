@@ -15,6 +15,6 @@ class FormSubmissionController extends Controller
         $formData = $form->toArray();
 
         // Return the view with the form data
-        return view('form-review', compact('formData'));
+        return view('form-review', ['formData' => $formData]);
     }
 }

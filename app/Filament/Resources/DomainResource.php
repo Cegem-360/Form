@@ -44,7 +44,7 @@ class DomainResource extends Resource
                     ->searchable(),
                 TextColumn::make('url')
                     ->copyable()
-                    ->copyableState(fn (string $state): string => (string) "{$state}"),
+                    ->copyableState(fn (string $state): string => $state),
             ])
             ->filters([
                 //

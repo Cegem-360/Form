@@ -196,7 +196,7 @@ class FormQuestionVisibility extends Model
         'online_bank_card_payment_options_visible',
     ];
 
-    public function casts(): array
+    protected function casts(): array
     {
         return [
             'token_visible' => 'boolean',

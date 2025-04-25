@@ -74,3 +74,13 @@
 
 
 
+#forditások mindenhol
+- [ ] Vat number és company contact kiszedés 
+- [ ] description áthelyezni 2 oldal RBAC
+- [ ] websitepages oldalra file upload csak képet 
+- [ ] igen nem egymás mellet legyen 3. oldalon 
+- [ ] description a functions mellé
+- [ ] hirlevél mindegyik weboldal tipushoz
+- [ ] 3oldal tab név grafika és funkcíók
+- [ ] projekt description 3. oldalra áthelyezés
+- [ ] nyelvek legőrdükő lista legyen 

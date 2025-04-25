@@ -36,12 +36,12 @@ class CreateSmallForm extends Component implements HasForms
      *
      * @param [type] $token
      */
-    public function mount($token = null): void
+    public function mount($token = null)
     {
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
-        // dump($this->post);
-        if ($this->post === null) {
+
+        if (! $this->post) {
             $this->redirect(route('form.expired'));
         }
 

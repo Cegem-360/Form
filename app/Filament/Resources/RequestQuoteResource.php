@@ -192,7 +192,7 @@ class RequestQuoteResource extends Resource
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                            ->modalSubmitActionLabel('No, I don\'t have a website graphic')
+                            ->modalSubmitActionLabel("No, I don't have a website graphic")
                             ->modalAlignment(Alignment::Center)
                             ->action(function (Set $set) {
                                 $set('have_website_graphic', false);
@@ -203,7 +203,7 @@ class RequestQuoteResource extends Resource
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->name} {$record->websiteType()->first()->name}"),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => sprintf('%s %s', $record->name, $record->websiteType()->first()->name)),
                 Toggle::make('is_multilangual'),
                 Select::make('languages')
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))

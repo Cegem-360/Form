@@ -106,15 +106,16 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
                     $activities .= $activity['name'] . ', ';
                 }
             }
+
             if ($value['name'] == 'Rólunk') {
                 $about = $value['description'];
             }
 
         }
-        $context .= 'A következő szövegekből írj egy ütős címet. A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
-        $context .= ' A cím legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
 
-        return $context;
+        $context .= 'A következő szövegekből írj egy ütős címet. A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
+
+        return $context . ' A cím legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
     }
 
     public function handleHeroBannerText(): string
@@ -128,6 +129,7 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
                     $activities .= $activity['name'] . ', ';
                 }
             }
+
             if ($value['name'] == 'Rólunk') {
                 $about = $value['description'];
             }
@@ -135,9 +137,8 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         }
 
         $context .= 'A következő szövegekből írj egy rövid 2 mondatból álló szöveget, ami a inspiráló értékesítési szöveg legyen. A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
-        $context .= ' A szöveg legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
 
-        return $context;
+        return $context . ' A szöveg legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
     }
 
     public function handleAboutUsText(): string
@@ -151,6 +152,7 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
                     $activities .= $activity['name'] . ', ';
                 }
             }
+
             if ($value['name'] == 'Rólunk') {
                 $about = $value['description'];
             }
@@ -158,9 +160,8 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         }
 
         $context .= 'A következő szövegekből írj egy 3 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Rólunk". A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
-        $context .= ' A szöveg legyen határozott. ';
 
-        return $context;
+        return $context . ' A szöveg legyen határozott. ';
     }
 
     public function handleHighlightedServicesText(): string
@@ -177,8 +178,7 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         }
 
         $context .= 'A következő szövegekből írj egy 2 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Szolgáltatásaink". A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
-        $context .= ' A szöveg legyen határozott. ';
 
-        return $context;
+        return $context . ' A szöveg legyen határozott. ';
     }
 }

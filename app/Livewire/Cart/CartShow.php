@@ -38,6 +38,7 @@ class CartShow extends Component implements HasActions, HasForms
         if (! Session::exists('requestQuote')) {
             abort(403, 'Unauthorized action.');
         }
+
         $this->requestQuote = RequestQuote::find(Session::get('requestQuote'));
         collect($this->requestQuote->websites)->each(function ($page) use (&$total) {
             if ($page['required']) {

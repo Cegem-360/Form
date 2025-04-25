@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Log;
 
 class ProcessFormSubmission implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     protected FormQuestion $data;
 
     /**
@@ -72,9 +74,9 @@ class ProcessFormSubmission implements ShouldQueue
                 ]);
 
             dump($wordpress_response->getBody()->getContents());
-        } catch (\Exception $e) {
-            Log::error('Error processing form submission: ' . $e->getMessage());
-            dump('Error: ' . $e->getMessage());
+        } catch (\Exception $exception) {
+            Log::error('Error processing form submission: ' . $exception->getMessage());
+            dump('Error: ' . $exception->getMessage());
         }
     }
 }
