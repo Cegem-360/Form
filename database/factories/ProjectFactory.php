@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Enums\ProjectStatus;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
+ * @extends Factory<Project>
  */
 class ProjectFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
+     * @var class-string<Model>
      */
     protected $model = Project::class;
 

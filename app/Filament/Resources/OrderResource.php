@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\OrderResource\Pages\ListOrders;
+use App\Filament\Resources\OrderResource\Pages\CreateOrder;
+use App\Filament\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Models\Order;
 use Filament\Forms;
@@ -24,24 +33,24 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('stripe_order_id')
+                TextInput::make('stripe_order_id')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('amount')
+                TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('currency')
+                TextInput::make('currency')
                     ->required()
                     ->maxLength(3),
-                Forms\Components\TextInput::make('status')
+                TextInput::make('status')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('customer_email')
+                TextInput::make('customer_email')
                     ->email()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('customer_name')
+                TextInput::make('customer_name')
                     ->maxLength(255),
-                Forms\Components\Select::make('user_id')
+                Select::make('user_id')
                     ->relationship('user', 'name'),
             ]);
     }
@@ -50,27 +59,27 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('stripe_order_id')
+                TextColumn::make('stripe_order_id')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('amount')
+                TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('currency')
+                TextColumn::make('currency')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('customer_email')
+                TextColumn::make('customer_email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('customer_name')
+                TextColumn::make('customer_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user.name')
+                TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -79,11 +88,11 @@ class OrderResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -98,9 +107,9 @@ class OrderResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListOrders::route('/'),
-            'create' => Pages\CreateOrder::route('/create'),
-            'edit' => Pages\EditOrder::route('/{record}/edit'),
+            'index' => ListOrders::route('/'),
+            'create' => CreateOrder::route('/create'),
+            'edit' => EditOrder::route('/{record}/edit'),
         ];
     }
 }

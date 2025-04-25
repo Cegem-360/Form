@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\RequestQuoteFactory;
 use App\Enums\ClientType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RequestQuote extends Model
 {
-    /** @use HasFactory<\Database\Factories\RequestQuoteFactory> */
+    /** @use HasFactory<RequestQuoteFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -23,8 +24,6 @@ class RequestQuote extends Model
         'client_type',
         'company_name',
         'company_address',
-        'company_vat_number',
-        'company_contact_name',
         'website_type_id',
         'websites',
         'have_website_graphic',

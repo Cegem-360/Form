@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
+use App\Filament\Resources\WebsiteTypeResource\Pages\CreateWebsiteType;
+use App\Filament\Resources\WebsiteTypeResource\Pages\ViewWebsiteType;
+use App\Filament\Resources\WebsiteTypeResource\Pages\EditWebsiteType;
 use App\Filament\Resources\WebsiteTypeResource\Pages;
 use App\Filament\Resources\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
 use App\Models\WebsiteType;
@@ -35,13 +44,13 @@ class WebsiteTypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -50,12 +59,12 @@ class WebsiteTypeResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -70,10 +79,10 @@ class WebsiteTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebsiteTypes::route('/'),
-            'create' => Pages\CreateWebsiteType::route('/create'),
-            'view' => Pages\ViewWebsiteType::route('/{record}'),
-            'edit' => Pages\EditWebsiteType::route('/{record}/edit'),
+            'index' => ListWebsiteTypes::route('/'),
+            'create' => CreateWebsiteType::route('/create'),
+            'view' => ViewWebsiteType::route('/{record}'),
+            'edit' => EditWebsiteType::route('/{record}/edit'),
         ];
     }
 }

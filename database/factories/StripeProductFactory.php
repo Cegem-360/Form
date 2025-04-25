@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\StripeProduct;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\StripeProduct>
+ * @extends Factory<StripeProduct>
  */
 class StripeProductFactory extends Factory
 {

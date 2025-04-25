@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\DomainFactory;
 use App\Observers\DomainObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class Domain extends Model
 {
-    /** @use HasFactory<\Database\Factories\DomainFactory> */
+    /** @use HasFactory<DomainFactory> */
     use HasFactory;
 
     protected $fillable = [

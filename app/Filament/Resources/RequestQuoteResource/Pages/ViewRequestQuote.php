@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\RequestQuoteResource\Pages;
 
+use Filament\Actions\EditAction;
 use App\Filament\Resources\RequestQuoteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
@@ -15,7 +16,7 @@ class ViewRequestQuote extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\EditAction::make(),
+            EditAction::make(),
         ];
     }
 }

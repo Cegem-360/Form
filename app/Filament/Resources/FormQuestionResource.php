@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\FormQuestionResource\Pages\ListFormQuestions;
+use App\Filament\Resources\FormQuestionResource\Pages\CreateFormQuestion;
+use App\Filament\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
 use App\Filament\Resources\FormQuestionResource\Pages;
@@ -520,23 +527,23 @@ class FormQuestionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('domain.name')
+                TextColumn::make('domain.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('company_name')
+                TextColumn::make('company_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('contact_name')
+                TextColumn::make('contact_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('contact_email')
+                TextColumn::make('contact_email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('contact_phone')
+                TextColumn::make('contact_phone')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -545,12 +552,12 @@ class FormQuestionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
 
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -565,9 +572,9 @@ class FormQuestionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFormQuestions::route('/'),
-            'create' => Pages\CreateFormQuestion::route('/create'),
-            'edit' => Pages\EditFormQuestion::route('/{record}/edit'),
+            'index' => ListFormQuestions::route('/'),
+            'create' => CreateFormQuestion::route('/create'),
+            'edit' => EditFormQuestion::route('/{record}/edit'),
         ];
     }
 }

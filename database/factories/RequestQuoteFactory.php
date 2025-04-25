@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Enums\ClientType;
 use App\Models\RequestQuote;
 use App\Models\User;
@@ -11,14 +12,14 @@ use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RequestQuote>
+ * @extends Factory<RequestQuote>
  */
 class RequestQuoteFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
-     * @var class-string<\Illuminate\Database\Eloquent\Model>
+     * @var class-string<Model>
      */
     protected $model = RequestQuote::class;
 
@@ -50,8 +51,6 @@ class RequestQuoteFactory extends Factory
             'client_type' => $this->faker->randomElement(array_column(ClientType::cases(), 'value')),
             'company_name' => $this->faker->company(),
             'company_address' => $this->faker->address(),
-            'company_vat_number' => $this->faker->word(),
-            'company_contact_name' => $this->faker->name(),
             'project_description' => $this->faker->randomHtml(),
             // website type
             'website_type_id' => WebsiteType::factory(),

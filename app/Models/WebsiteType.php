@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\WebsiteTypeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WebsiteType extends Model
 {
-    /** @use HasFactory<\Database\Factories\WebsiteTypeFactory> */
+    /** @use HasFactory<WebsiteTypeFactory> */
     use HasFactory;
 
     protected $fillable = [

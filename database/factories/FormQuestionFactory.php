@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\FormQuestion;
 use App\Models\Domain;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FormQuestion>
+ * @extends Factory<FormQuestion>
  */
 class FormQuestionFactory extends Factory
 {

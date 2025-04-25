@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
+use App\Filament\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
+use App\Filament\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
+use App\Filament\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Enums\ClientType;
 use App\Filament\Resources\RequestQuoteResource\Pages;
 use App\Models\RequestQuote;
@@ -81,10 +91,6 @@ class RequestQuoteResource extends Resource
                     TextInput::make('company_name')
                         ->maxLength(255),
                     TextInput::make('company_address')
-                        ->maxLength(255),
-                    TextInput::make('company_vat_number')
-                        ->maxLength(255),
-                    TextInput::make('company_contact_name')
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->live()
@@ -228,30 +234,30 @@ class RequestQuoteResource extends Resource
                 return $query->whereUserId($userId);
             })
             ->columns([
-                Tables\Columns\TextColumn::make('quotation_name')
+                TextColumn::make('quotation_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('email')
+                TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+                TextColumn::make('phone')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('company_name')
+                TextColumn::make('company_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('website_type_id')
+                TextColumn::make('website_type_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('have_website_graphic')
+                IconColumn::make('have_website_graphic')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('is_multilangual')
+                IconColumn::make('is_multilangual')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('is_ecommerce')
+                IconColumn::make('is_ecommerce')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -260,12 +266,12 @@ class RequestQuoteResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -280,10 +286,10 @@ class RequestQuoteResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRequestQuotes::route('/'),
-            'create' => Pages\CreateRequestQuote::route('/create'),
-            'view' => Pages\ViewRequestQuote::route('/{record}'),
-            'edit' => Pages\EditRequestQuote::route('/{record}/edit'),
+            'index' => ListRequestQuotes::route('/'),
+            'create' => CreateRequestQuote::route('/create'),
+            'view' => ViewRequestQuote::route('/{record}'),
+            'edit' => EditRequestQuote::route('/{record}/edit'),
         ];
     }
 }

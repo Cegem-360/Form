@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\ProjectFactory;
 use App\Enums\ProjectStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProjectFactory> */
+    /** @use HasFactory<ProjectFactory> */
     use HasFactory;
 
     protected $fillable = [

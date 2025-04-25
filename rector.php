@@ -15,6 +15,7 @@ return RectorConfig::configure()
         __DIR__ . '/resources',
         __DIR__ . '/routes',
     ])
+    ->withImportNames(true)
     // here we can define, what prepared sets of rules will be applied
     ->withSets([
         SetList::DEAD_CODE,

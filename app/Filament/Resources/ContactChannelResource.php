@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\ContactChannelResource\Pages\ListContactChannels;
+use App\Filament\Resources\ContactChannelResource\Pages\CreateContactChannel;
+use App\Filament\Resources\ContactChannelResource\Pages\ViewContactChannel;
+use App\Filament\Resources\ContactChannelResource\Pages\EditContactChannel;
 use App\Filament\Resources\ContactChannelResource\Pages;
 use App\Models\ContactChannel;
 use Filament\Forms;
@@ -22,7 +32,7 @@ class ContactChannelResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -32,13 +42,13 @@ class ContactChannelResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -47,12 +57,12 @@ class ContactChannelResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -67,10 +77,10 @@ class ContactChannelResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListContactChannels::route('/'),
-            'create' => Pages\CreateContactChannel::route('/create'),
-            'view' => Pages\ViewContactChannel::route('/{record}'),
-            'edit' => Pages\EditContactChannel::route('/{record}/edit'),
+            'index' => ListContactChannels::route('/'),
+            'create' => CreateContactChannel::route('/create'),
+            'view' => ViewContactChannel::route('/{record}'),
+            'edit' => EditContactChannel::route('/{record}/edit'),
         ];
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use Exception;
 use App\Models\FormQuestion;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -72,7 +73,7 @@ class ProcessFormSubmission implements ShouldQueue
                 ]);
 
             dump($wordpress_response->getBody()->getContents());
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             Log::error('Error processing form submission: ' . $exception->getMessage());
             dump('Error: ' . $exception->getMessage());
         }

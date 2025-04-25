@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
 use App\Filament\Resources\WebsiteLanguageResource\Pages;
 use App\Models\WebsiteLanguage;
 use Filament\Forms;
@@ -22,9 +32,9 @@ class WebsiteLanguageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('code')
+                TextInput::make('code')
                     ->maxLength(255),
             ]);
     }
@@ -33,15 +43,15 @@ class WebsiteLanguageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('code')
+                TextColumn::make('code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -50,12 +60,12 @@ class WebsiteLanguageResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -70,10 +80,10 @@ class WebsiteLanguageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListWebsiteLanguages::route('/'),
-            'create' => Pages\CreateWebsiteLanguage::route('/create'),
-            'view' => Pages\ViewWebsiteLanguage::route('/{record}'),
-            'edit' => Pages\EditWebsiteLanguage::route('/{record}/edit'),
+            'index' => ListWebsiteLanguages::route('/'),
+            'create' => CreateWebsiteLanguage::route('/create'),
+            'view' => ViewWebsiteLanguage::route('/{record}'),
+            'edit' => EditWebsiteLanguage::route('/{record}/edit'),
         ];
     }
 }

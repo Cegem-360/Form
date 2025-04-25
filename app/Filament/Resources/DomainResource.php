@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\DomainResource\Pages\ListDomains;
+use App\Filament\Resources\DomainResource\Pages\CreateDomain;
+use App\Filament\Resources\DomainResource\Pages\ViewDomain;
+use App\Filament\Resources\DomainResource\Pages\EditDomain;
 use App\Filament\Resources\DomainResource\Pages;
 use App\Models\Domain;
 use Filament\Forms\Components\TextInput;
@@ -50,12 +57,12 @@ class DomainResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
                 ViewAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -70,10 +77,10 @@ class DomainResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDomains::route('/'),
-            'create' => Pages\CreateDomain::route('/create'),
-            'view' => Pages\ViewDomain::route('/{record}'),
-            'edit' => Pages\EditDomain::route('/{record}/edit'),
+            'index' => ListDomains::route('/'),
+            'create' => CreateDomain::route('/create'),
+            'view' => ViewDomain::route('/{record}'),
+            'edit' => EditDomain::route('/{record}/edit'),
         ];
     }
 }

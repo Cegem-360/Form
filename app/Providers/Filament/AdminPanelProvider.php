@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use Filament\Pages\Dashboard;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use App\Filament\Pages\Auth\Login;
 use Filament\Http\Middleware\Authenticate;
@@ -38,13 +41,13 @@ class AdminPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverClusters(in: app_path('Filament/Clusters'), for: 'App\\Filament\\Clusters')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
 
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                AccountWidget::class,
+                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

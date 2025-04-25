@@ -26,8 +26,6 @@ return new class extends Migration
             $table->enum('client_type', array_column(ClientType::cases(), 'value'))->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_address')->nullable();
-            $table->string('company_vat_number')->nullable(); // HU tax number
-            $table->string('company_contact_name')->nullable();
             $table->longText('project_description')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\WebsiteLanguage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WebsiteLanguage>
+ * @extends Factory<WebsiteLanguage>
  */
 class WebsiteLanguageFactory extends Factory
 {

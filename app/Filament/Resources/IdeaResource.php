@@ -4,6 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\IdeaResource\Pages\ListIdeas;
+use App\Filament\Resources\IdeaResource\Pages\CreateIdea;
+use App\Filament\Resources\IdeaResource\Pages\ViewIdea;
+use App\Filament\Resources\IdeaResource\Pages\EditIdea;
 use App\Filament\Resources\IdeaResource\Pages;
 use App\Models\Idea;
 use Filament\Forms;
@@ -26,12 +37,12 @@ class IdeaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                Textarea::make('description')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('project_id')
+                TextInput::make('project_id')
                     ->required()
                     ->numeric(),
             ]);
@@ -41,16 +52,16 @@ class IdeaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('project_id')
+                TextColumn::make('project_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -59,12 +70,12 @@ class IdeaResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -79,10 +90,10 @@ class IdeaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListIdeas::route('/'),
-            'create' => Pages\CreateIdea::route('/create'),
-            'view' => Pages\ViewIdea::route('/{record}'),
-            'edit' => Pages\EditIdea::route('/{record}/edit'),
+            'index' => ListIdeas::route('/'),
+            'create' => CreateIdea::route('/create'),
+            'view' => ViewIdea::route('/{record}'),
+            'edit' => EditIdea::route('/{record}/edit'),
         ];
     }
 }

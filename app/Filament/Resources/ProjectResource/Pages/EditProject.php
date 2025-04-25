@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\ProjectResource;
 use App\Models\FormQuestion;
 use App\Models\Project;
@@ -19,8 +21,8 @@ class EditProject extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            ViewAction::make(),
+            DeleteAction::make(),
             ActionGroup::make([
                 Action::make('convertToStarter')
                     ->label('Convert to Starter')

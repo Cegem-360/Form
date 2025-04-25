@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SystemChatParameterResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\SystemChatParameterResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -15,7 +16,7 @@ class EditSystemChatParameter extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }

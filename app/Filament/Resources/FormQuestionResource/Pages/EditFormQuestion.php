@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\FormQuestionResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\FormQuestionResource;
 use App\Jobs\UpdateAllWebsiteDataByDomain;
 use App\Models\FormQuestion;
@@ -22,7 +23,7 @@ class EditFormQuestion extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
             Action::make('Generate and View pdf')
                 ->action(function (FormQuestion $formQuestion) {
                     $pdf = App::make('dompdf.wrapper');

@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\SupportPackResource\Pages\ListSupportPacks;
+use App\Filament\Resources\SupportPackResource\Pages\CreateSupportPack;
+use App\Filament\Resources\SupportPackResource\Pages\ViewSupportPack;
+use App\Filament\Resources\SupportPackResource\Pages\EditSupportPack;
 use App\Filament\Resources\SupportPackResource\Pages;
 use App\Models\SupportPack;
 use Filament\Forms;
@@ -24,7 +34,7 @@ class SupportPackResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,13 +44,13 @@ class SupportPackResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -49,12 +59,12 @@ class SupportPackResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -69,10 +79,10 @@ class SupportPackResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSupportPacks::route('/'),
-            'create' => Pages\CreateSupportPack::route('/create'),
-            'view' => Pages\ViewSupportPack::route('/{record}'),
-            'edit' => Pages\EditSupportPack::route('/{record}/edit'),
+            'index' => ListSupportPacks::route('/'),
+            'create' => CreateSupportPack::route('/create'),
+            'view' => ViewSupportPack::route('/{record}'),
+            'edit' => EditSupportPack::route('/{record}/edit'),
         ];
     }
 }

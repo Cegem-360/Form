@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+use Database\Factories\SystemChatParameterFactory;
+use Illuminate\Database\Eloquent\Builder;
 use App\Enums\OpenAIRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,26 +17,26 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $form_field_id
  * @property OpenAIRole $role
  * @property string $content
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  *
- * @method static \Database\Factories\SystemChatParameterFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereFormFieldId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereFormFieldName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereRole($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereUpdatedAt($value)
+ * @method static SystemChatParameterFactory factory($count = null, $state = [])
+ * @method static Builder<static>|SystemChatParameter newModelQuery()
+ * @method static Builder<static>|SystemChatParameter newQuery()
+ * @method static Builder<static>|SystemChatParameter query()
+ * @method static Builder<static>|SystemChatParameter whereContent($value)
+ * @method static Builder<static>|SystemChatParameter whereCreatedAt($value)
+ * @method static Builder<static>|SystemChatParameter whereFormFieldId($value)
+ * @method static Builder<static>|SystemChatParameter whereFormFieldName($value)
+ * @method static Builder<static>|SystemChatParameter whereId($value)
+ * @method static Builder<static>|SystemChatParameter whereRole($value)
+ * @method static Builder<static>|SystemChatParameter whereUpdatedAt($value)
  *
  * @mixin \Eloquent
  */
 class SystemChatParameter extends Model
 {
-    /** @use HasFactory<\Database\Factories\SystemChatParameterFactory> */
+    /** @use HasFactory<SystemChatParameterFactory> */
     use HasFactory;
 
     protected $fillable = [

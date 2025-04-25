@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
 use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages;
 use App\Models\RequestQuoteFunctionality;
 use Filament\Forms\Components\Select;
@@ -46,21 +55,21 @@ class RequestQuoteFunctionalityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('price')
+                TextColumn::make('price')
                     ->money()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('websiteType.name')
+                TextColumn::make('websiteType.name')
                     ->label('Website Type')
                     ->sortable()
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: false),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -69,12 +78,12 @@ class RequestQuoteFunctionalityResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -89,10 +98,10 @@ class RequestQuoteFunctionalityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListRequestQuoteFunctionalities::route('/'),
-            'create' => Pages\CreateRequestQuoteFunctionality::route('/create'),
-            'view' => Pages\ViewRequestQuoteFunctionality::route('/{record}'),
-            'edit' => Pages\EditRequestQuoteFunctionality::route('/{record}/edit'),
+            'index' => ListRequestQuoteFunctionalities::route('/'),
+            'create' => CreateRequestQuoteFunctionality::route('/create'),
+            'view' => ViewRequestQuoteFunctionality::route('/{record}'),
+            'edit' => EditRequestQuoteFunctionality::route('/{record}/edit'),
         ];
     }
 }

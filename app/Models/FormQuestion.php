@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\FormQuestionFactory;
 use App\Observers\FormQuestionObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FormQuestion extends Model
 {
-    /** @use HasFactory<\Database\Factories\FormQuestionFactory> */
+    /** @use HasFactory<FormQuestionFactory> */
     use HasFactory;
 
     protected $fillable = [

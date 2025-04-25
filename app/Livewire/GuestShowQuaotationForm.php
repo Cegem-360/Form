@@ -141,7 +141,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     'phone' => $fillForRegister['phone'],
                     'company_name' => $fillForRegister['company_name'] ?? null,
                     'company_address' => $fillForRegister['company_address'] ?? null,
-                    'company_vat_number' => $fillForRegister['company_vat_number'] ?? null,
+                    'company_vat_number' => null,
                     'company_registration_number' => $fillForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make('password'), // or use a random password
                 ]);
@@ -180,7 +180,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         'phone' => $data['phone'],
                         'company_name' => $data['company_name'] ?? null,
                         'company_address' => $data['company_address'] ?? null,
-                        'company_vat_number' => $data['company_vat_number'] ?? null,
+                        'company_vat_number' => null,
                         'company_registration_number' => $data['company_registration_number'] ?? null,
                         'client_type' => $data['client_type'] ?? null,
                     ];
@@ -192,7 +192,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     'phone' => $data['phone'],
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => $data['company_vat_number'] ?? null,
+                    'company_vat_number' => null,
                     'company_registration_number' => $data['company_registration_number'] ?? null,
                     'client_type' => $data['client_type'] ?? null,
                 ];
@@ -208,10 +208,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_vat_number')
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
@@ -294,10 +290,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_address')
-                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->maxLength(255),
-                    TextInput::make('company_vat_number')
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),

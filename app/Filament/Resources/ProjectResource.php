@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\ProjectResource\Pages\ListProjects;
+use App\Filament\Resources\ProjectResource\Pages\CreateProject;
+use App\Filament\Resources\ProjectResource\Pages\ViewProject;
+use App\Filament\Resources\ProjectResource\Pages\EditProject;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
 use App\Filament\Resources\ProjectResource\Pages;
@@ -67,35 +76,35 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('start_date')
+                TextColumn::make('start_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
+                TextColumn::make('end_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('garanty')
+                TextColumn::make('status'),
+                TextColumn::make('garanty')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('garanty_end_date')
+                TextColumn::make('garanty_end_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('contact')
+                TextColumn::make('contact')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('support_pack_id')
+                TextColumn::make('support_pack_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('contact_channel_id')
+                TextColumn::make('contact_channel_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -104,12 +113,12 @@ class ProjectResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ViewAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -124,10 +133,10 @@ class ProjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProjects::route('/'),
-            'create' => Pages\CreateProject::route('/create'),
-            'view' => Pages\ViewProject::route('/{record}'),
-            'edit' => Pages\EditProject::route('/{record}/edit'),
+            'index' => ListProjects::route('/'),
+            'create' => CreateProject::route('/create'),
+            'view' => ViewProject::route('/{record}'),
+            'edit' => EditProject::route('/{record}/edit'),
         ];
     }
 }

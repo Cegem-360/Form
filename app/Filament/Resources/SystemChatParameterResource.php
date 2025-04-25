@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\SystemChatParameterResource\Pages\ListSystemChatParameters;
+use App\Filament\Resources\SystemChatParameterResource\Pages\CreateSystemChatParameter;
+use App\Filament\Resources\SystemChatParameterResource\Pages\EditSystemChatParameter;
 use App\Enums\OpenAIRole;
 use App\Filament\Resources\SystemChatParameterResource\Pages;
 use App\Models\SystemChatParameter;
@@ -76,11 +82,11 @@ class SystemChatParameterResource extends Resource
                      ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -95,9 +101,9 @@ class SystemChatParameterResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSystemChatParameters::route('/'),
-            'create' => Pages\CreateSystemChatParameter::route('/create'),
-            'edit' => Pages\EditSystemChatParameter::route('/{record}/edit'),
+            'index' => ListSystemChatParameters::route('/'),
+            'create' => CreateSystemChatParameter::route('/create'),
+            'edit' => EditSystemChatParameter::route('/{record}/edit'),
         ];
     }
 }

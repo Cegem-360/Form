@@ -76,7 +76,6 @@ class CartShow extends Component implements HasActions, HasForms
                         'phone' => $this->requestQuote->phone,
                         'company_name' => $this->requestQuote->company_name,
                         'company_address' => $this->requestQuote->company_address,
-                        'company_vat_number' => $this->requestQuote->company_vat_number,
                         'company_registration_number' => $this->requestQuote->company_registration_number,
                         'password' => Hash::make('password'),
                         'email_verified_at' => now(),

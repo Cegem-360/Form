@@ -4,6 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
+use App\Filament\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
+use App\Filament\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
 use App\Filament\Resources\FormQuestionVisibilityResource\Pages;
 use App\Models\FormQuestionVisibility;
 use Filament\Forms;
@@ -26,82 +36,82 @@ class FormQuestionVisibilityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('form_question_id')
+                Select::make('form_question_id')
                     ->relationship('formQuestion', 'id')
                     ->required(),
-                Forms\Components\Toggle::make('token_visible')
+                Toggle::make('token_visible')
                     ->required(),
-                Forms\Components\Toggle::make('company_name_visible')
+                Toggle::make('company_name_visible')
                     ->required(),
-                Forms\Components\Toggle::make('contact_name_visible')
+                Toggle::make('contact_name_visible')
                     ->required(),
-                Forms\Components\Toggle::make('contact_email_visible')
+                Toggle::make('contact_email_visible')
                     ->required(),
-                Forms\Components\Toggle::make('contact_phone_visible')
+                Toggle::make('contact_phone_visible')
                     ->required(),
-                Forms\Components\Toggle::make('contact_position_visible')
+                Toggle::make('contact_position_visible')
                     ->required(),
-                Forms\Components\Toggle::make('have_exist_website_visible')
+                Toggle::make('have_exist_website_visible')
                     ->required(),
-                Forms\Components\Toggle::make('exist_website_url_visible')
+                Toggle::make('exist_website_url_visible')
                     ->required(),
-                Forms\Components\Toggle::make('is_exact_deadline_visible')
+                Toggle::make('is_exact_deadline_visible')
                     ->required(),
-                Forms\Components\Toggle::make('deadline_visible')
+                Toggle::make('deadline_visible')
                     ->required(),
-                Forms\Components\Toggle::make('formating_milestone_visible')
+                Toggle::make('formating_milestone_visible')
                     ->required(),
-                Forms\Components\Toggle::make('visual_feeling_visible')
+                Toggle::make('visual_feeling_visible')
                     ->required(),
-                Forms\Components\Toggle::make('have_exist_design_visible')
+                Toggle::make('have_exist_design_visible')
                     ->required(),
-                Forms\Components\Toggle::make('design_files_visible')
+                Toggle::make('design_files_visible')
                     ->required(),
-                Forms\Components\Toggle::make('inspire_websites_visible')
+                Toggle::make('inspire_websites_visible')
                     ->required(),
-                Forms\Components\Toggle::make('banned_elements_visible')
+                Toggle::make('banned_elements_visible')
                     ->required(),
-                Forms\Components\Toggle::make('primary_color_visible')
+                Toggle::make('primary_color_visible')
                     ->required(),
-                Forms\Components\Toggle::make('secondary_color_visible')
+                Toggle::make('secondary_color_visible')
                     ->required(),
-                Forms\Components\Toggle::make('additional_colors_visible')
+                Toggle::make('additional_colors_visible')
                     ->required(),
-                Forms\Components\Toggle::make('prefered_font_types_visible')
+                Toggle::make('prefered_font_types_visible')
                     ->required(),
-                Forms\Components\Toggle::make('own_company_images_visible')
+                Toggle::make('own_company_images_visible')
                     ->required(),
-                Forms\Components\Toggle::make('use_video_or_animation_visible')
+                Toggle::make('use_video_or_animation_visible')
                     ->required(),
-                Forms\Components\Toggle::make('own_company_videos_visible')
+                Toggle::make('own_company_videos_visible')
                     ->required(),
-                Forms\Components\Toggle::make('main_pages_visible')
+                Toggle::make('main_pages_visible')
                     ->required(),
-                Forms\Components\Toggle::make('other_pages_visible')
+                Toggle::make('other_pages_visible')
                     ->required(),
-                Forms\Components\Toggle::make('have_product_catalog_visible')
+                Toggle::make('have_product_catalog_visible')
                     ->required(),
-                Forms\Components\Toggle::make('product_catalog_visible')
+                Toggle::make('product_catalog_visible')
                     ->required(),
-                Forms\Components\Toggle::make('tone_of_website_visible')
+                Toggle::make('tone_of_website_visible')
                     ->required(),
-                Forms\Components\Toggle::make('other_tone_of_website_visible')
+                Toggle::make('other_tone_of_website_visible')
                     ->required(),
-                Forms\Components\Toggle::make('need_multi_language_visible')
+                Toggle::make('need_multi_language_visible')
                     ->required(),
-                Forms\Components\Toggle::make('languages_for_website_visible')
+                Toggle::make('languages_for_website_visible')
                     ->required(),
-                Forms\Components\Toggle::make('call_to_actions_visible')
+                Toggle::make('call_to_actions_visible')
                     ->required(),
-                Forms\Components\Toggle::make('have_blog_visible')
+                Toggle::make('have_blog_visible')
                     ->required(),
-                Forms\Components\Toggle::make('exist_blog_count_visible')
+                Toggle::make('exist_blog_count_visible')
                     ->required(),
-                Forms\Components\Toggle::make('importance_of_seo_visible')
+                Toggle::make('importance_of_seo_visible')
                     ->required(),
-                Forms\Components\Toggle::make('have_payed_advertising_visible')
+                Toggle::make('have_payed_advertising_visible')
                     ->required(),
-                Forms\Components\Toggle::make('other_expectation_or_request_visible')
+                Toggle::make('other_expectation_or_request_visible')
                     ->required(),
             ]);
     }
@@ -110,88 +120,88 @@ class FormQuestionVisibilityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('formQuestion.id')
+                TextColumn::make('formQuestion.id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('token_visible')
+                IconColumn::make('token_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('company_name_visible')
+                IconColumn::make('company_name_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('contact_name_visible')
+                IconColumn::make('contact_name_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('contact_email_visible')
+                IconColumn::make('contact_email_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('contact_phone_visible')
+                IconColumn::make('contact_phone_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('contact_position_visible')
+                IconColumn::make('contact_position_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('have_exist_website_visible')
+                IconColumn::make('have_exist_website_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('exist_website_url_visible')
+                IconColumn::make('exist_website_url_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('is_exact_deadline_visible')
+                IconColumn::make('is_exact_deadline_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('deadline_visible')
+                IconColumn::make('deadline_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('formating_milestone_visible')
+                IconColumn::make('formating_milestone_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('visual_feeling_visible')
+                IconColumn::make('visual_feeling_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('have_exist_design_visible')
+                IconColumn::make('have_exist_design_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('design_files_visible')
+                IconColumn::make('design_files_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('inspire_websites_visible')
+                IconColumn::make('inspire_websites_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('banned_elements_visible')
+                IconColumn::make('banned_elements_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('primary_color_visible')
+                IconColumn::make('primary_color_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('secondary_color_visible')
+                IconColumn::make('secondary_color_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('additional_colors_visible')
+                IconColumn::make('additional_colors_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('prefered_font_types_visible')
+                IconColumn::make('prefered_font_types_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('own_company_images_visible')
+                IconColumn::make('own_company_images_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('use_video_or_animation_visible')
+                IconColumn::make('use_video_or_animation_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('own_company_videos_visible')
+                IconColumn::make('own_company_videos_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('main_pages_visible')
+                IconColumn::make('main_pages_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('other_pages_visible')
+                IconColumn::make('other_pages_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('have_product_catalog_visible')
+                IconColumn::make('have_product_catalog_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('product_catalog_visible')
+                IconColumn::make('product_catalog_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('tone_of_website_visible')
+                IconColumn::make('tone_of_website_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('other_tone_of_website_visible')
+                IconColumn::make('other_tone_of_website_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('need_multi_language_visible')
+                IconColumn::make('need_multi_language_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('languages_for_website_visible')
+                IconColumn::make('languages_for_website_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('call_to_actions_visible')
+                IconColumn::make('call_to_actions_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('have_blog_visible')
+                IconColumn::make('have_blog_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('exist_blog_count_visible')
+                IconColumn::make('exist_blog_count_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('importance_of_seo_visible')
+                IconColumn::make('importance_of_seo_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('have_payed_advertising_visible')
+                IconColumn::make('have_payed_advertising_visible')
                     ->boolean(),
-                Tables\Columns\IconColumn::make('other_expectation_or_request_visible')
+                IconColumn::make('other_expectation_or_request_visible')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -200,11 +210,11 @@ class FormQuestionVisibilityResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -219,9 +229,9 @@ class FormQuestionVisibilityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListFormQuestionVisibilities::route('/'),
-            'create' => Pages\CreateFormQuestionVisibility::route('/create'),
-            'edit' => Pages\EditFormQuestionVisibility::route('/{record}/edit'),
+            'index' => ListFormQuestionVisibilities::route('/'),
+            'create' => CreateFormQuestionVisibility::route('/create'),
+            'edit' => EditFormQuestionVisibility::route('/{record}/edit'),
         ];
     }
 }

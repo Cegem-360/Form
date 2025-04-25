@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\DomainResource\Pages;
 
+use Filament\Actions\DeleteAction;
 use App\Filament\Resources\DomainResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
@@ -15,7 +16,7 @@ class EditDomain extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            DeleteAction::make(),
         ];
     }
 }
