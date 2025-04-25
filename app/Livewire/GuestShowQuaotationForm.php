@@ -261,96 +261,105 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
     private function getClientInformationSchema(): Step
     {
         return
-        Step::make('Client Information')->schema(
+        Step::make('Client Information')->translateLabel()->schema(
             [
                 Grid::make(2)->schema([
                     TextInput::make('name')
                         ->label('Full Name')
+                        ->translateLabel()
                         ->live()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('email')
+                        ->translateLabel()
                         ->email()
                         ->live()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('phone')
+                        ->translateLabel()
                         ->tel()
                         ->live()
                         ->required()
                         ->maxLength(255),
                     Select::make('client_type')
+                        ->label('Legal form')
+                        ->translateLabel()
                         ->live()
                         ->required()
                         ->options(ClientType::class)
                         ->preload()
                         ->searchable(),
                     TextInput::make('company_name')
+                        ->translateLabel()
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_address')
+                        ->translateLabel()
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_contact_name')
+                        ->translateLabel()
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->live()
                         ->required()
+                        ->translateLabel()
                         ->relationship('websiteType', 'name')
                         ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
                         ->preload(),
                     Select::make('website_engine')
+                        ->translateLabel()
                         ->options([
                             'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
                             'shopify' => 'Shopify',
                         ])->required(),
-                    RichEditor::make('project_description')
-                        ->maxLength(65535)
-                        ->disableToolbarButtons([
-                            'attachFiles',
-                            'codeBlock',
-                            'italic',
-                            'strikeThrough',
-                            'underline',
-                        ])->columnSpanFull(),
+
                 ]),
             ]);
     }
 
     private function getWebsiteInformationSchema(): Step
     {
-        return Step::make('Website Informations')
+        return Step::make('Website Informations')->translateLabel()
             ->schema([
                 Grid::make(1)->schema([
-                    Repeater::make('websites')->deletable(false)->schema([
+                    Repeater::make('websites')->translateLabel()->deletable(false)->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(2)->columnSpan(1)->schema([
-                                TextInput::make('name')->required()->distinct(),
+                                TextInput::make('name')
+                                    ->translateLabel()
+                                    ->required()
+                                    ->distinct(),
                                 ToggleButtons::make('required')
+                                    ->label('Want to this page?')
+                                    ->translateLabel()
                                     ->live()
                                     ->options([
-                                        '1' => 'Yes',
-                                        '0' => 'No',
+                                        '1' => __('Yes'),
+                                        '0' => __('No'),
                                     ])
+                                    ->default('0')
                                     ->inline()
                                     ->required(),
                                 ToggleButtons::make('length')
+                                    ->label('Content length')
+                                    ->translateLabel()
                                     ->live()
                                     ->visible(fn ($get) => $get('required'))
-                                    ->label('Length')
                                     ->default('medium')
                                     ->required(fn ($get) => $get('required'))
                                     ->options([
-                                        'short' => 'Short',
-                                        'medium' => 'Medium',
-                                        'large' => 'Large',
+                                        'short' => __('Short'),
+                                        'medium' => __('Medium'),
+                                        'large' => __('Large'),
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set): void {
@@ -359,6 +368,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->required()
                                     ->columnSpanFull(),
                                 RichEditor::make('description')
+                                    ->translateLabel()
                                     ->visible(fn ($get) => $get('required'))
                                     ->label('Részletes leírás')
                                     ->maxLength(65535)
@@ -437,6 +447,16 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 
                         ])
                         ->addActionLabel(__('Add Website')),
+                    RichEditor::make('project_description')
+                        ->translateLabel()
+                        ->maxLength(65535)
+                        ->disableToolbarButtons([
+                            'attachFiles',
+                            'codeBlock',
+                            'italic',
+                            'strikeThrough',
+                            'underline',
+                        ])->columnSpanFull(),
                 ]),
             ]);
     }
@@ -476,13 +496,17 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 ])->label('Do you have a website graphic?'),
             ]),
             CheckboxList::make('request_quote_functionalities')
+                ->translateLabel()
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'));
                 })
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null),
-            Toggle::make('is_multilangual')->live(),
+            Toggle::make('is_multilangual')
+                ->translateLabel()
+                ->live(),
             Select::make('default_language')
+                ->translateLabel()
                 ->live()
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
@@ -493,6 +517,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 })
                 ->searchable(),
             CheckboxList::make('languages')
+                ->translateLabel()
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->options(function (Get $get) {
                     return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');

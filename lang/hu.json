@@ -61,6 +61,21 @@
     "Send email to me": "Magamnak küldés",
     "Register": "Regisztráció",
     "Cancel": "Mégse",
-    "Are you sure you want to register?": "Biztos vagy benne, hogy regisztrálni szeretnél?"
+    "Are you sure you want to register?": "Biztos vagy benne, hogy regisztrálni szeretnél?",
+    "Full Name" : "Teljes név",
+    "Legal form": "Jogi forma",
+    "Website type": "Weboldal típusa",
+    "Website goal": "Weboldal célja",
+    "Website engine": "Weboldal motorja",
+    "websites": "weboldalak",
+    "Required": "Kötelező",
+    "Want to this page?": "Szeretnéd ezt az oldalt?",
+    "Content length": "Tartalom hossza",
+    "Website Informations": "Weboldal információk",
+    "Client Informations": "Ügyfél információk",
+    "Short": "Rövid",
+    "Medium": "Közepes",
+    "Large": "Nagy"
+
 
 }

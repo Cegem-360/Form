@@ -75,8 +75,8 @@
 
 
 #forditások mindenhol
-- [ ] Vat number és company contact kiszedés 
-- [ ] description áthelyezni 2 oldal RBAC
+- [x] Vat number és company contact kiszedés 
+- [x] description áthelyezni 2 oldal RBAC
 - [ ] websitepages oldalra file upload csak képet 
 - [ ] igen nem egymás mellet legyen 3. oldalon 
 - [ ] description a functions mellé
