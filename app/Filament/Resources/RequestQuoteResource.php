@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
-use App\Filament\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
-use App\Filament\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
-use App\Filament\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Enums\ClientType;
-use App\Filament\Resources\RequestQuoteResource\Pages;
+use App\Filament\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
+use App\Filament\Resources\RequestQuoteResource\Pages\EditRequestQuote;
+use App\Filament\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
+use App\Filament\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -34,7 +28,12 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -154,6 +153,20 @@ class RequestQuoteResource extends Resource
                                         'strikeThrough',
                                         'underline',
                                     ]),
+                                FileUpload::make('image')
+                                    ->translateLabel()
+                                    ->label('Image')
+                                    ->visible(fn ($get) => $get('required'))
+                                    ->disk('public')
+                                    ->directory('website-images')
+                                    ->openable()
+                                    ->downloadable()
+                                    ->reorderable()
+                                    ->maxFiles(10)
+                                    ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
+                                    ->required(fn ($get) => $get('required'))
+                                    ->helperText(__('You can upload multiple images'))
+                                    ->columnSpanFull(),
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([
@@ -180,6 +193,7 @@ class RequestQuoteResource extends Resource
                     Toggle::make('have_website_graphic')
                         ->default(false)
                         ->label('Do you have a website graphic?')
+                        ->translateLabel()
                         ->disabled(),
                     Actions::make([
                         Action::make('yes')
@@ -203,18 +217,34 @@ class RequestQuoteResource extends Resource
                             ->action(function (Set $set): void {
                                 $set('have_website_graphic', false);
                             }),
-                    ])->label('Do you have a website graphic?'),
+                    ])->label('Do you have a website graphic?')->translateLabel(),
                 ]),
-                CheckboxList::make('request_quote_functionalities')
+                CheckboxList::make('request_quote_functionalities')->translateLabel()
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
                     ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name)),
-                Toggle::make('is_multilangual'),
-                Select::make('languages')
+                Toggle::make('is_multilangual')
+                    ->translateLabel()
+                    ->live(),
+                Select::make('default_language')
+                    ->translateLabel()
+                    ->live()
+                    ->visible(fn ($get) => $get('is_multilangual'))
+                    ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
-                    ->multiple()
                     ->preload()
+                    ->afterStateUpdated(function (Set $set): void {
+                        $set('languages', []);
+                    })
+                    ->searchable(),
+                Select::make('languages')
+                    ->translateLabel()
+                    ->multiple()
+                    ->visible(fn ($get) => $get('is_multilangual'))
+                    ->options(function (Get $get) {
+                        return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
+                    })
                     ->searchable(),
 
             ]);

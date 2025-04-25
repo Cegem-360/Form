@@ -75,7 +75,19 @@
     "Client Informations": "Ügyfél információk",
     "Short": "Rövid",
     "Medium": "Közepes",
-    "Large": "Nagy"
-
+    "Large": "Nagy",
+    "You can upload multiple images": "Több képet is feltölthetsz",
+    "Do you have a website graphic?": "Van weboldal grafikád?",
+    "Project description": "Projekt leírás",
+    "Request quote functionalities": "Weboldal funkciók",
+    "Is multilangual": "Többnyelvű az oldal",
+    "Default language": "Alapértelmezett nyelv",
+    "Languages": "Nyelvek",
+    "Grafics and functions": "Grafika és funkciók",
+    "Consent": "Hozzájárulás",
+    "I agree to the terms and conditions(note:later has link)": "Elfogadom a feltételeket és a szabályzatot (később link)",
+    "You must agree to the terms and conditions to proceed.": "Feltételek és szabályzat elfogadása szükséges a folytatáshoz.",
+    "I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)": "Hozzájárulok a személyes adataim feldolgozásához az adatvédelmi irányelveknek megfelelően (később link)",
+    "You must agree to the processing of your personal data in accordance with the privacy policy to proceed.": "Személyes adataim feldolgozásának elfogadása szükséges a folytatáshoz."
 
 }

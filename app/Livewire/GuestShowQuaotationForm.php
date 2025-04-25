@@ -16,6 +16,7 @@ use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -380,6 +381,20 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                         'underline',
                                     ])
                                     ->columnSpanFull(),
+                                FileUpload::make('image')
+                                    ->translateLabel()
+                                    ->label('Image')
+                                    ->visible(fn ($get) => $get('required'))
+                                    ->disk('public')
+                                    ->directory('website-images')
+                                    ->openable()
+                                    ->downloadable()
+                                    ->reorderable()
+                                    ->maxFiles(10)
+                                    ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
+                                    ->required(fn ($get) => $get('required'))
+                                    ->helperText(__('You can upload multiple images'))
+                                    ->columnSpanFull(),
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([
@@ -447,31 +462,32 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 
                         ])
                         ->addActionLabel(__('Add Website')),
-                    RichEditor::make('project_description')
-                        ->translateLabel()
-                        ->maxLength(65535)
-                        ->disableToolbarButtons([
-                            'attachFiles',
-                            'codeBlock',
-                            'italic',
-                            'strikeThrough',
-                            'underline',
-                        ])->columnSpanFull(),
+
                 ]),
             ]);
     }
 
     private function getGraphicsInformationSchema(): Step
     {
-        return Step::make('Graphics')->schema([
+        return Step::make('Grafics and functions')->translateLabel()->schema([
             Grid::make(1)->schema([
+                RichEditor::make('project_description')
+                    ->translateLabel()
+                    ->maxLength(65535)
+                    ->disableToolbarButtons([
+                        'attachFiles',
+                        'codeBlock',
+                        'italic',
+                        'strikeThrough',
+                        'underline',
+                    ])->columnSpanFull(),
                 Toggle::make('have_website_graphic')
                     ->default(false)
                     ->label('Do you have a website graphic?')
+                    ->translateLabel()
                     ->disabled(),
                 Actions::make([
                     Action::make('yes')
-                        ->visible(fn ($get): bool => $get('have_website_graphic') === false)
                         ->translateLabel()
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
@@ -483,7 +499,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                             $set('have_website_graphic', true);
                         }),
                     Action::make('no')
-                        ->visible(fn ($get): bool => $get('have_website_graphic') === true)
                         ->translateLabel()
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
@@ -493,7 +508,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->action(function (Set $set): void {
                             $set('have_website_graphic', false);
                         }),
-                ])->label('Do you have a website graphic?'),
+                ])->label('Do you have a website graphic?')->translateLabel(),
             ]),
             CheckboxList::make('request_quote_functionalities')
                 ->translateLabel()
@@ -516,8 +531,9 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     $set('languages', []);
                 })
                 ->searchable(),
-            CheckboxList::make('languages')
+            Select::make('languages')
                 ->translateLabel()
+                ->multiple()
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->options(function (Get $get) {
                     return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
@@ -528,20 +544,22 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 
     private function getConstentSchema(): Step
     {
-        return Step::make('Consent')->schema([
+        return Step::make('Consent')->translateLabel()->schema([
             Grid::make(1)->schema([
                 Checkbox::make('consent')
                     ->live()
                     ->default(false)
                     ->label('I agree to the terms and conditions(note:later has link)')
+                    ->translateLabel()
                     ->required()
-                    ->helperText('You must agree to the terms and conditions to proceed.')
+                    ->helperText(__('You must agree to the terms and conditions to proceed.'))
                     ->rules(['accepted']),
                 Checkbox::make('privacy_policy')
                     ->live()
                     ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
+                    ->translateLabel()
                     ->default(false)
-                    ->helperText('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.')
+                    ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
                     ->required()
                     ->rules(['accepted']),
             ]),

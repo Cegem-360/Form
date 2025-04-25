@@ -34,5 +34,21 @@ class AppServiceProvider extends ServiceProvider
         Model::automaticallyEagerLoadRelationships();
         Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Permission::class, PermissionPolicy::class);
+        $this->migrationsCustomPath();
+    }
+
+    private function migrationsCustomPath(): void
+    {
+        $this->loadMigrationsFrom([
+            database_path('migrations/basics'),
+            database_path('migrations/formStarter'),
+            database_path('migrations/permission'),
+            database_path('migrations/stripe'),
+            database_path('migrations/requestQuote'),
+            database_path('migrations/project'),
+            database_path('migrations/formQuestion'),
+            /*  database_path('migrations/basics'), */
+
+        ]);
     }
 }
