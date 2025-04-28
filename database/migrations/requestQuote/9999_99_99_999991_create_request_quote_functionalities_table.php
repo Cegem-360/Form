@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable(false);
             $table->integer('price')->nullable()->default(0);
+            $table->text('description')->nullable();
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
             $table->timestamps();
         });

@@ -153,7 +153,7 @@ class RequestQuoteResource extends Resource
                                         'strikeThrough',
                                         'underline',
                                     ]),
-                                FileUpload::make('image')
+                                FileUpload::make('images')
                                     ->translateLabel()
                                     ->label('Image')
                                     ->visible(fn ($get) => $get('required'))
@@ -164,7 +164,6 @@ class RequestQuoteResource extends Resource
                                     ->reorderable()
                                     ->maxFiles(10)
                                     ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
-                                    ->required(fn ($get) => $get('required'))
                                     ->helperText(__('You can upload multiple images'))
                                     ->columnSpanFull(),
 
@@ -223,7 +222,10 @@ class RequestQuoteResource extends Resource
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name)),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => $record->name)
+                /*  ->descriptions(function (Get $get): array {
+                        return $get('')->functionalities?->pluck('id', 'description')->toArray();
+                    }) */,
                 Toggle::make('is_multilangual')
                     ->translateLabel()
                     ->live(),

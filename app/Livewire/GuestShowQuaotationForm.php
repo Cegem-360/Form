@@ -152,7 +152,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 $record = RequestQuote::create($data);
 
                 Notification::make()
-                    ->title('Quotation created and order placed')
+                    ->title(__('Quotation created and order placed'))
                     ->success()
                     ->send();
 
@@ -175,6 +175,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->body('This email is already registered. Please use a different email address.')
                         ->danger()
                         ->send();
+                    $this->halt();
 
                     return [
                         'name' => $data['name'],
@@ -262,7 +263,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
     private function getClientInformationSchema(): Step
     {
         return
-        Step::make('Client Information')->translateLabel()->schema(
+        Step::make('Client Informations')->translateLabel()->schema(
             [
                 Grid::make(2)->schema([
                     TextInput::make('name')
@@ -381,9 +382,9 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                         'underline',
                                     ])
                                     ->columnSpanFull(),
-                                FileUpload::make('image')
+                                FileUpload::make('images')
                                     ->translateLabel()
-                                    ->label('Image')
+                                    ->label('Images')
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
                                     ->directory('website-images')
@@ -392,7 +393,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                                     ->reorderable()
                                     ->maxFiles(10)
                                     ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
-                                    ->required(fn ($get) => $get('required'))
                                     ->helperText(__('You can upload multiple images'))
                                     ->columnSpanFull(),
 
@@ -516,7 +516,12 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     return $query->where('website_type_id', $get('website_type_id'));
                 })
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
-                ->disabled(fn ($get): bool => $get('website_type_id') === null),
+                ->disabled(fn ($get): bool => $get('website_type_id') === null)
+                ->descriptions(function (Get $get) {
+                    return RequestQuote::find($get('website_type_id'))?->requestQuoteFunctionalities
+                        ->pluck('description', 'id')
+                        ->toArray();
+                }),
             Toggle::make('is_multilangual')
                 ->translateLabel()
                 ->live(),

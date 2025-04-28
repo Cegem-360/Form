@@ -24,6 +24,7 @@ class RequestQuoteFunctionalityFactory extends Factory
             'name' => $this->faker->word(),
             'price' => $this->faker->numberBetween(100, 1000),
             'website_type_id' => WebsiteType::factory(),
+            'description' => $this->faker->sentence(),
         ];
     }
 }

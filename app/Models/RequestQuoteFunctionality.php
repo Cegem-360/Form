@@ -16,6 +16,7 @@ class RequestQuoteFunctionality extends Model
     protected $fillable = [
         'name',
         'price',
+        'description',
         'website_type_id',
     ];
 

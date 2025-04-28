@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Database\Factories\RequestQuoteFactory;
 use App\Enums\ClientType;
+use Database\Factories\RequestQuoteFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RequestQuote extends Model
 {
@@ -49,7 +50,7 @@ class RequestQuote extends Model
         return $this->belongsTo(WebsiteType::class);
     }
 
-    public function requestQuoteFunctionalities()
+    public function requestQuoteFunctionalities(): BelongsToMany
     {
         return $this->belongsToMany(RequestQuoteFunctionality::class);
     }

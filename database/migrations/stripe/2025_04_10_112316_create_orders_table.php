@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\StripeCurrency;
+use App\Enums\TransactionStatus;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('stripe_order_id')->unique();
             $table->integer('amount');
             $table->enum('currency', array_column(StripeCurrency::cases(), 'value'));
-            $table->string('status');
+            $table->enum('status', array_column(TransactionStatus::cases(), 'value'));
             $table->string('customer_email')->nullable();
             $table->string('customer_name')->nullable();
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();

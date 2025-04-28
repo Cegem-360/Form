@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Enums\ClientType;
 use App\Models\RequestQuote;
 use App\Models\User;
 use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @extends Factory<RequestQuote>
@@ -39,6 +39,7 @@ class RequestQuoteFactory extends Factory
                 'required' => $this->faker->boolean(),
                 'length' => $this->faker->randomElement(['short', 'medium', 'long']),
                 'description' => $this->faker->randomHtml(),
+                'images' => null,
             ];
         }
 

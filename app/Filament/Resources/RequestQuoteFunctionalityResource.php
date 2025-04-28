@@ -4,22 +4,21 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
 use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
-use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
 use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
-use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
+use App\Filament\Resources\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
 use App\Models\RequestQuoteFunctionality;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class RequestQuoteFunctionalityResource extends Resource
@@ -41,7 +40,9 @@ class RequestQuoteFunctionalityResource extends Resource
                     ->numeric()
                     ->default(0)
                     ->prefix('$'),
-
+                RichEditor::make('description')
+                    ->maxLength(65535)
+                    ->placeholder('Description'),
                 Select::make('website_type_id')
                     ->relationship('websiteType', 'name')
                     ->required()

@@ -1,7 +1,5 @@
 # TODO List for Form
 
-    [ ] connect all background data request quote [ ] -> project [ ] -> form question [ ]
-
     ## Invoice
     - [ ] Create invoice template
     - [ ] Add customer details section
@@ -37,7 +35,7 @@
 # Test Cases for TODO List
 
     ## Frontend Page 3 Actions
-    - [ ] Test "Order -> Pay" functionality
+    - [x] Test "Order -> Pay" functionality
         - Verify that the "Order -> Pay" button is visible and clickable.
         - Ensure that clicking the button transitions the user to the payment page.
         - Validate that the correct order details are passed to the payment page.
@@ -56,15 +54,6 @@
         - Confirm that no order is placed when using this feature.
         - Validate error handling for invalid email addresses or network issues.
 
-# Permissions and Roles
-    - [x] Define user roles and their permissions
-    - [x] Implement role-based access control (RBAC)
-    - [x] Add UI for managing roles and permissions
-    - [x] Test role assignment functionality
-    - [x] Validate permission enforcement across the application
-
-
-
     #Request quote kedvezmény
 
 
@@ -72,14 +61,19 @@
         -[ ] project indító gomb a szerkesztés oldalon
 
 
-
-
-#forditások mindenhol
-- [x] Vat number és company contact kiszedés 
-- [x] websitepages oldalra file upload csak képet 
-- [x] igen nem egymás mellet legyen 3. oldalon 
 - [ ] description a functions mellé
-- [x] hirlevél mindegyik weboldal tipushoz
-- [x] 3oldal tab név grafika és funkcíók
-- [x] projekt description 3. oldalra áthelyezés
-- [x] nyelvek legőrdükő lista legyen 
+
+
+## megrendelés 
+- [ ] # kosár 50%-át kell kifizetni számlával
+- [ ] # fizetési mod választása / kosár fordítása
+- [ ] # Árajánlat PDF rendberakása
+- [ ] # Éresítési email Email formázása(küldjön tamásnak)
+- [ ] # +1 lépés a kosár után ahol a fizetési mód és többi adatokat szerkesztketi és látja
+
+##quotation form 1 page
+- [ ] # ne legyen közelező a "Company address"
+#order
+- [ ] # bankártyás fizetés (Stripe-val)/utalásal
+
+- [ ] # Sikeres oldal/köszönöm
