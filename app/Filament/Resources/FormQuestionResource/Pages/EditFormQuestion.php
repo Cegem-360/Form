@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\FormQuestionResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\FormQuestionResource;
 use App\Jobs\UpdateAllWebsiteDataByDomain;
 use App\Models\FormQuestion;
 use App\Models\SystemChatParameter;
-use Filament\Actions;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Actions\Action;
+use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\EditRecord;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
 class EditFormQuestion extends EditRecord
@@ -26,9 +25,12 @@ class EditFormQuestion extends EditRecord
             DeleteAction::make(),
             Action::make('Generate and View pdf')
                 ->action(function (FormQuestion $formQuestion) {
-                    $pdf = App::make('dompdf.wrapper');
+                    $pdf = Pdf::loadView('pdf.form-question', ['formQuestion' => $formQuestion], encoding: 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->setOption('isHtml5ParserEnabled', true);
+                    $pdf->setOption('isUnicodeEnabled', true);
 
-                    $pdfContent = $pdf->loadView('pdf.form-question', ['formQuestion' => $formQuestion])->output();
+                    $pdfContent = $pdf->output();
 
                     // Save the PDF to a temporary location
                     $filePath = 'pdfs/' . uniqid() . '.pdf';

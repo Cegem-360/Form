@@ -7,7 +7,7 @@
         <title>Form Question</title>
         <style>
             body {
-                font-family: Arial, sans-serif;
+                font-family: DejaVu Sans;
                 margin: 20px;
             }
 
