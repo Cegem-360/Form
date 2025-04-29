@@ -71,7 +71,7 @@
             "./vendor/bin/pint"
         ],
         "rector":[
-            "./vendor/bin/rector process --set laravel-12"
+            "./vendor/bin/rector process "
         ]
     },
     "extra": {

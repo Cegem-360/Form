@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\RequestQuote;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Livewire\Component;
+use Notification;
 
 class PaymentPage extends Component implements HasForms
 {
@@ -29,8 +31,11 @@ class PaymentPage extends Component implements HasForms
         if (! $this->requestQuote) {
             abort(403, 'Unauthorized action.');
         }
+
         $this->form->fill([
-            'requestQuote' => $this->requestQuote,
+            'name' => $this->requestQuote->name,
+            'email' => $this->requestQuote->email,
+            'phone' => $this->requestQuote->phone,
         ]);
 
     }
@@ -46,16 +51,32 @@ class PaymentPage extends Component implements HasForms
     {
         return $form
             ->schema([
-                TextInput::make('requestQuote.name')
+                TextInput::make('name')
                     ->label('Name')
+                    ->translateLabel()
+                    ->live()
                     ->required(),
-                TextInput::make('requestQuote.email')
+                TextInput::make('email')
                     ->label('Email')
+                    ->translateLabel()
                     ->required()
+                    ->live()
                     ->email(),
-                TextInput::make('requestQuote.phone')
+                TextInput::make('phone')
                     ->label('Phone')
+                    ->translateLabel()
+                    ->live()
                     ->required(),
+                Select::make('paymentMethod')
+                    ->translateLabel()
+                    ->label('Payment Method')
+                    ->options([
+                        'stripe' => 'Stripe',
+                        'bank_transfer' => 'Bank Transfer',
+                    ])
+                    ->default('stripe')
+                    ->required()
+                    ->live(),
             ])
             ->statePath('data');
     }
@@ -70,15 +91,18 @@ class PaymentPage extends Component implements HasForms
         // Handle order finalization logic here
     }
 
-    public function updateCustomerData()
+    public function updateCustomerData(): void
     {
         $this->validate([
-            'requestQuote.name' => 'required|string',
-            'requestQuote.email' => 'required|email',
-            'requestQuote.phone' => 'nullable|string',
+            'data.name' => ['required', 'string'],
+            'data.email' => ['required', 'email'],
+            'data.phone' => ['nullable', 'string'],
         ]);
         $this->requestQuote->save();
-        session()->flash('message', 'A rendelő adatai frissítve lettek.');
+        Notification::make()
+            ->title(__('Customer data updated successfully'))
+            ->success()
+            ->send();
     }
 
     public function render()

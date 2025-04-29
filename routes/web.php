@@ -48,7 +48,7 @@ Route::get('/quotation/preview/{requestQuote}', function (RequestQuote $requestQ
     return $pdf->stream('quotation-preview.pdf');
 })->name('quotation.preview.id');
 
-Route::get('/cart/summary', CartShow::class)->name('cart.summary');
+Route::get('/cart/summary/{requestQuote}', CartShow::class)->name('cart.summary');
 Route::get('/payment/{record}', PaymentPage::class)->name('payment.page');
 /* Route::post('/payment/stripe', [PaymentController::class, 'stripePayment'])->name('stripe.payment');
 Route::get('/order/finalize', [PaymentController::class, 'finalizeOrder'])->name('order.finalize'); */

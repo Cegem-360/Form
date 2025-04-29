@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace App\Livewire\Cart;
 
 use App\Models\RequestQuote;
-use App\Models\User;
-use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -33,7 +29,7 @@ class CartShow extends Component implements HasActions, HasForms
 
     public ?RequestQuote $requestQuote = null;
 
-    public function mount(): void
+    public function mount(RequestQuote $requestQuote): void
     {
         if (! Session::exists('requestQuote')) {
             abort(403, 'Unauthorized action.');
@@ -63,39 +59,9 @@ class CartShow extends Component implements HasActions, HasForms
             ->statePath('data');
     }
 
-    public function submitAction(): Action
+    public function checkout(): void
     {
-
-        return Action::make('submit')
-            ->label('Submit')
-            ->action(function () {
-                /* if (! Auth::check()) {
-                    $user = User::create([
-                        'name' => $this->requestQuote->name,
-                        'email' => $this->requestQuote->email,
-                        'phone' => $this->requestQuote->phone,
-                        'company_name' => $this->requestQuote->company_name,
-                        'company_address' => $this->requestQuote->company_address,
-                        'company_registration_number' => $this->requestQuote->company_registration_number,
-                        'password' => Hash::make('password'),
-                        'email_verified_at' => now(),
-                    ]);
-                    $user->assignRole('user');
-                    Auth::login($user);
-
-                }
-
-                return Auth::user()->checkoutCharge($this->total * 100, 'Árajánlat', 1, [
-                    'success_url' => route('checkout-success'),
-                    'cancel_url' => route('checkout-cancel'),
-                    'metadata' => [
-                        'requestQuoteId' => $this->requestQuote->id,
-                        'userId' => Auth::user()->id,
-                    ],
-                ]); */
-                $this->redirect(route('checkout.summary', ['requestQuote' => $this->requestQuote]), true);
-            })
-            ->color('primary');
+        $this->redirect(route('checkout.summary', ['requestQuote' => $this->requestQuote]));
     }
 
     public function render(): View

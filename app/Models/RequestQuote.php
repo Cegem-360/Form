@@ -74,8 +74,6 @@ class RequestQuote extends Model
             }
         }
 
-        $total += $this->requestQuoteFunctionalities->sum('price');
-
-        return $total;
+        return $total + $this->requestQuoteFunctionalities->sum('price');
     }
 }

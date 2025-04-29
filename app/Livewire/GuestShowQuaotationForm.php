@@ -109,14 +109,14 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 $record = RequestQuote::create($data);
 
                 Notification::make()
-                    ->title('Quotation created and order placed')
+                    ->title(__('Quotation created and order placed'))
                     ->success()
                     ->send();
 
                 $this->form->model($record)->saveRelationships();
                 // save to session
                 Session::put('requestQuote', $record->id);
-                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]), true);
+                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
             })
             ->label(__('Order'))
             ->color('primary')
@@ -126,6 +126,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
     public function orderAndRegisterAction(): SubbmitButton
     {
         return SubbmitButton::make('Register')
+            ->label(__('Register and Order'))
             ->action(function (array $data): void {
                 $fillForRegister = $data;
                 $data = $this->form->getState();
@@ -159,6 +160,8 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 $this->form->model($record)->saveRelationships();
 
                 // Redirect to Cart summary page
+                Session::put('requestQuote', $record->id);
+
                 $this->redirect(route('cart.summary', ['requestQuote' => $record->id]), true);
             })
             ->requiresConfirmation()
