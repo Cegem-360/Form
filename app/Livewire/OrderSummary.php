@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
-use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Livewire\Component;
 use Illuminate\Contracts\View\View;
+use Livewire\Component;
 
 class OrderSummary extends Component implements HasForms
 {
@@ -24,7 +25,7 @@ class OrderSummary extends Component implements HasForms
     {
         return $form
             ->schema([
-                //
+
             ])
             ->statePath('data');
     }

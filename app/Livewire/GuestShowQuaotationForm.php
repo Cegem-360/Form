@@ -300,7 +300,6 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     TextInput::make('company_address')
                         ->translateLabel()
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
                         ->maxLength(255),
                     TextInput::make('company_contact_name')
                         ->translateLabel()

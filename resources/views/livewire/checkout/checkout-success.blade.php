@@ -18,7 +18,7 @@
     </div>
 
     <div class="mt-6 text-center">
-        <a href="{{ route('shop') }}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Continue
-            Shopping</a>
+        {{-- <a href="{{ route('shop') }}" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Continue
+            Shopping</a> --}}
     </div>
 </div>

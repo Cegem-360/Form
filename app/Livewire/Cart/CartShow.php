@@ -69,7 +69,7 @@ class CartShow extends Component implements HasActions, HasForms
         return Action::make('submit')
             ->label('Submit')
             ->action(function () {
-                if (! Auth::check()) {
+                /* if (! Auth::check()) {
                     $user = User::create([
                         'name' => $this->requestQuote->name,
                         'email' => $this->requestQuote->email,
@@ -88,7 +88,12 @@ class CartShow extends Component implements HasActions, HasForms
                 return Auth::user()->checkoutCharge($this->total * 100, 'Árajánlat', 1, [
                     'success_url' => route('checkout-success'),
                     'cancel_url' => route('checkout-cancel'),
-                ]);
+                    'metadata' => [
+                        'requestQuoteId' => $this->requestQuote->id,
+                        'userId' => Auth::user()->id,
+                    ],
+                ]); */
+                $this->redirect(route('checkout.summary', ['requestQuote' => $this->requestQuote]), true);
             })
             ->color('primary');
     }

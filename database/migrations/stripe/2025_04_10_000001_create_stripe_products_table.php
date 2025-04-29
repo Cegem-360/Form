@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('stripe_products', function (Blueprint $table): void {
             $table->id();
-            $table->string('stripe_product_id')->unique();
+            $table->string('stripe_product_id')->unique(); // price_
             $table->string('name');
             $table->string('description')->nullable();
 

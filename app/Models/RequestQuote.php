@@ -59,4 +59,23 @@ class RequestQuote extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getTotalPriceAttribute(): int
+    {
+        $total = 0;
+
+        foreach ($this->websites as $website) {
+            if ($website['required']) {
+                $total += match ($website['length']) {
+                    'short' => 20000,
+                    'medium' => 40000,
+                    'long' => 70000,
+                };
+            }
+        }
+
+        $total += $this->requestQuoteFunctionalities->sum('price');
+
+        return $total;
+    }
 }

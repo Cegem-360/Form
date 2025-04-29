@@ -66,14 +66,14 @@
 
 ## megrendelés 
 - [ ] # kosár 50%-át kell kifizetni számlával
-- [ ] # fizetési mod választása / kosár fordítása
+- [x] # fizetési mod választása / kosár fordítása
 - [ ] # Árajánlat PDF rendberakása
 - [ ] # Éresítési email Email formázása(küldjön tamásnak)
-- [ ] # +1 lépés a kosár után ahol a fizetési mód és többi adatokat szerkesztketi és látja
+- [x] # +1 lépés a kosár után ahol a fizetési mód és többi adatokat szerkesztketi és látja
 
 ##quotation form 1 page
-- [ ] # ne legyen közelező a "Company address"
+- [x] # ne legyen közelező a "Company address"
 #order
 - [ ] # bankártyás fizetés (Stripe-val)/utalásal
 
-- [ ] # Sikeres oldal/köszönöm
+- [x] # Sikeres oldal/köszönöm

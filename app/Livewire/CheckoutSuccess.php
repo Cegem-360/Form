@@ -20,11 +20,15 @@ class CheckoutSuccess extends Component
 
     public function mount(Request $request): void
     {
+        dump($request->all());
         $this->sessionId = $request->get('session_id');
     }
 
     public function render(): JsonResponse|View|Response
     {
+
+        $prices = Cashier::stripe()->prices->all();
+        dump($prices);
 
         if ($this->sessionId === null) {
             return view('livewire.checkout.checkout-unsuccess');

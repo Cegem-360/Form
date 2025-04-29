@@ -10,10 +10,12 @@ use App\Livewire\CheckoutSuccess;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Livewire\PaymentPage;
+use App\Models\Order;
 use App\Models\RequestQuote;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 require_once __DIR__ . '/auth.php';
 
@@ -50,16 +52,28 @@ Route::get('/cart/summary', CartShow::class)->name('cart.summary');
 Route::get('/payment/{record}', PaymentPage::class)->name('payment.page');
 /* Route::post('/payment/stripe', [PaymentController::class, 'stripePayment'])->name('stripe.payment');
 Route::get('/order/finalize', [PaymentController::class, 'finalizeOrder'])->name('order.finalize'); */
-Route::get('/checkout', function (Request $request) {
-    $stripePriceId = 'price_1RCJasBCJOrnQDeAtMq4qMeW';
-
+Route::middleware(['auth'])->get('/checkout', function (Request $request) {
     $quantity = 1;
+    $order = Order::factory()->create([
+        'user_id' => $request->user()->id,
+        'status' => 'pending',
+        'stripe_order_id' => Str::uuid()->toString(),
+        'amount' => $quantity,
+    ]);
 
-    return $request->user()->checkout([$stripePriceId => $quantity], [
+    $stripePriceId = 'prod_SDH5goUSju2dYP';
+
+    return $request->user()->checkoutCharge(50000 * 100, 'Website Laravel', 1, [
         'success_url' => route('checkout-success'),
         'cancel_url' => route('checkout-cancel'),
+        'metadata' => [
+            'order_id' => $order->id,
+        ],
     ]);
 })->name('checkout');
+
+Route::get('/checkout/summary/{requestQuote}', PaymentPage::class)->name('checkout.summary');
+
 Route::get('/checkout/success', CheckoutSuccess::class)->name('checkout-success');
 Route::view('/checkout/cancel', 'livewire.cancel')->name('checkout-cancel');
 
