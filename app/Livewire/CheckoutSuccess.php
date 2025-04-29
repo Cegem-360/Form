@@ -20,6 +20,7 @@ class CheckoutSuccess extends Component
         if (Session::missing('order')) {
             abort(403, 'Unauthorized action.');
         }
+
         $this->order = Order::find(Session::get('order'));
 
     }

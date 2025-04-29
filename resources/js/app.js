@@ -1,3 +1,6 @@
-/*import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import '../css/app.css';
 
-Livewire.start();*/
+import.meta.glob([
+    '../images/**',
+    '../fonts/**',
+  ]);

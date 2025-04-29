@@ -14,7 +14,7 @@
             }
 
             body {
-                font-family: Monaco, system-ui, sans-serif;
+                font-family: DejaVu Sans;
                 margin: 100px 0;
                 padding: 0;
                 line-height: 1.6;
@@ -45,6 +45,10 @@
             .logo-wrapper {
                 margin-bottom: 20px;
                 text-align: right;
+                position: fixed;
+                top: 0;
+                right: 0;
+                padding: 10px;
             }
 
             .logo {
@@ -187,30 +191,31 @@
 
     <body>
         <div class="page-cover">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-01.jpg'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-01.jpg')) }}"
                 alt="Borító" class="page-cover-image">
         </div>
         <div class="cover-text" style="z-index: 10; color: white;">
             <p style="position: absolute; top: 100px; left: 100px; font-size: 24px; font-weight: bold;">cégem360</p>
             <p style="position: absolute; top: 100px; right: 50px; font-size: 24px; text-transform: uppercase;">
                 Prémium weboldal készítés</p>
-            <p style="position: absolute; top: 500px; left: 100px; font-size: 48px; font-weight: bold;">
-                Ügyfél neve {{ $requestQuote->customer_name }} részére</p>
+            <p style="position: absolute; top: 500px; left: 100px; font-size: 32px; font-weight: bold;">
+                {{ $requestQuote->name }} részére
+            </p>
             <p style="position: absolute; top: 580px; left: 100px; font-size: 32px;">
                 Árajánlat weboldal fejlesztésre</p>
         </div>
-
+        {{-- 
         <div class="page-break"></div>
 
         <div class="page-cover">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-02.jpg'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-02.jpg')) }}"
                 alt="Tartalom" class="page-cover-image">
-        </div>
+        </div> --}}
 
         <div class="page-break"></div>
 
         <div class="page-cover">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/weboldal-arajanlat-borito-03.jpg'))) }}"
+            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-03.jpg')) }}"
                 alt="Rólunk" class="page-cover-image">
         </div>
 
@@ -218,13 +223,13 @@
 
         {{-- <div class="main-content"> --}}
         <div class="page-header">
-            <div class="logo-wrapper">
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(resource_path('images/cegem360-logo.png'))) }}"
-                    alt="Logo" class="logo">
+            <div class="logo-wrapper" style="">
+                <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/cegem360-logo.png')) }}"
+                    alt="Logo" class="logo" style="max-width: 150px; height: auto;">
             </div>
         </div>
         <div class="container">
-            <h1 class="">Quotation</h1>
+            <h1 class="">Árajánlat</h1>
             <h3>Sorszám: {{ $requestQuote->id }}</h3>
             <div class="header" style="display: flex; justify-content: space-between; gap: 100px;">
                 <h4>Árajánlat</h4>
@@ -522,8 +527,25 @@
                 @endforeach
             </div>
         </div>
-        <div class="footer">
-            <p>FOOTER</p>
+        <div class="footer"
+            style="background: #e9f3fa; color: #222; font-family: DejaVu Sans; border-top: 1px solid #b3d8f1; display: flex; justify-content: space-between; align-items: center; padding: 30px 60px; font-size: 13px;">
+            <div style="text-align: left;">
+                <strong>Cégem 360 Kft.</strong><br>
+                1182 Budapest, Gulipán utca 6.<br>
+                Iroda: 1146 Budapest, Istvánmezei út 1-3. IV. emelet<br>
+                Adószám: 14286249-2-43<br>
+                <a href="mailto:info@cegem360.hu" style="color: #39A2DB; text-decoration: none;">info@cegem360.hu</a> |
+                <a href="tel:+36203319550" style="color: #39A2DB; text-decoration: none;">+36 20 331 9550</a>
+            </div>
+            <div style="border-left: 1px solid #b3d8f1; height: 60px; margin: 0 30px;"></div>
+            <div style="text-align: right;">
+                <a href="https://cegem360.hu"
+                    style="color: #39A2DB; font-weight: bold; text-decoration: none; font-size: 15px;">www.cegem360.hu</a><br>
+                <span style="font-size: 12px; color: #666;">Prémium weboldal készítés, digitális megoldások
+                    vállalkozásoknak</span><br>
+                <span style="font-size: 11px; color: #aaa;">© {{ date('Y') }} Cégem 360 Kft. Minden jog
+                    fenntartva.</span>
+            </div>
         </div>
         {{-- </div> --}}
     </body>
