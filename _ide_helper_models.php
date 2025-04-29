@@ -341,7 +341,7 @@ namespace App\Models{
  * @property string $stripe_order_id
  * @property int $amount
  * @property \App\Enums\StripeCurrency $currency
- * @property string $status
+ * @property \App\Enums\TransactionStatus $status
  * @property string|null $customer_email
  * @property string|null $customer_name
  * @property int|null $user_id

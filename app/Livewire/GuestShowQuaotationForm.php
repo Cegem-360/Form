@@ -106,6 +106,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         return SubbmitButton::make('order')
             ->action(function (): void {
                 $data = $this->form->getState();
+                $data['user_id'] = Auth::id();
                 $record = RequestQuote::create($data);
 
                 Notification::make()
@@ -128,7 +129,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
         return SubbmitButton::make('Register')
             ->label(__('Register and Order'))
             ->action(function (array $data): void {
-                $fillForRegister = $data;
+                $fillDataForRegister = $data;
                 $data = $this->form->getState();
                 // user create and login and navigate to guestViewQuotationOrder
 
@@ -138,18 +139,19 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                  * TODO - add email verification
                  */
                 $user = User::create([
-                    'name' => $fillForRegister['name'],
-                    'email' => $fillForRegister['email'],
-                    'phone' => $fillForRegister['phone'],
-                    'company_name' => $fillForRegister['company_name'] ?? null,
-                    'company_address' => $fillForRegister['company_address'] ?? null,
+                    'name' => $fillDataForRegister['name'],
+                    'email' => $fillDataForRegister['email'],
+                    'phone' => $fillDataForRegister['phone'],
+                    'company_name' => $fillDataForRegister['company_name'] ?? null,
+                    'company_address' => $fillDataForRegister['company_address'] ?? null,
                     'company_vat_number' => null,
-                    'company_registration_number' => $fillForRegister['company_registration_number'] ?? null,
+                    'company_registration_number' => $fillDataForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make('password'), // or use a random password
                 ]);
                 $user->assignRole('guest');
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
+                $data['user_id'] = Auth::id();
                 $record = RequestQuote::create($data);
 
                 Notification::make()
@@ -162,7 +164,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                 // Redirect to Cart summary page
                 Session::put('requestQuote', $record->id);
 
-                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]), true);
+                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
             })
             ->requiresConfirmation()
             ->modalHeading(__('Register'))

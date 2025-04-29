@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Enums\TransactionStatus;
+use App\Models\Order;
 use App\Models\RequestQuote;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Livewire\Component;
-use Notification;
 
-class PaymentPage extends Component implements HasForms
+class PaymentPage extends Component implements HasActions, HasForms
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
     public ?array $data = [];
@@ -27,6 +36,10 @@ class PaymentPage extends Component implements HasForms
     {
         dump($requestQuote);
 
+        if (Auth::user()->id !== $requestQuote->user_id) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $this->requestQuote = $requestQuote; // Load order details
         if (! $this->requestQuote) {
             abort(403, 'Unauthorized action.');
@@ -38,13 +51,6 @@ class PaymentPage extends Component implements HasForms
             'phone' => $this->requestQuote->phone,
         ]);
 
-    }
-
-    public function submit(): void
-    {
-        $this->form->getState();
-
-        //
     }
 
     public function form(Form $form): Form
@@ -81,14 +87,75 @@ class PaymentPage extends Component implements HasForms
             ->statePath('data');
     }
 
-    public function payWithStripe(): void
+    public function payWithStripe(): Action
     {
-        // Handle Stripe payment logic here
+        return Action::make('payWithStripe')
+            ->action(function (): void {
+                $this->validate([
+                    'data.name' => ['required', 'string'],
+                    'data.email' => ['required', 'email'],
+                    'data.phone' => ['nullable', 'string'],
+                ]);
+
+                $this->requestQuote->save();
+
+                Notification::make()
+                    ->title(__('Order finalized successfully'))
+                    ->success()
+                    ->send();
+                Session::forget('requestQuote');
+
+                $order = Order::create([
+                    'user_id' => Auth::user()->id,
+                    'status' => TransactionStatus::PENDING,
+                    'stripe_order_id' => Str::uuid()->toString(),
+                    'amount' => $this->requestQuote->total_price,
+                ]);
+
+                Session::put('order', $order->id);
+
+                Auth::user()->checkoutCharge($this->requestQuote->total_price / 50 * 100, 'Website Laravel', 1, [
+                    'success_url' => route('checkout-success'),
+                    'cancel_url' => route('checkout-cancel'),
+                    'metadata' => [
+                        'order_id' => $order->id,
+                    ],
+                ]);
+
+            })
+            ->label(__('Pay with Stripe'));
     }
 
-    public function finalizeOrder(): void
+    public function finalizeOrder(): Action
     {
-        // Handle order finalization logic here
+        return Action::make('finalizeOrder')
+            ->label(__('Finalize Order'))
+            ->action(function (): void {
+                $this->validate([
+                    'data.name' => ['required', 'string'],
+                    'data.email' => ['required', 'email'],
+                    'data.phone' => ['nullable', 'string'],
+                ]);
+
+                $this->requestQuote->save();
+
+                Notification::make()
+                    ->title(__('Order finalized successfully'))
+                    ->success()
+                    ->send();
+                Session::forget('requestQuote');
+
+                $order = Order::create([
+                    'user_id' => Auth::user()->id,
+                    'status' => TransactionStatus::PENDING,
+                    'stripe_order_id' => Str::uuid()->toString(),
+                    'amount' => $this->requestQuote->total_price,
+                ]);
+
+                Session::put('order', $order->id);
+
+                $this->redirect(route('checkout-success'));
+            });
     }
 
     public function updateCustomerData(): void

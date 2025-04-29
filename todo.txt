@@ -74,6 +74,6 @@
 ##quotation form 1 page
 - [x] # ne legyen közelező a "Company address"
 #order
-- [ ] # bankártyás fizetés (Stripe-val)/utalásal
+- [x] # bankártyás fizetés (Stripe-val)/utalásal
 
 - [x] # Sikeres oldal/köszönöm

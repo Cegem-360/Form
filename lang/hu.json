@@ -93,5 +93,8 @@
     "Images": "Képek",
     "Register and Order": "Regisztráció és rendelés",
     "Payment Method": "Fizetési mód",
-    "Customer data updated successfully": "Ügyfél adatok sikeresen frissítve"
+    "Customer data updated successfully": "Ügyfél adatok sikeresen frissítve",
+    "Pay with Stripe": "Fizess Stripe-al",
+    "Order finalized successfully": "Rendelés sikeresen véglegesítve",
+    "Finalize Order": "Rendelés véglegesítése"
 }

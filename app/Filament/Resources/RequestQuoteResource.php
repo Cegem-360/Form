@@ -59,7 +59,6 @@ class RequestQuoteResource extends Resource
                         ->searchable()
                         ->default(Auth::user()->id),
                     TextInput::make('quotation_name')
-                        ->required()
                         ->maxLength(255),
                     TextInput::make('name')
                         ->required()
@@ -73,7 +72,6 @@ class RequestQuoteResource extends Resource
                         ->tel()
                         ->maxLength(255),
                     RichEditor::make('project_description')
-                        ->required()
                         ->maxLength(65535)
                         ->disableToolbarButtons([
                             'attachFiles',

@@ -22,7 +22,19 @@
 
         <!-- Fizetési lehetőségek -->
         <div class="mb-4">
-            <h2 class="mb-2 text-lg font-semibold">Fizetési lehetőségek</h2>
+
+            @empty(!$data['paymentMethod'])
+
+                <h2 class="mb-2 text-lg font-semibold">Fizetés véglegesítése</h2>
+
+                @if ($data['paymentMethod'] == 'bank_transfer')
+                    {{ $this->finalizeOrder() }}
+                @elseif ($data['paymentMethod'] == 'stripe')
+                    {{ $this->payWithStripe() }}
+                @else
+                    <p class="text-red-500">Kérjük, válasszon egy érvényes fizetési módot.</p>
+                @endif
+            @endempty
         </div>
     </form>
     <x-filament-actions::modals />

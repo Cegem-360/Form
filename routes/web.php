@@ -72,7 +72,7 @@ Route::middleware(['auth'])->get('/checkout', function (Request $request) {
     ]);
 })->name('checkout');
 
-Route::get('/checkout/summary/{requestQuote}', PaymentPage::class)->name('checkout.summary');
+Route::middleware(['auth'])->get('/checkout/summary/{requestQuote}', PaymentPage::class)->name('checkout.summary');
 
 Route::get('/checkout/success', CheckoutSuccess::class)->name('checkout-success');
 Route::view('/checkout/cancel', 'livewire.cancel')->name('checkout-cancel');
