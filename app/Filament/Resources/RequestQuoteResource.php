@@ -239,6 +239,8 @@ class RequestQuoteResource extends Resource
                     })
                     ->searchable(),
                 Select::make('languages')
+                   /*  ->relationship('languages', 'name') */
+                    ->preload()
                     ->translateLabel()
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))

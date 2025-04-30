@@ -90,7 +90,7 @@ class PaymentPage extends Component implements HasActions, HasForms
     public function payWithStripe(): Action
     {
         return Action::make('payWithStripe')
-            ->action(function (): void {
+            ->action(function () {
                 $this->validate([
                     'data.name' => ['required', 'string'],
                     'data.email' => ['required', 'email'],
@@ -114,13 +114,14 @@ class PaymentPage extends Component implements HasActions, HasForms
 
                 Session::put('order', $order->id);
 
-                Auth::user()->checkoutCharge($this->requestQuote->total_price / 50 * 100, 'Website Laravel', 1, [
+                return Auth::user()->checkoutCharge(($this->requestQuote->total_price / 2) * 100, 'Website Laravel', 1, [
                     'success_url' => route('checkout-success'),
                     'cancel_url' => route('checkout-cancel'),
                     'metadata' => [
                         'order_id' => $order->id,
                     ],
                 ]);
+                // dump('Payment initiated');
 
             })
             ->label(__('Pay with Stripe'));

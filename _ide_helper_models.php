@@ -512,6 +512,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read int $total_price
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WebsiteLanguage> $requestLanguages
+ * @property-read int|null $request_languages_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \App\Models\User|null $user

@@ -96,5 +96,8 @@
     "Customer data updated successfully": "Ügyfél adatok sikeresen frissítve",
     "Pay with Stripe": "Fizess Stripe-al",
     "Order finalized successfully": "Rendelés sikeresen véglegesítve",
-    "Finalize Order": "Rendelés véglegesítése"
+    "Finalize Order": "Rendelés véglegesítése",
+    "Webshop request quotes": "Webshop árajánlatkérés",
+    "Web site request quotes": "Web oldal árajánlatkérés",
+    "Landing page request quotes": "Landing page árajánlatkérés"
 }

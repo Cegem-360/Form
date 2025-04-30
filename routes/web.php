@@ -29,7 +29,7 @@ Route::get('/form-review/{form}', [FormSubmissionController::class, 'review'])->
 
 Route::get('/form/expired', [FormController::class, 'expired'])->name('form.expired');
 
-Route::get('quotation', GuestShowQuaotationForm::class)->name('quotation');
+Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
 Route::get('/quotation/preview', function () {
 
     $pdf = PDF::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([

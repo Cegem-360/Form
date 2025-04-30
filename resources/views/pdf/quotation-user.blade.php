@@ -1,3 +1,4 @@
+@use('App\Models\WebsiteLanguage')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -158,13 +159,35 @@
                 left: 0;
                 right: 0;
                 width: 100%;
-                text-align: center;
-                margin-top: 20px;
-                padding: 50px;
+                padding: 36px 32px 36px 32px;
+                font-size: 24px;
+                color: #fff;
+                background: #5d7fc2;
+                font-family: DejaVu Sans, Arial, sans-serif;
+                font-weight: bold;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                border-top: none;
+                box-sizing: border-box;
+            }
+
+            .footer .footer-col {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .footer .footer-col span {
+                font-weight: bold;
+                line-height: 1.3;
                 font-size: 12px;
-                color: #777;
-                background-color: #ccc;
-                z-index: -1;
+                text-align: left;
+            }
+
+            .footer .footer-col.right {
+                text-align: right;
+                align-items: flex-end;
             }
 
             .page-break {
@@ -233,13 +256,14 @@
             <h3>Sorszám: {{ $requestQuote->id }}</h3>
             <div class="header" style="display: flex; justify-content: space-between; gap: 100px;">
                 <h4>Árajánlat</h4>
-                <h2>{{ $requestQuote->customer_name }} részére</h2>
+                <h2>{{ $requestQuote->name }} részére</h2>
                 <div class="header-content-wrapper">
                     <div class="header-left">
                         <h4>Tárgy</h4>
-                        <p>Árajánlat {{ $requestQuote->company_name }} {{ $requestQuote->website_engine }} készítésére
+                        <p>Árajánlat {{ $requestQuote->company_name ?? $requestQuote->name }}
+                            {{ $requestQuote->website_engine }} {{ $requestQuote->websiteType->name }} készítésére
                         </p>
-                        <h4>AJÁNLATTEVŐ CÉG:</h4>
+                        <h4>AJÁNLATOT ADÓ CÉG:</h4>
                         <p>Cégem 360 Kft.<br />
                             Székhely: 1182 Budapest, Gulipán utca 6.<br />
                             Iroda: 1146 Budapest, Istvánmezei út 1-3. IV. emelet<br />
@@ -259,42 +283,53 @@
                     </div>
                 </div>
             </div>
+            <div class="page-break"></div>
             <div class="quotation-details">
+
                 <h3>A projekt leírása</h3>
                 <p>Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az ügyfél
-                    igényeinek, megfelelően <strong>egyedi fejlesztésű {{ $requestQuote->website_engine }} alapú
+                    igényeinek, megfelelően <strong>{{ $requestQuote->websiteType->name }}
+                        {{ $requestQuote->website_engine }} alapú
                         motorral.</strong></p>
                 <ul>
                     <li>minőségi, új webdesign</li>
                     <li>okostelefonra optimalizált megjelenés elkészítése</li>
-                    <li>főoldal és Rólunk (Nagy terjedelem) 3 aloldal készítése (Katalógus, Rólunk, Kapcsolat)</li>
-                    <li>webshop készítése az árajánlathoz írt specifikációk alapján</li>
-                    <li>kategóriák és termékek feltöltése</li>
+                    @foreach ($requestQuote->websites as $page)
+                        @if ($page['required'])
+                            <li>{{ $page['name'] }} ({{ __(ucfirst($page['length'])) }} terjedelem)</li>
+                        @endif
+                    @endforeach
+                    {{--   <li>webshop készítése az árajánlathoz írt specifikációk alapján</li>
+                    <li>kategóriák és termékek feltöltése</li> --}}
                     <li>különböző, legújabb védelmi rendszerek telepítése</li>
                     <li>alap Google optimalizálás beállítás: struktúra és meta adatok beállítása, Google Analytics
                         telepítése, beállítása (Analitikai jelentések a látogatottságára vonatkozóan)</li>
                     <li>különböző közösségi média platformok mérőinek telepítése (Facebook Pixel)</li>
                     <li>GDPR beállítások (Süti értesítés, Adatvédelmi nyilatkozat)</li>
-                    <li>üzenetküldő űrlap</li>
+                    {{-- <li>üzenetküldő űrlap</li> --}}
                 </ul>
 
-                <p><strong>Quotation ID:</strong> {{ $requestQuote->id }}</p>
-                <p><strong>Customer Name:</strong> {{ $requestQuote->customer_name }}</p>
-                <p><strong>Email:</strong> {{ $requestQuote->email }}</p>
-                <p><strong>Phone:</strong> {{ $requestQuote->phone }}</p>
-                <p><strong>Project Description:</strong> {{ $requestQuote->project_description }}</p>
-                <p><strong>Company Name:</strong> {{ $requestQuote->company_name }}</p>
-                <p><strong>Website Type:</strong> {{ $requestQuote->websiteType()->first()->name ?? 'N/A' }}</p>
-                <p><strong>Have Website Graphic:</strong> {{ $requestQuote->have_website_graphic ? 'Yes' : 'No' }}</p>
-                <p><strong>Is Multilingual:</strong> {{ $requestQuote->is_multilangual ? 'Yes' : 'No' }}</p>
-                <p><strong>Languages:</strong> {{ implode(', ', $requestQuote->languages ?? []) }}</p>
-                <p><strong>Is E-commerce:</strong> {{ $requestQuote->is_ecommerce ? 'Yes' : 'No' }}</p>
-                <p><strong>E-commerce Functionalities:</strong>
-                    {{ implode(', ', is_array($requestQuote->ecommerce_functionalities) ? $requestQuote->ecommerce_functionalities : []) }}
-                </p>
-                <p><strong>Website Engine:</strong> {{ $requestQuote->website_engine }}</p>
             </div>
+            @if (!$requestQuote->requestQuoteFunctionalities->isEmpty())
+                <div class="page-break"></div>
+                <div class="quotation-details">
 
+                    <h3>A projekt funkcíók</h3>
+
+                    <ul>
+
+                        @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
+                            <li>
+                                {{ $functionality->name }} - {{ number_format($functionality->price, 0, ',', ' ') }}
+                                Ft <br />
+                                <span style="font-size: 12px;">{{ $functionality->description }}</span>
+                            </li>
+                        @endforeach
+
+                    </ul>
+
+                </div>
+            @endif
             <div class="page-break"></div>
 
             <div>
@@ -436,7 +471,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><b>WordPress alapú weboldal készítés</b></td>
+                            <td><b>{{ $requestQuote->website_engine }} weboldal készítés</b></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -454,53 +489,57 @@
                             <td>80000 Ft</td>
                             <td>80000 Ft</td>
                         </tr>
-                        <tr>
-                            <td>Főoldal</td>
-                            <td>nagy</td>
-                            <td>70000 Ft</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Rólunk</td>
-                            <td>közepes</td>
-                            <td>40000 Ft</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Kapcsolat</td>
-                            <td>kicsi</td>
-                            <td>20000 Ft</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Űrlap beállítás</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @foreach ($requestQuote->websites as $page)
+                            @if ($page['required'])
+                                <tr>
+                                    <td>{{ $page['name'] }} </td>
+                                    <td>{{ __(ucfirst($page['length'])) }} </td>
+                                    <td> {{ match ($page['length']) {
+                                        'short' => number_format(20000, 0, ',', ' ') . ' Ft',
+                                        'medium' => number_format(40000, 0, ',', ' ') . ' Ft',
+                                        'long' => number_format(70000, 0, ',', ' ') . ' Ft',
+                                        default => number_format(0, 0, ',', ' ') . ' Ft',
+                                    } }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            @endif
+                        @endforeach
+
+                        @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
+                            <tr>
+                                <td>{{ $functionality->name }} <br />
+                                    <span style="font-size: 12px;">{{ $functionality->description }}</span>
+                                </td>
+                                <td>1 db</td>
+                                <td>{{ number_format($functionality->price, 0, ',', ' ') }} Ft</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
                         <tr>
                             <td colspan="4" style="text-align: right;">
                                 <h3><b>+ ÁFA</b></h3>
                             </td>
                         </tr>
-                        <tr>
-                            <td><b>Nyelvesítés</b></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Angol</td>
-                            <td>1 db</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Német</td>
-                            <td>5 db</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        @if ($requestQuote->is_multilangual)
+                            <tr>
+                                <td><b>Nyelvesítés</b></td>
+                                <td>1</td>
+                                <td>felár 30%</td>
+                                <td></td>
+                            </tr>
+                            @dump($requestQuote->languages)
+                            @foreach ($requestQuote->languages as $language)
+                                <tr>
+                                    {{ WebsiteLanguage::find($language)->name }}
+                                    {{-- <td>{{ $language->name }}</td>
+                                    {{--   <td>{{ $language->name }}</td>
+                                    <td> 1 db</td>
+                                    <td></td>
+                                    <td></td> --}}
+                                </tr>
+                            @endforeach
+                        @endif
                         <tr>
                             <td colspan="4" style="text-align: right;">
                                 <h3><b>+ ÁFA</b></h3>
@@ -510,7 +549,7 @@
                 </table>
             </div>
 
-            <div class="calculation">
+            {{-- <div class="calculation">
                 <h3>Cost Calculation</h3>
                 @foreach ($requestQuote->websites as $page)
                     @if ($page['required'])
@@ -525,28 +564,47 @@
                         <p></p>
                     @endif
                 @endforeach
+            </div> --}}
+        </div>
+        <div class="footer">
+            <div class="footer-col">
+                <span>Cégem 360 Kft.</span>
+                <span style="margin-left: 380px;">Tel.: +36 20 331 9550</span><br />
+                <span>Székhely: 1182 Budapest, Gulipán utca 6.</span>
+                <span style="margin-left: 200px;">E-mail: info@cegem360.hu</span><br />
+                <span>Cg.: 01-09-897122 / Adószám: 14286249-2-43</span>
+                <span style="margin-left: 175px;">Web: cegem360.hu</span>
+            </div>
+            <div class="footer-col right">
+
             </div>
         </div>
-        <div class="footer"
-            style="background: #e9f3fa; color: #222; font-family: DejaVu Sans; border-top: 1px solid #b3d8f1; display: flex; justify-content: space-between; align-items: center; padding: 30px 60px; font-size: 13px;">
-            <div style="text-align: left;">
-                <strong>Cégem 360 Kft.</strong><br>
-                1182 Budapest, Gulipán utca 6.<br>
-                Iroda: 1146 Budapest, Istvánmezei út 1-3. IV. emelet<br>
-                Adószám: 14286249-2-43<br>
-                <a href="mailto:info@cegem360.hu" style="color: #39A2DB; text-decoration: none;">info@cegem360.hu</a> |
-                <a href="tel:+36203319550" style="color: #39A2DB; text-decoration: none;">+36 20 331 9550</a>
-            </div>
-            <div style="border-left: 1px solid #b3d8f1; height: 60px; margin: 0 30px;"></div>
-            <div style="text-align: right;">
-                <a href="https://cegem360.hu"
-                    style="color: #39A2DB; font-weight: bold; text-decoration: none; font-size: 15px;">www.cegem360.hu</a><br>
-                <span style="font-size: 12px; color: #666;">Prémium weboldal készítés, digitális megoldások
-                    vállalkozásoknak</span><br>
-                <span style="font-size: 11px; color: #aaa;">© {{ date('Y') }} Cégem 360 Kft. Minden jog
-                    fenntartva.</span>
-            </div>
-        </div>
+        <style>
+            .footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 36px 32px;
+                font-size: 12px;
+                color: #fff;
+                background: #5d7fc2;
+                font-family: DejaVu Sans, Arial, sans-serif;
+                font-weight: bold;
+                box-sizing: border-box;
+            }
+
+            .footer .footer-col {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                text-align: left;
+            }
+
+            .footer .footer-col.right {
+                text-align: right;
+                align-items: flex-end;
+            }
+        </style>
         {{-- </div> --}}
     </body>
 

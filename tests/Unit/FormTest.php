@@ -13,6 +13,7 @@ it('has fillable attributes', function (): void {
     $form = new FormQuestion;
 
     $expected = [
+        'user_id',
         'domain_id',
         'project_id',
         'token',

@@ -6,10 +6,13 @@ namespace App\Models;
 
 use App\Enums\ClientType;
 use Database\Factories\RequestQuoteFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RequestQuote extends Model
 {
@@ -60,6 +63,11 @@ class RequestQuote extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function requestLanguages(): HasMany
+    {
+        return $this->hasMany(WebsiteLanguage::class);
+    }
+
     public function getTotalPriceAttribute(): int
     {
         $total = 0;
@@ -75,5 +83,29 @@ class RequestQuote extends Model
         }
 
         return $total + $this->requestQuoteFunctionalities->sum('price');
+    }
+
+    #[Scope]
+    public function webShop(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Webshop');
+        });
+    }
+
+    #[Scope]
+    public function webSite(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Weboldal');
+        });
+    }
+
+    #[Scope]
+    public function landingPage(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Landing Page	');
+        });
     }
 }

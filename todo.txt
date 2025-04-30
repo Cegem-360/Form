@@ -65,9 +65,9 @@
 
 
 ## megrendelés 
-- [ ] # kosár 50%-át kell kifizetni számlával
+- [x] # kosár 50%-át kell kifizetni számlával
 - [x] # fizetési mod választása / kosár fordítása
-- [ ] # Árajánlat PDF rendberakása
+- [x] # Árajánlat PDF rendberakása
 - [ ] # Éresítési email Email formázása(küldjön tamásnak)
 - [x] # +1 lépés a kosár után ahol a fizetési mód és többi adatokat szerkesztketi és látja
 
@@ -77,3 +77,15 @@
 - [x] # bankártyás fizetés (Stripe-val)/utalásal
 
 - [x] # Sikeres oldal/köszönöm
+
+
+- [ ] árajánlatban 50% össze résznél
+
+
+- [ ] cart/summary/ oldalon
+
+- [ ] végösszed helyet 
+
+- [ ] Előleg összeg
+
+- [x] abort átszerkeszteni szebre
