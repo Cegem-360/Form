@@ -4,31 +4,34 @@ declare(strict_types=1);
 
 namespace App\Filament\Pages\Auth;
 
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Pages\Auth\EditProfile as BasePage;
+use Illuminate\Support\Facades\Auth;
 
-class Login extends BasePage
+final class EditProfile extends BasePage
 {
     public function mount(): void
     {
         parent::mount();
 
         $this->form->fill([
-            'email' => 'admin@admin.com',
-            'password' => 'password',
-            'remember' => true,
+            Auth::user()->name,
+            Auth::user()->email,
         ]);
     }
 
-    protected function fillForm(): void
+    public function form(Form $form): Form
     {
-        $data = $this->getUser()->attributesToArray();
-
-        $this->callHook('beforeFill');
-
-        $data = $this->mutateFormDataBeforeFill($data);
-
-        $this->form->fill($data);
-
-        $this->callHook('afterFill');
+        return $form
+            ->schema([
+                TextInput::make('username')
+                    ->required()
+                    ->maxLength(255),
+                $this->getNameFormComponent(),
+                $this->getEmailFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getPasswordConfirmationFormComponent(),
+            ]);
     }
 }

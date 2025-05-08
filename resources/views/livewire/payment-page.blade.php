@@ -16,23 +16,27 @@
             <div class="flex items-center justify-between">
                 <span class="font-medium">Végösszeg:</span>
                 <span
-                    class="text-xl font-bold text-green-700">{{ Number::currency($requestQuote->getTotalPriceAttribute() ?? 0, in: 'HUF', locale: 'hu') }}</span>
+                    class="text-xl font-bold text-green-700">{{ Number::currency($requestQuote->getTotalPriceAttribute() ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}</span>
             </div>
         </div>
 
         <!-- Fizetési lehetőségek -->
-        <div class="mb-4">
+        <div class="mb-4 text-center">
 
             @empty(!$data['paymentMethod'])
 
-                <h2 class="mb-2 text-lg font-semibold">Fizetés véglegesítése</h2>
+                <h2 class="mb-2 text-lg font-semibold text-center">Fizetés véglegesítése</h2>
 
                 @if ($data['paymentMethod'] == 'bank_transfer')
-                    {{ $this->finalizeOrder() }}
+                    <div class="text-center">
+                        {{ $this->finalizeOrder() }}
+                    </div>
                 @elseif ($data['paymentMethod'] == 'stripe')
-                    {{ $this->payWithStripe() }}
+                    <div class="text-center">
+                        {{ $this->payWithStripe() }}
+                    </div>
                 @else
-                    <p class="text-red-500">Kérjük, válasszon egy érvényes fizetési módot.</p>
+                    <p class="text-center text-red-500">Kérjük, válasszon egy érvényes fizetési módot.</p>
                 @endif
             @endempty
         </div>

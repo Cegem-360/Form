@@ -99,5 +99,10 @@
     "Finalize Order": "Rendelés véglegesítése",
     "Webshop request quotes": "Webshop árajánlatkérés",
     "Web site request quotes": "Web oldal árajánlatkérés",
-    "Landing page request quotes": "Landing page árajánlatkérés"
+    "Landing page request quotes": "Landing page árajánlatkérés",
+    "INDIVIDUAL": "Magánszemély",
+    "COMPANY": "Cég",
+    "company": "Cég",
+    "individual": "Magánszemély",
+    "Bank Transfer": "Banki átutalás"
 }

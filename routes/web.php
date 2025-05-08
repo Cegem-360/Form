@@ -17,10 +17,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
-require_once __DIR__ . '/auth.php';
+require_once __DIR__.'/auth.php';
 
-Route::get('/', function () {
-    return redirect()->route('filament.admin.auth.login');
+Route::middleware(['auth'])->get('/', function () {
+    return redirect()->route('filament.admin.pages.dashboard');
 })->name('home');
 
 Route::get('/kerdoiv/{token?}', FormQuestionForm::class)->name('kerdoiv');
@@ -32,7 +32,7 @@ Route::get('/form/expired', [FormController::class, 'expired'])->name('form.expi
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
 Route::get('/quotation/preview', function () {
 
-    $pdf = PDF::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
+    $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
         'id' => 1,
         'company_name' => 'Test Company',
         'name' => 'Test Name',
@@ -43,7 +43,7 @@ Route::get('/quotation/preview', function () {
 })->name('quotation.preview');
 
 Route::get('/quotation/preview/{requestQuote}', function (RequestQuote $requestQuote) {
-    $pdf = PDF::loadView('pdf.quotation-user', ['requestQuote' => $requestQuote]);
+    $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 
     return $pdf->stream('quotation-preview.pdf');
 })->name('quotation.preview.id');
@@ -61,7 +61,7 @@ Route::middleware(['auth'])->get('/checkout', function (Request $request) {
         'amount' => $quantity,
     ]);
 
-    $stripePriceId = 'prod_SDH5goUSju2dYP';
+    // $stripePriceId = 'prod_SDH5goUSju2dYP';
 
     return $request->user()->checkoutCharge(50000 * 100, 'Website Laravel', 1, [
         'success_url' => route('checkout-success'),

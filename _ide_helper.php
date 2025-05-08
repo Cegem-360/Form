@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.11.0.
+ * Generated for Laravel 12.13.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -13662,7 +13662,6 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
-     * @method static array|(\Illuminate\Http\UploadedFile|\Illuminate\Http\UploadedFile[]|null file(string|null $key = null, mixed $default = null)
      * @method static array validate(array $rules, ...$params)
      * @method static array validateWithBag(string $errorBag, array $rules, ...$params)
      * @method static bool hasValidSignature(bool $absolute = true)
@@ -14047,7 +14046,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|null $key
          * @param mixed $default
-         * @return \Symfony\Component\HttpFoundation\InputBag|mixed 
+         * @return ($key is null ? \Symfony\Component\HttpFoundation\InputBag : mixed)
          * @static 
          */
         public static function json($key = null, $default = null)
@@ -14197,7 +14196,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|null $param
          * @param mixed $default
-         * @return \Illuminate\Routing\Route|object|string|null 
+         * @return ($param is null ? \Illuminate\Routing\Route : object|string|null)
          * @static 
          */
         public static function route($param = null, $default = null)
@@ -18422,7 +18421,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Set the Schema Blueprint resolver callback.
          *
-         * @param \Closure $resolver
+         * @param \Illuminate\Database\Schema\TResolver|null $resolver
          * @return void 
          * @static 
          */
@@ -29846,7 +29845,7 @@ namespace  {
         /**
          * Set the columns to be selected.
          *
-         * @param array|mixed $columns
+         * @param mixed $columns
          * @return \Illuminate\Database\Eloquent\Builder<static> 
          * @static 
          */
@@ -29916,7 +29915,7 @@ namespace  {
         /**
          * Add a new select column to the query.
          *
-         * @param array|mixed $column
+         * @param mixed $column
          * @return \Illuminate\Database\Eloquent\Builder<static> 
          * @static 
          */
@@ -31759,7 +31758,7 @@ namespace  {
         /**
          * Get the count of the total records for the paginator.
          *
-         * @param array $columns
+         * @param array<string|\Illuminate\Contracts\Database\Query\Expression> $columns
          * @return int 
          * @static 
          */
@@ -32069,7 +32068,7 @@ namespace  {
         /**
          * Get all of the query builder's columns in a text-only array with all expressions evaluated.
          *
-         * @return array 
+         * @return list<string> 
          * @static 
          */
         public static function getColumns()
@@ -32128,7 +32127,7 @@ namespace  {
          * Set the bindings on the query builder.
          *
          * @param list<mixed> $bindings
-         * @param string $type
+         * @param "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type
          * @return \Illuminate\Database\Eloquent\Builder<static> 
          * @throws \InvalidArgumentException
          * @static 
@@ -32143,7 +32142,7 @@ namespace  {
          * Add a binding to the query.
          *
          * @param mixed $value
-         * @param string $type
+         * @param "select"|"from"|"join"|"where"|"groupBy"|"having"|"order"|"union"|"unionOrder" $type
          * @return \Illuminate\Database\Eloquent\Builder<static> 
          * @throws \InvalidArgumentException
          * @static 

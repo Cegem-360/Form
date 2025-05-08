@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
-class PaymentPage extends Component implements HasActions, HasForms
+final class PaymentPage extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
@@ -78,7 +78,7 @@ class PaymentPage extends Component implements HasActions, HasForms
                     ->label('Payment Method')
                     ->options([
                         'stripe' => 'Stripe',
-                        'bank_transfer' => 'Bank Transfer',
+                        'bank_transfer' => __('Bank Transfer'),
                     ])
                     ->default('stripe')
                     ->required()

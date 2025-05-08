@@ -79,13 +79,11 @@
 - [x] # Sikeres oldal/köszönöm
 
 
-- [ ] árajánlatban 50% össze résznél
+- [ ] árajánlatban 50% összeg résznél
 
 
 - [ ] cart/summary/ oldalon
 
-- [ ] végösszed helyet 
-
-- [ ] Előleg összeg
+- [x] végösszeg helyet Előleg összeg
 
 - [x] abort átszerkeszteni szebre

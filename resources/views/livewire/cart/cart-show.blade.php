@@ -23,20 +23,12 @@
                                     </div>
                                 </div>
                                 <div class="text-right min-w-[120px]">
-                                    <div class="text-sm text-gray-400 line-through">
-                                        @if ($page['length'] === 'short')
-                                            {{ Number::currency(25000, in: 'HUF', locale: 'hu') }}
-                                        @elseif($page['length'] === 'medium')
-                                            {{ Number::currency(45000, in: 'HUF', locale: 'hu') }}
-                                        @else
-                                            {{ Number::currency(80000, in: 'HUF', locale: 'hu') }}
-                                        @endif
-                                    </div>
+
                                     <div class="text-lg font-bold text-green-700">
                                         {{ match ($page['length']) {
-                                            'short' => Number::currency(20000, in: 'HUF', locale: 'hu'),
-                                            'medium' => Number::currency(40000, in: 'HUF', locale: 'hu'),
-                                            'long' => Number::currency(70000, in: 'HUF', locale: 'hu'),
+                                            'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
+                                            'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
+                                            'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
                                         } }}
                                     </div>
                                 </div>
@@ -57,7 +49,7 @@
                                 <div class="text-xs text-gray-500">{{ $function->description ?? 'Nincs leírás' }}</div>
                             </div>
                             <div class="font-bold text-green-700">
-                                {{ Number::currency($function['price'], in: 'HUF', locale: 'hu') }}
+                                {{ Number::currency($function['price'], in: 'HUF', locale: 'hu', precision: 0) }}
                             </div>
                         </li>
                     @endforeach
@@ -72,49 +64,20 @@
                 <div class="flex justify-between py-1">
                     <span class="text-gray-700">Tételek összesen</span>
                     <span
-                        class="font-semibold">{{ Number::currency($itemTotal ?? $total, in: 'HUF', locale: 'hu') }}</span>
+                        class="font-semibold">{{ Number::currency($itemTotal ?? $total, in: 'HUF', locale: 'hu', precision: 0) }}</span>
                 </div>
-                {{--  <div class="flex justify-between py-1">
-                <span class="text-gray-700">Kedvezmény</span>
-                <span class="text-green-700">-{{ Number::currency($discount ?? 0, in: 'HUF', locale: 'hu') }}</span>
-            </div>
-            <div class="flex justify-between py-1">
-                <span class="text-gray-700">Szállítás</span>
-                <span class="text-green-700">Ingyenes</span>
-            </div>
-            <div class="flex justify-between py-1">
-                <span class="text-gray-700">Kupon</span>
-                <span class="text-green-700">-{{ Number::currency($coupon ?? 0, in: 'HUF', locale: 'hu') }}</span>
-            </div> --}}
+
                 <div class="my-3 border-t"></div>
                 <div class="flex items-center justify-between py-2">
-                    <span class="text-lg font-bold">Végösszeg</span>
+                    <span class="text-lg font-bold">Előleg összeg</span>
                     <span
-                        class="text-2xl font-bold text-green-700">{{ Number::currency($total, in: 'HUF', locale: 'hu') }}</span>
+                        class="text-2xl font-bold text-green-700">{{ Number::currency($total / 2, in: 'HUF', locale: 'hu', precision: 0) }}</span>
                 </div>
                 <button type="button" wire:click="checkout"
                     class="w-full py-3 mt-4 text-lg font-bold text-white transition bg-orange-500 rounded-lg hover:bg-orange-600">Tovább
                     a fizetéshez</button>
             </div>
-            <!-- Extra információk, garanciák -->
-            {{--  <div class="space-y-2">
-            <div class="flex items-center gap-2 p-3 bg-white rounded-lg shadow">
-                <span class="text-blue-600">🍏</span>
-                <span class="font-medium">Ízgarancia</span>
-            </div>
-            <div class="flex items-center gap-2 p-3 bg-white rounded-lg shadow">
-                <span class="text-blue-600">🔄</span>
-                <span class="font-medium">100% rugalmas előfizetés</span>
-            </div>
-            <div class="flex items-center gap-2 p-3 bg-white rounded-lg shadow">
-                <span class="text-blue-600">✅</span>
-                <span class="font-medium">Tiszta címke minősítés</span>
-            </div>
-            <div class="flex items-center gap-2 p-3 bg-white rounded-lg shadow">
-                <span class="text-blue-600">⭐</span>
-                <span class="font-medium">Smart Rewards</span>
-            </div>
-        </div> --}}
+
         </div>
         {{ $this->form }}
 

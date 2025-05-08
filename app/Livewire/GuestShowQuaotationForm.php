@@ -45,7 +45,7 @@ use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class GuestShowQuaotationForm extends Component implements HasActions, HasForms
+final class GuestShowQuaotationForm extends Component implements HasActions, HasForms
 {
     use InteractsWithActions;
     use InteractsWithForms;
@@ -265,6 +265,11 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
             ->icon('heroicon-o-envelope');
     }
 
+    public function render(): View
+    {
+        return view('livewire.guest-show-quaotation-form');
+    }
+
     private function getClientInformationSchema(): Step
     {
         return
@@ -295,8 +300,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->live()
                         ->required()
                         ->options(ClientType::class)
-                        ->preload()
-                        ->searchable(),
+                        ->preload(),
                     TextInput::make('company_name')
                         ->translateLabel()
                         ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
@@ -322,6 +326,7 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                         ->preload(),
                     Select::make('website_engine')
                         ->translateLabel()
+                        ->preload()
                         ->options([
                             'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
@@ -573,10 +578,5 @@ class GuestShowQuaotationForm extends Component implements HasActions, HasForms
                     ->rules(['accepted']),
             ]),
         ]);
-    }
-
-    public function render(): View
-    {
-        return view('livewire.guest-show-quaotation-form');
     }
 }

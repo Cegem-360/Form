@@ -72,6 +72,7 @@ test('user can delete their account', function (): void {
 test('correct password must be provided to delete account', function (): void {
     $user = User::factory()->create();
     $user->assignRole('user');
+
     $response = $this
         ->actingAs($user)
         ->from('/profile')
