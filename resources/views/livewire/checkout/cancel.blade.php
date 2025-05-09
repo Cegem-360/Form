@@ -1,3 +1,4 @@
+@use('Illuminate\Support\Facades\Session')
 <div>
     <div class="p-6 bg-white rounded-lg shadow-md">
         <h2 class="mb-4 text-xl font-semibold text-gray-800">Cancel Subscription</h2>
@@ -9,7 +10,7 @@
         </button>
     </div>
     <div class="mt-4">
-        <a href="{{ route('cart.summary') }}"
+        <a href="{{ route('cart.summary', ['requestQuote' => Session::get('requestQuote')]) }}"
             class="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500">
             Back to Cart Summary
         </a>

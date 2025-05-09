@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire;
+namespace App\Livewire\Checkout;
 
 use App\Enums\TransactionStatus;
 use App\Models\Order;
@@ -18,7 +18,6 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 final class PaymentPage extends Component implements HasActions, HasForms
@@ -32,18 +31,17 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     public ?RequestQuote $requestQuote;
 
-    public function mount(RequestQuote $requestQuote): void
+    public function mount(?RequestQuote $requestQuote = null): void
     {
-        dump($requestQuote);
+        /*
+                if (Auth::user()->id !== $requestQuote->user_id) {
+                    abort(403, 'Unauthorized action.');
+                }
 
-        if (Auth::user()->id !== $requestQuote->user_id) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $this->requestQuote = $requestQuote; // Load order details
-        if (! $this->requestQuote) {
-            abort(403, 'Unauthorized action.');
-        }
+                $this->requestQuote = $requestQuote; // Load order details
+                if (! $this->requestQuote) {
+                    abort(403, 'Unauthorized action.');
+                } */
 
         $this->form->fill([
             'name' => $this->requestQuote->name,
@@ -103,24 +101,45 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->title(__('Order finalized successfully'))
                     ->success()
                     ->send();
-                Session::forget('requestQuote');
 
                 $order = Order::create([
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
-                    'stripe_order_id' => Str::uuid()->toString(),
+                    'request_quote_id' => $this->requestQuote->id,
                     'amount' => $this->requestQuote->total_price,
                 ]);
 
                 Session::put('order', $order->id);
 
-                return Auth::user()->checkoutCharge(($this->requestQuote->total_price / 2) * 100, 'Website Laravel', 1, [
-                    'success_url' => route('checkout-success'),
-                    'cancel_url' => route('checkout-cancel'),
-                    'metadata' => [
-                        'order_id' => $order->id,
+                return Auth::user()->checkoutCharge(
+                    amount: ($this->requestQuote->total_price / 2) * 100,
+                    name: 'Website Laravel',
+                    quantity: 1,
+                    sessionOptions: [
+                        'success_url' => route('checkout.success', ['requestQuote' => $this->requestQuote->id]),
+                        'cancel_url' => route('checkout.unsuccess', ['requestQuote' => $this->requestQuote->id]),
+                        'metadata' => [
+                            'order_id' => $order->id,
+                        ],
                     ],
-                ]);
+                    customerOptions: [
+                        'customer_details' => [
+                            'address' => [
+                                'city' => 'Budapest',
+                                'country' => 'HU',
+                                'line1' => null,
+                                'line2' => null,
+                                'postal_code' => null,
+                                'state' => null,
+                            ],
+                            'email' => 'admin@admin.com',
+                            'name' => 'Szabó Zoltán',
+                            'phone' => null,
+                            'tax_exempt' => 'none',
+                            'tax_ids' => [],
+                        ],
+                    ]
+                );
                 // dump('Payment initiated');
 
             })
@@ -149,13 +168,13 @@ final class PaymentPage extends Component implements HasActions, HasForms
                 $order = Order::create([
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
-                    'stripe_order_id' => Str::uuid()->toString(),
+                    'request_quote_id' => $this->requestQuote->id,
                     'amount' => $this->requestQuote->total_price,
                 ]);
 
                 Session::put('order', $order->id);
 
-                $this->redirect(route('checkout-success'));
+                $this->redirect(route('checkout.success'));
             });
     }
 
@@ -175,6 +194,6 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     public function render()
     {
-        return view('livewire.payment-page');
+        return view('livewire.checkout.payment-page');
     }
 }

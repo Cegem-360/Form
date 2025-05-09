@@ -1,12 +1,17 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-C_JIwEO0.js",
+    "file": "assets/app-goa13dIJ.js",
     "name": "app",
     "src": "resources/css/app.css",
     "isEntry": true,
     "css": [
-      "assets/app-M-RYBIy7.css"
+      "assets/app-D_WW1iVv.css"
     ]
+  },
+  "resources/css/style.css": {
+    "file": "assets/style-BsEzOD7s.css",
+    "src": "resources/css/style.css",
+    "isEntry": true
   },
   "resources/images/cegem360-logo.png": {
     "file": "assets/cegem360-logo-DhaG7cVa.png",
@@ -25,7 +30,7 @@
     "src": "resources/images/weboldal-arajanlat-borito-03.jpg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BGYJXXc4.js",
+    "file": "assets/app-B0X45mP2.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,

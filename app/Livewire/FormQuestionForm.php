@@ -26,7 +26,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class FormQuestionForm extends Component implements HasForms
+final class FormQuestionForm extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -40,7 +40,7 @@ class FormQuestionForm extends Component implements HasForms
     {
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
-        if ($this->post instanceof FormQuestion) {
+        if (! $this->post instanceof FormQuestion) {
             $this->redirect(route('form.expired'));
         }
 

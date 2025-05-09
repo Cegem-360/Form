@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Resources\OrderResource\Pages\EditOrder;
-use App\Filament\Resources\OrderResource\Pages;
+use App\Filament\Resources\OrderResource\Pages\ListOrders;
 use App\Models\Order;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class OrderResource extends Resource
+final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
@@ -33,7 +30,7 @@ class OrderResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('stripe_order_id')
+                TextInput::make('request_quote_id')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('amount')
@@ -59,7 +56,7 @@ class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('stripe_order_id')
+                TextColumn::make('request_quote_id.name')
                     ->searchable(),
                 TextColumn::make('amount')
                     ->numeric()

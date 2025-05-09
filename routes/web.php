@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\FormSubmissionController;
-use App\Http\Controllers\PaymentController;
 use App\Livewire\Cart\CartShow;
-use App\Livewire\CheckoutSuccess;
+use App\Livewire\Checkout\CheckoutSuccess;
+use App\Livewire\Checkout\CheckoutUnsuccess;
+use App\Livewire\Checkout\PaymentPage;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
-use App\Livewire\PaymentPage;
-use App\Models\Order;
 use App\Models\RequestQuote;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
+use Spatie\Browsershot\Browsershot;
 
 require_once __DIR__.'/auth.php';
 
@@ -30,51 +28,57 @@ Route::get('/form-review/{form}', [FormSubmissionController::class, 'review'])->
 Route::get('/form/expired', [FormController::class, 'expired'])->name('form.expired');
 
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
-Route::get('/quotation/preview', function () {
 
-    $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
-        'id' => 1,
-        'company_name' => 'Test Company',
-        'name' => 'Test Name',
-        'email' => 'test@test.com',
-    ])]);
+Route::name('quotation.')->prefix('quotation')->group(function () {
+    Route::get('preview/{requestQuote}', function () {
+        /*
+                $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
+                    'id' => 1,
+                    'company_name' => 'Test Company',
+                    'name' => 'Test Name',
+                    'email' => 'test@test.com',
+                ])]);
 
-    return $pdf->stream('quotation-preview.pdf');
-})->name('quotation.preview');
+                return $pdf->stream('quotation-preview.pdf'); */
+        $requestQuote = RequestQuote::factory()->make([
+            'id' => 1,
+            'company_name' => 'Test Company',
+            'name' => 'Test Name',
+            'email' => '',
+        ]);
+        $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
 
-Route::get('/quotation/preview/{requestQuote}', function (RequestQuote $requestQuote) {
-    $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => $requestQuote]);
+        Browsershot::html($template)->savePdf(storage_path('app/public/quotation.pdf'));
 
-    return $pdf->stream('quotation-preview.pdf');
-})->name('quotation.preview.id');
+        return response()->file(storage_path('app/public/quotation.pdf'));
+        /* ->setOption('args', ['--no-sandbox'])
+        ->setOption('disable-smart-shrinking', true)
+        ->setOption('viewport', ['width' => 1280, 'height' => 800])
+        ->setOption('format', 'A4')
+        ->setOption('margin-top', '0')
+        ->setOption('margin-bottom', '0')
+        ->setOption('margin-left', '0')
+        ->setOption('margin-right', '0')
+        ->pdf() */
 
-Route::get('/cart/summary/{requestQuote}', CartShow::class)->name('cart.summary');
-Route::get('/payment/{record}', PaymentPage::class)->name('payment.page');
-/* Route::post('/payment/stripe', [PaymentController::class, 'stripePayment'])->name('stripe.payment');
-Route::get('/order/finalize', [PaymentController::class, 'finalizeOrder'])->name('order.finalize'); */
-Route::middleware(['auth'])->get('/checkout', function (Request $request) {
-    $quantity = 1;
-    $order = Order::factory()->create([
-        'user_id' => $request->user()->id,
-        'status' => 'pending',
-        'stripe_order_id' => Str::uuid()->toString(),
-        'amount' => $quantity,
-    ]);
+    })->name('preview');
 
-    // $stripePriceId = 'prod_SDH5goUSju2dYP';
+    /* Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
+        $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 
-    return $request->user()->checkoutCharge(50000 * 100, 'Website Laravel', 1, [
-        'success_url' => route('checkout-success'),
-        'cancel_url' => route('checkout-cancel'),
-        'metadata' => [
-            'order_id' => $order->id,
-        ],
-    ]);
-})->name('checkout');
+        return $pdf->stream('quotation-preview.pdf');
+    })->name('preview.id'); */
+});
+Route::middleware(['auth'])->name('cart.')->prefix('cart')->group(function () {
+    Route::get('summary/{requestQuote}', CartShow::class)->name('summary');
+});
 
-Route::middleware(['auth'])->get('/checkout/summary/{requestQuote}', PaymentPage::class)->name('checkout.summary');
+Route::name('checkout.')->prefix('checkout')->group(function () {
 
-Route::get('/checkout/success', CheckoutSuccess::class)->name('checkout-success');
-Route::view('/checkout/cancel', 'livewire.cancel')->name('checkout-cancel');
+    Route::middleware(['auth'])->get('/summary/{requestQuote}', PaymentPage::class)->name('summary');
+    Route::get('success/{requestQuote}', CheckoutSuccess::class)->name('success');
+    Route::get('unsuccess/{requestQuote}', CheckoutUnsuccess::class)->name('unsuccess');
+
+});
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');

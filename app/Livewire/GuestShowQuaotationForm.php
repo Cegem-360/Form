@@ -107,17 +107,17 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->action(function (): void {
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
-                $record = RequestQuote::create($data);
+                $requestQuote = RequestQuote::create($data);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
                     ->success()
                     ->send();
 
-                $this->form->model($record)->saveRelationships();
+                $this->form->model($requestQuote)->saveRelationships();
                 // save to session
-                Session::put('requestQuote', $record->id);
-                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
+                Session::put('requestQuote', $requestQuote->id);
+                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
             })
             ->label(__('Order'))
             ->color('primary')
@@ -152,19 +152,19 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
-                $record = RequestQuote::create($data);
+                $requestQuote = RequestQuote::create($data);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
                     ->success()
                     ->send();
 
-                $this->form->model($record)->saveRelationships();
+                $this->form->model($requestQuote)->saveRelationships();
 
                 // Redirect to Cart summary page
-                Session::put('requestQuote', $record->id);
+                Session::put('requestQuote', $requestQuote->id);
 
-                $this->redirect(route('cart.summary', ['requestQuote' => $record->id]));
+                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
             })
             ->requiresConfirmation()
             ->modalHeading(__('Register'))

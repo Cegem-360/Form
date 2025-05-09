@@ -87,3 +87,19 @@
 - [x] végösszeg helyet Előleg összeg
 
 - [x] abort átszerkeszteni szebre
+
+- [x] Áfa mindenhol, nettó és bruttó összesítés
+
+- [ ] vissza gomb a kosárhoz a megrendelés oldalról
+
+- [ ] céges adatok a fizetés mód. oldalon
+
+- [ ] A projekt leírása után dinamikus leirás 
+
+- [ ] projekt oldalon a Request quote oldalon a quote nevet használja
+
+- [ ] quote oldalon a project generálás oldalon név automatikusan töltse
+
+- [ ] Project goal/project oldalra huzza be automatikusan az árajánlatból
+
+- [ ] kerdoiv magyaritása és adatok importálása a projectből dinamikusan

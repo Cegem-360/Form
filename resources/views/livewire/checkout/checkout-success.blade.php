@@ -14,12 +14,11 @@
                     we'll send you confirmation very soon!</p>
                 <div class="mb-4">
                     <span class="block text-xs text-gray-500">Tracking number</span>
-                    <span
-                        class="block font-mono text-sm font-semibold text-blue-700">{{ $order->tracking_number ?? $order->id }}</span>
+                    <span class="block font-mono text-sm font-semibold text-blue-700">{{ $requestQuote->id }}</span>
                 </div>
                 <!-- Tételek listája -->
                 <div class="mb-6 border divide-y divide-gray-200 rounded-lg">
-                    @foreach ($order->orderItems as $item)
+                    @foreach ($order->orderItems ?? [] as $item)
                         <div class="flex items-center gap-4 p-4">
                             <img src="{{ $item->image ?? 'https://via.placeholder.com/48x48' }}"
                                 alt="{{ $item->name }}" class="object-cover w-12 h-12 bg-gray-100 rounded">
@@ -33,7 +32,7 @@
                     @endforeach
                 </div>
                 <!-- Összegzés -->
-                <div class="mb-6">
+                {{-- <div class="mb-6">
                     <div class="flex justify-between mb-1 text-sm">
                         <span class="text-gray-600">Subtotal</span>
                         <span>{{ number_format($order->subtotal ?? $order->total, 2) }} {{ $order->currency }}</span>
@@ -69,7 +68,7 @@
                             <span class="text-xs text-gray-400">{{ $order->card_expiry ?? '' }}</span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="mt-8 text-right">
                 <a href="#" class="font-semibold text-indigo-600 hover:underline">Continue Shopping

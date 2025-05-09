@@ -9,11 +9,11 @@
         $data['consent'] &&
         $data['privacy_policy']
 )
-    {{ $this->orderAction }}
-
-    @guest
+    @auth
+        {{ $this->orderAction }}
+    @else
         {{ $this->orderAndRegisterAction }}
-    @endguest
+    @endauth
 
     {{ $this->sendEmailToMeAction }}
 @endif

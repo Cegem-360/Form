@@ -24,12 +24,22 @@
                                 </div>
                                 <div class="text-right min-w-[120px]">
 
-                                    <div class="text-lg font-bold text-green-700">
-                                        {{ match ($page['length']) {
-                                            'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
-                                            'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
-                                            'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
-                                        } }}
+                                    <div>
+                                        <div class="text-lg font-bold text-green-700">
+                                            {{ match ($page['length']) {
+                                                'short' => Number::currency(20000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                                'medium' => Number::currency(40000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                                'long' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                            } }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            (ÁFA nélkül:
+                                            {{ match ($page['length']) {
+                                                'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
+                                                'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
+                                                'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
+                                            } }})
+                                        </div>
                                     </div>
                                 </div>
                             </li>
@@ -42,7 +52,7 @@
             <div class="mb-8">
                 <h2 class="mb-4 text-xl font-bold">Kiválasztott weboldal funkciók</h2>
                 <ul class="bg-white divide-y divide-gray-200 rounded-lg shadow-md">
-                    @foreach ($this->requestQuote->requestQuoteFunctionalities as $function)
+                    @foreach ($this->requestQuote->requestQuoteFunctionalities ?? [] as $function)
                         <li class="flex items-center justify-between p-4">
                             <div>
                                 <div class="font-medium">{{ $function->name }}</div>
@@ -63,15 +73,29 @@
                 <h2 class="mb-4 text-lg font-bold tracking-wide text-center">ÖSSZESÍTÉS</h2>
                 <div class="flex justify-between py-1">
                     <span class="text-gray-700">Tételek összesen</span>
-                    <span
-                        class="font-semibold">{{ Number::currency($itemTotal ?? $total, in: 'HUF', locale: 'hu', precision: 0) }}</span>
+                    <div class="text-right">
+                        <div class="font-semibold text-green-700">
+                            {{ Number::currency($total * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            (ÁFA nélkül:
+                            {{ Number::currency($total, in: 'HUF', locale: 'hu', precision: 0) }})
+                        </div>
+                    </div>
                 </div>
 
                 <div class="my-3 border-t"></div>
                 <div class="flex items-center justify-between py-2">
                     <span class="text-lg font-bold">Előleg összeg</span>
-                    <span
-                        class="text-2xl font-bold text-green-700">{{ Number::currency($total / 2, in: 'HUF', locale: 'hu', precision: 0) }}</span>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-green-700">
+                            {{ Number::currency(($total / 2) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            (ÁFA nélkül:
+                            {{ Number::currency($total / 2, in: 'HUF', locale: 'hu', precision: 0) }})
+                        </div>
+                    </div>
                 </div>
                 <button type="button" wire:click="checkout"
                     class="w-full py-3 mt-4 text-lg font-bold text-white transition bg-orange-500 rounded-lg hover:bg-orange-600">Tovább

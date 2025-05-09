@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Order extends Model
+final class Order extends Model
 {
     /** @use HasFactory<OrderFactory> */
     use HasFactory;
 
     protected $fillable = [
-        'stripe_order_id',
+        'request_quote_id',
         'amount',
         'currency',
         'status',
@@ -26,6 +26,11 @@ class Order extends Model
         'customer_name',
         'user_id',
     ];
+
+    public function requestQuote(): BelongsTo
+    {
+        return $this->belongsTo(RequestQuote::class);
+    }
 
     public function user(): BelongsTo
     {
