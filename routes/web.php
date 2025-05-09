@@ -28,7 +28,9 @@ Route::get('/form-review/{form}', [FormSubmissionController::class, 'review'])->
 Route::get('/form/expired', [FormController::class, 'expired'])->name('form.expired');
 
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
-
+Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
+    return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
+})->name('quotation.pdf');
 Route::name('quotation.')->prefix('quotation')->group(function () {
     Route::get('preview/{requestQuote}', function () {
         /*

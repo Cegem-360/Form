@@ -1,398 +1,352 @@
 @use('App\Models\WebsiteLanguage')
-<!DOCTYPE html>
-<html lang="en">
+<x-layouts.app>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Quotation</title>
-        {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/css/style.css') }}"> --}}
-        {{-- <link rel="stylesheet" href="resource_path('css/style.css')"> --}}
-        @vite('resources/css/app.css')
-        @vite('resources/css/style.css')
-
-        @vite(['resources/js/app.js'])
-
-    </head>
-
-    <body>
-        <div class="page-cover">
+    <body class="font-sans text-gray-900 bg-white">
+        <!-- Borító -->
+        <div class="relative w-full h-[900px]">
             <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-01.jpg')) }}"
-                alt="Borító" class="page-cover-image">
+                alt="Borító" class="absolute inset-0 z-0 object-cover w-full h-full" />
+            <div class="absolute inset-0 z-10 flex flex-col justify-between text-white">
+                <div class="flex justify-between p-12">
+                    <span class="text-3xl font-bold">cégem360</span>
+                    <span class="text-3xl uppercase">Prémium weboldal készítés</span>
+                </div>
+                <div class="p-12">
+                    <p class="mb-4 text-4xl font-bold">{{ $requestQuote->name }} részére</p>
+                    <p class="text-3xl">Árajánlat weboldal fejlesztésre</p>
+                </div>
+            </div>
         </div>
-        <div class="cover-text" style="z-index: 10; color: white;">
-            <p style="position: absolute; top: 100px; left: 100px; font-size: 24px; font-weight: bold;">cégem360</p>
-            <p style="position: absolute; top: 100px; right: 50px; font-size: 24px; text-transform: uppercase;">
-                Prémium weboldal készítés</p>
-            <p style="position: absolute; top: 500px; left: 100px; font-size: 32px; font-weight: bold;">
-                {{ $requestQuote->name }} részére
-            </p>
-            <p style="position: absolute; top: 580px; left: 100px; font-size: 32px;">
-                Árajánlat weboldal fejlesztésre</p>
-        </div>
-        {{-- 
         <div class="page-break"></div>
-
-        <div class="page-cover">
-            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-02.jpg')) }}"
-                alt="Tartalom" class="page-cover-image">
-        </div> --}}
-
-        <div class="page-break"></div>
-
-        <div class="page-cover">
+        <!-- Rólunk oldal -->
+        <div class="relative w-full h-[900px]">
             <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-03.jpg')) }}"
-                alt="Rólunk" class="page-cover-image">
+                alt="Rólunk" class="absolute inset-0 z-0 object-cover w-full h-full" />
         </div>
-
         <div class="page-break"></div>
-
-        {{-- <div class="main-content"> --}}
-        <div class="page-header">
-            <div class="logo-wrapper" style="">
+        <!-- Fejléc és ajánlat fő adatai -->
+        <div class="px-12 py-8">
+            <div class="flex items-center justify-between mb-8">
                 <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/cegem360-logo.png')) }}"
-                    alt="Logo" class="logo" style="max-width: 150px; height: auto;">
+                    alt="Logo" class="h-20" />
+                <div class="text-right">
+                    <h1 class="text-4xl font-bold text-blue-700">Árajánlat</h1>
+                    <h3 class="text-lg">Sorszám: {{ $requestQuote->id }}</h3>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-12 mb-8">
+                <div class="flex-1 min-w-[300px]">
+                    <h4 class="font-semibold">Tárgy</h4>
+                    <p>Árajánlat {{ $requestQuote->company_name ?? $requestQuote->name }}
+                        {{ $requestQuote->website_engine }} {{ $requestQuote->websiteType->name }} készítésére
+                    </p>
+                    <h4 class="mt-4 font-semibold">Ajánlatot adó cég:</h4>
+                    <p>
+                        Cégem 360 Kft.<br>
+                        Székhely: 1182 Budapest, Gulipán utca 6.<br>
+                        Iroda: 1146 Budapest, Istvánmezei út 1-3. IV. emelet<br>
+                        Adószám: 14286249-2-43<br>
+                        Cégjegyzékszám: 01 09 897122
+                    </p>
+                </div>
+                <div class="flex-1 min-w-[300px]">
+                    <h4 class="font-semibold">Készült</h4>
+                    <p>{{ \Carbon\Carbon::now()->format('Y.m.d.') }}</p>
+                    <h4 class="mt-4 font-semibold">Ajánlat érvényessége</h4>
+                    <p>{{ \Carbon\Carbon::now()->addMonth()->format('Y.m.d.') }}</p>
+                    <h4 class="mt-4 font-semibold">Kapcsolattartók:</h4>
+                    <p>
+                        Tóth Tamás<br>
+                        <a href="tel:+36203319550" class="text-blue-700">+36 20 331 9550</a><br>
+                        <a href="mailto:tamas@cegem360.hu" class="text-blue-700">tamas@cegem360.hu</a>
+                    </p>
+                </div>
             </div>
         </div>
-        <div class="container">
-            <h1 class="">Árajánlat</h1>
-            <h3>Sorszám: {{ $requestQuote->id }}</h3>
-            <div class="header" style="display: flex; justify-content: space-between; gap: 100px;">
-                <h4>Árajánlat</h4>
-                <h2>{{ $requestQuote->name }} részére</h2>
-                <div class="header-content-wrapper">
-                    <div class="header-left">
-                        <h4>Tárgy</h4>
-                        <p>Árajánlat {{ $requestQuote->company_name ?? $requestQuote->name }}
-                            {{ $requestQuote->website_engine }} {{ $requestQuote->websiteType->name }} készítésére
-                        </p>
-                        <h4>AJÁNLATOT ADÓ CÉG:</h4>
-                        <p>Cégem 360 Kft.<br />
-                            Székhely: 1182 Budapest, Gulipán utca 6.<br />
-                            Iroda: 1146 Budapest, Istvánmezei út 1-3. IV. emelet<br />
-                            Adószám: 14286249-2-43<br />
-                            Cégjegyzékszám: 01 09 897122</p>
-                    </div>
-                    <div class="header-right">
-                        <h4>Készült</h4>
-                        <p>{{ \Carbon\Carbon::now()->format('Y.m.d.') }}</p>
-                        <h4>Ajánlat érvényessége</h4>
-                        <p>{{ \Carbon\Carbon::now()->addMonth()->format('Y.m.d.') }}</p>
-                        <h4>Kapcsolattartók:</h4>
-                        <p>Tóth Tamás<br />
-                            <a href="tel:+36203319550">+36 20 331 9550</a><br />
-                            <a href="mailto:tamas@cegem360.hu">tamas@cegem360.hu</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div class="page-break"></div>
+        <!-- Projekt leírása -->
+        <div class="px-12 py-8">
+            <h3 class="mb-4 text-2xl font-bold">A projekt leírása</h3>
+            <p class="mb-4">Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az
+                ügyfél igényeinek megfelelően <strong>{{ $requestQuote->websiteType->name }}
+                    {{ $requestQuote->website_engine }} alapú motorral.</strong></p>
+            <ul class="pl-8 mb-4 list-disc">
+                <li>minőségi, új webdesign</li>
+                <li>okostelefonra optimalizált megjelenés elkészítése</li>
+                @foreach ($requestQuote->websites as $page)
+                    @if ($page['required'])
+                        <li>{{ $page['name'] }} ({{ __(ucfirst($page['length'])) }} terjedelem)</li>
+                    @endif
+                @endforeach
+                <li>különböző, legújabb védelmi rendszerek telepítése</li>
+                <li>alap Google optimalizálás beállítás: struktúra és meta adatok beállítása, Google Analytics
+                    telepítése, beállítása</li>
+                <li>különböző közösségi média platformok mérőinek telepítése (Facebook Pixel)</li>
+                <li>GDPR beállítások (Süti értesítés, Adatvédelmi nyilatkozat)</li>
+            </ul>
+        </div>
+        @if (!$requestQuote->requestQuoteFunctionalities->isEmpty())
             <div class="page-break"></div>
-            <div class="quotation-details">
-
-                <h3>A projekt leírása</h3>
-                <p>Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az ügyfél
-                    igényeinek, megfelelően <strong>{{ $requestQuote->websiteType->name }}
-                        {{ $requestQuote->website_engine }} alapú
-                        motorral.</strong></p>
-                <ul>
-                    <li>minőségi, új webdesign</li>
-                    <li>okostelefonra optimalizált megjelenés elkészítése</li>
-                    @foreach ($requestQuote->websites as $page)
-                        @if ($page['required'])
-                            <li>{{ $page['name'] }} ({{ __(ucfirst($page['length'])) }} terjedelem)</li>
-                        @endif
+            <div class="px-12 py-8">
+                <h3 class="mb-4 text-2xl font-bold">A projekt funkciók</h3>
+                <ul class="pl-8 list-disc">
+                    @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
+                        <li class="mb-2">
+                            <span class="font-semibold">{{ $functionality->name }}</span> -
+                            {{ number_format($functionality->price, 0, ',', ' ') }} Ft<br>
+                            <span class="text-xs">{{ $functionality->description }}</span>
+                        </li>
                     @endforeach
-                    {{--   <li>webshop készítése az árajánlathoz írt specifikációk alapján</li>
-                    <li>kategóriák és termékek feltöltése</li> --}}
-                    <li>különböző, legújabb védelmi rendszerek telepítése</li>
-                    <li>alap Google optimalizálás beállítás: struktúra és meta adatok beállítása, Google Analytics
-                        telepítése, beállítása (Analitikai jelentések a látogatottságára vonatkozóan)</li>
-                    <li>különböző közösségi média platformok mérőinek telepítése (Facebook Pixel)</li>
-                    <li>GDPR beállítások (Süti értesítés, Adatvédelmi nyilatkozat)</li>
-                    {{-- <li>üzenetküldő űrlap</li> --}}
                 </ul>
-
             </div>
-            @if (!$requestQuote->requestQuoteFunctionalities->isEmpty())
-                <div class="page-break"></div>
-                <div class="quotation-details">
-
-                    <h3>A projekt funkcíók</h3>
-
-                    <ul>
-
-                        @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
-                            <li>
-                                {{ $functionality->name }} - {{ number_format($functionality->price, 0, ',', ' ') }}
-                                Ft <br />
-                                <span style="font-size: 12px;">{{ $functionality->description }}</span>
-                            </li>
-                        @endforeach
-
-                    </ul>
-
-                </div>
-            @endif
-            <div class="page-break"></div>
-
-            <div>
-                <h2>Munkafolyamat leírása</h2>
-                <h3>1. Konzultáció és tervezés</h3>
-                <p>A projekt kezdeti szakaszában:</p>
-                <ul>
-                    <li>Kezdeti konzultáció:</li>
-                    <ul>
+        @endif
+        <div class="page-break"></div>
+        <!-- Munkafolyamat -->
+        <div class="px-12 py-8">
+            <h2 class="mb-4 text-2xl font-bold">Munkafolyamat leírása</h2>
+            <!-- ...a teljes folyamatleírásod, minden címhez, listához, bekezdéshez Tailwind utility osztályokat adva... -->
+            <h3 class="mt-6 mb-2 text-xl font-semibold">1. Konzultáció és tervezés</h3>
+            <p class="mb-2">A projekt kezdeti szakaszában:</p>
+            <ul class="pl-8 mb-2 list-disc">
+                <li>Kezdeti konzultáció:
+                    <ul class="pl-8 list-disc">
                         <li>Ügyfél igényeinek felmérése, célok, elvárások megismerése.</li>
                         <li>Célközönség és versenytársak elemzése.</li>
                     </ul>
-                    <li>Specifikáció meghatározása:</li>
-                    <ul>
+                </li>
+                <li>Specifikáció meghatározása:
+                    <ul class="pl-8 list-disc">
                         <li>Funkciók és szolgáltatások részletezése.</li>
                         <li>Weboldal struktúrájának, funkcióinak és funkcionális követelményeinek kidolgozása.</li>
                     </ul>
-                    <li>UI tervezés:</li>
-                    <ul>
+                </li>
+                <li>UI tervezés:
+                    <ul class="pl-8 list-disc">
                         <li>Drótvázak készítése: Alapvető vázlatok, amelyek bemutatják az oldal elrendezését és a
                             navigációt.</li>
                         <li>UI design: A vizuális tervek elkészítése, színek, betűtípusok, gombok, ikonok tervezése.
-                            Fontos,
-                            hogy az ügyfél itt véglegesítse a designt, hogy a későbbi szakaszok gördülékenyen
-                            haladhassanak.
-                        </li>
+                            Fontos, hogy az ügyfél itt véglegesítse a designt, hogy a későbbi szakaszok gördülékenyen
+                            haladhassanak.</li>
                         <li>Design visszajelzések beépítése, véglegesítés.</li>
                     </ul>
-                    <li>Prototípus bemutatása:</li>
-                    <ul>
+                </li>
+                <li>Prototípus bemutatása:
+                    <ul class="pl-8 list-disc">
                         <li>Kattintható prototípus, amellyel az ügyfél előre látja, hogyan fog kinézni és működni az
-                            oldal.
-                            Ennek elfogadása után lehet továbblépni a fejlesztésre.</li>
+                            oldal. Ennek elfogadása után lehet továbblépni a fejlesztésre.</li>
                     </ul>
-                </ul>
-                <h3>2. Front-end fejlesztés</h3>
-                <p>Ebben a szakaszban az UI tervek alapján a főoldal és aloldalak elkészítése:</p>
-                <ul>
-                    <li>HTML, CSS, JavaScript fejlesztés:</li>
-                    <ul>
+                </li>
+            </ul>
+            <h3 class="mt-6 mb-2 text-xl font-semibold">2. Front-end fejlesztés</h3>
+            <p class="mb-2">Ebben a szakaszban az UI tervek alapján a főoldal és aloldalak elkészítése:</p>
+            <ul class="pl-8 mb-2 list-disc">
+                <li>HTML, CSS, JavaScript fejlesztés:
+                    <ul class="pl-8 list-disc">
                         <li>Az oldal felépítése az elfogadott UI design alapján.</li>
                     </ul>
-                    <li>Reszponzív design:</li>
-                    <ul>
+                </li>
+                <li>Reszponzív design:
+                    <ul class="pl-8 list-disc">
                         <li>Mobilra, tabletre és asztali számítógépekre optimalizálás, hogy az oldal minden eszközön jól
                             működjön.</li>
                     </ul>
-                    <li>Animációk és interakciók:</li>
-                    <ul>
+                </li>
+                <li>Animációk és interakciók:
+                    <ul class="pl-8 list-disc">
                         <li>Görgetési effektek, hover animációk, felhasználói visszajelzések (pl. gombnyomások)
                             megvalósítása.</li>
                     </ul>
-                    <li>SEO alapú HTML szerkezet:</li>
-                    <ul>
+                </li>
+                <li>SEO alapú HTML szerkezet:
+                    <ul class="pl-8 list-disc">
                         <li>SEO-barát kódolás, figyelve a meta címekre, leírásokra és heading struktúrára.</li>
                     </ul>
-                </ul>
-                <h3>3. Back-end fejlesztés</h3>
-                <p>A Laravel alapú szerver oldali fejlesztés következik:</p>
-                <ul>
-                    <li>Adatbázis tervezés:</li>
-                    <ul>
+                </li>
+            </ul>
+            <h3 class="mt-6 mb-2 text-xl font-semibold">3. Back-end fejlesztés</h3>
+            <p class="mb-2">A Laravel alapú szerver oldali fejlesztés következik:</p>
+            <ul class="pl-8 mb-2 list-disc">
+                <li>Adatbázis tervezés:
+                    <ul class="pl-8 list-disc">
                         <li>Táblák, kapcsolatok, migrációk létrehozása.</li>
                     </ul>
-                    <li>Adminisztrációs felület fejlesztése:</li>
-                    <ul>
+                </li>
+                <li>Adminisztrációs felület fejlesztése:
+                    <ul class="pl-8 list-disc">
                         <li>Az ügyfél számára kezelőfelület biztosítása, ahol tartalmakat és adatokat kezelhet.</li>
                     </ul>
-                    <li>Felhasználói hitelesítés:</li>
-                    <ul>
+                </li>
+                <li>Felhasználói hitelesítés:
+                    <ul class="pl-8 list-disc">
                         <li>Regisztráció, bejelentkezés, jogosultságok kezelése.</li>
                     </ul>
-                    <li>API integrációk:</li>
-                    <ul>
+                </li>
+                <li>API integrációk:
+                    <ul class="pl-8 list-disc">
                         <li>Külső szolgáltatások (pl. fizetési rendszerek, harmadik fél API-k) integrálása.</li>
                     </ul>
-                    <li>Felhasználói felület összekapcsolása a backenddel:</li>
-                    <ul>
+                </li>
+                <li>Felhasználói felület összekapcsolása a backenddel:
+                    <ul class="pl-8 list-disc">
                         <li>Formok kezelése, adatok dinamikus betöltése.</li>
                     </ul>
-                </ul>
-                <h3>4. Tesztelés és hibajavítás</h3>
-                <p>Az oldal funkcióinak és teljesítményének alapos ellenőrzése:</p>
-                <ul>
-                    <li>Egységtesztek:</li>
-                    <ul>
+                </li>
+            </ul>
+            <h3 class="mt-6 mb-2 text-xl font-semibold">4. Tesztelés és hibajavítás</h3>
+            <p class="mb-2">Az oldal funkcióinak és teljesítményének alapos ellenőrzése:</p>
+            <ul class="pl-8 mb-2 list-disc">
+                <li>Egységtesztek:
+                    <ul class="pl-8 list-disc">
                         <li>Laravel tesztelési eszközök segítségével az egyes funkciók automatikus tesztelése.</li>
                     </ul>
-                    <li>Kézi tesztelés:</li>
-                    <ul>
+                </li>
+                <li>Kézi tesztelés:
+                    <ul class="pl-8 list-disc">
                         <li>Az oldal működésének kézi ellenőrzése különböző böngészőkben és eszközökön.</li>
                     </ul>
-                    <li>Biztonsági tesztelés:</li>
-                    <ul>
+                </li>
+                <li>Biztonsági tesztelés:
+                    <ul class="pl-8 list-disc">
                         <li>XSS, SQL injekciók és egyéb sebezhetőségek elleni védelem biztosítása.</li>
                     </ul>
-                    <li>Teljesítményoptimalizálás:</li>
-                    <ul>
+                </li>
+                <li>Teljesítményoptimalizálás:
+                    <ul class="pl-8 list-disc">
                         <li>Oldal sebességének javítása, képek tömörítése, caching beállítása.</li>
                     </ul>
-                </ul>
-                <h3>5. Karbantartás és támogatás</h3>
-                <p>Az elkészült projekt átadása és utólagos támogatás biztosítása:</p>
-                <ul>
-                    <li>Oktatás és dokumentáció:</li>
-                    <ul>
+                </li>
+            </ul>
+            <h3 class="mt-6 mb-2 text-xl font-semibold">5. Karbantartás és támogatás</h3>
+            <p class="mb-2">Az elkészült projekt átadása és utólagos támogatás biztosítása:</p>
+            <ul class="pl-8 mb-2 list-disc">
+                <li>Oktatás és dokumentáció:
+                    <ul class="pl-8 list-disc">
                         <li>Az ügyfél képzése az adminisztrációs felület használatára, valamint részletes dokumentáció
                             átadása.</li>
                     </ul>
-                    <li>Garancia időszak:</li>
-                    <ul>
+                </li>
+                <li>Garancia időszak:
+                    <ul class="pl-8 list-disc">
                         <li>Bizonyos időszakra (1 hónap) ingyenes hibajavítások biztosítása.</li>
                     </ul>
-                    <li>Folyamatos karbantartás:</li>
-                    <ul>
+                </li>
+                <li>Folyamatos karbantartás:
+                    <ul class="pl-8 list-disc">
                         <li>Havi vagy éves díjas konstrukció, amely tartalmazza az oldal frissítését, biztonsági
-                            mentéseket,
-                            valamint kisebb fejlesztéseket.</li>
+                            mentéseket, valamint kisebb fejlesztéseket.</li>
                     </ul>
-                </ul>
-                <h2>Vállalási határidő</h2>
-                <p>A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő 30
-                    munkanapon
-                    belül elkészül.</p>
-            </div>
-
-            <div class="page-break"></div>
-
-            <div id="price-table">
-                <h2>A feladat díjazása</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>MEGNEVEZÉS</th>
-                            <th>MENNYISÉG</th>
-                            <th>EGYSÉGDÍJ</th>
-                            <th>ÖSSZESEN</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>{{ $requestQuote->website_engine }} weboldal készítés</b></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Keretrendszer beállítása (védelmi, GDPR, süti elfogadás, Analytics, Webmester eszközök)
-                            </td>
-                            <td>1 db</td>
-                            <td>80000 Ft</td>
-                            <td>80000 Ft</td>
-                        </tr>
-                        <tr>
-                            <td>UI tervezés (drótváz, design)</td>
-                            <td>1 db</td>
-                            <td>80000 Ft</td>
-                            <td>80000 Ft</td>
-                        </tr>
-                        @foreach ($requestQuote->websites as $page)
-                            @if ($page['required'])
-                                <tr>
-                                    <td>{{ $page['name'] }} </td>
-                                    <td>{{ __(ucfirst($page['length'])) }} </td>
-                                    <td> {{ match ($page['length']) {
+                </li>
+            </ul>
+            <h2 class="mt-8 mb-2 text-xl font-bold">Vállalási határidő</h2>
+            <p class="mb-2">A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő
+                30 munkanapon belül elkészül.</p>
+        </div>
+        <div class="page-break"></div>
+        <!-- Díjazás táblázat -->
+        <div class="px-12 py-8">
+            <h2 class="mb-4 text-2xl font-bold">A feladat díjazása</h2>
+            <table class="min-w-full text-sm border border-gray-300">
+                <thead>
+                    <tr class="bg-blue-100">
+                        <th class="px-4 py-2 border">MEGNEVEZÉS</th>
+                        <th class="px-4 py-2 border">MENNYISÉG</th>
+                        <th class="px-4 py-2 border">EGYSÉGDÍJ</th>
+                        <th class="px-4 py-2 border">ÖSSZESEN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-4 py-2 font-bold border">{{ $requestQuote->website_engine }} weboldal készítés
+                        </td>
+                        <td class="px-4 py-2 border"></td>
+                        <td class="px-4 py-2 border"></td>
+                        <td class="px-4 py-2 border"></td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 border">Keretrendszer beállítása (védelmi, GDPR, süti elfogadás,
+                            Analytics, Webmester eszközök)</td>
+                        <td class="px-4 py-2 border">1 db</td>
+                        <td class="px-4 py-2 border">80000 Ft</td>
+                        <td class="px-4 py-2 border">80000 Ft</td>
+                    </tr>
+                    <tr>
+                        <td class="px-4 py-2 border">UI tervezés (drótváz, design)</td>
+                        <td class="px-4 py-2 border">1 db</td>
+                        <td class="px-4 py-2 border">80000 Ft</td>
+                        <td class="px-4 py-2 border">80000 Ft</td>
+                    </tr>
+                    @foreach ($requestQuote->websites as $page)
+                        @if ($page['required'])
+                            <tr>
+                                <td class="px-4 py-2 border">{{ $page['name'] }}</td>
+                                <td class="px-4 py-2 border">{{ __(ucfirst($page['length'])) }}</td>
+                                <td class="px-4 py-2 border">
+                                    {{ match ($page['length']) {
                                         'short' => number_format(20000, 0, ',', ' ') . ' Ft',
                                         'medium' => number_format(40000, 0, ',', ' ') . ' Ft',
                                         'long' => number_format(70000, 0, ',', ' ') . ' Ft',
                                         default => number_format(0, 0, ',', ' ') . ' Ft',
                                     } }}
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            @endif
-                        @endforeach
-
-                        @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
-                            <tr>
-                                <td>{{ $functionality->name }} <br />
-                                    <span style="font-size: 12px;">{{ $functionality->description }}</span>
                                 </td>
-                                <td>1 db</td>
-                                <td>{{ number_format($functionality->price, 0, ',', ' ') }} Ft</td>
-                                <td></td>
+                                <td class="px-4 py-2 border"></td>
+                            </tr>
+                        @endif
+                    @endforeach
+                    @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
+                        <tr>
+                            <td class="px-4 py-2 border">{{ $functionality->name }}<br><span
+                                    class="text-xs">{{ $functionality->description }}</span></td>
+                            <td class="px-4 py-2 border">1 db</td>
+                            <td class="px-4 py-2 border">{{ number_format($functionality->price, 0, ',', ' ') }} Ft
+                            </td>
+                            <td class="px-4 py-2 border"></td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">+ ÁFA</h3>
+                        </td>
+                    </tr>
+                    @if ($requestQuote->is_multilangual)
+                        <tr>
+                            <td class="px-4 py-2 font-bold border">Nyelvesítés</td>
+                            <td class="px-4 py-2 border">1</td>
+                            <td class="px-4 py-2 border">felár 30%</td>
+                            <td class="px-4 py-2 border"></td>
+                        </tr>
+                        @foreach ($requestQuote->languages as $language)
+                            <tr>
+                                <td class="px-4 py-2 border">{{ WebsiteLanguage::find($language)?->name }}</td>
+                                <td class="px-4 py-2 border"></td>
+                                <td class="px-4 py-2 border"></td>
+                                <td class="px-4 py-2 border"></td>
                             </tr>
                         @endforeach
-                        <tr>
-                            <td colspan="4" style="text-align: right;">
-                                <h3><b>+ ÁFA</b></h3>
-                            </td>
-                        </tr>
-                        @if ($requestQuote->is_multilangual)
-                            <tr>
-                                <td><b>Nyelvesítés</b></td>
-                                <td>1</td>
-                                <td>felár 30%</td>
-                                <td></td>
-                            </tr>
-                            @dump($requestQuote->languages)
-                            @foreach ($requestQuote->languages as $language)
-                                <tr>
-                                    {{ WebsiteLanguage::find($language)?->name }}
-                                    {{-- <td>{{ $language->name }}</td>
-                                    {{--   <td>{{ $language->name }}</td>
-                                    <td> 1 db</td>
-                                    <td></td>
-                                    <td></td> --}}
-                                </tr>
-                            @endforeach
-                        @endif
-                        <tr>
-                            <td colspan="4" style="text-align: right;">
-                                <h3><b>+ ÁFA</b></h3>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
+                    @endif
+                    <tr>
+                        <td colspan="4" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">+ ÁFA</h3>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="footer">
-            <div class="footer-col">
+        <!-- Lábléc -->
+        <div class="flex items-start justify-between w-full px-8 py-6 text-xs font-bold text-white bg-blue-700">
+            <div>
                 <span>Cégem 360 Kft.</span>
-                <span style="margin-left: 380px;">Tel.: +36 20 331 9550</span><br />
+                <span class="ml-24">Tel.: +36 20 331 9550</span><br>
                 <span>Székhely: 1182 Budapest, Gulipán utca 6.</span>
-                <span style="margin-left: 200px;">E-mail: info@cegem360.hu</span><br />
+                <span class="ml-12">E-mail: info@cegem360.hu</span><br>
                 <span>Cg.: 01-09-897122 / Adószám: 14286249-2-43</span>
-                <span style="margin-left: 175px;">Web: cegem360.hu</span>
-            </div>
-            <div class="footer-col right">
-
+                <span class="ml-10">Web: cegem360.hu</span>
             </div>
         </div>
         <style>
-            .footer {
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-start;
-                padding: 36px 32px;
-                font-size: 12px;
-                color: #fff;
-                background: #5d7fc2;
-                font-family: DejaVu Sans, Arial, sans-serif;
-                font-weight: bold;
-                box-sizing: border-box;
-            }
-
-            .footer .footer-col {
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                text-align: left;
-            }
-
-            .footer .footer-col.right {
-                text-align: right;
-                align-items: flex-end;
+            .page-break {
+                page-break-after: always;
             }
         </style>
-        {{-- </div> --}}
     </body>
 
-</html>
+</x-layouts.app>
