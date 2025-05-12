@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class DatabaseSeeder extends Seeder
+final class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call([
+            RoleSeeder::class,
             UserAndRolesSeeder::class,
             WebsiteTypeSeeder::class,
             WebsiteLanguageSeeder::class,
@@ -65,8 +66,8 @@ class DatabaseSeeder extends Seeder
         $guest->assignRole('guest');
 
         foreach (['view-any', 'view', 'create', 'update', 'delete', 'delete-any', 'replicate', 'restore', 'restore-any', 'reorder', 'force-delete', 'force-delete-any'] as $value) {
-            Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value . ' Role']);
-            Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value . ' Permission']);
+            Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value.' Role']);
+            Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value.' Permission']);
         }
 
         Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission): void {

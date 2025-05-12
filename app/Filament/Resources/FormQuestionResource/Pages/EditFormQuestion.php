@@ -15,7 +15,7 @@ use Filament\Forms\Components\Select;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Storage;
 
-class EditFormQuestion extends EditRecord
+final class EditFormQuestion extends EditRecord
 {
     protected static string $resource = FormQuestionResource::class;
 
@@ -33,7 +33,7 @@ class EditFormQuestion extends EditRecord
                     $pdfContent = $pdf->output();
 
                     // Save the PDF to a temporary location
-                    $filePath = 'pdfs/' . uniqid() . '.pdf';
+                    $filePath = 'pdfs/form-question-'.$formQuestion->id.'-'.time().'.pdf';
                     Storage::disk('public')->put($filePath, $pdfContent);
 
                     // Return the URL to the frontend
