@@ -12,7 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Http;
 
-class UpdateAllWebsiteDataByDomain implements ShouldQueue
+final class UpdateAllWebsiteDataByDomain implements ShouldQueue
 {
     use Queueable;
 
@@ -47,9 +47,9 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         foreach ($systemChatParameters as $systemChatPrameter) {
 
             $content = $this->sendRequestToOpenAI($systemChatPrameter->form_field_name);
-            dump('Form field name: ' . $systemChatPrameter->form_field_name);
-            dump('Http request: ' . $this->domain->url . 'wp-json/wp/v2/ux-blocks/' . $systemChatPrameter->form_field_id);
-            Http::withBasicAuth('tothtamas', 'Ttoth2020!')->post($this->domain->url . 'wp-json/wp/v2/ux-blocks/' . $systemChatPrameter->form_field_name, [
+            /*  dump('Form field name: ' . $systemChatPrameter->form_field_name);
+             dump('Http request: ' . $this->domain->url . 'wp-json/wp/v2/ux-blocks/' . $systemChatPrameter->form_field_id); */
+            Http::withBasicAuth('tothtamas', 'Ttoth2020!')->post($this->domain->url.'wp-json/wp/v2/ux-blocks/'.$systemChatPrameter->form_field_name, [
                 // 'id' => $systemChatPrameter->form_field_id, // not null
                 // 'title' => $systemChatPrameter->form_field_name, // not null
                 'content' => $content, // not null
@@ -74,7 +74,7 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
 
         // Send request to OpenAI API
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . config('services.openai.key'),
+            'Authorization' => 'Bearer '.config('services.openai.key'),
         ])->post('https://api.openai.com/v1/chat/completions', [
             'model' => 'gpt-4o',
             'messages' => [
@@ -101,21 +101,21 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         $about = '';
         $context = '';
         foreach ($this->form->main_pages as $value) {
-            if ($value['name'] == 'Szolgáltatásaink') {
+            if ($value['name'] === 'Szolgáltatásaink') {
                 foreach ($this->form->activities as $activity) {
-                    $activities .= $activity['name'] . ', ';
+                    $activities .= $activity['name'].', ';
                 }
             }
 
-            if ($value['name'] == 'Rólunk') {
+            if ($value['name'] === 'Rólunk') {
                 $about = $value['description'];
             }
 
         }
 
-        $context .= 'A következő szövegekből írj egy ütős címet. A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
+        $context .= 'A következő szövegekből írj egy ütős címet. A cég szolgáltatásai: '.$activities.' A cég bemutatkozása: '.$about;
 
-        return $context . ' A cím legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
+        return $context.' A cím legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
     }
 
     public function handleHeroBannerText(): string
@@ -124,21 +124,21 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         $about = '';
         $context = '';
         foreach ($this->form->main_pages as $value) {
-            if ($value['name'] == 'Szolgáltatásaink') {
+            if ($value['name'] === 'Szolgáltatásaink') {
                 foreach ($this->form->activities as $activity) {
-                    $activities .= $activity['name'] . ', ';
+                    $activities .= $activity['name'].', ';
                 }
             }
 
-            if ($value['name'] == 'Rólunk') {
+            if ($value['name'] === 'Rólunk') {
                 $about = $value['description'];
             }
 
         }
 
-        $context .= 'A következő szövegekből írj egy rövid 2 mondatból álló szöveget, ami a inspiráló értékesítési szöveg legyen. A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
+        $context .= 'A következő szövegekből írj egy rövid 2 mondatból álló szöveget, ami a inspiráló értékesítési szöveg legyen. A cég szolgáltatásai: '.$activities.' A cég bemutatkozása: '.$about;
 
-        return $context . ' A szöveg legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
+        return $context.' A szöveg legyen figyelemfelkeltő és inspiráló, hogy a látogatók érdeklődését felkeltse.';
     }
 
     public function handleAboutUsText(): string
@@ -147,21 +147,21 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         $about = '';
         $context = '';
         foreach ($this->form->main_pages as $value) {
-            if ($value['name'] == 'Szolgáltatásaink') {
+            if ($value['name'] === 'Szolgáltatásaink') {
                 foreach ($this->form->activities as $activity) {
-                    $activities .= $activity['name'] . ', ';
+                    $activities .= $activity['name'].', ';
                 }
             }
 
-            if ($value['name'] == 'Rólunk') {
+            if ($value['name'] === 'Rólunk') {
                 $about = $value['description'];
             }
 
         }
 
-        $context .= 'A következő szövegekből írj egy 3 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Rólunk". A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
+        $context .= 'A következő szövegekből írj egy 3 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Rólunk". A cég szolgáltatásai: '.$activities.' A cég bemutatkozása: '.$about;
 
-        return $context . ' A szöveg legyen határozott. ';
+        return $context.' A szöveg legyen határozott. ';
     }
 
     public function handleHighlightedServicesText(): string
@@ -170,15 +170,15 @@ class UpdateAllWebsiteDataByDomain implements ShouldQueue
         $about = '';
         $context = '';
         foreach ($this->form->main_pages as $value) {
-            if ($value['name'] == 'Szolgáltatásaink') {
+            if ($value['name'] === 'Szolgáltatásaink') {
                 foreach ($this->form->activities as $activity) {
-                    $activities .= $activity['name'] . ', ';
+                    $activities .= $activity['name'].', ';
                 }
             }
         }
 
-        $context .= 'A következő szövegekből írj egy 2 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Szolgáltatásaink". A cég szolgáltatásai: ' . $activities . ' A cég bemutatkozása: ' . $about;
+        $context .= 'A következő szövegekből írj egy 2 szakaszból álló maximum 10-15 mondatos szöveget, ami a céget bemutatja "Szolgáltatásaink". A cég szolgáltatásai: '.$activities.' A cég bemutatkozása: '.$about;
 
-        return $context . ' A szöveg legyen határozott. ';
+        return $context.' A szöveg legyen határozott. ';
     }
 }

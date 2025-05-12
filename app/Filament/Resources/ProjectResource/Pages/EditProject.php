@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\ProjectResource;
 use App\Models\FormQuestion;
 use App\Models\Project;
-use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProject extends EditRecord
+final class EditProject extends EditRecord
 {
     protected static string $resource = ProjectResource::class;
 
@@ -30,7 +29,7 @@ class EditProject extends EditRecord
                         // formquestion
                     ])
                     ->action(function (array $data, Project $record) {
-                        dump($record->requestQuote);
+                        /*  dump($record->requestQuote); */
                         $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
                             return [
                                 'description' => $page['description'],

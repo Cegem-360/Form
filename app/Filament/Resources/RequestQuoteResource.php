@@ -39,7 +39,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class RequestQuoteResource extends Resource
+final class RequestQuoteResource extends Resource
 {
     protected static ?string $model = RequestQuote::class;
 
@@ -231,7 +231,7 @@ class RequestQuoteResource extends Resource
                     ->translateLabel()
                     ->live()
                     ->visible(fn ($get) => $get('is_multilangual'))
-                    ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
+                    ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                     ->preload()
                     ->afterStateUpdated(function (Set $set): void {

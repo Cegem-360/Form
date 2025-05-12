@@ -276,45 +276,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         Step::make('Client Informations')->translateLabel()->schema(
             [
                 Grid::make(2)->schema([
-                    TextInput::make('name')
-                        ->label('Full Name')
-                        ->translateLabel()
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('email')
-                        ->translateLabel()
-                        ->email()
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                    TextInput::make('phone')
-                        ->translateLabel()
-                        ->tel()
-                        ->live()
-                        ->required()
-                        ->maxLength(255),
-                    Select::make('client_type')
-                        ->label('Legal form')
-                        ->translateLabel()
-                        ->live()
-                        ->required()
-                        ->options(ClientType::class)
-                        ->preload(),
-                    TextInput::make('company_name')
-                        ->translateLabel()
-                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->maxLength(255),
-                    TextInput::make('company_address')
-                        ->translateLabel()
-                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->maxLength(255),
-                    TextInput::make('company_contact_name')
-                        ->translateLabel()
-                        ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                        ->maxLength(255),
+
                     Select::make('website_type_id')
                         ->live()
                         ->required()
@@ -538,7 +500,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->translateLabel()
                 ->live()
                 ->visible(fn ($get) => $get('is_multilangual'))
-                ->default(WebsiteLanguage::whereName('Hungarian')->first()->id)
+                ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
                 ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                 ->preload()
                 ->afterStateUpdated(function (Set $set): void {
@@ -560,6 +522,45 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     {
         return Step::make('Consent')->translateLabel()->schema([
             Grid::make(1)->schema([
+                TextInput::make('name')
+                    ->label('Full Name')
+                    ->translateLabel()
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('email')
+                    ->translateLabel()
+                    ->email()
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('phone')
+                    ->translateLabel()
+                    ->tel()
+                    ->live()
+                    ->required()
+                    ->maxLength(255),
+                Select::make('client_type')
+                    ->label('Legal form')
+                    ->translateLabel()
+                    ->live()
+                    ->required()
+                    ->options(ClientType::class)
+                    ->preload(),
+                TextInput::make('company_name')
+                    ->translateLabel()
+                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
+                TextInput::make('company_address')
+                    ->translateLabel()
+                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
+                TextInput::make('company_contact_name')
+                    ->translateLabel()
+                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->maxLength(255),
                 Checkbox::make('consent')
                     ->live()
                     ->default(false)

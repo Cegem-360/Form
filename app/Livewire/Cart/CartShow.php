@@ -63,7 +63,7 @@ final class CartShow extends Component implements HasActions, HasForms
 
     public function render(): View
     {
-        dump($this->requestQuote);
+        /*  dump($this->requestQuote); */
 
         return view('livewire.cart.cart-show');
     }
