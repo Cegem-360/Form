@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Mail;
 
 use App\Models\RequestQuote;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,6 +12,7 @@ use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Spatie\Browsershot\Browsershot;
 
 final class QuotationSendedToUser extends Mailable implements ShouldQueue
 {
@@ -53,10 +53,10 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
      */
     public function attachments(): Attachment
     {
-        $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => $this->requestQuote]);
+        $template = view('pdf.quotation-user', ['requestQuote' => $this->requestQuote])->render();
 
-        return Attachment::fromData(fn () => $pdf->output(), 'quotation.pdf')
-            ->as('quotation.pdf')
-            ->withMime('application/pdf');
+        Browsershot::html($template)->savePdf(storage_path('app/public/quotation.pdf'));
+
+        return Attachment::fromPath(storage_path('app/public/quotation.pdf'));
     }
 }

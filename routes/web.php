@@ -26,20 +26,14 @@ Route::get('/form/expired', function () {
 })->name('form.expired');
 
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
+
 Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
     return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 })->name('quotation.pdf');
+
 Route::name('quotation.')->prefix('quotation')->group(function () {
     Route::get('preview/{requestQuote}', function () {
-        /*
-                $pdf = Pdf::loadView('pdf.quotation-user', ['requestQuote' => RequestQuote::factory()->make([
-                    'id' => 1,
-                    'company_name' => 'Test Company',
-                    'name' => 'Test Name',
-                    'email' => 'test@test.com',
-                ])]);
 
-                return $pdf->stream('quotation-preview.pdf'); */
         $requestQuote = RequestQuote::factory()->make([
             'id' => 1,
             'company_name' => 'Test Company',
