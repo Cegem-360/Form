@@ -208,7 +208,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
                 Session::put('order', $order->id);
 
-                $this->redirect(route('checkout.success'));
+                $this->redirect(route('checkout.success', ['requestQuote' => $this->requestQuote->id]));
             });
     }
 

@@ -14,9 +14,15 @@
         <div class="p-4 mb-6 rounded bg-gray-50">
             <h2 class="mb-2 text-lg font-semibold">Kosár összegzése</h2>
             <div class="flex items-center justify-between">
-                <span class="font-medium">Végösszeg:</span>
-                <span
-                    class="text-xl font-bold text-green-700">{{ Number::currency($requestQuote->getTotalPriceAttribute() ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}</span>
+                <span class="font-medium">Előleg összeg:</span>
+                <span class="text-xl font-bold text-green-700">
+
+                    {{ Number::currency($requestQuote->getTotalPriceAttribute() / 2 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
+                    <span class="block text-xs font-normal text-gray-500">
+                        Bruttó:
+                        {{ Number::currency(($requestQuote->getTotalPriceAttribute() / 2) * 1.27 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
+                    </span>
+                </span>
             </div>
         </div>
 
