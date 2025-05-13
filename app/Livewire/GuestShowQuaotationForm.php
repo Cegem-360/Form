@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -127,46 +128,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function orderAndRegisterAction(): SubbmitButton
     {
-        return SubbmitButton::make('Register')
+        return SubbmitButton::make('orderAndRegisterAction')
             ->label(__('Register and Order'))
-            ->action(function (array $data): void {
-                $fillDataForRegister = $data;
-                $data = $this->form->getState();
-                // user create and login and navigate to guestViewQuotationOrder
 
-                /**
-                 * TODO - add email verification
-                 * TODO - add permissions and roles
-                 * TODO - add email verification
-                 */
-                $user = User::create([
-                    'name' => $fillDataForRegister['name'],
-                    'email' => $fillDataForRegister['email'],
-                    'phone' => $fillDataForRegister['phone'],
-                    'company_name' => $fillDataForRegister['company_name'] ?? null,
-                    'company_address' => $fillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => null,
-                    'company_registration_number' => $fillDataForRegister['company_registration_number'] ?? null,
-                    'password' => Hash::make('password'), // or use a random password
-                ]);
-                $user->assignRole('guest');
-                event(new Registered($user));
-                Auth::loginUsingId($user->id, true);
-                $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
-
-                Notification::make()
-                    ->title(__('Quotation created and order placed'))
-                    ->success()
-                    ->send();
-
-                $this->form->model($requestQuote)->saveRelationships();
-
-                // Redirect to Cart summary page
-                Session::put('requestQuote', $requestQuote->id);
-
-                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
-            })
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
             ->modalDescription(__('Are you sure you want to register?'))
@@ -206,41 +170,85 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ];
             })->form([
                 Select::make('client_type')
+                    ->label('Legal form')
                     ->live()
                     ->required()
-                    ->options(ClientType::class)
-                    ->preload()
-                    ->searchable(),
+                    ->translateLabel()
+                    ->options(ClientType::class),
                 TextInput::make('company_name')
+                    ->translateLabel()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
+                    ->translateLabel()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_registration_number')
+                    ->translateLabel()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('name')
                     ->label('Full Name')
+                    ->translateLabel()
                     ->live()
                     ->required()
                     ->maxLength(255),
                 TextInput::make('email')
+                    ->translateLabel()
                     ->email()
                     ->unique(User::class, 'email')
                     ->live()
                     ->required()
                     ->maxLength(255),
                 TextInput::make('phone')
+                    ->translateLabel()
                     ->tel()
                     ->live()
                     ->required()
                     ->maxLength(255),
-            ])
-            ->label(__('Register'))
+            ])->action(function (array $data): void {
+                $fillDataForRegister = $data;
+                $data = $this->form->getState();
+                $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
+                    'name' => ['required', 'string', 'max:255'],
+                    'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+                    'phone' => ['required', 'string', 'max:255'],
+                    'company_name' => ['nullable', 'string', 'max:255'],
+                    'company_address' => ['nullable', 'string', 'max:255'],
+                    'company_registration_number' => ['nullable', 'string', 'max:255'],
+                ])->validate();
+
+                $user = User::create([
+                    'name' => $validatedfillDataForRegister['name'],
+                    'email' => $validatedfillDataForRegister['email'],
+                    'phone' => $validatedfillDataForRegister['phone'],
+                    'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
+                    'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
+                    'company_vat_number' => null,
+                    'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
+                    'password' => Hash::make('password'), // or use a random password
+                ]);
+                $user->assignRole('guest');
+                event(new Registered($user));
+                Auth::loginUsingId($user->id, true);
+                $data['user_id'] = Auth::id();
+                $requestQuote = RequestQuote::create($data);
+
+                Notification::make()
+                    ->title(__('Quotation created and order placed'))
+                    ->success()
+                    ->send();
+
+                $this->form->model($requestQuote)->saveRelationships();
+
+                // Redirect to Cart summary page
+                Session::put('requestQuote', $requestQuote->id);
+
+                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
+            })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
 

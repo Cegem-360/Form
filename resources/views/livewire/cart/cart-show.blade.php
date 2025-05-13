@@ -27,17 +27,17 @@
                                     <div>
                                         <div class="text-lg font-bold text-green-700">
                                             {{ match ($page['length']) {
-                                                'short' => Number::currency(20000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                                'medium' => Number::currency(40000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                                'long' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                            } }}
-                                        </div>
-                                        <div class="text-sm text-gray-500">
-                                            (ÁFA nélkül:
-                                            {{ match ($page['length']) {
                                                 'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
                                                 'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
                                                 'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
+                                            } }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            (Bruttó:
+                                            {{ match ($page['length']) {
+                                                'short' => Number::currency(20000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                                'medium' => Number::currency(40000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                                'long' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
                                             } }})
                                         </div>
                                     </div>
@@ -75,11 +75,12 @@
                     <span class="text-gray-700">Tételek összesen</span>
                     <div class="text-right">
                         <div class="font-semibold text-green-700">
-                            {{ Number::currency($total * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                            {{ Number::currency($total, in: 'HUF', locale: 'hu', precision: 0) }})
+
                         </div>
                         <div class="text-sm text-gray-500">
-                            (ÁFA nélkül:
-                            {{ Number::currency($total, in: 'HUF', locale: 'hu', precision: 0) }})
+                            (Bruttó:
+                            {{ Number::currency($total * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
                         </div>
                     </div>
                 </div>
@@ -89,11 +90,12 @@
                     <span class="text-lg font-bold">Előleg összeg</span>
                     <div class="text-right">
                         <div class="text-2xl font-bold text-green-700">
-                            {{ Number::currency(($total / 2) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                            {{ Number::currency($total / 2, in: 'HUF', locale: 'hu', precision: 0) }})
+
                         </div>
                         <div class="text-sm text-gray-500">
-                            (ÁFA nélkül:
-                            {{ Number::currency($total / 2, in: 'HUF', locale: 'hu', precision: 0) }})
+                            (Bruttó:
+                            {{ Number::currency(($total / 2) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
                         </div>
                     </div>
                 </div>
