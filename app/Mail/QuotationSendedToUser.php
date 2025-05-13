@@ -30,7 +30,7 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Quotation Sended To User',
+            subject: 'Az Ön weboldal fejlesztési árajánlata megérkezett!',
         );
     }
 
@@ -40,7 +40,9 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.quotation-sended-to-user',
+            markdown: 'mail.quotation-sended-to-user', with: [
+                'requestQuote' => $this->requestQuote,
+            ],
         );
     }
 

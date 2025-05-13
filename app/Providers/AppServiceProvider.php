@@ -6,6 +6,8 @@ namespace App\Providers;
 
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\Field;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
@@ -14,7 +16,7 @@ use Laravel\Cashier\Cashier;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class AppServiceProvider extends ServiceProvider
+final class AppServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -35,6 +37,18 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Permission::class, PermissionPolicy::class);
         $this->migrationsCustomPath();
+        /* Field::macro('tooltip', function (string $tooltip) {
+            return $this->hintAction(
+                function () use ($tooltip) {
+                    return Action::make('help')
+                        ->icon('heroicon-o-question-mark-circle')
+                        ->extraAttributes(['class' => 'text-gray-500'])
+                        ->label('')
+                        ->tooltip($tooltip);
+
+                }
+            );
+        }); */
     }
 
     private function migrationsCustomPath(): void

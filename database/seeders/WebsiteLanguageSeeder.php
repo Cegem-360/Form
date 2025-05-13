@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use App\Models\WebsiteLanguage;
 use Illuminate\Database\Seeder;
 
-class WebsiteLanguageSeeder extends Seeder
+final class WebsiteLanguageSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,47 +15,47 @@ class WebsiteLanguageSeeder extends Seeder
     public function run(): void
     {
         WebsiteLanguage::factory()->create([
-            'name' => 'Hungarian',
+            'name' => 'Magyar',
             'code' => 'hu',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'English',
+            'name' => 'Angol',
             'code' => 'en',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'German',
+            'name' => 'Német',
             'code' => 'de',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'French',
+            'name' => 'Francia',
             'code' => 'fr',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Spanish',
+            'name' => 'Spanyol',
             'code' => 'es',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Italian',
+            'name' => 'Olasz',
             'code' => 'it',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Dutch',
+            'name' => 'Holland',
             'code' => 'nl',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Polish',
+            'name' => 'Lengyel',
             'code' => 'pl',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Czech',
+            'name' => 'Cseh',
             'code' => 'cs',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Slovak',
+            'name' => 'Szlovák',
             'code' => 'sk',
         ]);
         WebsiteLanguage::factory()->create([
-            'name' => 'Romanian',
+            'name' => 'Román',
             'code' => 'ro',
         ]);
     }

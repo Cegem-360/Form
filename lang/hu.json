@@ -51,7 +51,7 @@
     "Register And Order": "Regisztráció és rendelés",
     "Submit and send to me in Email": "Megrendelem és elküldöm emailben",
     "Yes, I have a website graphic": "Igen, van weboldal grafikám",
-    "Are you sure you'd have website graphic form UI/UX designer?": "Biztos vagy benne, hogy UI/UX dizájnertől szeretnél weboldal grafikát?",
+    "Are you sure you'd have website graphic form UI/UX designer?": "Biztos vagy benne, hogy UI/UX dizájnertől van weboldal grafikát?",
     "No, I don't have a website graphic": "Nem, nincs weboldal grafikám",
     "Yes": "Igen",
     "No": "Nem",
@@ -67,7 +67,8 @@
     "Website type": "Weboldal típusa",
     "Website goal": "Weboldal célja",
     "Website engine": "Weboldal motorja",
-    "websites": "weboldalak",
+    "websites": "igényelt oldalak",
+    "Websites": "Igényelt oldalak",
     "Required": "Kötelező",
     "Want to this page?": "Szeretnéd ezt az oldalt?",
     "Content length": "Tartalom hossza",
@@ -80,7 +81,7 @@
     "Do you have a website graphic?": "Van weboldal grafikád?",
     "Project description": "Projekt leírás",
     "Request quote functionalities": "Weboldal funkciók",
-    "Is multilangual": "Többnyelvű az oldal",
+    "Is multilangual": "Többnyelvű oldal igénylése",
     "Default language": "Alapértelmezett nyelv",
     "Languages": "Nyelvek",
     "Grafics and functions": "Grafika és funkciók",
@@ -106,5 +107,7 @@
     "individual": "Magánszemély",
     "Bank Transfer": "Banki átutalás",
     "Company address": "Cég cím",
-    "Company contact name": "Cég kapcsolattartó neve"
+    "Company contact name": "Cég kapcsolattartó neve",
+    "Advanced apointment form Webshop": "Webshop részletes megbeszélés űrlap",
+    "Page description": "Adott oldal rövid leírása"
 }

@@ -8,25 +8,25 @@
     };
 @endphp
 
-@if ($getState() == 'website_previews/short_preview.png')
+@if ($getState() == 'short')
     <p>
-        Csak szöveget tartalmaz egyszerü szerkezetben. Elrendezés és formázaást tartalmaz de képeket vizuális anyagokat
-        nélkül.
+        Ideális választás a lényegre törő, gyorsan áttekinthető aloldalakhoz, mint például egy szolgáltatás rövid
+        bemutatása vagy egy kapcsolati oldal. Maximum 2 szakaszt tartalmaz, melyekben 1-1 szövegdoboz és 1-1 kép
+        helyezhető el.
     </p>
-@elseif ($getState() == 'website_previews/medium_preview.png')
+@elseif ($getState() == 'large')
     <p>
-        Már tartalmaz képeket és formázott szöveget, de mennyiségben korlátozott.
-        Ez a fájl mérete kisebb, és gyorsabban betöltődik, mint a teljes képernyős előnézet.
-        <br />
-        <strong>Megjegyzés:</strong> Ez a fájl mérete kisebb, és gyorsabban betöltődik, mint a teljes képernyős
-        előnézet.
+        A legátfogóbb választás, tökéletes részletes termékoldalakhoz, szolgáltatásbemutatókhoz, amelyek alapos
+        tájékoztatást nyújtanak. Akár 10 kép és 10 szövegdoboz, 5 banner, valamint olyan elemek, mint „előnyeink”
+        szekció, egyedi kép-szöveg kompozíciók, visszaszámláló, "rólunk mondták" idézetek, értékelések, valamint termék-
+        és szolgáltatáskategóriák behúzása is beilleszthető.
     </p>
 @else
     <p>
-        Teljes képernyős előnézet, amely tartalmazza az összes szöveget és képet, amely a weboldalon megjelenik.
-        Ez a legjobb választás, ha a weboldal teljes megjelenését szeretné bemutatni.
-        <br />
-        <strong>Megjegyzés:</strong> Ez a fájl mérete nagyobb lehet, és hosszabb időt vehet igénybe a betöltéshez.
+        Ez az opció lehetőséget biztosít részletesebb információk megjelenítésére, elegendő térrel egy termék vagy
+        szolgáltatás komplexebb leírásához. Tartalmazhat maximum 5 képet, 5 szövegdobozt és 2 bannert, biztosítva az
+        optimális egyensúlyt a szöveg és a vizuális elemek között.
+    </p>
 
     </p>
 @endif

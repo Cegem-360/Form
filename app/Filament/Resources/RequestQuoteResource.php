@@ -183,7 +183,8 @@ final class RequestQuoteResource extends Resource
                             ]),
                         ]),
 
-                    ]),
+                    ])
+                        ->translateLabel(),
 
                 ]),
                 Grid::make(1)->schema([
@@ -220,9 +221,10 @@ final class RequestQuoteResource extends Resource
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => $record->name)
-                /*  ->descriptions(function (Get $get): array {
-                        return $get('')->functionalities?->pluck('id', 'description')->toArray();
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name))
+                /* ->descriptions(function (Get $get): array {
+                        return 'Functionalities for '.$get('website_type_id');
+                        // return $get('')->functionalities?->pluck('id', 'description')->toArray();
                     }) */,
                 Toggle::make('is_multilangual')
                     ->translateLabel()

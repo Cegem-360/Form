@@ -7,6 +7,7 @@ namespace App\Livewire;
 use App\Enums\ClientType;
 use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
+use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
 use Filament\Actions\Action as SubbmitButton;
@@ -258,7 +259,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 $this->form->model($record)->saveRelationships();
 
                 Mail::to($data['email'])->send(new QuotationSendedToUser($record));
-                $this->redirect(route('email-sended-to-user'), true);
+                $this->redirect(route('email-sended-to-user'), false);
             })
             ->label(__('Send email to me'))
             ->color('success')
@@ -275,20 +276,55 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return
         Step::make('Client Informations')->translateLabel()->schema(
             [
+                ViewField::make('welcomeText')->view(
+                    'filament.forms.components.welcome'
+                ),
                 Grid::make(2)->schema([
 
                     Select::make('website_type_id')
                         ->live()
                         ->required()
                         ->translateLabel()
-                        ->relationship('websiteType', 'name')
+                        ->relationship('websiteType', 'name', function ($query) {
+
+                            $order = ['weboldal', 'webshop', 'landing page'];
+
+                            return $query->whereIn('name', $order)
+                                ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
+
+                        })
                         ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
+                        ->hintAction(function () {
+                            return Action::make('help')
+                                ->icon('heroicon-o-question-mark-circle')
+                                ->extraAttributes(['class' => 'text-gray-500'])
+                                ->label('')
+                                ->tooltip(function ($state) {
+                                    return __('Filament/pages/request-quote.website_type_tooltip');
+                                });
+                        })
                         ->preload(),
                     Select::make('website_engine')
+                        ->live()
+                        ->hintAction(function () {
+                            return Action::make('help')
+                                ->icon('heroicon-o-question-mark-circle')
+                                ->extraAttributes(['class' => 'text-gray-500'])
+                                ->label('')
+                                ->tooltip(function ($state) {
+                                    return match ($state) {
+                                        'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
+                                        'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
+                                        'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
+                                        default => __('Filament/pages/request-quote.website_engine_tooltip'),
+                                    };
+
+                                    // return __('Filament/pages/request-quote.website_engine_tooltip');
+                                });
+                        })
                         ->translateLabel()
-                        ->preload()
                         ->options([
                             'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
@@ -343,7 +379,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                 RichEditor::make('description')
                                     ->translateLabel()
                                     ->visible(fn ($get) => $get('required'))
-                                    ->label('Részletes leírás')
+                                    ->label(__('Page description'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
                                         'attachFiles',
@@ -355,7 +391,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                     ->columnSpanFull(),
                                 FileUpload::make('images')
                                     ->translateLabel()
-                                    ->label('Images')
+                                    ->label('Adott oldalhoz esetleges igényelt képek forfeltöltése')
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
                                     ->directory('website-images')
@@ -379,7 +415,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                     ),
                             ]),
                         ]),
-                    ])->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                    ])->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
+                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
                         ->minItems(1)
                         ->maxItems(30)
                         ->collapsible()
@@ -431,8 +468,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                 'required' => '0',
                             ],
 
-                        ])
-                        ->addActionLabel(__('Add Website')),
+                        ]),
 
                 ]),
             ]);
@@ -443,8 +479,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return Step::make('Grafics and functions')->translateLabel()->schema([
             Grid::make(1)->schema([
                 RichEditor::make('project_description')
+                    ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
                     ->translateLabel()
-                    ->maxLength(65535)
+                    ->maxLength(20000)
                     ->disableToolbarButtons([
                         'attachFiles',
                         'codeBlock',
@@ -456,16 +493,20 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->default(false)
                     ->label('Do you have a website graphic?')
                     ->translateLabel()
+                    ->hidden(true)
                     ->disabled(),
+                ViewField::make('have_website_graphic')
+                    ->view('filament.forms.components.have-website-graphic'),
                 Actions::make([
                     Action::make('yes')
                         ->translateLabel()
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
                         ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalSubmitActionLabel(__('Yes, I have a website graphic'))
-                        ->modalCancelActionLabel(__("No, I don't have a website graphic"))
+                        ->modalSubmitActionLabel(__('Igen, Biztosan van'))
+                        ->modalCancelActionLabel(__('mégsem'))
                         ->modalAlignment(Alignment::Center)
+                        ->color(fn ($livewire) => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
                         ->action(function (Set $set): void {
                             $set('have_website_graphic', true);
                         }),
@@ -474,10 +515,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
                         ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalSubmitActionLabel("No, I don't have a website graphic")
+                        ->modalCancelActionLabel(__('mégsem'))
+                        ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
                         ->modalAlignment(Alignment::Center)
+                        ->color(fn ($livewire) => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
                         ->action(function (Set $set): void {
                             $set('have_website_graphic', false);
+
                         }),
                 ])->label('Do you have a website graphic?')->translateLabel(),
             ]),
@@ -489,9 +533,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null)
                 ->descriptions(function (Get $get) {
-                    return RequestQuote::find($get('website_type_id'))?->requestQuoteFunctionalities
-                        ->pluck('description', 'id')
-                        ->toArray();
+                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->pluck('description', 'id')->toArray();
                 }),
             Toggle::make('is_multilangual')
                 ->translateLabel()
@@ -500,7 +542,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->translateLabel()
                 ->live()
                 ->visible(fn ($get) => $get('is_multilangual'))
-                ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
+                ->default(WebsiteLanguage::whereName('Magyar')->firstOrCreate(['name' => 'Magyar'])->id)
                 ->options(WebsiteLanguage::all()->pluck('name', 'id'))
                 ->preload()
                 ->afterStateUpdated(function (Set $set): void {

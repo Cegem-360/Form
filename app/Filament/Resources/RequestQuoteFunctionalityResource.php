@@ -21,7 +21,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class RequestQuoteFunctionalityResource extends Resource
+final class RequestQuoteFunctionalityResource extends Resource
 {
     protected static ?string $model = RequestQuoteFunctionality::class;
 
@@ -47,7 +47,6 @@ class RequestQuoteFunctionalityResource extends Resource
                     ->relationship('websiteType', 'name')
                     ->required()
                     ->preload()
-                    ->searchable()
                     ->placeholder('Select a website type'),
             ]);
     }

@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use App\Models\WebsiteType;
 use Illuminate\Database\Seeder;
 
-class WebsiteTypeSeeder extends Seeder
+final class WebsiteTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -20,6 +20,7 @@ class WebsiteTypeSeeder extends Seeder
         WebsiteType::factory()->create([
             'name' => 'Webshop',
         ]);
+
         WebsiteType::factory()->create([
             'name' => 'Weboldal',
         ]);
