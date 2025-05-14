@@ -10,7 +10,7 @@
                 <div class="flex justify-between p-12">
                     <span class="text-3xl font-bold">cégem360</span>
                     <span class="text-3xl uppercase">Prémium weboldal készítés</span>
-                </div>a
+                </div>form
                 <div class="p-12">
                     <p class="mb-4 text-4xl font-bold">{{ $requestQuote->name }} részére</p>
                     <p class="text-3xl">Árajánlat weboldal fejlesztésre</p>
