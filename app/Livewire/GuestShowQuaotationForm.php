@@ -299,7 +299,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
-                        ->hintAction(function () {
+                        ->hintAction(function (): \Filament\Forms\Components\Actions\Action {
                             return Action::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
@@ -311,7 +311,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->preload(),
                     Select::make('website_engine')
                         ->live()
-                        ->hintAction(function () {
+                        ->hintAction(function (): \Filament\Forms\Components\Actions\Action {
                             return Action::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
@@ -509,7 +509,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->modalSubmitActionLabel(__('Igen, Biztosan van'))
                         ->modalCancelActionLabel(__('mégsem'))
                         ->modalAlignment(Alignment::Center)
-                        ->color(fn ($livewire) => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
+                        ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
                         ->action(function (Set $set): void {
                             $set('have_website_graphic', true);
                         }),
@@ -521,7 +521,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->modalCancelActionLabel(__('mégsem'))
                         ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
                         ->modalAlignment(Alignment::Center)
-                        ->color(fn ($livewire) => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
+                        ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
                         ->action(function (Set $set): void {
                             $set('have_website_graphic', false);
 

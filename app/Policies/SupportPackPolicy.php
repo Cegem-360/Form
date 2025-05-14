@@ -20,7 +20,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, SupportPack $supportpack): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view SupportPack');
     }
@@ -36,7 +36,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, SupportPack $supportpack): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update SupportPack');
     }
@@ -44,7 +44,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, SupportPack $supportpack): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete SupportPack');
     }
@@ -60,7 +60,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, SupportPack $supportpack): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore SupportPack');
     }
@@ -76,7 +76,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, SupportPack $supportpack): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate SupportPack');
     }
@@ -92,7 +92,7 @@ final class SupportPackPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, SupportPack $supportpack): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete SupportPack');
     }

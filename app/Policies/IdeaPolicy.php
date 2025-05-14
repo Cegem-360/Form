@@ -20,7 +20,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Idea $idea): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view Idea');
     }
@@ -36,7 +36,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Idea $idea): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update Idea');
     }
@@ -44,7 +44,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Idea $idea): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete Idea');
     }
@@ -60,7 +60,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Idea $idea): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore Idea');
     }
@@ -76,7 +76,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, Idea $idea): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate Idea');
     }
@@ -92,7 +92,7 @@ final class IdeaPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Idea $idea): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete Idea');
     }

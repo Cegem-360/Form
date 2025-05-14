@@ -20,7 +20,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FormQuestion $formquestion): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view FormQuestion');
     }
@@ -36,7 +36,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, FormQuestion $formquestion): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update FormQuestion');
     }
@@ -44,7 +44,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FormQuestion $formquestion): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete FormQuestion');
     }
@@ -60,7 +60,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, FormQuestion $formquestion): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore FormQuestion');
     }
@@ -76,7 +76,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, FormQuestion $formquestion): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate FormQuestion');
     }
@@ -92,7 +92,7 @@ final class FormQuestionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FormQuestion $formquestion): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete FormQuestion');
     }

@@ -20,7 +20,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view FormQuestionVisibility');
     }
@@ -36,7 +36,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update FormQuestionVisibility');
     }
@@ -44,7 +44,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete FormQuestionVisibility');
     }
@@ -60,7 +60,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore FormQuestionVisibility');
     }
@@ -76,7 +76,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate FormQuestionVisibility');
     }
@@ -92,7 +92,7 @@ final class FormQuestionVisibilityPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, FormQuestionVisibility $formquestionvisibility): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete FormQuestionVisibility');
     }

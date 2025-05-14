@@ -11,8 +11,6 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 final class CartShow extends Component implements HasActions, HasForms
@@ -30,9 +28,6 @@ final class CartShow extends Component implements HasActions, HasForms
     {
         $this->requestQuote = $requestQuote;
 
-        /* if (! Session::exists('requestQuote') && Auth::user()->id !== $requestQuote->user_id) {
-            abort(403, 'Unauthorized action.');
-        } */
         collect($this->requestQuote?->websites)->each(function (array $page) use (&$total): void {
             if ($page['required']) {
                 $this->total += match ($page['length']) {
@@ -63,8 +58,6 @@ final class CartShow extends Component implements HasActions, HasForms
 
     public function render(): View
     {
-        /*  dump($this->requestQuote); */
-
         return view('livewire.cart.cart-show');
     }
 }

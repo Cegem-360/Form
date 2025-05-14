@@ -20,7 +20,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Project $project): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view Project');
     }
@@ -36,7 +36,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Project $project): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update Project');
     }
@@ -44,7 +44,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Project $project): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete Project');
     }
@@ -60,7 +60,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Project $project): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore Project');
     }
@@ -76,7 +76,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, Project $project): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate Project');
     }
@@ -92,7 +92,7 @@ final class ProjectPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Project $project): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete Project');
     }

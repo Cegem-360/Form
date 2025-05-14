@@ -31,7 +31,7 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
     return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 })->name('quotation.pdf');
 
-Route::name('quotation.')->prefix('quotation')->group(function () {
+Route::name('quotation.')->prefix('quotation')->group(function (): void {
     Route::get('preview/{requestQuote}', function () {
 
         $requestQuote = RequestQuote::factory()->make([
@@ -63,11 +63,11 @@ Route::name('quotation.')->prefix('quotation')->group(function () {
         return $pdf->stream('quotation-preview.pdf');
     })->name('preview.id'); */
 });
-Route::middleware(['auth'])->name('cart.')->prefix('cart')->group(function () {
+Route::middleware(['auth'])->name('cart.')->prefix('cart')->group(function (): void {
     Route::get('summary/{requestQuote}', CartShow::class)->name('summary');
 });
 
-Route::name('checkout.')->prefix('checkout')->group(function () {
+Route::name('checkout.')->prefix('checkout')->group(function (): void {
 
     Route::middleware(['auth'])->get('/summary/{requestQuote}', PaymentPage::class)->name('summary');
     Route::get('success/{requestQuote}', CheckoutSuccess::class)->name('success');

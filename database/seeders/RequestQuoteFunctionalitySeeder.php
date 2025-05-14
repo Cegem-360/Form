@@ -20,7 +20,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
 
         $websiteTypes = WebsiteType::whereName('weboldal')->orWhere('name', 'webshop')->get();
 
-        $websiteTypes->each(function ($websiteType) {
+        $websiteTypes->each(function ($websiteType): void {
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Kapcsolati űrlap',
                 'price' => 30000,
@@ -92,7 +92,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
 
         $websiteTypes = WebsiteType::whereName('Landing page')->get();
 
-        $websiteTypes->each(function ($websiteType) {
+        $websiteTypes->each(function ($websiteType): void {
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Kapcsolati űrlap',
                 'price' => 30000,

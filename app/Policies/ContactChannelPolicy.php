@@ -20,7 +20,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, ContactChannel $contactchannel): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view ContactChannel');
     }
@@ -36,7 +36,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, ContactChannel $contactchannel): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update ContactChannel');
     }
@@ -44,7 +44,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, ContactChannel $contactchannel): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete ContactChannel');
     }
@@ -60,7 +60,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, ContactChannel $contactchannel): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore ContactChannel');
     }
@@ -76,7 +76,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, ContactChannel $contactchannel): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate ContactChannel');
     }
@@ -92,7 +92,7 @@ final class ContactChannelPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, ContactChannel $contactchannel): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete ContactChannel');
     }

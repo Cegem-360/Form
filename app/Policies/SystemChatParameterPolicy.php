@@ -20,7 +20,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, SystemChatParameter $systemchatparameter): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view SystemChatParameter');
     }
@@ -36,7 +36,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, SystemChatParameter $systemchatparameter): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update SystemChatParameter');
     }
@@ -44,7 +44,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, SystemChatParameter $systemchatparameter): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete SystemChatParameter');
     }
@@ -60,7 +60,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, SystemChatParameter $systemchatparameter): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore SystemChatParameter');
     }
@@ -76,7 +76,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, SystemChatParameter $systemchatparameter): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate SystemChatParameter');
     }
@@ -92,7 +92,7 @@ final class SystemChatParameterPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, SystemChatParameter $systemchatparameter): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete SystemChatParameter');
     }
