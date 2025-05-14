@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\FormQuestionResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\FormQuestionResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListFormQuestions extends ListRecords
+final class ListFormQuestions extends ListRecords
 {
     protected static string $resource = FormQuestionResource::class;
 

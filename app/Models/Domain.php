@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Database\Factories\DomainFactory;
 use App\Observers\DomainObserver;
+use Database\Factories\DomainFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\FormQuestion|null $formQuestion
+ * @property-read FormQuestion|null $formQuestion
  *
  * @method static \Database\Factories\DomainFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain newModelQuery()
@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  *
  * @mixin \Eloquent
  */
-class Domain extends Model
+final class Domain extends Model
 {
     /** @use HasFactory<DomainFactory> */
     use HasFactory;

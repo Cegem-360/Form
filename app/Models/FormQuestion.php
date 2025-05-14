@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Database\Factories\FormQuestionFactory;
 use App\Observers\FormQuestionObserver;
+use Database\Factories\FormQuestionFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(FormQuestionObserver::class)]
 
-class FormQuestion extends Model
+final class FormQuestion extends Model
 {
     /** @use HasFactory<FormQuestionFactory> */
     use HasFactory;

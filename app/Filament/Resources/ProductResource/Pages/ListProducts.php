@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ProductResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\ProductResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListProducts extends ListRecords
+final class ListProducts extends ListRecords
 {
     protected static string $resource = ProductResource::class;
 

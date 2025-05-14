@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\StripeProduct;
@@ -8,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<StripeProduct>
  */
-class StripeProductFactory extends Factory
+final class StripeProductFactory extends Factory
 {
     /**
      * Define the model's default state.

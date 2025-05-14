@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\RequestQuoteFunctionalityResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\RequestQuoteFunctionalityResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListRequestQuoteFunctionalities extends ListRecords
+final class ListRequestQuoteFunctionalities extends ListRecords
 {
     protected static string $resource = RequestQuoteFunctionalityResource::class;
 

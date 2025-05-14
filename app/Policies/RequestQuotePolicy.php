@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Models\RequestQuote;
 use App\Models\User;
 
-class RequestQuotePolicy
+final class RequestQuotePolicy
 {
     /**
      * Determine whether the user can view any models.

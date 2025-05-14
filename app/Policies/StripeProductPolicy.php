@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\StripeProduct;
 use App\Models\User;
 
-class StripeProductPolicy
+final class StripeProductPolicy
 {
     /**
      * Determine whether the user can view any models.

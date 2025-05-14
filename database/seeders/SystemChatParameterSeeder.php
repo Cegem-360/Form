@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class SystemChatParameterSeeder extends Seeder
+final class SystemChatParameterSeeder extends Seeder
 {
     /**
      * Run the database seeds.

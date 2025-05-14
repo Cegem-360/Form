@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<FormQuestionVisibility>
  */
-class FormQuestionVisibilityFactory extends Factory
+final class FormQuestionVisibilityFactory extends Factory
 {
     /**
      * Define the model's default state.

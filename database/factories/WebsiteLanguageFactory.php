@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<WebsiteLanguage>
  */
-class WebsiteLanguageFactory extends Factory
+final class WebsiteLanguageFactory extends Factory
 {
     /**
      * Define the model's default state.

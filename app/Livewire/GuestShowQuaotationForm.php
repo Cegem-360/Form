@@ -111,11 +111,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 $data['user_id'] = Auth::id();
                 $requestQuote = RequestQuote::create($data);
 
-                Notification::make()
-                    ->title(__('Quotation created and order placed'))
-                    ->success()
-                    ->send();
-
                 $this->form->model($requestQuote)->saveRelationships();
                 // save to session
                 Session::put('requestQuote', $requestQuote->id);

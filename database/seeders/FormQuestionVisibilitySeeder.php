@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class FormQuestionVisibilitySeeder extends Seeder
+final class FormQuestionVisibilitySeeder extends Seeder
 {
     /**
      * Run the database seeds.

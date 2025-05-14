@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\Project;
 use App\Models\User;
 
-class ProjectPolicy
+final class ProjectPolicy
 {
     /**
      * Determine whether the user can view any models.

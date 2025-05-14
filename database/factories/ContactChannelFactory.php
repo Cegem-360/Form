@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<ContactChannel>
  */
-class ContactChannelFactory extends Factory
+final class ContactChannelFactory extends Factory
 {
     /**
      * Define the model's default state.

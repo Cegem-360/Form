@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\ProjectResource\Pages\ListProjects;
-use App\Filament\Resources\ProjectResource\Pages\CreateProject;
-use App\Filament\Resources\ProjectResource\Pages\ViewProject;
-use App\Filament\Resources\ProjectResource\Pages\EditProject;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\Pages\CreateProject;
+use App\Filament\Resources\ProjectResource\Pages\EditProject;
+use App\Filament\Resources\ProjectResource\Pages\ListProjects;
+use App\Filament\Resources\ProjectResource\Pages\ViewProject;
 use App\Models\Project;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
@@ -23,11 +17,15 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectResource extends Resource
+final class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 

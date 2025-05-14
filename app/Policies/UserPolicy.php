@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Policies;
+declare(strict_types=1);
 
-use Illuminate\Auth\Access\Response;
+namespace App\Policies;
 
 use App\Models\User;
 
-class UserPolicy
+final class UserPolicy
 {
     /**
      * Determine whether the user can view any models.

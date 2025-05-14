@@ -10,7 +10,7 @@ use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class OrderSummary extends Component implements HasForms
+final class OrderSummary extends Component implements HasForms
 {
     use InteractsWithForms;
 

@@ -10,7 +10,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewDomain extends ViewRecord
+final class ViewDomain extends ViewRecord
 {
     protected static string $resource = DomainResource::class;
 

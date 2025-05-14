@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\WebsiteTypeResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\WebsiteTypeResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListWebsiteTypes extends ListRecords
+final class ListWebsiteTypes extends ListRecords
 {
     protected static string $resource = WebsiteTypeResource::class;
 

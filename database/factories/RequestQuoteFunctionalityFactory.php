@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends Factory<RequestQuoteFunctionality>
  */
-class RequestQuoteFunctionalityFactory extends Factory
+final class RequestQuoteFunctionalityFactory extends Factory
 {
     /**
      * Define the model's default state.

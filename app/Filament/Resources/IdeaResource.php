@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\IdeaResource\Pages\ListIdeas;
 use App\Filament\Resources\IdeaResource\Pages\CreateIdea;
-use App\Filament\Resources\IdeaResource\Pages\ViewIdea;
 use App\Filament\Resources\IdeaResource\Pages\EditIdea;
-use App\Filament\Resources\IdeaResource\Pages;
+use App\Filament\Resources\IdeaResource\Pages\ListIdeas;
+use App\Filament\Resources\IdeaResource\Pages\ViewIdea;
 use App\Models\Idea;
-use Filament\Forms;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class IdeaResource extends Resource
+final class IdeaResource extends Resource
 {
     protected static ?string $model = Idea::class;
 

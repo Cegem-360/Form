@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\ProjectResource\Pages;
 
-use Filament\Actions\EditAction;
 use App\Filament\Resources\ProjectResource;
-use Filament\Actions;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewProject extends ViewRecord
+final class ViewProject extends ViewRecord
 {
     protected static string $resource = ProjectResource::class;
 

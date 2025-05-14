@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
 use App\Filament\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
 use App\Filament\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
-use App\Filament\Resources\FormQuestionVisibilityResource\Pages;
+use App\Filament\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
 use App\Models\FormQuestionVisibility;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class FormQuestionVisibilityResource extends Resource
+final class FormQuestionVisibilityResource extends Resource
 {
     protected static ?string $model = FormQuestionVisibility::class;
 

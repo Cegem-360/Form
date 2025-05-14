@@ -8,7 +8,7 @@ use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Laravel\Cashier\Cashier;
 
-class StripeSeeder extends Seeder
+final class StripeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -7,7 +7,7 @@ namespace App\Observers;
 use App\Models\Domain;
 use App\Models\FormQuestion;
 
-class DomainObserver
+final class DomainObserver
 {
     public function created(Domain $domain): void
     {

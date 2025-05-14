@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\ContactChannelResource\Pages\ListContactChannels;
 use App\Filament\Resources\ContactChannelResource\Pages\CreateContactChannel;
-use App\Filament\Resources\ContactChannelResource\Pages\ViewContactChannel;
 use App\Filament\Resources\ContactChannelResource\Pages\EditContactChannel;
-use App\Filament\Resources\ContactChannelResource\Pages;
+use App\Filament\Resources\ContactChannelResource\Pages\ListContactChannels;
+use App\Filament\Resources\ContactChannelResource\Pages\ViewContactChannel;
 use App\Models\ContactChannel;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ContactChannelResource extends Resource
+final class ContactChannelResource extends Resource
 {
     protected static ?string $model = ContactChannel::class;
 

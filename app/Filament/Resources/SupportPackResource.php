@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\SupportPackResource\Pages\ListSupportPacks;
 use App\Filament\Resources\SupportPackResource\Pages\CreateSupportPack;
-use App\Filament\Resources\SupportPackResource\Pages\ViewSupportPack;
 use App\Filament\Resources\SupportPackResource\Pages\EditSupportPack;
-use App\Filament\Resources\SupportPackResource\Pages;
+use App\Filament\Resources\SupportPackResource\Pages\ListSupportPacks;
+use App\Filament\Resources\SupportPackResource\Pages\ViewSupportPack;
 use App\Models\SupportPack;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class SupportPackResource extends Resource
+final class SupportPackResource extends Resource
 {
     protected static ?string $model = SupportPack::class;
 

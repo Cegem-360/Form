@@ -7,7 +7,7 @@ namespace App\Filament\Resources\WebsiteLanguageResource\Pages;
 use App\Filament\Resources\WebsiteLanguageResource;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateWebsiteLanguage extends CreateRecord
+final class CreateWebsiteLanguage extends CreateRecord
 {
     protected static string $resource = WebsiteLanguageResource::class;
 }

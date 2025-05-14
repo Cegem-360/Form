@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
 use Database\Factories\FormQuestionVisibilityFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -129,7 +129,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @mixin \Eloquent
  */
-class FormQuestionVisibility extends Model
+final class FormQuestionVisibility extends Model
 {
     /** @use HasFactory<FormQuestionVisibilityFactory> */
     use HasFactory;
@@ -199,6 +199,11 @@ class FormQuestionVisibility extends Model
         'online_bank_card_payment_options_visible',
     ];
 
+    public function formQuestion(): BelongsTo
+    {
+        return $this->belongsTo(FormQuestion::class);
+    }
+
     protected function casts(): array
     {
         return [
@@ -262,10 +267,5 @@ class FormQuestionVisibility extends Model
             'online_bank_card_payment_options_visible' => 'boolean',
 
         ];
-    }
-
-    public function formQuestion(): BelongsTo
-    {
-        return $this->belongsTo(FormQuestion::class);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\FormQuestion;
 use App\Models\Domain;
+use App\Models\FormQuestion;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<FormQuestion>
  */
-class FormQuestionFactory extends Factory
+final class FormQuestionFactory extends Factory
 {
     /**
      * Define the model's default state.

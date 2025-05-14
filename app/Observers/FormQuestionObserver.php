@@ -7,7 +7,7 @@ namespace App\Observers;
 use App\Models\FormQuestion;
 use Illuminate\Support\Facades\Storage;
 
-class FormQuestionObserver
+final class FormQuestionObserver
 {
     /**
      * Handle the FormQuestion "deleted" event.

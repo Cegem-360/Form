@@ -7,7 +7,7 @@ namespace App\Jobs;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class UpdateBlockInWordpressById implements ShouldQueue
+final class UpdateBlockInWordpressById implements ShouldQueue
 {
     use Queueable;
 

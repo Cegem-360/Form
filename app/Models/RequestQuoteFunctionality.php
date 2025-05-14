@@ -8,7 +8,7 @@ use Database\Factories\RequestQuoteFunctionalityFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RequestQuoteFunctionality extends Model
+final class RequestQuoteFunctionality extends Model
 {
     /** @use HasFactory<RequestQuoteFunctionalityFactory> */
     use HasFactory;

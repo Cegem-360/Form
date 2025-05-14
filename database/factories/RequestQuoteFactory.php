@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @extends Factory<RequestQuote>
  */
-class RequestQuoteFactory extends Factory
+final class RequestQuoteFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

@@ -8,7 +8,7 @@ use App\Models\RequestQuote;
 use App\Models\WebsiteType;
 use Illuminate\Database\Seeder;
 
-class RequestQuoteSeeder extends Seeder
+final class RequestQuoteSeeder extends Seeder
 {
     /**
      * Run the database seeds.

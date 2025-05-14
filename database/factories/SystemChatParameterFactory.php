@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Enums\OpenAIRole;
 use App\Models\SystemChatParameter;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * @extends Factory<SystemChatParameter>
  */
-class SystemChatParameterFactory extends Factory
+final class SystemChatParameterFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

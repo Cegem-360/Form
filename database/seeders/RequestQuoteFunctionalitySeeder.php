@@ -44,7 +44,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
                 'name' => 'Hírlevél feliratkozás',
                 'price' => 60000,
                 'website_type_id' => $websiteType->id,
-                'description' => 'Egy beépített funkció, amellyel a látogatók feliratkozhatnak az Ön e-mail listájára, hogy értesüljenek híreiről, akcióiról vagy újdonságairól.',
+                'description' => 'Egy beépített funkció, amellyel a látogatók feliratkozhatnak az Ön e-mail listájára, hogy értesüljenek híreiről, akcióiról vagy újdonságairól. A szolgáltatás tartalmazza a hirlevél küldő rendszer integrácíóját.',
             ]);
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Pop-up ablak',
@@ -62,7 +62,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
                 'name' => 'Chat',
                 'price' => 30000,
                 'website_type_id' => $websiteType->id,
-                'description' => 'Valós idejű kommunikációs eszköz, amely lehetővé teszi a weboldal látogatói számára, hogy azonnali üzenetet váltsanak Önnel vagy az ügyfélszolgálattal, növelve az elkötelezettséget. Adot chatt szolgáltató kérhet felárat.',
+                'description' => 'Valós idejű kommunikációs eszköz, amely lehetővé teszi a weboldal látogatói számára, hogy azonnali üzenetet váltsanak Önnel vagy az ügyfélszolgálattal, növelve az elkötelezettséget. Adot chat szolgáltató kérhet felárat.',
             ]);
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Blog / Hírek szekció',
@@ -108,7 +108,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
             ]);
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Pop-up ablak',
-                'price' => 120000,
+                'price' => 60000,
                 'website_type_id' => $websiteType->id,
                 'description' => 'Egy felugró felület, amely automatikusan megjelenik a látogatóknak bizonyos feltételek teljesülésekor (pl. oldalra érkezéskor, kilépés előtt), figyelemfelkeltő üzenetek vagy ajánlatok megjelenítésére.',
             ]);
@@ -116,7 +116,7 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
                 'name' => 'Hírlevél feliratkozás',
                 'price' => 60000,
                 'website_type_id' => $websiteType->id,
-                'description' => 'Egy beépített funkció, amellyel a látogatók feliratkozhatnak az Ön e-mail listájára, hogy értesüljenek híreiről, akcióiról vagy újdonságairól.',
+                'description' => 'Egy beépített funkció, amellyel a látogatók feliratkozhatnak az Ön e-mail listájára, hogy értesüljenek híreiről, akcióiról vagy újdonságairól. A szolgáltatás tartalmazza a hirlevél küldő rendszer integrácíóját.',
             ]);
             RequestQuoteFunctionality::factory()->create([
                 'name' => 'Közösségi média integráció',

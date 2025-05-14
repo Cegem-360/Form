@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class RequestQuote extends Model
+final class RequestQuote extends Model
 {
     /** @use HasFactory<RequestQuoteFactory> */
     use HasFactory;
@@ -35,18 +35,6 @@ class RequestQuote extends Model
         'languages',
         'website_engine',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'websites' => 'array',
-            'functionalities' => 'array',
-            'languages' => 'array',
-            'is_multilangual' => 'boolean',
-            'have_website_graphic' => 'boolean',
-            'client_type' => ClientType::class,
-        ];
-    }
 
     public function websiteType()
     {
@@ -107,5 +95,17 @@ class RequestQuote extends Model
         return $query->whereHas('websiteType', function ($q) {
             return $q->whereName('Landing Page	');
         });
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'websites' => 'array',
+            'functionalities' => 'array',
+            'languages' => 'array',
+            'is_multilangual' => 'boolean',
+            'have_website_graphic' => 'boolean',
+            'client_type' => ClientType::class,
+        ];
     }
 }

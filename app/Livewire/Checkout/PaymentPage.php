@@ -87,18 +87,18 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->preload(),
                 TextInput::make('company_name')
                     ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
                     ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_registration_number')
                     ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 Select::make('paymentMethod')
                     ->translateLabel()

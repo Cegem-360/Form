@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\WebsiteLanguage;
 use App\Models\User;
+use App\Models\WebsiteLanguage;
 
-class WebsiteLanguagePolicy
+final class WebsiteLanguagePolicy
 {
     /**
      * Determine whether the user can view any models.

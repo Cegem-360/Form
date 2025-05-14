@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
 use App\Models\SystemChatParameter;
 use App\Models\User;
 
-class SystemChatParameterPolicy
+final class SystemChatParameterPolicy
 {
     /**
      * Determine whether the user can view any models.

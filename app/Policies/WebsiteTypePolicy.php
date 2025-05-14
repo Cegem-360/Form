@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\WebsiteType;
 use App\Models\User;
+use App\Models\WebsiteType;
 
-class WebsiteTypePolicy
+final class WebsiteTypePolicy
 {
     /**
      * Determine whether the user can view any models.

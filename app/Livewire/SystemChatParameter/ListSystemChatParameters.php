@@ -20,7 +20,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class ListSystemChatParameters extends Component implements HasForms, HasTable
+final class ListSystemChatParameters extends Component implements HasForms, HasTable
 {
     use InteractsWithForms;
     use InteractsWithTable;

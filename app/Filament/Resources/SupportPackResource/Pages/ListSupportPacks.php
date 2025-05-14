@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SupportPackResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\SupportPackResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSupportPacks extends ListRecords
+final class ListSupportPacks extends ListRecords
 {
     protected static string $resource = SupportPackResource::class;
 

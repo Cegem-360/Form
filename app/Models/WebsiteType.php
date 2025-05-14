@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WebsiteType extends Model
+final class WebsiteType extends Model
 {
     /** @use HasFactory<WebsiteTypeFactory> */
     use HasFactory;

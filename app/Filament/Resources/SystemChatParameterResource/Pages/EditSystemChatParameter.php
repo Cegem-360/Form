@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SystemChatParameterResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\SystemChatParameterResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditSystemChatParameter extends EditRecord
+final class EditSystemChatParameter extends EditRecord
 {
     protected static string $resource = SystemChatParameterResource::class;
 

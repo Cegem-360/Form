@@ -8,7 +8,7 @@ use App\Models\RequestQuote;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class RequestQuoteFormChart extends BaseWidget
+final class RequestQuoteFormChart extends BaseWidget
 {
     protected function getStats(): array
     {

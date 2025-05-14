@@ -14,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+final class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use Billable<Billable> */
     use Billable;
@@ -51,6 +51,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'remember_token',
     ];
 
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '');
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -62,10 +67,5 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return str_ends_with($this->email, '');
     }
 }

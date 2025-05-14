@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
+use App\Enums\OpenAIRole;
 use Database\Factories\SystemChatParameterFactory;
 use Illuminate\Database\Eloquent\Builder;
-use App\Enums\OpenAIRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
@@ -34,7 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @mixin \Eloquent
  */
-class SystemChatParameter extends Model
+final class SystemChatParameter extends Model
 {
     /** @use HasFactory<SystemChatParameterFactory> */
     use HasFactory;

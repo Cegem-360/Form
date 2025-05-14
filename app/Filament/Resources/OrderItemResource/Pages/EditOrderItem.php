@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\OrderItemResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Resources\OrderItemResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditOrderItem extends EditRecord
+final class EditOrderItem extends EditRecord
 {
     protected static string $resource = OrderItemResource::class;
 

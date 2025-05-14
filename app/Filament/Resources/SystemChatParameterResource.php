@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\SystemChatParameterResource\Pages\ListSystemChatParameters;
+use App\Enums\OpenAIRole;
 use App\Filament\Resources\SystemChatParameterResource\Pages\CreateSystemChatParameter;
 use App\Filament\Resources\SystemChatParameterResource\Pages\EditSystemChatParameter;
-use App\Enums\OpenAIRole;
-use App\Filament\Resources\SystemChatParameterResource\Pages;
+use App\Filament\Resources\SystemChatParameterResource\Pages\ListSystemChatParameters;
 use App\Models\SystemChatParameter;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
-class SystemChatParameterResource extends Resource
+final class SystemChatParameterResource extends Resource
 {
     protected static ?string $model = SystemChatParameter::class;
 

@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
 use App\Filament\Resources\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
-use App\Filament\Resources\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
 use App\Filament\Resources\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
-use App\Filament\Resources\WebsiteLanguageResource\Pages;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
+use App\Filament\Resources\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
 use App\Models\WebsiteLanguage;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class WebsiteLanguageResource extends Resource
+final class WebsiteLanguageResource extends Resource
 {
     protected static ?string $model = WebsiteLanguage::class;
 

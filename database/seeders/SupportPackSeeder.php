@@ -7,7 +7,7 @@ namespace Database\Seeders;
 use App\Models\SupportPack;
 use Illuminate\Database\Seeder;
 
-class SupportPackSeeder extends Seeder
+final class SupportPackSeeder extends Seeder
 {
     /**
      * Run the database seeds.

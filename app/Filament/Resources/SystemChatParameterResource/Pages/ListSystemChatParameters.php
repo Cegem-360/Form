@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\SystemChatParameterResource\Pages;
 
-use Filament\Actions\CreateAction;
 use App\Filament\Resources\SystemChatParameterResource;
-use Filament\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
-class ListSystemChatParameters extends ListRecords
+final class ListSystemChatParameters extends ListRecords
 {
     protected static string $resource = SystemChatParameterResource::class;
 

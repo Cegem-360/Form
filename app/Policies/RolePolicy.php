@@ -7,7 +7,7 @@ namespace App\Policies;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
-class RolePolicy
+final class RolePolicy
 {
     /**
      * Determine whether the user can view any models.

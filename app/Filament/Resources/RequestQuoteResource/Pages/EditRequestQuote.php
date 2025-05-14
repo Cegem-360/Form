@@ -20,9 +20,26 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
-class EditRequestQuote extends EditRecord
+final class EditRequestQuote extends EditRecord
 {
     protected static string $resource = RequestQuoteResource::class;
+
+    public function createPdf()
+    {
+        $record = $this->record;
+
+        return redirect()->route('quotation.preview.id', ['requestQuote' => $record->id]);
+    }
+
+    public function createPdfAndSendToCurrentUser(): void
+    {
+        $record = $this->record;
+        Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($record));
+        Notification::make()
+            ->title('Quotation has been sent to your email')
+            ->success()
+            ->send();
+    }
 
     protected function getHeaderActions(): array
     {
@@ -68,22 +85,5 @@ class EditRequestQuote extends EditRecord
                     ->color('secondary'),
             ]),
         ];
-    }
-
-    public function createPdf()
-    {
-        $record = $this->record;
-
-        return redirect()->route('quotation.preview.id', ['requestQuote' => $record->id]);
-    }
-
-    public function createPdfAndSendToCurrentUser(): void
-    {
-        $record = $this->record;
-        Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($record));
-        Notification::make()
-            ->title('Quotation has been sent to your email')
-            ->success()
-            ->send();
     }
 }

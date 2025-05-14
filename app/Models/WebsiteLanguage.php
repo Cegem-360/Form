@@ -8,7 +8,7 @@ use Database\Factories\WebsiteLanguageFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WebsiteLanguage extends Model
+final class WebsiteLanguage extends Model
 {
     /** @use HasFactory<WebsiteLanguageFactory> */
     use HasFactory;

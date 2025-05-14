@@ -13,7 +13,7 @@ abstract class Page extends BasePage
      *
      * @return array<string, string>
      */
-    public static function siteElements(): array
+    final public static function siteElements(): array
     {
         return [
             '@element' => '#selector',

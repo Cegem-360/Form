@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
 use App\Filament\Resources\WebsiteTypeResource\Pages\CreateWebsiteType;
-use App\Filament\Resources\WebsiteTypeResource\Pages\ViewWebsiteType;
 use App\Filament\Resources\WebsiteTypeResource\Pages\EditWebsiteType;
-use App\Filament\Resources\WebsiteTypeResource\Pages;
+use App\Filament\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
+use App\Filament\Resources\WebsiteTypeResource\Pages\ViewWebsiteType;
 use App\Filament\Resources\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
 use App\Models\WebsiteType;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class WebsiteTypeResource extends Resource
+final class WebsiteTypeResource extends Resource
 {
     protected static ?string $model = WebsiteType::class;
 

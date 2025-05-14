@@ -4,24 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\DomainResource\Pages\ListDomains;
 use App\Filament\Resources\DomainResource\Pages\CreateDomain;
-use App\Filament\Resources\DomainResource\Pages\ViewDomain;
 use App\Filament\Resources\DomainResource\Pages\EditDomain;
-use App\Filament\Resources\DomainResource\Pages;
+use App\Filament\Resources\DomainResource\Pages\ListDomains;
+use App\Filament\Resources\DomainResource\Pages\ViewDomain;
 use App\Models\Domain;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class DomainResource extends Resource
+final class DomainResource extends Resource
 {
     protected static ?string $model = Domain::class;
 

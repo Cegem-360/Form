@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Resources\FormQuestionResource\Pages\ListFormQuestions;
-use App\Filament\Resources\FormQuestionResource\Pages\CreateFormQuestion;
-use App\Filament\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\FormQuestionResource\Pages;
+use App\Filament\Resources\FormQuestionResource\Pages\CreateFormQuestion;
+use App\Filament\Resources\FormQuestionResource\Pages\EditFormQuestion;
+use App\Filament\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
@@ -32,13 +27,16 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
 
-class FormQuestionResource extends Resource
+final class FormQuestionResource extends Resource
 {
     protected static ?string $model = FormQuestion::class;
 
@@ -90,11 +88,11 @@ class FormQuestionResource extends Resource
                                             ->icon('heroicon-o-clipboard')
                                             ->copyable(function (Set $set, $state) {
                                                 $token = Str::random(60);
-                                                if ($state == null) {
+                                                if ($state === null) {
                                                     $set('token', $token);
                                                 }
 
-                                                if ($state != null) {
+                                                if ($state !== null) {
                                                     $token = $state;
                                                 }
 
