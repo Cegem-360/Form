@@ -34,6 +34,7 @@ final class RequestQuote extends Model
         'is_multilangual',
         'languages',
         'website_engine',
+        'payment_method',
     ];
 
     public function websiteType()

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Middleware\EnsureHasRequestQuote;
 use App\Livewire\Cart\CartShow;
 use App\Livewire\Checkout\CheckoutSuccess;
 use App\Livewire\Checkout\CheckoutUnsuccess;
@@ -63,13 +64,13 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         return $pdf->stream('quotation-preview.pdf');
     })->name('preview.id'); */
 });
-Route::middleware(['auth'])->name('cart.')->prefix('cart')->group(function (): void {
+Route::middleware(['auth', EnsureHasRequestQuote::class])->name('cart.')->prefix('cart')->group(function (): void {
     Route::get('summary/{requestQuote}', CartShow::class)->name('summary');
 });
 
-Route::name('checkout.')->prefix('checkout')->group(function (): void {
+Route::middleware(['auth', EnsureHasRequestQuote::class])->name('checkout.')->prefix('checkout')->group(function (): void {
 
-    Route::middleware(['auth'])->get('/summary/{requestQuote}', PaymentPage::class)->name('summary');
+    Route::get('/summary/{requestQuote}', PaymentPage::class)->name('summary');
     Route::get('success/{requestQuote}', CheckoutSuccess::class)->name('success');
     Route::get('unsuccess/{requestQuote}', CheckoutUnsuccess::class)->name('unsuccess');
 

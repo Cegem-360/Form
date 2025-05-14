@@ -11,6 +11,7 @@ use App\Models\RequestQuote;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -35,25 +36,9 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     public function mount(?RequestQuote $requestQuote = null): void
     {
-        /*
-                if (Auth::user()->id !== $requestQuote->user_id) {
-                    abort(403, 'Unauthorized action.');
-                }
 
-                $this->requestQuote = $requestQuote; // Load order details
-                if (! $this->requestQuote) {
-                    abort(403, 'Unauthorized action.');
-                } */
+        // $this->requestQuote = $requestQuote; // Load order details
 
-        /* $this->form->fill([
-            'name' => $this->requestQuote->name,
-            'email' => $this->requestQuote->email,
-            'phone' => $this->requestQuote->phone,
-            'client_type' => $this->requestQuote->client_type,
-            'company_name' => $this->requestQuote->company_name,
-            'company_address' => $this->requestQuote->company_address,
-            'company_registration_number' => $this->requestQuote->company_registration_number,
-        ]); */
         $this->form->fill($this->requestQuote->toArray());
 
     }
@@ -86,6 +71,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->options(ClientType::class)
                     ->preload(),
                 TextInput::make('company_name')
+
                     ->translateLabel()
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
@@ -103,7 +89,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
-                Select::make('paymentMethod')
+                Select::make('payment_method')
                     ->translateLabel()
                     ->label('Payment Method')
                     ->options([
@@ -111,16 +97,31 @@ final class PaymentPage extends Component implements HasActions, HasForms
                         'bank_transfer' => __('Bank Transfer'),
                     ])
                     ->default('stripe')
+                    ->afterStateUpdated(function ($state): void {
+                        $this->requestQuote->payment_method = $state;
+                        $this->requestQuote->save();
+                    })
                     ->required()
+                    ->live(),
+                Checkbox::make('terms')
+                    ->label(__('I have read and accept the terms and conditions'))
+                    ->required()
+                    ->translateLabel()
+                    ->live(),
+                Checkbox::make('privacy')
+                    ->label(__('I have read and accept the privacy policy'))
+                    ->required()
+                    ->translateLabel()
                     ->live(),
             ])
             ->statePath('data')
-            ->model($this->requestQuote);
+            ->model(RequestQuote::class);
     }
 
     public function payWithStripe(): Action
     {
         return Action::make('payWithStripe')
+            ->extraAttributes(['class' => '!bg-[#2563eb]'])
             ->action(function () {
                 $this->validate([
                     'data.name' => ['required', 'string'],
@@ -130,8 +131,12 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'data.company_name' => ['nullable', 'string'],
                     'data.company_address' => ['nullable', 'string'],
                     'data.company_registration_number' => ['nullable', 'string'],
+                    'data.payment_method' => ['required', 'string'],
+                    'data.terms' => ['accepted'],
+                    'data.privacy' => ['accepted'],
                 ]);
 
+                $this->requestQuote->update($this->data);
                 $this->requestQuote->save();
 
                 Notification::make()
@@ -158,26 +163,8 @@ final class PaymentPage extends Component implements HasActions, HasForms
                         'metadata' => [
                             'order_id' => $order->id,
                         ],
-                    ],/*
-                    customerOptions: [
-                        'customer_details' => [
-                            'address' => [
-                                'city' => 'Budapest',
-                                'country' => 'HU',
-                                'line1' => null,
-                                'line2' => null,
-                                'postal_code' => null,
-                                'state' => null,
-                            ],
-                            'email' => 'admin@admin.com',
-                            'name' => 'Szabó Zoltán',
-                            'phone' => null,
-                            'tax_exempt' => 'none',
-                            'tax_ids' => [],
-                        ],
-                    ] */
+                    ],
                 );
-                // dump('Payment initiated');
 
             })
             ->label(__('Pay with Stripe'));
@@ -192,15 +179,21 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'data.name' => ['required', 'string'],
                     'data.email' => ['required', 'email'],
                     'data.phone' => ['nullable', 'string'],
+                    'data.client_type' => ['required', 'string'],
+                    'data.company_name' => ['nullable', 'string'],
+                    'data.company_address' => ['nullable', 'string'],
+                    'data.company_registration_number' => ['nullable', 'string'],
+                    'data.payment_method' => ['required', 'string'],
+                    'data.terms' => ['accepted'],
+                    'data.privacy' => ['accepted'],
                 ]);
-
+                $this->requestQuote->update($this->data);
                 $this->requestQuote->save();
 
                 Notification::make()
                     ->title(__('Order finalized successfully'))
                     ->success()
                     ->send();
-                Session::forget('requestQuote');
 
                 $order = Order::create([
                     'user_id' => Auth::user()->id,
@@ -215,7 +208,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
             });
     }
 
-    public function updateCustomerData(): void
+    /* public function updateCustomerData(): void
     {
         $this->validate([
             'data.name' => ['required', 'string'],
@@ -231,7 +224,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
             ->title(__('Customer data updated successfully'))
             ->success()
             ->send();
-    }
+    } */
 
     public function render()
     {

@@ -96,7 +96,7 @@
     "Payment Method": "Fizetési mód",
     "Customer data updated successfully": "Ügyfél adatok sikeresen frissítve",
     "Pay with Stripe": "Fizess Stripe-al",
-    "Order finalized successfully": "Rendelés sikeresen véglegesítve",
+    "Order finalized successfully": "Rendelés sikeresen leadva",
     "Finalize Order": "Rendelés véglegesítése",
     "Webshop request quotes": "Webshop árajánlatkérés",
     "Web site request quotes": "Web oldal árajánlatkérés",
@@ -110,5 +110,7 @@
     "Company contact name": "Cég kapcsolattartó neve",
     "Advanced apointment form Webshop": "Webshop részletes megbeszélés űrlap",
     "Page description": "Adott oldal rövid leírása",
-    "Company registration number": "Cégjegyzékszám"
+    "Company registration number": "Cégjegyzékszám",
+    "I have read and accept the terms and conditions": "Elolvastam és elfogadom a ÁSZF-t",
+    "I have read and accept the privacy policy": "Elolvastam és elfogadom az adatvédelmi irányelveket"
 }

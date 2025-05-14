@@ -80,6 +80,8 @@ final class RequestQuoteResource extends Resource
                             'strikeThrough',
                             'underline',
                         ])->columnSpanFull(),
+                    TextInput::make('payment_method')
+                        ->maxLength(255),
                     Select::make('client_type')
                         ->required()
                         ->options(ClientType::class)

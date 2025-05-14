@@ -29,9 +29,20 @@ final class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'company_name' => fake()->company(),
+            'company_address' => fake()->address(),
+            'company_vat_number' => fake()->swiftBicNumber(), // or use another supported method, or a custom VAT generator
+            'company_registration_number' => fake()->regexify('[0-9]{8}'),
+            'created_at' => now(),
+            'updated_at' => now(),
             'email_verified_at' => now(),
             'password' => self::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'stripe_id' => null,
+            'pm_type' => null,
+            'pm_last_four' => null,
+            'trial_ends_at' => null,
         ];
     }
 

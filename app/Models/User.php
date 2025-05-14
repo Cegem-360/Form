@@ -38,6 +38,11 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
         'company_address',
         'company_vat_number',
         'company_registration_number',
+        'email_verified_at',
+        'stripe_id',
+        'pm_type',
+        'pm_last_four',
+        'trial_ends_at',
         'password',
     ];
 
@@ -53,7 +58,11 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, '');
+        if ($panel->getId() === 'admin') {
+            return $this->hasVerifiedEmail();
+        }
+
+        return true;
     }
 
     /**

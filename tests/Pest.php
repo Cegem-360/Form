@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\DuskTestCase;
 use Tests\TestCase;
 
-pest()->extend(DuskTestCase::class)
+/* pest()->extend(DuskTestCase::class)
 //  ->use(Illuminate\Foundation\Testing\DatabaseMigrations::class)
-    ->in('Browser');
+    ->in('Browser'); */
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ pest()->extend(DuskTestCase::class)
 */
 
 pest()->extend(TestCase::class)
-    ->use(RefreshDatabase::class)
+    ->use(DatabaseMigrations::class)
     ->in('Feature', 'Unit');
 
 // pest()->extend(Tests\TestCase::class)->in('Unit');

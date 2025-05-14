@@ -60,6 +60,7 @@ final class RequestQuoteFactory extends Factory
             'have_website_graphic' => $this->faker->boolean(),
             'is_multilangual' => $this->faker->boolean(),
             'languages' => [$this->faker->word()],
+            'payment_method' => $this->faker->randomElement(['stripe',  'bank_transfer']),
         ];
     }
 }

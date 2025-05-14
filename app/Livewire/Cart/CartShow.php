@@ -26,6 +26,7 @@ final class CartShow extends Component implements HasActions, HasForms
 
     public function mount(RequestQuote $requestQuote): void
     {
+
         $this->requestQuote = $requestQuote;
 
         collect($this->requestQuote?->websites)->each(function (array $page) use (&$total): void {

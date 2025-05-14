@@ -29,7 +29,7 @@ namespace App\Models{
  * @method static Builder<static>|ContactChannel whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class ContactChannel extends \Eloquent {}
+	final class ContactChannel extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -42,7 +42,7 @@ namespace App\Models{
  * @property string $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\FormQuestion|null $formQuestion
+ * @property-read FormQuestion|null $formQuestion
  * @method static \Database\Factories\DomainFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain newQuery()
@@ -55,7 +55,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain whereUrl($value)
  * @mixin \Eloquent
  */
-	class Domain extends \Eloquent {}
+	final class Domain extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -183,7 +183,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereVisualFeeling($value)
  */
-	class FormQuestion extends \Eloquent {}
+	final class FormQuestion extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -305,7 +305,7 @@ namespace App\Models{
  * @method static Builder<static>|FormQuestionVisibility whereVisualFeelingVisible($value)
  * @mixin \Eloquent
  */
-	class FormQuestionVisibility extends \Eloquent {}
+	final class FormQuestionVisibility extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -330,7 +330,7 @@ namespace App\Models{
  * @method static Builder<static>|Idea whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class Idea extends \Eloquent {}
+	final class Idea extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -338,13 +338,13 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $stripe_order_id
  * @property int $amount
  * @property \App\Enums\StripeCurrency $currency
  * @property \App\Enums\TransactionStatus $status
  * @property string|null $customer_email
  * @property string|null $customer_name
  * @property int|null $user_id
+ * @property int|null $request_quote_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OrderItem> $orderItems
@@ -361,8 +361,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereCustomerEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereCustomerName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereRequestQuoteId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereStripeOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order whereUserId($value)
  */
@@ -399,7 +399,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereStripeProductId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereUpdatedAt($value)
  */
-	class OrderItem extends \Eloquent {}
+	final class OrderItem extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -407,7 +407,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $stripe_product_id
+ * @property string|null $stripe_product_id
  * @property string $name
  * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -423,7 +423,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereStripeProductId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUpdatedAt($value)
  */
-	class Product extends \Eloquent {}
+	final class Product extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -487,7 +487,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUpdatedBy($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereUserId($value)
  */
-	class Project extends \Eloquent {}
+	final class Project extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -510,6 +510,7 @@ namespace App\Models{
  * @property bool|null $have_website_graphic
  * @property bool|null $is_multilangual
  * @property array<array-key, mixed>|null $languages
+ * @property string|null $payment_method
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read int $total_price
@@ -533,6 +534,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereIsMultilangual($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote wherePaymentMethod($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereProjectDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereQuotationName($value)
@@ -542,7 +544,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsiteTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereWebsites($value)
  */
-	class RequestQuote extends \Eloquent {}
+	final class RequestQuote extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -571,7 +573,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereWebsiteTypeId($value)
  */
-	class RequestQuoteFunctionality extends \Eloquent {}
+	final class RequestQuoteFunctionality extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -579,7 +581,7 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string $stripe_product_id
+ * @property string|null $stripe_product_id
  * @property string $name
  * @property string|null $description
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -595,7 +597,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereStripeProductId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct whereUpdatedAt($value)
  */
-	class StripeProduct extends \Eloquent {}
+	final class StripeProduct extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -616,7 +618,7 @@ namespace App\Models{
  * @method static Builder<static>|SupportPack whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class SupportPack extends \Eloquent {}
+	final class SupportPack extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -643,7 +645,7 @@ namespace App\Models{
  * @method static Builder<static>|SystemChatParameter whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class SystemChatParameter extends \Eloquent {}
+	final class SystemChatParameter extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -703,7 +705,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
-	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
+	final class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }
 
 namespace App\Models{
@@ -725,7 +727,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteLanguage whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteLanguage whereUpdatedAt($value)
  */
-	class WebsiteLanguage extends \Eloquent {}
+	final class WebsiteLanguage extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -749,6 +751,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereUpdatedAt($value)
  */
-	class WebsiteType extends \Eloquent {}
+	final class WebsiteType extends \Eloquent {}
 }
 

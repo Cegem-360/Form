@@ -7,11 +7,12 @@ namespace App\Livewire\Checkout;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
 use App\Models\RequestQuote;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Str;
-use Laravel\Cashier\Cashier;
 use Livewire\Component;
 
+/**
+ * @var Order $order
+ * @var RequestQuote $requestQuote
+ */
 final class CheckoutSuccess extends Component
 {
     public ?string $sessionId = null;
@@ -24,35 +25,27 @@ final class CheckoutSuccess extends Component
     {
 
         $this->requestQuote = $requestQuote;
-        /*
-                $this->order = Order::create([
-                    'stripe_order_id' => Str::uuid(),
-                    'user_id' => $requestQuote->user_id,
-                    'amount' => $requestQuote->getTotalPriceAttribute(),
-                    'request_quote_id' => $requestQuote->id,
-                    'status' => TransactionStatus::COMPLETED,
+        /**
+         * 'request_quote_id',
+        'amount',
+        'currency',
+        'status',
+        'customer_email',
+        'customer_name',
+        'user_id',
+         */
+        $this->order = Order::firstOrcreate([
+            'request_quote_id' => $requestQuote->id,
+            'user_id' => $requestQuote->user_id,
+            'amount' => $requestQuote->getTotalPriceAttribute(),
+            'status' => TransactionStatus::PENDING,
 
-                ]); */
-
-        /*  if (Session::missing('order')) {
-             abort(403, 'Unauthorized action.');
-         } */
-
-        // $this->order = Order::find(Session::get('order'));
+        ]);
 
     }
 
     public function render()
     {
-
-        /*  $prices = Cashier::stripe()->prices->all();
-         dump($prices); */
-
-        // $session = Cashier::stripe()->checkout->sessions->retrieve($this->sessionId);
-
-        /*     if ($session->payment_status != 'paid') {
-                return $this->redirect(route('checkout-cancel'));
-            } */
 
         return view('livewire.checkout.checkout-success');
     }
