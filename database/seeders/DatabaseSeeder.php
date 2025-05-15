@@ -78,6 +78,8 @@ final class DatabaseSeeder extends Seeder
         });
 
         Role::findByName('guest')->givePermissionTo([
+            'update User',
+            'delete User',
             'view-any RequestQuote',
             'view RequestQuote',
             'create RequestQuote',
