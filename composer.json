@@ -78,8 +78,12 @@
         "rector": [
             "./vendor/bin/rector process "
         ],
-        "test": [
+        "test-mutate": [
             "./vendor/bin/pest --bail --colors=always --testsuite=Unit --mutate",
+            "./vendor/bin/pest --bail --colors=always --testsuite=Feature"
+        ],
+        "test": [
+            "./vendor/bin/pest --bail --colors=always --testsuite=Unit ",
             "./vendor/bin/pest --bail --colors=always --testsuite=Feature"
         ]
     },

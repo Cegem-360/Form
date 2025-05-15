@@ -112,5 +112,7 @@
     "Page description": "Adott oldal rövid leírása",
     "Company registration number": "Cégjegyzékszám",
     "I have read and accept the terms and conditions": "Elolvastam és elfogadom a ÁSZF-t",
-    "I have read and accept the privacy policy": "Elolvastam és elfogadom az adatvédelmi irányelveket"
+    "I have read and accept the privacy policy": "Elolvastam és elfogadom az adatvédelmi irányelveket",
+    "Payment method": "Fizetési mód",
+    "Client type": "Jogi forma"
 }

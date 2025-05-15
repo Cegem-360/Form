@@ -7,6 +7,7 @@ namespace App\Livewire\Checkout;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
 use App\Models\RequestQuote;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 /**
@@ -25,15 +26,7 @@ final class CheckoutSuccess extends Component
     {
 
         $this->requestQuote = $requestQuote;
-        /**
-         * 'request_quote_id',
-        'amount',
-        'currency',
-        'status',
-        'customer_email',
-        'customer_name',
-        'user_id',
-         */
+
         $this->order = Order::firstOrcreate([
             'request_quote_id' => $requestQuote->id,
             'user_id' => $requestQuote->user_id,
@@ -41,7 +34,7 @@ final class CheckoutSuccess extends Component
             'status' => TransactionStatus::PENDING,
 
         ]);
-
+        Session::forget('request_quote');
     }
 
     public function render()

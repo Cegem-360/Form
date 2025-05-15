@@ -47,6 +47,11 @@ final class RequestQuoteResource extends Resource
 
     protected static ?string $navigationGroup = 'Request Quote';
 
+    public static function getNavigationLabel(): string
+    {
+        return __('filament::resources/pages/request-quote.navigation.label');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -61,17 +66,21 @@ final class RequestQuoteResource extends Resource
                     TextInput::make('quotation_name')
                         ->maxLength(255),
                     TextInput::make('name')
+                        ->translateLabel()
                         ->required()
                         ->maxLength(255),
                     TextInput::make('email')
+                        ->translateLabel()
                         ->required()
                         ->email()
                         ->maxLength(255),
                     TextInput::make('phone')
+                        ->translateLabel()
                         ->required()
                         ->tel()
                         ->maxLength(255),
                     RichEditor::make('project_description')
+                        ->translateLabel()
                         ->maxLength(65535)
                         ->disableToolbarButtons([
                             'attachFiles',
@@ -81,6 +90,8 @@ final class RequestQuoteResource extends Resource
                             'underline',
                         ])->columnSpanFull(),
                     TextInput::make('payment_method')
+                        ->disabled()
+                        ->translateLabel()
                         ->maxLength(255),
                     Select::make('client_type')
                         ->required()
@@ -88,11 +99,14 @@ final class RequestQuoteResource extends Resource
                         ->preload()
                         ->searchable(),
                     TextInput::make('company_name')
+                        ->translateLabel()
                         ->maxLength(255),
                     TextInput::make('company_address')
+                        ->translateLabel()
                         ->maxLength(255),
                     Select::make('website_type_id')
                         ->live()
+                        ->translateLabel()
                         ->required()
                         ->relationship('websiteType', 'name')
                         ->preload()
@@ -117,33 +131,39 @@ final class RequestQuoteResource extends Resource
                     Repeater::make('websites')->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(1)->columnSpan(1)->schema([
-                                TextInput::make('name')->required(),
+                                TextInput::make('name')
+                                    ->translateLabel()
+                                    ->required(),
                                 ToggleButtons::make('required')
+                                    ->translateLabel()
                                     ->live()
                                     ->options([
-                                        '1' => 'Yes',
-                                        '0' => 'No',
+                                        '1' => __('Yes'),
+                                        '0' => __('No'),
                                     ])
                                     ->inline()
                                     ->required(),
                                 ToggleButtons::make('length')
+                                    ->label('Content length')
+                                    ->translateLabel()
                                     ->live()
                                     ->options([
-                                        'short' => 'Short',
-                                        'medium' => 'Medium',
-                                        'long' => 'Long',
+                                        'short' => __('Short'),
+                                        'medium' => __('Medium'),
+                                        'large' => __('Large'),
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set, Get $get): void {
                                         $set('image', match ($state) {
                                             'short' => 'website_previews/short_preview.png',
                                             'medium' => 'website_previews/medium_preview.png',
-                                            'long' => 'website_previews/long_preview.png',
+                                            'large' => 'website_previews/long_preview.png',
                                             default => null,
                                         });
                                     })
                                     ->required(fn ($get) => $get('required')),
                                 RichEditor::make('description')
+                                    ->translateLabel()
                                     ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
@@ -155,7 +175,6 @@ final class RequestQuoteResource extends Resource
                                     ]),
                                 FileUpload::make('images')
                                     ->translateLabel()
-                                    ->label('Image')
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
                                     ->directory('website-images')
@@ -169,19 +188,14 @@ final class RequestQuoteResource extends Resource
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([
-                                ViewField::make('image')->view('filament.forms.components.image')->viewData(
-                                    [
-                                        'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
-                                        'show_image' => false, // hides the image
-                                    ]
-                                )->formatStateUsing(function (Get $get): ?string {
-                                    return match ($get('length')) {
-                                        'short' => 'website_previews/short_preview.png',
-                                        'medium' => 'website_previews/medium_preview.png',
-                                        'long' => 'website_previews/long_preview.png',
-                                        default => null,
-                                    };
-                                }),
+                                ViewField::make('image')
+                                    ->view('filament.forms.components.image')
+                                    ->viewData(
+                                        [
+                                            'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
+                                            'show_image' => true, // hides the image
+                                        ]
+                                    ),
                             ]),
                         ]),
 
@@ -197,7 +211,7 @@ final class RequestQuoteResource extends Resource
                         ->disabled(),
                     Actions::make([
                         Action::make('yes')
-
+                            ->hidden()
                             ->translateLabel()
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
@@ -208,6 +222,7 @@ final class RequestQuoteResource extends Resource
                                 $set('have_website_graphic', true);
                             }),
                         Action::make('no')
+                            ->hidden()
                             ->translateLabel()
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
@@ -223,11 +238,7 @@ final class RequestQuoteResource extends Resource
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
-                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name))
-                /* ->descriptions(function (Get $get): array {
-                        return 'Functionalities for '.$get('website_type_id');
-                        // return $get('')->functionalities?->pluck('id', 'description')->toArray();
-                    }) */,
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name)),
                 Toggle::make('is_multilangual')
                     ->translateLabel()
                     ->live(),
