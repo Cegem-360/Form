@@ -150,14 +150,14 @@ final class RequestQuoteResource extends Resource
                                     ->options([
                                         'short' => __('Short'),
                                         'medium' => __('Medium'),
-                                        'large' => __('Large'),
+                                        'long' => __('Large'),
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set, Get $get): void {
                                         $set('image', match ($state) {
                                             'short' => 'website_previews/short_preview.png',
                                             'medium' => 'website_previews/medium_preview.png',
-                                            'large' => 'website_previews/long_preview.png',
+                                            'long' => 'website_previews/long_preview.png',
                                             default => null,
                                         });
                                     })

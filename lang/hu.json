@@ -106,13 +106,15 @@
     "company": "Cég",
     "individual": "Magánszemély",
     "Bank Transfer": "Banki átutalás",
-    "Company address": "Cég cím",
+    "Company address": "Cég székhely cím",
     "Company contact name": "Cég kapcsolattartó neve",
     "Advanced apointment form Webshop": "Webshop részletes megbeszélés űrlap",
     "Page description": "Adott oldal rövid leírása",
-    "Company registration number": "Cégjegyzékszám",
+    "Company registration number": "Cég adó szám",
     "I have read and accept the terms and conditions": "Elolvastam és elfogadom a ÁSZF-t",
     "I have read and accept the privacy policy": "Elolvastam és elfogadom az adatvédelmi irányelveket",
     "Payment method": "Fizetési mód",
-    "Client type": "Jogi forma"
+    "Client type": "Jogi forma",
+    "long": "Hosszú",
+    "Long": "Hosszú"
 }

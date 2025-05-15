@@ -299,7 +299,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
-                        ->hintAction(function (): \Filament\Forms\Components\Actions\Action {
+                        ->hintAction(function (): Action {
                             return Action::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
@@ -311,7 +311,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->preload(),
                     Select::make('website_engine')
                         ->live()
-                        ->hintAction(function (): \Filament\Forms\Components\Actions\Action {
+                        ->hintAction(function (): Action {
                             return Action::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
@@ -371,7 +371,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                     ->options([
                                         'short' => __('Short'),
                                         'medium' => __('Medium'),
-                                        'large' => __('Large'),
+                                        'long' => __('Large'),
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set): void {

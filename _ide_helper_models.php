@@ -337,6 +337,18 @@ namespace App\Models{
 /**
  * 
  *
+ * @method static \Database\Factories\OptionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option query()
+ */
+	class Option extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
  * @property int $id
  * @property int $amount
  * @property \App\Enums\StripeCurrency $currency

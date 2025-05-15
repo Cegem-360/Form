@@ -35,6 +35,7 @@ final class RequestQuote extends Model
         'languages',
         'website_engine',
         'payment_method',
+        'project_description',
     ];
 
     public function websiteType()

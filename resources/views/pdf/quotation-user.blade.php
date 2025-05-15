@@ -5,14 +5,7 @@
 
         <!-- Borító -->
         <x-layouts.pdf.partials.cover :requestQuote="$requestQuote" />
-
-        <div class="page-break"></div>
-        <!-- Rólunk oldal -->
-        <div class="relative w-full h-[900px]">
-            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-03.jpg')) }}"
-                alt="Rólunk" class="absolute inset-0 z-0 object-cover w-full h-full" />
-        </div>
-        <div class="page-break"></div>
+        <x-layouts.pdf.partials.about-us />
         <!-- Fejléc és ajánlat fő adatai -->
         <div class="px-12 py-8">
             <div class="flex items-center justify-between mb-8">
@@ -57,8 +50,12 @@
         <div class="px-12 py-8">
             <h3 class="mb-4 text-2xl font-bold">A projekt leírása</h3>
             <p class="mb-4">Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az
-                ügyfél igényeinek megfelelően <strong>{{ $requestQuote->websiteType->name }}
-                    {{ $requestQuote->website_engine }} alapú motorral.</strong></p>
+                ügyfél igényeinek megfelelően
+                <strong>
+                    {{ $requestQuote->websiteType->name }} {{ $requestQuote->website_engine }} alapú motorral.
+                </strong>
+            </p>
+            <p class="mb-4">{!! $requestQuote->project_description !!}</p>
             <ul class="pl-8 mb-4 list-disc">
                 <li>minőségi, új webdesign</li>
                 <li>okostelefonra optimalizált megjelenés elkészítése</li>
@@ -72,23 +69,17 @@
                     telepítése, beállítása</li>
                 <li>különböző közösségi média platformok mérőinek telepítése (Facebook Pixel)</li>
                 <li>GDPR beállítások (Süti értesítés, Adatvédelmi nyilatkozat)</li>
-            </ul>
-        </div>
-        @if (!$requestQuote->requestQuoteFunctionalities->isEmpty())
-            <div class="page-break"></div>
-            <div class="px-12 py-8">
-                <h3 class="mb-4 text-2xl font-bold">A projekt funkciók</h3>
-                <ul class="pl-8 list-disc">
-                    @foreach ($requestQuote->requestQuoteFunctionalities as $functionality)
+                @if ($requestQuote?->requestQuoteFunctionalities)
+                    @foreach ($requestQuote->requestQuoteFunctionalities ?? [] as $functionality)
                         <li class="mb-2">
-                            <span class="font-semibold">{{ $functionality->name }}</span> -
-                            {{ number_format($functionality->price, 0, ',', ' ') }} Ft<br>
+                            <span class="font-semibold">{{ $functionality->name }}</span><br>
                             <span class="text-xs">{{ $functionality->description }}</span>
                         </li>
                     @endforeach
-                </ul>
-            </div>
-        @endif
+                @endif
+            </ul>
+        </div>
+
         <div class="page-break"></div>
         <!-- Munkafolyamat -->
         <div class="px-12 py-8">
@@ -228,7 +219,8 @@
             </ul>
             <h2 class="mt-8 mb-2 text-xl font-bold">Vállalási határidő</h2>
             <p class="mb-2">A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő
-                30 munkanapon belül elkészül.</p>
+                30 munkanapon belül elkészül.
+            </p>
         </div>
         <div class="page-break"></div>
         <!-- Díjazás táblázat -->
@@ -271,10 +263,10 @@
                                 <td class="px-4 py-2 border">{{ __(ucfirst($page['length'])) }}</td>
                                 <td class="px-4 py-2 border">
                                     {{ match ($page['length']) {
-                                        'short' => number_format(20000, 0, ',', ' ') . ' Ft',
-                                        'medium' => number_format(40000, 0, ',', ' ') . ' Ft',
-                                        'long' => number_format(70000, 0, ',', ' ') . ' Ft',
-                                        default => number_format(0, 0, ',', ' ') . ' Ft',
+                                        'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
+                                        'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
+                                        'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
+                                        default => Number::currency(0, in: 'HUF', locale: 'hu', precision: 0),
                                     } }}
                                 </td>
                                 <td class="px-4 py-2 border"></td>
@@ -286,35 +278,50 @@
                             <td class="px-4 py-2 border">{{ $functionality->name }}<br><span
                                     class="text-xs">{{ $functionality->description }}</span></td>
                             <td class="px-4 py-2 border">1 db</td>
-                            <td class="px-4 py-2 border">{{ number_format($functionality->price, 0, ',', ' ') }} Ft
+                            <td class="px-4 py-2 border">
+                                {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }} Ft
                             </td>
                             <td class="px-4 py-2 border"></td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="4" class="px-4 py-2 text-right border">
-                            <h3 class="font-bold">+ ÁFA</h3>
+                        <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">Összesen:</h3>
+                        </td>
+                        <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">
+                                {{ Number::currency($requestQuote->getTotalPriceAttribute(), in: 'HUF', locale: 'hu', precision: 0) }}
+                                + ÁFA
+                            </h3>
                         </td>
                     </tr>
                     @if ($requestQuote->is_multilangual)
                         <tr>
                             <td class="px-4 py-2 font-bold border">Nyelvesítés</td>
-                            <td class="px-4 py-2 border">1</td>
+                            <td class="px-4 py-2 border"></td>
                             <td class="px-4 py-2 border">felár 30%</td>
                             <td class="px-4 py-2 border"></td>
                         </tr>
-                        @foreach ($requestQuote->languages as $language)
-                            <tr>
-                                <td class="px-4 py-2 border">{{ WebsiteLanguage::find($language)?->name }}</td>
-                                <td class="px-4 py-2 border"></td>
-                                <td class="px-4 py-2 border"></td>
-                                <td class="px-4 py-2 border"></td>
-                            </tr>
-                        @endforeach
+                        @if ($requestQuote?->languages)
+                            @foreach ($requestQuote->languages ?? [] as $language)
+                                <tr>
+                                    <td class="px-4 py-2 border">{{ WebsiteLanguage::find($language)?->name }}</td>
+                                    <td class="px-4 py-2 border"></td>
+                                    <td class="px-4 py-2 border"></td>
+                                    <td class="px-4 py-2 border"></td>
+                                </tr>
+                            @endforeach
+                        @endif
                     @endif
                     <tr>
-                        <td colspan="4" class="px-4 py-2 text-right border">
-                            <h3 class="font-bold">+ ÁFA</h3>
+                        <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">Előleg összeg:</h3>
+                        </td>
+                        <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">
+                                {{ Number::currency($requestQuote->getTotalPriceAttribute() / 2, in: 'HUF', locale: 'hu', precision: 0) }}
+                                + ÁFA
+                            </h3>
                         </td>
                     </tr>
                 </tbody>
@@ -323,12 +330,18 @@
         <!-- Lábléc -->
         <div class="flex items-start justify-between w-full px-8 py-6 text-xs font-bold text-white bg-blue-700">
             <div>
-                <span>Cégem 360 Kft.</span>
-                <span class="ml-24">Tel.: +36 20 331 9550</span><br>
-                <span>Székhely: 1182 Budapest, Gulipán utca 6.</span>
-                <span class="ml-12">E-mail: info@cegem360.hu</span><br>
-                <span>Cg.: 01-09-897122 / Adószám: 14286249-2-43</span>
-                <span class="ml-10">Web: cegem360.hu</span>
+                <div class="flex justify-between w-full gap-16">
+                    <div class="flex flex-col items-start pl-2 space-y-1">
+                        <span>Cégem 360 Kft.</span>
+                        <span>Székhely: 1182 Budapest, Gulipán utca 6.</span>
+                        <span>Cg.: 01-09-897122 / Adószám: 14286249-2-43</span>
+                    </div>
+                    <div class="flex flex-col items-end pr-2 space-y-1 text-right">
+                        <span>Tel.: +36 20 331 9550</span>
+                        <span>E-mail: info@cegem360.hu</span>
+                        <span>Web: cegem360.hu</span>
+                    </div>
+                </div>
             </div>
         </div>
         <style>

@@ -9,11 +9,17 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Scripts -->
-        @vite('resources/js/app.js', 'resources/css/app.css')
+
+        @vite('resources/css/app.css')
+        @filamentStyles
     </head>
 
     <body class="font-sans antialiased text-gray-900">
+        {{ $slot }}
 
+        <!-- Scripts -->
+        @vite('resources/js/app.js')
+        @filamentScripts
     </body>
 
 </html>

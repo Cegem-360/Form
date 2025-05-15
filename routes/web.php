@@ -40,7 +40,7 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         ]);
         $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
 
-        Browsershot::html($template)->savePdf(storage_path('app/public/quotation.pdf'));
+        Browsershot::html($template)->showBackground()->format('A4')->savePdf(storage_path('app/public/quotation.pdf'));
 
         return response()->file(storage_path('app/public/quotation.pdf'));
 
