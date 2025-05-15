@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Filament\Resources\Admin\Dashboard\UserResource\Pages\EditUser;
-use App\Filament\Resources\Admin\Dashboard\UserResource\Pages\ListUsers;
+use App\Filament\Admin\Resources\Dashboard\UserResource\Pages\EditUser;
+use App\Filament\Admin\Resources\Dashboard\UserResource\Pages\ListUsers;
 use App\Models\User;
 use Livewire\Livewire;
 

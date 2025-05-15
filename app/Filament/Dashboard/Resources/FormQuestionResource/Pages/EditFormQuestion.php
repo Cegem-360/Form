@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\FormQuestionResource\Pages;
 
-use App\Filament\Resources\Dashboard\FormQuestionResource;
+use App\Filament\Dashboard\Resources\FormQuestionResource;
 use App\Jobs\UpdateAllWebsiteDataByDomain;
 use App\Models\FormQuestion;
 use App\Models\SystemChatParameter;

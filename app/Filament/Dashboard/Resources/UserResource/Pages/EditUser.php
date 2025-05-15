@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\UserResource\Pages;
 
-use App\Filament\Resources\Dashboard\UserResource;
+use App\Filament\Dashboard\Resources\UserResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;

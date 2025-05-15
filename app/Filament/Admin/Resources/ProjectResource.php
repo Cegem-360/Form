@@ -6,10 +6,10 @@ namespace App\Filament\Admin\Resources;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\Admin\ProjectResource\Pages\CreateProject;
-use App\Filament\Resources\Admin\ProjectResource\Pages\EditProject;
-use App\Filament\Resources\Admin\ProjectResource\Pages\ListProjects;
-use App\Filament\Resources\Admin\ProjectResource\Pages\ViewProject;
+use App\Filament\Admin\Resources\ProjectResource\Pages\CreateProject;
+use App\Filament\Admin\Resources\ProjectResource\Pages\EditProject;
+use App\Filament\Admin\Resources\ProjectResource\Pages\ListProjects;
+use App\Filament\Admin\Resources\ProjectResource\Pages\ViewProject;
 use App\Models\Project;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;

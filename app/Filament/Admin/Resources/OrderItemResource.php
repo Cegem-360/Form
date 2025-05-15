@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\OrderItemResource\Pages\CreateOrderItem;
-use App\Filament\Resources\Admin\OrderItemResource\Pages\EditOrderItem;
-use App\Filament\Resources\Admin\OrderItemResource\Pages\ListOrderItems;
+use App\Filament\Admin\Resources\OrderItemResource\Pages\CreateOrderItem;
+use App\Filament\Admin\Resources\OrderItemResource\Pages\EditOrderItem;
+use App\Filament\Admin\Resources\OrderItemResource\Pages\ListOrderItems;
 use App\Models\OrderItem;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

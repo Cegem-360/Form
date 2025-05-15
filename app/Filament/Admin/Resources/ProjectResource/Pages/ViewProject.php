@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\Admin\ProjectResource;
+use App\Filament\Admin\Resources\ProjectResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 

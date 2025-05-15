@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\ContactChannelResource\Pages;
 
-use App\Filament\Resources\Dashboard\ContactChannelResource;
+use App\Filament\Dashboard\Resources\ContactChannelResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

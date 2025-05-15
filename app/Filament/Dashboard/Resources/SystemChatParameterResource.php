@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\OpenAIRole;
-use App\Filament\Resources\Dashboard\SystemChatParameterResource\Pages\CreateSystemChatParameter;
-use App\Filament\Resources\Dashboard\SystemChatParameterResource\Pages\EditSystemChatParameter;
-use App\Filament\Resources\Dashboard\SystemChatParameterResource\Pages\ListSystemChatParameters;
+use App\Filament\Dashboard\Resources\SystemChatParameterResource\Pages\CreateSystemChatParameter;
+use App\Filament\Dashboard\Resources\SystemChatParameterResource\Pages\EditSystemChatParameter;
+use App\Filament\Dashboard\Resources\SystemChatParameterResource\Pages\ListSystemChatParameters;
 use App\Models\SystemChatParameter;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;

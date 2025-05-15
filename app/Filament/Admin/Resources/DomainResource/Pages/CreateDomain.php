@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\DomainResource\Pages;
 
-use App\Filament\Resources\Admin\DomainResource;
+use App\Filament\Admin\Resources\DomainResource;
 use Filament\Resources\Pages\CreateRecord;
 
 final class CreateDomain extends CreateRecord

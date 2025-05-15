@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\SystemChatParameterResource\Pages;
 
-use App\Filament\Resources\Dashboard\SystemChatParameterResource;
+use App\Filament\Dashboard\Resources\SystemChatParameterResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\UserResource\Pages\CreateUser;
-use App\Filament\Resources\Dashboard\UserResource\Pages\EditUser;
-use App\Filament\Resources\Dashboard\UserResource\Pages\ListUsers;
-use App\Filament\Resources\Dashboard\UserResource\Pages\ViewUser;
+use App\Filament\Dashboard\Resources\UserResource\Pages\CreateUser;
+use App\Filament\Dashboard\Resources\UserResource\Pages\EditUser;
+use App\Filament\Dashboard\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Dashboard\Resources\UserResource\Pages\ViewUser;
 use App\Models\User;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;

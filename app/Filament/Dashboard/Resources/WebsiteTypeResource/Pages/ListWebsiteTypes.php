@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\WebsiteTypeResource\Pages;
 
-use App\Filament\Resources\Dashboard\WebsiteTypeResource;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

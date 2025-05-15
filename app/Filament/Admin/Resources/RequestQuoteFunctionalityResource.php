@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
-use App\Filament\Resources\Admin\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
-use App\Filament\Resources\Admin\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
-use App\Filament\Resources\Admin\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
+use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
+use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
+use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
+use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
 use App\Models\RequestQuoteFunctionality;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
-use App\Filament\Resources\Dashboard\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
-use App\Filament\Resources\Dashboard\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
+use App\Filament\Dashboard\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
+use App\Filament\Dashboard\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
+use App\Filament\Dashboard\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
 use App\Models\FormQuestionVisibility;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\Dashboard\ProductResource;
+use App\Filament\Dashboard\Resources\ProductResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

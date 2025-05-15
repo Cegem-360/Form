@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\RequestQuoteResource\Pages;
 
-use App\Filament\Resources\Dashboard\RequestQuoteResource;
+use App\Filament\Dashboard\Resources\RequestQuoteResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

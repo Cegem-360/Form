@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\FormQuestionResource\Pages;
 
-use App\Filament\Resources\Admin\FormQuestionResource;
+use App\Filament\Admin\Resources\FormQuestionResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

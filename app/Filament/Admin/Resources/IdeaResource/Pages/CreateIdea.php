@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\IdeaResource\Pages;
 
-use App\Filament\Resources\Admin\IdeaResource;
+use App\Filament\Admin\Resources\IdeaResource;
 use Filament\Resources\Pages\CreateRecord;
 
 final class CreateIdea extends CreateRecord

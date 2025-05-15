@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\ProductResource\Pages;
 
-use App\Filament\Resources\Admin\ProductResource;
+use App\Filament\Admin\Resources\ProductResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

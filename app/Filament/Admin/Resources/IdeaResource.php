@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\IdeaResource\Pages\CreateIdea;
-use App\Filament\Resources\Admin\IdeaResource\Pages\EditIdea;
-use App\Filament\Resources\Admin\IdeaResource\Pages\ListIdeas;
-use App\Filament\Resources\Admin\IdeaResource\Pages\ViewIdea;
+use App\Filament\Admin\Resources\IdeaResource\Pages\CreateIdea;
+use App\Filament\Admin\Resources\IdeaResource\Pages\EditIdea;
+use App\Filament\Admin\Resources\IdeaResource\Pages\ListIdeas;
+use App\Filament\Admin\Resources\IdeaResource\Pages\ViewIdea;
 use App\Models\Idea;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;

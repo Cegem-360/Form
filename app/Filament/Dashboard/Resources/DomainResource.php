@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\DomainResource\Pages\CreateDomain;
-use App\Filament\Resources\Dashboard\DomainResource\Pages\EditDomain;
-use App\Filament\Resources\Dashboard\DomainResource\Pages\ListDomains;
-use App\Filament\Resources\Dashboard\DomainResource\Pages\ViewDomain;
+use App\Filament\Dashboard\Resources\DomainResource\Pages\CreateDomain;
+use App\Filament\Dashboard\Resources\DomainResource\Pages\EditDomain;
+use App\Filament\Dashboard\Resources\DomainResource\Pages\ListDomains;
+use App\Filament\Dashboard\Resources\DomainResource\Pages\ViewDomain;
 use App\Models\Domain;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

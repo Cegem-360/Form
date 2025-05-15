@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\OrderResource\Pages;
 
-use App\Filament\Resources\Admin\OrderResource;
+use App\Filament\Admin\Resources\OrderResource;
 use Filament\Resources\Pages\CreateRecord;
 
 final class CreateOrder extends CreateRecord

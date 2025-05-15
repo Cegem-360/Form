@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
-use App\Filament\Resources\Admin\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
-use App\Filament\Resources\Admin\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
+use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
+use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
+use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
 use App\Models\FormQuestionVisibility;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;

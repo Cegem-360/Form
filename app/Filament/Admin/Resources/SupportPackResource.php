@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\SupportPackResource\Pages\CreateSupportPack;
-use App\Filament\Resources\Admin\SupportPackResource\Pages\EditSupportPack;
-use App\Filament\Resources\Admin\SupportPackResource\Pages\ListSupportPacks;
-use App\Filament\Resources\Admin\SupportPackResource\Pages\ViewSupportPack;
+use App\Filament\Admin\Resources\SupportPackResource\Pages\CreateSupportPack;
+use App\Filament\Admin\Resources\SupportPackResource\Pages\EditSupportPack;
+use App\Filament\Admin\Resources\SupportPackResource\Pages\ListSupportPacks;
+use App\Filament\Admin\Resources\SupportPackResource\Pages\ViewSupportPack;
 use App\Models\SupportPack;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

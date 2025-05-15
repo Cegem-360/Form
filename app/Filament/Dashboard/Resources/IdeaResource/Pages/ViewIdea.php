@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\IdeaResource\Pages;
 
-use App\Filament\Resources\Dashboard\IdeaResource;
+use App\Filament\Dashboard\Resources\IdeaResource;
 use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 

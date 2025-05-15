@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\Dashboard\ProjectResource;
+use App\Filament\Dashboard\Resources\ProjectResource;
 use App\Models\FormQuestion;
 use App\Models\Project;
 use Filament\Actions\Action;

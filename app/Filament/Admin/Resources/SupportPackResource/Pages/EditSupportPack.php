@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\SupportPackResource\Pages;
 
-use App\Filament\Resources\Admin\SupportPackResource;
+use App\Filament\Admin\Resources\SupportPackResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
-use App\Filament\Resources\Admin\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
-use App\Filament\Resources\Admin\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
-use App\Filament\Resources\Admin\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
+use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
+use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
+use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
+use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

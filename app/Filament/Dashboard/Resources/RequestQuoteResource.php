@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ClientType;
-use App\Filament\Resources\Dashboard\RequestQuoteResource\Pages\CreateRequestQuote;
-use App\Filament\Resources\Dashboard\RequestQuoteResource\Pages\EditRequestQuote;
-use App\Filament\Resources\Dashboard\RequestQuoteResource\Pages\ListRequestQuotes;
-use App\Filament\Resources\Dashboard\RequestQuoteResource\Pages\ViewRequestQuote;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\EditRequestQuote;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\Actions;

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\OrderResource\Pages\CreateOrder;
-use App\Filament\Resources\Dashboard\OrderResource\Pages\EditOrder;
-use App\Filament\Resources\Dashboard\OrderResource\Pages\ListOrders;
+use App\Filament\Dashboard\Resources\OrderResource\Pages\CreateOrder;
+use App\Filament\Dashboard\Resources\OrderResource\Pages\EditOrder;
+use App\Filament\Dashboard\Resources\OrderResource\Pages\ListOrders;
 use App\Models\Order;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;

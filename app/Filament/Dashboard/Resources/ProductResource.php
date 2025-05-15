@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\ProductResource\Pages\CreateProduct;
-use App\Filament\Resources\Dashboard\ProductResource\Pages\EditProduct;
-use App\Filament\Resources\Dashboard\ProductResource\Pages\ListProducts;
+use App\Filament\Dashboard\Resources\ProductResource\Pages\CreateProduct;
+use App\Filament\Dashboard\Resources\ProductResource\Pages\EditProduct;
+use App\Filament\Dashboard\Resources\ProductResource\Pages\ListProducts;
 use App\Models\Product;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

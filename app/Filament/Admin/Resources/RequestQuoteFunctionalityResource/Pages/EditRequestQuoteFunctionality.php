@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages;
 
-use App\Filament\Resources\Admin\RequestQuoteFunctionalityResource;
+use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;

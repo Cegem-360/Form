@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Resources\Dashboard\WebsiteTypeResource\Pages\CreateWebsiteType;
-use App\Filament\Resources\Dashboard\WebsiteTypeResource\Pages\EditWebsiteType;
-use App\Filament\Resources\Dashboard\WebsiteTypeResource\Pages\ListWebsiteTypes;
-use App\Filament\Resources\Dashboard\WebsiteTypeResource\Pages\ViewWebsiteType;
-use App\Filament\Resources\Dashboard\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource\Pages\CreateWebsiteType;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource\Pages\EditWebsiteType;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource\Pages\ViewWebsiteType;
+use App\Filament\Dashboard\Resources\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
 use App\Models\WebsiteType;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

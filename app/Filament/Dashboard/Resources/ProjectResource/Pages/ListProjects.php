@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources\ProjectResource\Pages;
 
-use App\Filament\Resources\Dashboard\ProjectResource;
+use App\Filament\Dashboard\Resources\ProjectResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

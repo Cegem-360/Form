@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\WebsiteTypeResource\Pages;
 
-use App\Filament\Resources\Admin\WebsiteTypeResource;
+use App\Filament\Admin\Resources\WebsiteTypeResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;

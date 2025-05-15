@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\SystemChatParameterResource\Pages;
 
-use App\Filament\Resources\Admin\SystemChatParameterResource;
+use App\Filament\Admin\Resources\SystemChatParameterResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 

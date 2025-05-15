@@ -6,9 +6,9 @@ namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\Dashboard\FormQuestionResource\Pages\CreateFormQuestion;
-use App\Filament\Resources\Dashboard\FormQuestionResource\Pages\EditFormQuestion;
-use App\Filament\Resources\Dashboard\FormQuestionResource\Pages\ListFormQuestions;
+use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\CreateFormQuestion;
+use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\EditFormQuestion;
+use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;

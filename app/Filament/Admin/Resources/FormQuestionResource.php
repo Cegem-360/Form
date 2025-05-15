@@ -6,9 +6,9 @@ namespace App\Filament\Admin\Resources;
 
 use App\Enums\ProjectStatus;
 use App\Enums\UserRole;
-use App\Filament\Resources\Admin\FormQuestionResource\Pages\CreateFormQuestion;
-use App\Filament\Resources\Admin\FormQuestionResource\Pages\EditFormQuestion;
-use App\Filament\Resources\Admin\FormQuestionResource\Pages\ListFormQuestions;
+use App\Filament\Admin\Resources\FormQuestionResource\Pages\CreateFormQuestion;
+use App\Filament\Admin\Resources\FormQuestionResource\Pages\EditFormQuestion;
+use App\Filament\Admin\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;

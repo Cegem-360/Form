@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\Admin\ContactChannelResource\Pages\CreateContactChannel;
-use App\Filament\Resources\Admin\ContactChannelResource\Pages\EditContactChannel;
-use App\Filament\Resources\Admin\ContactChannelResource\Pages\ListContactChannels;
-use App\Filament\Resources\Admin\ContactChannelResource\Pages\ViewContactChannel;
+use App\Filament\Admin\Resources\ContactChannelResource\Pages\CreateContactChannel;
+use App\Filament\Admin\Resources\ContactChannelResource\Pages\EditContactChannel;
+use App\Filament\Admin\Resources\ContactChannelResource\Pages\ListContactChannels;
+use App\Filament\Admin\Resources\ContactChannelResource\Pages\ViewContactChannel;
 use App\Models\ContactChannel;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;

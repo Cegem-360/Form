@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Providers\Filament;
 
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Pages\Auth\EditProfile;
-use App\Filament\Pages\Auth\Login;
-use App\Filament\Resources\Admin\Dashboard\RequestQuoteResource\Widgets\RequestQuoteFormChart;
+use App\Filament\Dashboard\Pages\Auth\EditProfile;
+use App\Filament\Dashboard\Pages\Auth\Login;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuoteFormChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
