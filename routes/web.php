@@ -45,6 +45,19 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         return response()->file(storage_path('app/public/quotation.pdf'));
 
     })->name('preview');
+    Route::get('preview/pdf/{requestQuote}', function () {
+
+        $requestQuote = RequestQuote::factory()->make([
+            'id' => 1,
+            'company_name' => 'Test Company',
+            'name' => 'Test Name',
+            'email' => '',
+        ]);
+        // $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
+
+        return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
+
+    })->name('preview.pdf');
 
 });
 Route::middleware(['auth'])->group(function (): void {

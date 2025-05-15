@@ -2,21 +2,10 @@
 <x-layouts.app>
 
     <body class="font-sans text-gray-900 bg-white">
+
         <!-- Borító -->
-        <div class="relative w-full h-[900px]">
-            <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/weboldal-arajanlat-borito-01.jpg')) }}"
-                alt="Borító" class="absolute inset-0 z-0 object-cover w-full h-full" />
-            <div class="absolute inset-0 z-10 flex flex-col justify-between text-white">
-                <div class="flex justify-between p-12">
-                    <span class="text-3xl font-bold">cégem360</span>
-                    <span class="text-3xl uppercase">Prémium weboldal készítés</span>
-                </div>form
-                <div class="p-12">
-                    <p class="mb-4 text-4xl font-bold">{{ $requestQuote->name }} részére</p>
-                    <p class="text-3xl">Árajánlat weboldal fejlesztésre</p>
-                </div>
-            </div>
-        </div>
+        <x-layouts.pdf.partials.cover :requestQuote="$requestQuote" />
+
         <div class="page-break"></div>
         <!-- Rólunk oldal -->
         <div class="relative w-full h-[900px]">
