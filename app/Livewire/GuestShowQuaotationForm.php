@@ -239,7 +239,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 $this->form->model($requestQuote)->saveRelationships();
 
-                // Redirect to Cart summary page
                 Session::put('requestQuote', $requestQuote->id);
 
                 $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
@@ -323,8 +322,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                         'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
                                         default => __('Filament/pages/request-quote.website_engine_tooltip'),
                                     };
-
-                                    // return __('Filament/pages/request-quote.website_engine_tooltip');
                                 });
                         })
                         ->translateLabel()
@@ -536,7 +533,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null)
                 ->descriptions(function (Get $get) {
-                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->pluck('description', 'id')->toArray();
+                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->notDefault()->pluck('description', 'id')->toArray();
                 }),
             Toggle::make('is_multilangual')
                 ->translateLabel()

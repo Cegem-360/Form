@@ -50,11 +50,4 @@ final class PdfOption extends Model
             return $q->whereName('Landing Page');
         });
     }
-
-    protected function casts(): array
-    {
-        return [
-            'default_functions' => 'array',
-        ];
-    }
 }

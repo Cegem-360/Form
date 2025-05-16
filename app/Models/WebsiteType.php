@@ -18,6 +18,11 @@ final class WebsiteType extends Model
         'name',
     ];
 
+    public function pdfOptions(): HasMany
+    {
+        return $this->hasMany(PdfOption::class);
+    }
+
     public function requestQuotes(): HasMany
     {
         return $this->hasMany(RequestQuote::class);

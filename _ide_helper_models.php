@@ -431,7 +431,6 @@ namespace App\Models{
  * @property string|null $website_engine
  * @property string|null $frontend_description
  * @property string|null $backend_description
- * @property array<array-key, mixed>|null $default_functions
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\WebsiteType|null $websiteType
@@ -441,7 +440,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereBackendDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereDefaultFunctions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereFrontendDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereUpdatedAt($value)
@@ -569,6 +567,10 @@ namespace App\Models{
  * @property-read int|null $request_languages_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalitiesDefault
+ * @property-read int|null $request_quote_functionalities_default_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalitiesNotDefault
+ * @property-read int|null $request_quote_functionalities_not_default_count
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])
@@ -607,6 +609,7 @@ namespace App\Models{
  * @property int|null $price
  * @property string|null $description
  * @property int $website_type_id
+ * @property bool|null $default
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
@@ -617,6 +620,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereName($value)
@@ -789,6 +793,8 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
+ * @property-read int|null $pdf_options_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes

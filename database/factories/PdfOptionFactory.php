@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\RequestQuoteFunctionality;
+use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,15 +19,14 @@ final class PdfOptionFactory extends Factory
      */
     public function definition(): array
     {
+        $websiteEngine = $this->faker->randomElement(['wordpress', 'shopify', 'laravel']);
+        $websiteType = WebsiteType::all()->random();
+
         return [
-            'website_engine' => $this->faker->randomElement(['wordpress', 'shopify', 'laravel']),
+            'website_engine' => $websiteEngine,
+            'website_type_id' => $websiteType->id,
             'frontend_description' => $this->faker->randomHtml(),
             'backend_description' => $this->faker->randomHtml(),
-            'default_functions' => [
-                'function1' => RequestQuoteFunctionality::all()->random()->boolean(),
-                'function2' => RequestQuoteFunctionality::all()->random()->boolean(),
-                'function3' => RequestQuoteFunctionality::all()->random()->boolean(),
-            ],
         ];
     }
 }

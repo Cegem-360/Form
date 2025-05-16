@@ -22,6 +22,21 @@ final class RequestQuoteFunctionalitySeeder extends Seeder
 
         $websiteTypes->each(function ($websiteType): void {
             RequestQuoteFunctionality::factory()->create([
+                'name' => 'Keretrendszer beállítása (védelmi, GDPR, süti elfogadás, Analytics, Webmester eszközök)',
+                'price' => 80000,
+                'website_type_id' => $websiteType->id,
+                'description' => 'A weboldal keretrendszerének beállítása, amely magában foglalja a védelmi intézkedéseket, a GDPR megfelelést, a süti elfogadást, az Analytics és a Webmester eszközök integrálását.',
+                'default' => true,
+            ]);
+            RequestQuoteFunctionality::factory()->create([
+                'name' => 'UI tervezés (drótváz, design)',
+                'price' => 80000,
+                'website_type_id' => $websiteType->id,
+                'description' => 'A weboldal felhasználói felületének tervezése, beleértve a drótvázakat és a végleges design-t.',
+                'default' => true,
+            ]);
+
+            RequestQuoteFunctionality::factory()->create([
                 'name' => 'Kapcsolati űrlap',
                 'price' => 30000,
                 'website_type_id' => $websiteType->id,

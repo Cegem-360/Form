@@ -9,6 +9,7 @@ use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\EditReq
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ViewRequestQuoteFunctionality;
 use App\Models\RequestQuoteFunctionality;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -39,7 +40,7 @@ final class RequestQuoteFunctionalityResource extends Resource
                 TextInput::make('price')
                     ->numeric()
                     ->default(0)
-                    ->prefix('$'),
+                    ->postfix('Ft'),
                 RichEditor::make('description')
                     ->maxLength(65535)
                     ->placeholder('Description'),
@@ -48,6 +49,10 @@ final class RequestQuoteFunctionalityResource extends Resource
                     ->required()
                     ->preload()
                     ->placeholder('Select a website type'),
+                Checkbox::make('default')
+                    ->label('Default')
+                    ->helperText('This functionality will be selected by default for all new request quotes.')
+                    ->default(false),
             ]);
     }
 
@@ -58,7 +63,7 @@ final class RequestQuoteFunctionalityResource extends Resource
                 TextColumn::make('name')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('HUF', 0, 'hu_HU')
                     ->sortable(),
                 TextColumn::make('websiteType.name')
                     ->label('Website Type')

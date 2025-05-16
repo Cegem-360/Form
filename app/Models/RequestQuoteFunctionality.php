@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\RequestQuoteFunctionalityFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 final class RequestQuoteFunctionality extends Model
 {
@@ -18,6 +22,7 @@ final class RequestQuoteFunctionality extends Model
         'price',
         'description',
         'website_type_id',
+        'website_engine',
         'default',
     ];
 
@@ -26,12 +31,42 @@ final class RequestQuoteFunctionality extends Model
         'default' => 'boolean',
     ];
 
-    public function requestQuotes()
+    #[Scope]
+    public function webShop(Builder $query): Builder
+    {
+        return $query->whereWebsiteEngine('Webáruház');
+    }
+
+    #[Scope]
+    public function webSite(Builder $query): Builder
+    {
+        return $query->whereWebsiteEngine('Weboldal');
+    }
+
+    #[Scope]
+    public function landingPage(Builder $query): Builder
+    {
+        return $query->whereWebsiteEngine('Landing Page');
+    }
+
+    #[Scope]
+    public function notDefault(Builder $query): Builder
+    {
+        return $query->whereDefault(0);
+    }
+
+    #[Scope]
+    public function default(Builder $query): Builder
+    {
+        return $query->whereDefault(1);
+    }
+
+    public function requestQuotes(): BelongsToMany
     {
         return $this->belongsToMany(RequestQuote::class);
     }
 
-    public function websiteType()
+    public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
     }

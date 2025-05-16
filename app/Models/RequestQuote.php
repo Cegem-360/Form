@@ -48,6 +48,16 @@ final class RequestQuote extends Model
         return $this->belongsToMany(RequestQuoteFunctionality::class);
     }
 
+    public function requestQuoteFunctionalitiesNotDefault(): BelongsToMany
+    {
+        return $this->requestQuoteFunctionalities()->notDefault();
+    }
+
+    public function requestQuoteFunctionalitiesDefault(): BelongsToMany
+    {
+        return $this->requestQuoteFunctionalities()->default();
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
