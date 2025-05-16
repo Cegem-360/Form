@@ -18,10 +18,12 @@ final class RequestQuoteFunctionality extends Model
         'price',
         'description',
         'website_type_id',
+        'default',
     ];
 
     protected $casts = [
         'price' => 'integer',
+        'default' => 'boolean',
     ];
 
     public function requestQuotes()

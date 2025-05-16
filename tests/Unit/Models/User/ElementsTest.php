@@ -11,10 +11,10 @@ use function Pest\Livewire\livewire;
 
 covers(User::class);
 
-it('can render page', function () {
+it('can render page', function (): void {
     // livewire(ListUsers::class)->assertSuccessful();
 });
-describe('User Model', function () {
+describe('User Model', function (): void {
     test('Admin can create a user', function (): void {
         $user = $this->createAdmin();
         $this->assertInstanceOf(User::class, $user);
@@ -24,7 +24,7 @@ describe('User Model', function () {
     });
 });
 
-describe('User Model', function () {
+describe('User Model', function (): void {
     test('to array', function (): void {
         $user = User::factory()->create()->refresh();
 

@@ -38,7 +38,7 @@ final class RequestQuote extends Model
         'project_description',
     ];
 
-    public function websiteType()
+    public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
     }
@@ -56,6 +56,11 @@ final class RequestQuote extends Model
     public function requestLanguages(): HasMany
     {
         return $this->hasMany(WebsiteLanguage::class);
+    }
+
+    public function pdfOptions(): HasMany
+    {
+        return $this->hasMany(PdfOption::class);
     }
 
     public function getTotalPriceAttribute(): int
@@ -95,7 +100,7 @@ final class RequestQuote extends Model
     public function landingPage(Builder $query): Builder
     {
         return $query->whereHas('websiteType', function ($q) {
-            return $q->whereName('Landing Page	');
+            return $q->whereName('Landing Page');
         });
     }
 

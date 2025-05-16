@@ -337,10 +337,18 @@ namespace App\Models{
 /**
  * 
  *
+ * @property int $id
+ * @property string|null $options
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\OptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereUpdatedAt($value)
  */
 	class Option extends \Eloquent {}
 }
@@ -412,6 +420,35 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem whereUpdatedAt($value)
  */
 	final class OrderItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $website_type_id
+ * @property string|null $website_engine
+ * @property string|null $frontend_description
+ * @property string|null $backend_description
+ * @property array<array-key, mixed>|null $default_functions
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\WebsiteType|null $websiteType
+ * @method static \Database\Factories\PdfOptionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereBackendDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereDefaultFunctions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereFrontendDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereWebsiteEngine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereWebsiteTypeId($value)
+ */
+	final class PdfOption extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -526,6 +563,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read int $total_price
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
+ * @property-read int|null $pdf_options_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WebsiteLanguage> $requestLanguages
  * @property-read int|null $request_languages_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities

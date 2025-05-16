@@ -1,10 +1,15 @@
 @use('App\Models\WebsiteLanguage')
 <x-layouts.app>
 
-    <body class="font-sans text-gray-900 bg-white">
-
+    <div class="font-sans text-gray-900 bg-white">
+        <style>
+            .page-break {
+                page-break-after: always;
+            }
+        </style>
         <!-- Borító -->
         <x-layouts.pdf.partials.cover :requestQuote="$requestQuote" />
+        <!-- Rólunk -->
         <x-layouts.pdf.partials.about-us />
         <!-- Fejléc és ajánlat fő adatai -->
         <div class="px-12 py-8">
@@ -46,8 +51,10 @@
             </div>
         </div>
         <div class="page-break"></div>
+
         <!-- Projekt leírása -->
         <div class="px-12 py-8">
+            <x-layouts.pdf.partials.logo />
             <h3 class="mb-4 text-2xl font-bold">A projekt leírása</h3>
             <p class="mb-4">Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az
                 ügyfél igényeinek megfelelően
@@ -327,28 +334,7 @@
                 </tbody>
             </table>
         </div>
-        <!-- Lábléc -->
-        <div class="flex items-start justify-between w-full px-8 py-6 text-xs font-bold text-white bg-blue-700">
-            <div>
-                <div class="flex justify-between w-full gap-16">
-                    <div class="flex flex-col items-start pl-2 space-y-1">
-                        <span>Cégem 360 Kft.</span>
-                        <span>Székhely: 1182 Budapest, Gulipán utca 6.</span>
-                        <span>Cg.: 01-09-897122 / Adószám: 14286249-2-43</span>
-                    </div>
-                    <div class="flex flex-col items-end pr-2 space-y-1 text-right">
-                        <span>Tel.: +36 20 331 9550</span>
-                        <span>E-mail: info@cegem360.hu</span>
-                        <span>Web: cegem360.hu</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <style>
-            .page-break {
-                page-break-after: always;
-            }
-        </style>
-    </body>
+
+    </div>
 
 </x-layouts.app>

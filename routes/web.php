@@ -45,6 +45,7 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         return response()->file(storage_path('app/public/quotation.pdf'));
 
     })->name('preview');
+
     Route::get('preview/pdf/{requestQuote}', function () {
 
         $requestQuote = RequestQuote::factory()->make([
@@ -53,7 +54,6 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
             'name' => 'Test Name',
             'email' => '',
         ]);
-        // $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
 
         return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 
