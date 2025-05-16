@@ -116,5 +116,8 @@
     "Payment method": "Fizetési mód",
     "Client type": "Jogi forma",
     "long": "Hosszú",
-    "Long": "Hosszú"
+    "Long": "Hosszú",
+    "Register and Create Quotation": "Regisztráció és árajánlatkérés",
+    "Password": "Jelszó",
+    "Password confirmation": "Jelszó megerősítése"
 }

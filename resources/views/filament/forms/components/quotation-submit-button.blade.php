@@ -13,6 +13,7 @@
         @auth
             {{ $this->orderAction }}
         @else
+            {{ $this->registerAndSendAction }}
             {{ $this->orderAndRegisterAction }}
         @endauth
 

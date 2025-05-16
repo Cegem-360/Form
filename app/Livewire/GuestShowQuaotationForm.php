@@ -123,8 +123,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function registerAndSendAction(): SubbmitButton
     {
-        return SubbmitButton::make('orderAndRegisterAction')
-            ->label(__('Register and Order'))
+        return SubbmitButton::make('registerAndSendAction')
+            ->label(__('Register and Create Quotation'))
 
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
@@ -136,21 +136,12 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 $data = $this->form->getState();
                 if (User::where('email', $data['email'])->exists()) {
                     Notification::make()
-                        ->title('Email already registered')
-                        ->body('This email is already registered. Please use a different email address.')
+                        ->title(__('Email already registered'))
+                        ->body(__('This email is already registered. Please use a different email address.'))
                         ->danger()
                         ->send();
                     $this->halt();
 
-                    /*  return [
-                         'name' => $data['name'],
-                         'phone' => $data['phone'],
-                         'company_name' => $data['company_name'] ?? null,
-                         'company_address' => $data['company_address'] ?? null,
-                         'company_vat_number' => null,
-                         'company_registration_number' => $data['company_registration_number'] ?? null,
-                         'client_type' => $data['client_type'] ?? null,
-                     ]; */
                 }
 
                 return [
@@ -159,7 +150,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $data['phone'],
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => null,
+                    'company_vat_number' => $data['company_registration_number'] ?? null,
                     'company_registration_number' => $data['company_registration_number'] ?? null,
                     'client_type' => $data['client_type'] ?? null,
                 ];
@@ -194,7 +185,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 TextInput::make('email')
                     ->translateLabel()
                     ->email()
-                    ->unique(User::class, 'email')
+                    ->unique('users', 'email')
                     ->live()
                     ->required()
                     ->maxLength(255),
@@ -205,6 +196,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->required()
                     ->maxLength(255),
                 TextInput::make('password')
+                    ->confirmed()
                     ->translateLabel()
                     ->password()
                     ->revealable()
@@ -235,7 +227,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => null,
+                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'],
                     'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
 
@@ -244,7 +236,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
+                $requestQuote = RequestQuote::create($validatedfillDataForRegister);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
@@ -280,17 +272,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->body('This email is already registered. Please use a different email address.')
                         ->danger()
                         ->send();
-                    $this->halt();
-
-                    return [
-                        'name' => $data['name'],
-                        'phone' => $data['phone'],
-                        'company_name' => $data['company_name'] ?? null,
-                        'company_address' => $data['company_address'] ?? null,
-                        'company_vat_number' => null,
-                        'company_registration_number' => $data['company_registration_number'] ?? null,
-                        'client_type' => $data['client_type'] ?? null,
-                    ];
                 }
 
                 return [
@@ -302,6 +283,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_vat_number' => null,
                     'company_registration_number' => $data['company_registration_number'] ?? null,
                     'client_type' => $data['client_type'] ?? null,
+                    'password' => $data['password'] ?? null,
+                    'password_confirmation' => $data['password_confirmation'] ?? null,
                 ];
             })->form([
                 Select::make('client_type')
@@ -334,7 +317,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 TextInput::make('email')
                     ->translateLabel()
                     ->email()
-                    ->unique(User::class, 'email')
+                    ->unique('users', 'email')
                     ->live()
                     ->required()
                     ->maxLength(255),
@@ -344,6 +327,18 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->live()
                     ->required()
                     ->maxLength(255),
+                TextInput::make('password')
+                    ->confirmed()
+                    ->translateLabel()
+                    ->password()
+                    ->revealable()
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('password_confirmation')
+                    ->translateLabel()
+                    ->password()
+                    ->revealable()
+                    ->required(),
             ])->action(function (array $data): void {
                 $fillDataForRegister = $data;
                 $data = $this->form->getState();
@@ -354,6 +349,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_name' => ['nullable', 'string', 'max:255'],
                     'company_address' => ['nullable', 'string', 'max:255'],
                     'company_registration_number' => ['nullable', 'string', 'max:255'],
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                    'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
 
                 $user = User::create([
@@ -362,15 +359,15 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => null,
+                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'],
                     'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
-                    'password' => Hash::make('password'), // or use a random password
+                    'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
                 $user->assignRole('guest');
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
+                $requestQuote = RequestQuote::create($validatedfillDataForRegister);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
