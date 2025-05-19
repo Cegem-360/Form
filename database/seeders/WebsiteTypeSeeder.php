@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\WebsiteType;
+use App\Models\WebsiteTypePrice;
 use Illuminate\Database\Seeder;
 
 final class WebsiteTypeSeeder extends Seeder
@@ -14,16 +15,44 @@ final class WebsiteTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        WebsiteType::factory()->create([
-            'name' => 'Landing Page',
-        ]);
-        WebsiteType::factory()->create([
-            'name' => 'Webshop',
-        ]);
+        $types = [
+            'Weboldal',
+            'Webshop',
+            'Landing Page',
+        ];
+        $engines = [
+            'wordpress',
+            'shopify',
+            'laravel',
+        ];
+        $sizes = [
+            'small',
+            'medium',
+            'large',
+        ];
+        $prices = [
+            'small' => 20000,
+            'medium' => 50000,
+            'large' => 80000,
+        ];
+        foreach ($types as $type) {
+            $websiteType = WebsiteType::factory()->create([
+                'name' => $type,
+            ]);
 
-        WebsiteType::factory()->create([
-            'name' => 'Weboldal',
-        ]);
+            foreach ($engines as $engine) {
+                foreach ($sizes as $size) {
+
+                    WebsiteTypePrice::factory()->create([
+                        'website_type_id' => $websiteType->id,
+                        'website_engine' => $engine,
+                        'size' => $size,
+                        'price' => $prices[$size],
+                    ]);
+
+                }
+            }
+        }
 
     }
 }

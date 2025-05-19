@@ -79,11 +79,11 @@ final class RequestQuote extends Model
 
         foreach ($this->websites as $website) {
             if ($website['required']) {
-                $total += match ($website['length']) {
-                    'short' => 20000,
-                    'medium' => 40000,
-                    'large' => 70000,
-                };
+                $total += $this->websiteType->websiteTypePrices
+                    ->whereWebsiteEngine($this->website_engine)
+                    ->whereSize($website['size'])
+                    ->first()
+                    ?->price ?? 0;
             }
         }
 

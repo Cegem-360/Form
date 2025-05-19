@@ -32,4 +32,9 @@ final class WebsiteType extends Model
     {
         return $this->hasMany(RequestQuoteFunctionality::class);
     }
+
+    public function websiteTypePrices(): HasMany
+    {
+        return $this->hasMany(WebsiteTypePrice::class);
+    }
 }

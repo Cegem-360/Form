@@ -10,20 +10,20 @@ use Livewire\Livewire;
 
 use function Pest\Livewire\livewire;
 
-it('loads the guest show quotation form page and shows fields', function () {
+it('loads the guest show quotation form page and shows fields', function (): void {
     $response = $this->get(route('quotation')); // Állítsd be a helyes route-ot!
     $response->assertStatus(200);
     $response->assertSee('Weboldal típusa');
     $response->assertSee('Weboldal motorja');
 });
 
-it('renders the livewire component', function () {
+it('renders the livewire component', function (): void {
     Livewire::test(GuestShowQuaotationForm::class)
         ->assertStatus(200)
         ->assertSee('Weboldal típusa');
 });
 
-it('fill the form', function () {
+it('fill the form', function (): void {
     Mail::fake();
     Notification::fake();
 

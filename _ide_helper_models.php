@@ -799,6 +799,8 @@ namespace App\Models{
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
  * @property-read int|null $request_quotes_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WebsiteTypePrice> $websiteTypePrices
+ * @property-read int|null $website_type_prices_count
  * @method static \Database\Factories\WebsiteTypeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType newQuery()
@@ -809,5 +811,32 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteType whereUpdatedAt($value)
  */
 	final class WebsiteType extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property int $website_type_id
+ * @property string $website_engine
+ * @property string $size
+ * @property int|null $price
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\WebsiteType|null $websiteType
+ * @method static \Database\Factories\WebsiteTypePriceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereWebsiteEngine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice whereWebsiteTypeId($value)
+ */
+	final class WebsiteTypePrice extends \Eloquent {}
 }
 

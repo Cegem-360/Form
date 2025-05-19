@@ -20,7 +20,7 @@ final class WebsiteTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement(['Website', 'Webshop', 'Landing page']),
+            'name' => $this->faker->randomElement(['weboldal', 'webshop', 'landing page']),
 
         ];
     }

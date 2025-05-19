@@ -329,7 +329,7 @@ final class RequestQuoteResource extends Resource
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
-                    ->visible(fn ($record) => $record->status !== 'order')
+                    ->visible(fn ($record): bool => $record->status !== 'order')
                     ->icon('heroicon-o-check'),
             ])
             ->bulkActions([
