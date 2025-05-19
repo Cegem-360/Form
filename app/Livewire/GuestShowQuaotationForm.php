@@ -505,7 +505,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                     ->options([
                                         'short' => __('Short'),
                                         'medium' => __('Medium'),
-                                        'long' => __('Large'),
+                                        'large' => __('Large'),
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set): void {

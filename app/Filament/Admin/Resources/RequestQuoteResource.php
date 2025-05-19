@@ -131,14 +131,14 @@ final class RequestQuoteResource extends Resource
                                     ->options([
                                         'short' => 'Short',
                                         'medium' => 'Medium',
-                                        'long' => 'Long',
+                                        'large' => 'Large',
                                     ])
                                     ->inline()
                                     ->afterStateUpdated(function ($state, Set $set, Get $get): void {
                                         $set('image', match ($state) {
                                             'short' => 'website_previews/short_preview.png',
                                             'medium' => 'website_previews/medium_preview.png',
-                                            'long' => 'website_previews/long_preview.png',
+                                            'large' => 'website_previews/large_preview.png',
                                             default => null,
                                         });
                                     })
@@ -178,7 +178,7 @@ final class RequestQuoteResource extends Resource
                                     return match ($get('length')) {
                                         'short' => 'website_previews/short_preview.png',
                                         'medium' => 'website_previews/medium_preview.png',
-                                        'long' => 'website_previews/long_preview.png',
+                                        'large' => 'website_previews/large_preview.png',
                                         default => null,
                                     };
                                 }),

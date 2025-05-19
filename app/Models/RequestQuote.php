@@ -82,7 +82,7 @@ final class RequestQuote extends Model
                 $total += match ($website['length']) {
                     'short' => 20000,
                     'medium' => 40000,
-                    'long' => 70000,
+                    'large' => 70000,
                 };
             }
         }

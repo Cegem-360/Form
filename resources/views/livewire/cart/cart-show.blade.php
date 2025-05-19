@@ -29,7 +29,7 @@
                                             {{ match ($page['length']) {
                                                 'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
                                                 'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
-                                                'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
+                                                'large' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
                                             } }}
                                             <span class="font-normal text-gray-700">+ Áfa</span>
                                         </div>
@@ -38,7 +38,7 @@
                                             {{ match ($page['length']) {
                                                 'short' => Number::currency(20000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
                                                 'medium' => Number::currency(40000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                                'long' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
+                                                'large' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
                                             } }})
                                         </div>
                                     </div>

@@ -34,7 +34,7 @@ final class CartShow extends Component implements HasActions, HasForms
                 $this->total += match ($page['length']) {
                     'short' => 20000,
                     'medium' => 40000,
-                    'long' => 70000,
+                    'large' => 70000,
                 };
             }
         });

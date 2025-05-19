@@ -30,14 +30,12 @@ final class RequestQuoteFactory extends Factory
      */
     public function definition(): array
     {
-        // $website_length = $this->faker->randomElement(['short', 'medium', 'long']);
-
         $websites = [];
         foreach ($this->faker->words(3) as $word) {
             $websites[] = [
                 'name' => $word,
                 'required' => $this->faker->boolean(),
-                'length' => $this->faker->randomElement(['short', 'medium', 'long']),
+                'length' => $this->faker->randomElement(['short', 'medium', 'large']),
                 'description' => $this->faker->randomHtml(),
                 'images' => null,
             ];

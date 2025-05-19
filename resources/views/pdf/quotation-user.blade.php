@@ -149,8 +149,8 @@
                                     {{ match ($page['length']) {
                                         'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
                                         'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
-                                        'long' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
-                                        default => Number::currency(0, in: 'HUF', locale: 'hu', precision: 0),
+                                        'large' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
+                                        default => Number::currency(9999999, in: 'HUF', locale: 'hu', precision: 0),
                                     } }}
                                 </td>
                                 <td class="px-4 py-2 border"></td>
