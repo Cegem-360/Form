@@ -8,6 +8,7 @@ use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
@@ -37,6 +38,8 @@ final class AppServiceProvider extends ServiceProvider
         Gate::policy(Role::class, RolePolicy::class);
         Gate::policy(Permission::class, PermissionPolicy::class);
         $this->migrationsCustomPath();
+
+        Table::$defaultNumberLocale = 'hu';
         /* Field::macro('tooltip', function (string $tooltip) {
             return $this->hintAction(
                 function () use ($tooltip) {

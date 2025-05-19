@@ -6,7 +6,8 @@ return [
     'navigation' => [
         'title' => 'Kérjen árajánlatot',
         'description' => 'Kérjen árajánlatot a kiválasztott termékekre.',
-        'label' => 'Árajánlatok',
+        'label' => 'Árajánlat',
+        'group' => 'Árajánlatok',
     ],
     'title' => 'Kérjen árajánlatot',
     'description' => 'Kérjen árajánlatot a kiválasztott termékekre.',

@@ -28,6 +28,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\Alignment;
+use Filament\Tables\Actions\Action as TableAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
@@ -38,6 +39,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 final class RequestQuoteResource extends Resource
 {
@@ -45,11 +47,19 @@ final class RequestQuoteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Request Quote';
-
-    public static function getNavigationLabel(): string
+    public static function getNavigationGroup(): ?string
     {
-        return __('filament::resources/pages/request-quote.navigation.label');
+        return __('filament::resources/pages/request-quote.navigation.group');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('Request Quote');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('Request Quotes');
     }
 
     public static function form(Form $form): Form
@@ -94,6 +104,7 @@ final class RequestQuoteResource extends Resource
                         ->translateLabel()
                         ->maxLength(255),
                     Select::make('client_type')
+                        ->translateLabel()
                         ->required()
                         ->options(ClientType::class)
                         ->preload()
@@ -120,6 +131,7 @@ final class RequestQuoteResource extends Resource
                         })
                         ->searchable(),
                     Select::make('website_engine')
+                        ->translateLabel()
                         ->options([
                             'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
@@ -282,29 +294,23 @@ final class RequestQuoteResource extends Resource
             })
             ->columns([
                 TextColumn::make('quotation_name')
+                    ->translateLabel()
                     ->searchable(),
-                TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('company_name')
-                    ->searchable(),
-                TextColumn::make('website_type_id')
+                TextColumn::make('websiteType.name')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('have_website_graphic')
-                    ->boolean(),
+
                 IconColumn::make('is_multilangual')
-                    ->boolean(),
-                IconColumn::make('is_ecommerce')
+                    ->translateLabel()
                     ->boolean(),
                 TextColumn::make('created_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->translateLabel()
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -315,6 +321,16 @@ final class RequestQuoteResource extends Resource
             ->actions([
                 ViewAction::make(),
                 EditAction::make(),
+                TableAction::make('order')
+                    ->label(__('Order'))
+                    ->action(function (Model $record) {
+                        Session::put('requestQuote', $record->id);
+
+                        return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
+                    })
+                    ->requiresConfirmation()
+                    ->visible(fn ($record) => $record->status !== 'order')
+                    ->icon('heroicon-o-check'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

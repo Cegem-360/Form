@@ -13,9 +13,7 @@
                         @if ($page['required'])
                             <li class="flex items-center justify-between p-4">
                                 <div class="flex items-center gap-4">
-                                    <div class="flex items-center justify-center w-24 h-16 bg-gray-100 rounded-md">
-                                        <span class="text-xs text-gray-400">Kép</span>
-                                    </div>
+
                                     <div>
                                         <div class="text-lg font-bold">{{ $page['name'] }}</div>
                                         <div class="text-sm text-gray-500">{{ $page['length'] }} oldal</div>
