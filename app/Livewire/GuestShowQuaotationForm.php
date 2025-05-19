@@ -207,7 +207,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->password()
                     ->revealable()
                     ->required(),
-            ])->action(function (array $data): void {
+            ])->action(function (array $data) {
                 $fillDataForRegister = $data;
                 $data = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
@@ -219,7 +219,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_registration_number' => ['nullable', 'string', 'max:255'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
-                    'website_type_id' => ['required', 'exists:website_types,id'],
                 ])->validate();
 
                 $user = User::create([
@@ -249,7 +248,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 Session::put('requestQuote', $requestQuote->id);
 
-                $this->redirect(route('filament.dashboard.resources.request-quotes.view', ['requestQuote' => $requestQuote->id]));
+                return $this->redirect(route('filament.dashboard.resources.request-quotes.view', [
+                    'record' => $requestQuote->id,
+                ]));
             })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
@@ -341,7 +342,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->password()
                     ->revealable()
                     ->required(),
-            ])->action(function (array $data): void {
+            ])->action(function (array $data) {
                 $fillDataForRegister = $data;
                 $data = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
@@ -380,7 +381,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 Session::put('requestQuote', $requestQuote->id);
 
-                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
+                return $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
             })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');

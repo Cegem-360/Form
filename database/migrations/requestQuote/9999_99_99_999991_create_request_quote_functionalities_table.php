@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('price')->nullable()->default(0);
             $table->text('description')->nullable();
             $table->foreignIdFor(WebsiteType::class)->nullable(false);
+
             $table->boolean('default')->nullable()->default(false);
             $table->timestamps();
         });
