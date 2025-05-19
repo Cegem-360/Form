@@ -25,8 +25,20 @@
                 <div class="mb-4">
                     <span class="block text-xs text-gray-500">Fizetési mód</span>
                     <span
-                        class="block text-sm font-bold">{{ $order->requestQuote->payment_method ?? 'Ismeretlen' }}</span>
+                        class="block text-sm font-bold">{{ __($order->requestQuote->payment_method) ?? 'Ismeretlen' }}</span>
                 </div>
+                @if ('bank_transfer' === $order->requestQuote->payment_method)
+                    <div class="p-4 mb-4 border border-gray-200 rounded bg-gray-50">
+                        <div class="mb-2 text-xs font-semibold text-gray-500">Banki átutalási adatok:</div>
+                        <ul class="space-y-1 text-sm text-gray-700 list-none">
+                            <li><span class="font-semibold">Kedvezményezett neve:</span> Cégem 360 Kft.</li>
+                            <li><span class="font-semibold">Bankszámlaszám:</span> 12600016-17129425-18957306</li>
+                            <li><span class="font-semibold">Bank:</span> Wise</li>
+                            <li><span class="font-semibold">Közlemény:</span> Rendelésszám:
+                                {{ $order->id ?? $requestQuote->id }}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="mb-4">
                     <div class="mb-1 text-xs font-semibold text-gray-500">Árajánlat összeg:</div>
                     <div class="text-2xl font-bold text-green-700">
@@ -69,10 +81,12 @@
                     <div class="p-4 mt-6 border border-blue-200 rounded bg-blue-50">
                         <h2 class="mb-2 text-lg font-semibold">Fizetési teendők</h2>
                         @if (($order->payment_method ?? '') === 'stripe')
-                            <p class="mb-2">A fizetés Stripe-on keresztül történt. Amennyiben bármilyen probléma
+                            <p class="mb-2">A fizetés Stripe-on keresztül történt. Amennyiben bármilyen
+                                probléma
                                 merülne fel, kérjük, vegye fel velünk a kapcsolatot.</p>
                         @else
-                            <p class="mb-2">A fizetési mód: átutalás. Kérjük, utalja el a végösszeget az alábbi
+                            <p class="mb-2">A fizetési mód: átutalás. Kérjük, utalja el a végösszeget az
+                                alábbi
                                 bankszámlára:</p>
                             <ul class="mb-2 text-left list-disc list-inside">
                                 <li><b>Cégnév:</b> Példa Kft.</li>
@@ -85,7 +99,8 @@
                 @endif
             </div>
             <div class="mt-8 text-right">
-                <a href="/" class="font-semibold text-indigo-600 hover:underline">Vissza a főoldalra &rarr;</a>
+                <a href="/" class="font-semibold text-indigo-600 hover:underline">Vissza a főoldalra
+                    &rarr;</a>
             </div>
         </div>
     </div>

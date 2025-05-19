@@ -219,6 +219,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_registration_number' => ['nullable', 'string', 'max:255'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
+                    'website_type_id' => ['required', 'exists:website_types,id'],
                 ])->validate();
 
                 $user = User::create([
@@ -227,7 +228,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'],
+                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
                     'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
 
@@ -236,7 +237,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($validatedfillDataForRegister);
+
+                $requestQuote = RequestQuote::create($data);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
@@ -247,7 +249,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 Session::put('requestQuote', $requestQuote->id);
 
-                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
+                $this->redirect(route('filament.dashboard.resources.request-quotes.view', ['requestQuote' => $requestQuote->id]));
             })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
@@ -359,7 +361,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'],
+                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
                     'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
@@ -367,7 +369,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($validatedfillDataForRegister);
+                $requestQuote = RequestQuote::create($data);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
@@ -388,7 +390,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     public function sendEmailToMeAction(): SubbmitButton
     {
         return SubbmitButton::make('sendEmailToMeAction')
-            ->action(function (): void {
+            ->action(function () {
                 $data = $this->form->getState();
                 $record = RequestQuote::create($data);
                 Notification::make()
@@ -398,8 +400,10 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 $this->form->model($record)->saveRelationships();
 
                 Mail::to($data['email'])->send(new QuotationSendedToUser($record));
-                $this->redirect(route('email-sended-to-user'), false);
+
+                return $this->redirect(route('email-sended-to-user'));
             })
+
             ->label(__('Send email to me'))
             ->color('success')
             ->icon('heroicon-o-envelope');

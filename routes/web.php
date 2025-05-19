@@ -17,7 +17,7 @@ use Spatie\Browsershot\Browsershot;
 require_once __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->get('/', function () {
-    return redirect()->route('filament.admin.pages.dashboard');
+    return redirect()->route('filament.dashboard.pages.dashboard');
 })->name('home');
 
 Route::get('/form/expired', function () {
