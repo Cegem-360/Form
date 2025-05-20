@@ -1,5 +1,6 @@
 @use('App\Models\WebsiteLanguage')
 @use('App\Models\PdfOption')
+@use('App\Models\WebsiteTypePrice')
 <x-layouts.app>
 
     <div class="font-sans text-gray-900 bg-white">
@@ -146,14 +147,11 @@
                                 <td class="px-4 py-2 border">{{ $page['name'] }}</td>
                                 <td class="px-4 py-2 border">{{ __(ucfirst($page['length'])) }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ match ($page['length']) {
-                                        'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
-                                        'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
-                                        'large' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
-                                        default => Number::currency(9999999, in: 'HUF', locale: 'hu', precision: 0),
-                                    } }}
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price, in: 'HUF', locale: 'hu', precision: 0) }}
                                 </td>
-                                <td class="px-4 py-2 border"></td>
+                                <td class="px-4 py-2 border">
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                </td>
                             </tr>
                         @endif
                     @endforeach
@@ -193,8 +191,12 @@
                                 <tr>
                                     <td class="px-4 py-2 border">{{ WebsiteLanguage::find($language)?->name }}</td>
                                     <td class="px-4 py-2 border"></td>
-                                    <td class="px-4 py-2 border"></td>
-                                    <td class="px-4 py-2 border"></td>
+                                    <td class="px-4 py-2 border">
+                                        {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()), in: 'HUF', locale: 'hu', precision: 0) }}
+                                    </td>
+                                    <td class="px-4 py-2 border">
+                                        {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()), in: 'HUF', locale: 'hu', precision: 0) }}
+                                    </td>
                                 </tr>
                             @endforeach
                         @endif

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire\Cart;
 
-use App\Models\Option;
 use App\Models\RequestQuote;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -25,14 +24,11 @@ final class CartShow extends Component implements HasActions, HasForms
 
     public ?RequestQuote $requestQuote = null;
 
-    public ?float $requestQuotePercent = null;
-
     public function mount(RequestQuote $requestQuote): void
     {
 
         $this->requestQuote = $requestQuote;
-        $this->requestQuotePercent = collect(Option::whereName('request_quote')
-            ->first()->options)->keyBy('key')['language_percent']['value'];
+
         $this->total += $this->requestQuote?->getTotalPriceAttribute();
         $this->form->fill();
     }

@@ -10,7 +10,6 @@ use App\Livewire\Checkout\PaymentPage;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Models\RequestQuote;
-use App\Models\WebsiteType;
 use Illuminate\Support\Facades\Route;
 use Spatie\Browsershot\Browsershot;
 
@@ -31,20 +30,17 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
 })->name('quotation.pdf');
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
-    Route::get('preview/{requestQuote}', function () {
+    Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
 
-        $requestQuote = RequestQuote::factory()->make([
-            'id' => 1,
-            'company_name' => 'Test Company',
-            'name' => 'Test Name',
-            'email' => 'zoltan@cegem360.hu',
-            'website_type_id' => WebsiteType::whereName('Weboldal')->first()->id,
-            'website_engine' => 'Laravel',
-        ]);
+        $requestQuote = RequestQuote::find($requestQuote->id);
 
         $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
-
-        Browsershot::html($template)->showBackground()->format('A4')->savePdf(storage_path('app/public/quotation.pdf'));
+        $headerHtml = view('pdf.header')->render();
+        Browsershot::html($template)->showBrowserHeaderAndFooter()
+            ->headerHtml($headerHtml)
+            ->showBackground()
+            ->format('A4')
+            ->savePdf(storage_path('app/public/quotation.pdf'));
 
         return response()->file(storage_path('app/public/quotation.pdf'));
 

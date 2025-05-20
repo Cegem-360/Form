@@ -99,12 +99,12 @@
                             </div>
                             <div class=" min-w-[140px]">
                                 <div class="font-bold text-green-700">
-                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuotePercent), in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()), in: 'HUF', locale: 'hu', precision: 0) }}
                                     <span class="font-normal text-gray-700">+ Áfa</span>
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     (Bruttó:
-                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuotePercent) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
                                 </div>
                             </div>
                         </li>

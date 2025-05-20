@@ -41,6 +41,12 @@ final class RequestQuote extends Model
         'billing_address',
     ];
 
+    public function requestQuotePercent(): ?float
+    {
+        return $this->requestQuotePercent = collect(Option::whereName('request_quote')
+            ->first()->options)->keyBy('key')['language_percent']['value'];
+    }
+
     public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
@@ -81,11 +87,10 @@ final class RequestQuote extends Model
         $total = $this->getTotalPriceAttributeNoLanguages();
 
         if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
-            $request_quote_percent = collect(Option::whereName('request_quote')
-                ->first()->options)->keyBy('key');
+
             $tmp = $total;
             foreach ($this->languages as $language) {
-                $total += (int) round($tmp * $request_quote_percent['language_percent']['value']);
+                $total += (int) round($tmp * $this->requestQuotePercent());
             }
         }
 
