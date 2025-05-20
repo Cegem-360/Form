@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('components.layouts.errors.layout')
 
 @section('title', __('Not Found'))
 @section('code', '404')

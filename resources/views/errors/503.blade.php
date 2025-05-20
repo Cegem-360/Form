@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('components.layouts.errors.layout')
 
 @section('title', __('Service Unavailable'))
 @section('code', '503')

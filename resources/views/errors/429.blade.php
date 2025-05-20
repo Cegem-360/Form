@@ -1,4 +1,4 @@
-@extends('errors::minimal')
+@extends('components.layouts.errors.layout')
 
 @section('title', __('Too Many Requests'))
 @section('code', '429')
