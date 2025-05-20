@@ -1,3 +1,4 @@
+@use('App\Models\WebsiteTypePrice')
 <div>
     <form class="container flex flex-col gap-8 p-6 mx-auto lg:flex-row">
         @csrf
@@ -24,20 +25,24 @@
 
                                     <div>
                                         <div class="text-lg font-bold text-green-700">
-                                            {{ match ($page['length']) {
-                                                'short' => Number::currency(20000, in: 'HUF', locale: 'hu', precision: 0),
-                                                'medium' => Number::currency(40000, in: 'HUF', locale: 'hu', precision: 0),
-                                                'large' => Number::currency(70000, in: 'HUF', locale: 'hu', precision: 0),
-                                            } }}
+                                            {{ Number::currency(
+                                                WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price ?? 0,
+                                                in: 'HUF',
+                                                locale: 'hu',
+                                                precision: 0,
+                                            ) }}
                                             <span class="font-normal text-gray-700">+ Áfa</span>
                                         </div>
                                         <div class="text-sm text-gray-500">
                                             (Bruttó:
-                                            {{ match ($page['length']) {
-                                                'short' => Number::currency(20000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                                'medium' => Number::currency(40000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                                'large' => Number::currency(70000 * 1.27, in: 'HUF', locale: 'hu', precision: 0),
-                                            } }})
+                                            {{ Number::currency(
+                                                WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price *
+                                                    1.27 ??
+                                                    0,
+                                                in: 'HUF',
+                                                locale: 'hu',
+                                                precision: 0,
+                                            ) }})
                                         </div>
                                     </div>
                                 </div>
@@ -59,12 +64,12 @@
                             </div>
                             <div class=" min-w-[140px]">
                                 <div class="font-bold text-green-700">
-                                    {{ Number::currency($function['price'], in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency($function->price, in: 'HUF', locale: 'hu', precision: 0) }}
                                     <span class="font-normal text-gray-700">+ Áfa</span>
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     (Bruttó:
-                                    {{ Number::currency($function['price'] * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
+                                    {{ Number::currency($function->price * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
                                 </div>
                             </div>
                         </li>

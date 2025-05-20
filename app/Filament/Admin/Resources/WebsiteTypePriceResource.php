@@ -36,9 +36,13 @@ final class WebsiteTypePriceResource extends Resource
                 TextInput::make('website_engine')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('size')
+                Select::make('size')
                     ->required()
-                    ->maxLength(255),
+                    ->options([
+                        'short' => 'Rövid',
+                        'medium' => 'Közepes',
+                        'long' => 'Hosszú',
+                    ]),
                 TextInput::make('price')
                     ->numeric()
                     ->default(0)

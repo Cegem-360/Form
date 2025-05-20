@@ -80,12 +80,16 @@ final class RequestQuote extends Model
 
         foreach ($this->websites as $website) {
             if ($website['required']) {
-                $total += $this->websiteType->websiteTypePrices
+                $total += $this->websiteType->websiteTypePrices()
                     ->whereWebsiteEngine($this->website_engine)
-                    ->whereSize($website['size'])
+                    ->whereSize($website['length'])
                     ->first()
                     ?->price ?? 0;
             }
+        }
+        if ($this->is_multilangual && is_array($this->languages) && count($this->languages) > 0) {
+            $additionalLanguages = count($this->languages);
+            $total += (int) round($total * (0.2 * $additionalLanguages));
         }
 
         return $total + $this->requestQuoteFunctionalities->sum('price');

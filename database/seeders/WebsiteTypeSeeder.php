@@ -26,12 +26,12 @@ final class WebsiteTypeSeeder extends Seeder
             'laravel',
         ];
         $sizes = [
-            'small',
+            'short',
             'medium',
             'large',
         ];
         $prices = [
-            'small' => 20000,
+            'short' => 20000,
             'medium' => 50000,
             'large' => 80000,
         ];

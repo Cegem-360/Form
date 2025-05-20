@@ -548,6 +548,7 @@ namespace App\Models{
  * @property string|null $email
  * @property string|null $phone
  * @property \App\Enums\ClientType|null $client_type
+ * @property string|null $billing_address
  * @property string|null $company_name
  * @property string|null $company_address
  * @property string|null $project_description
@@ -577,6 +578,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereBillingAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyName($value)
