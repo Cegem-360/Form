@@ -88,3 +88,5 @@ Route::middleware(['auth'])->group(function (): void {
 Route::get('kerdoiv/{token}', FormQuestionForm::class)->name('kerdoiv');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');
+
+require_once __DIR__.'/errors.php';
