@@ -7,6 +7,7 @@ namespace Database\Factories;
 use App\Enums\ClientType;
 use App\Models\RequestQuote;
 use App\Models\User;
+use App\Models\WebsiteLanguage;
 use App\Models\WebsiteType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,11 @@ final class RequestQuoteFactory extends Factory
         $website_type_id = WebsiteType::firstOrCreate([
             'name' => $this->faker->randomElement(['weboldal', 'webshop', 'landing page']),
         ])->id;
+        $languages = [];
+        $default_language = WebsiteLanguage::all()->random(1)->first();
+        foreach (WebsiteLanguage::whereNotIn('id', [$default_language->id])->get()->random(2) as $language) {
+            $languages[] = $language->name;
+        }
 
         return [
             'user_id' => User::factory(),
@@ -62,7 +68,8 @@ final class RequestQuoteFactory extends Factory
             'websites' => $websites,
             'have_website_graphic' => $this->faker->boolean(),
             'is_multilangual' => $this->faker->boolean(),
-            'languages' => [$this->faker->word()],
+            'default_language' => $default_language->id,
+            'languages' => $languages,
             'payment_method' => $this->faker->randomElement(['stripe',  'bank_transfer']),
         ];
     }

@@ -338,7 +338,8 @@ namespace App\Models{
  * 
  *
  * @property int $id
- * @property string|null $options
+ * @property string $name
+ * @property array<array-key, mixed>|null $options
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\OptionFactory factory($count = null, $state = [])
@@ -347,10 +348,11 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option whereUpdatedAt($value)
  */
-	class Option extends \Eloquent {}
+	final class Option extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -557,6 +559,7 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $websites
  * @property bool|null $have_website_graphic
  * @property bool|null $is_multilangual
+ * @property string|null $default_language
  * @property array<array-key, mixed>|null $languages
  * @property string|null $payment_method
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -583,6 +586,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereDefaultLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereHaveWebsiteGraphic($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereId($value)

@@ -35,6 +35,7 @@ return new class extends Migration
             $table->json('websites')->nullable();
             $table->boolean('have_website_graphic')->default(false)->nullable();
             $table->boolean('is_multilangual')->default(false)->nullable();
+            $table->string('default_language', 10)->nullable();
             $table->json('languages')->nullable();
             $table->string('payment_method')->nullable();
             $table->timestamps();

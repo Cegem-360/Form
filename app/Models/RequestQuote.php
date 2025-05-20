@@ -8,6 +8,7 @@ use App\Enums\ClientType;
 use Database\Factories\RequestQuoteFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,6 +33,7 @@ final class RequestQuote extends Model
         'websites',
         'have_website_graphic',
         'is_multilangual',
+        'default_language',
         'languages',
         'website_engine',
         'payment_method',
@@ -76,6 +78,22 @@ final class RequestQuote extends Model
 
     public function getTotalPriceAttribute(): int
     {
+        $total = $this->getTotalPriceAttributeNoLanguages();
+
+        if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
+            $request_quote_percent = collect(Option::whereName('request_quote')
+                ->first()->options)->keyBy('key');
+            $tmp = $total;
+            foreach ($this->languages as $language) {
+                $total += (int) round($tmp * $request_quote_percent['language_percent']['value']);
+            }
+        }
+
+        return $total;
+    }
+
+    public function getTotalPriceAttributeNoLanguages(): int
+    {
         $total = 0;
 
         foreach ($this->websites as $website) {
@@ -86,10 +104,6 @@ final class RequestQuote extends Model
                     ->first()
                     ?->price ?? 0;
             }
-        }
-        if ($this->is_multilangual && is_array($this->languages) && count($this->languages) > 0) {
-            $additionalLanguages = count($this->languages);
-            $total += (int) round($total * (0.2 * $additionalLanguages));
         }
 
         return $total + $this->requestQuoteFunctionalities->sum('price');
@@ -117,6 +131,11 @@ final class RequestQuote extends Model
         return $query->whereHas('websiteType', function ($q) {
             return $q->whereName('Landing Page');
         });
+    }
+
+    public function getLanguages(): Collection
+    {
+        return WebsiteLanguage::whereIn('id', $this->languages)->get();
     }
 
     protected function casts(): array

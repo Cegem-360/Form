@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('options', function (Blueprint $table): void {
             $table->id();
+            $table->string('name')->unique()->nullable(false);
             $table->json('options')->nullable();
             $table->timestamps();
         });

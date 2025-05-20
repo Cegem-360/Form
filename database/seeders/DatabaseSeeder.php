@@ -56,6 +56,7 @@ final class DatabaseSeeder extends Seeder
             RequestQuoteSeeder::class,
             OrderSeeder::class,
             OrderItemSeeder::class,
+            OptionSeeder::class,
             PdfOptionSeeder::class,
         ]);
         $guest = User::factory()->create([
