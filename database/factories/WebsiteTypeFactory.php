@@ -21,7 +21,6 @@ final class WebsiteTypeFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement(['weboldal', 'webshop', 'landing page']),
-
         ];
     }
 }

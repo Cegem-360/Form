@@ -1,37 +1,4 @@
 <x-layouts.app>
-    {{--  <div class="text-gray-900 bg-gray-100">
-        <div class="container p-4 mx-auto">
-            <h1 class="mb-4 text-3xl font-bold">Form Review</h1>
-            <ul class="p-4 bg-white rounded-lg shadow-md">
-                @foreach ($formData as $key => $value)
-                    <li class="py-2 border-b border-gray-200">
-                        <strong class="font-semibold">{{ $key }}:</strong>
-                        @if (is_array($value))
-                            <ul class="pl-4">
-                                @foreach ($value as $item)
-                                    <li>
-                                        @if (is_array($item))
-                                            <ul class="pl-4">
-                                                @foreach ($item as $subItem)
-                                                    <li>
-                                                        <span class="text-gray-700">{{ $subItem }}</span>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        @else
-                                            <span class="text-gray-700">{{ $item }}</span>
-                                        @endif
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <span class="text-gray-700">{{ $value }}</span>
-                        @endif
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    </div> --}}
 
     <div class="text-gray-900 bg-gray-100">
         <div class="container p-4 mx-auto">

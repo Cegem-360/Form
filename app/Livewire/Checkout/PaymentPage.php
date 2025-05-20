@@ -68,10 +68,14 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->translateLabel()
                     ->live()
                     ->required()
-                    ->options(ClientType::class)
-                    ->preload(),
+                    ->options(ClientType::class),
+                TextInput::make('billing_address')
+                    ->label('Billing Address')
+                    ->translateLabel()
+                    ->live()
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value),
                 TextInput::make('company_name')
-
                     ->translateLabel()
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)

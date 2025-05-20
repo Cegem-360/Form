@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->enum('client_type', array_column(ClientType::cases(), 'value'))->nullable();
+            $table->string('billing_address')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_address')->nullable();
             $table->longText('project_description')->nullable();

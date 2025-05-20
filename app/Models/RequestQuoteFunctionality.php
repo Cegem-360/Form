@@ -52,13 +52,13 @@ final class RequestQuoteFunctionality extends Model
     #[Scope]
     public function notDefault(Builder $query): Builder
     {
-        return $query->whereDefault(0);
+        return $query->whereDefault(false);
     }
 
     #[Scope]
     public function default(Builder $query): Builder
     {
-        return $query->whereDefault(1);
+        return $query->whereDefault(true);
     }
 
     public function requestQuotes(): BelongsToMany

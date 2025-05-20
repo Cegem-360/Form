@@ -36,6 +36,7 @@ final class RequestQuote extends Model
         'website_engine',
         'payment_method',
         'project_description',
+        'billing_address',
     ];
 
     public function websiteType(): BelongsTo

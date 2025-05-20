@@ -41,6 +41,10 @@ final class RequestQuoteFactory extends Factory
             ];
         }
 
+        $website_type_id = WebsiteType::firstOrCreate([
+            'name' => $this->faker->randomElement(['weboldal', 'webshop', 'landing page']),
+        ])->id;
+
         return [
             'user_id' => User::factory(),
             'quotation_name' => $this->faker->name(),
@@ -48,11 +52,12 @@ final class RequestQuoteFactory extends Factory
             'email' => $this->faker->email(),
             'phone' => $this->faker->phoneNumber(),
             'client_type' => $this->faker->randomElement(array_column(ClientType::cases(), 'value')),
+            'billing_address' => $this->faker->address(),
             'company_name' => $this->faker->company(),
             'company_address' => $this->faker->address(),
             'project_description' => $this->faker->randomHtml(),
             // website type
-            'website_type_id' => WebsiteType::factory(),
+            'website_type_id' => $website_type_id,
             'website_engine' => $this->faker->randomElement(['wordpress', 'shopify', 'laravel']),
             'websites' => $websites,
             'have_website_graphic' => $this->faker->boolean(),
