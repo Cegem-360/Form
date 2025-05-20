@@ -123,5 +123,9 @@
     "Request Quote": "Árajánlat",
     "Request Quotes": "Árajánlatok",
     "Quotation name": "Árajánlat neve",
-    "bank_transfer": "Banki átutalás"
+    "bank_transfer": "Banki átutalás",
+    "Remember me": "Emlékezz rám",
+    "Forgot your password?": "Elfelejtetted a jelszavad?",
+    "Reset password": "Jelszó visszaállítása",
+    "Log in": "Bejelentkezés"
 }
