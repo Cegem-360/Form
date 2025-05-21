@@ -7,6 +7,7 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\OptionResource\Pages\CreateOption;
 use App\Filament\Admin\Resources\OptionResource\Pages\EditOption;
 use App\Filament\Admin\Resources\OptionResource\Pages\ListOptions;
+use App\Filament\Admin\Resources\OptionResource\Pages\Settings;
 use App\Models\Option;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -23,6 +24,10 @@ final class OptionResource extends Resource
     protected static ?string $model = Option::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Settings';
+
+    protected static ?string $navigationLabel = 'Options';
 
     public static function form(Form $form): Form
     {

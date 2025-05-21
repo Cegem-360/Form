@@ -2,6 +2,15 @@
 
 namespace App\Filament\Admin\Resources;
 
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
+use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\CreateProjectCommission;
+use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\EditProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages;
 use App\Filament\Admin\Resources\ProjectCommissionResource\RelationManagers;
 use App\Models\ProjectCommission;
@@ -23,15 +32,15 @@ class ProjectCommissionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('project_id')
+                Select::make('project_id')
                     ->relationship('project', 'name'),
-                Forms\Components\Select::make('user_id')
+                Select::make('user_id')
                     ->relationship('user', 'name'),
-                Forms\Components\TextInput::make('commission_amount')
+                TextInput::make('commission_amount')
                     ->numeric(),
-                Forms\Components\TextInput::make('commission_percent')
+                TextInput::make('commission_percent')
                     ->numeric(),
-                Forms\Components\TextInput::make('commission_paid_amount')
+                TextInput::make('commission_paid_amount')
                     ->numeric(),
             ]);
     }
@@ -40,26 +49,26 @@ class ProjectCommissionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project.name')
+                TextColumn::make('project.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
+                TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('commission_amount')
+                TextColumn::make('commission_amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('commission_percent')
+                TextColumn::make('commission_percent')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('commission_paid_amount')
+                TextColumn::make('commission_paid_amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -68,11 +77,11 @@ class ProjectCommissionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -87,9 +96,9 @@ class ProjectCommissionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProjectCommissions::route('/'),
-            'create' => Pages\CreateProjectCommission::route('/create'),
-            'edit' => Pages\EditProjectCommission::route('/{record}/edit'),
+            'index' => ListProjectCommissions::route('/'),
+            'create' => CreateProjectCommission::route('/create'),
+            'edit' => EditProjectCommission::route('/{record}/edit'),
         ];
     }
 }

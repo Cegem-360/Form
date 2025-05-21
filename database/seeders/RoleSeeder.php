@@ -16,17 +16,6 @@ final class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = [
-            'super-admin', // all modules
-
-            'admin', // all modules, but not all permissions like a Boss
-
-            'guest', // Quotation(s)->own module(edit only status),  Normal register but not ordered yet (can send and then cant edit) no project
-
-            'user', // Quotation(s)->own module, Invoice(s)->own module, Payment(s)->own module, Project->own
-
-        ];
-
         foreach (RolesEnum::cases() as $role) {
             Role::firstOrCreate(['name' => $role->value, 'guard_name' => GuardName::WEB->value]);
         }

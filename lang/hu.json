@@ -110,7 +110,7 @@
     "Company contact name": "Cég kapcsolattartó neve",
     "Advanced apointment form Webshop": "Webshop részletes megbeszélés űrlap",
     "Page description": "Adott oldal rövid leírása",
-    "Company registration number": "Cégadó szám",
+    "Company vat number": "Céges adószám",
     "I have read and accept the terms and conditions": "Elolvastam és elfogadom a ÁSZF-t",
     "I have read and accept the privacy policy": "Elolvastam és elfogadom az adatvédelmi irányelveket",
     "Payment method": "Fizetési mód",
@@ -130,5 +130,6 @@
     "Log in": "Bejelentkezés",
     "Email already registered": "Email már regisztrálva van",
     "This email is already registered. Please use a different email address.": "Ez az email már regisztrálva van. Kérlek használj egy másik email címet.",
-    "Yes, sure I do": "Igen, Biztosan van"
+    "Yes, sure I do": "Igen, Biztosan van",
+    "Request quote module": "Árajánlatkérő modul"
 }

@@ -1,31 +1,26 @@
 <x-filament-panels::page>
-    <x-filament::section>
-        @foreach ($systemChatParameters as $systemChatParameter)
-            <x-filament::modal id="edit-systemChatParameter-{{ $systemChatParameter->id }}" alignment="center">
-                <x-slot name="heading">
-                    Modal heading
-                </x-slot>
-                <x-slot name="trigger">
-                    <x-filament::button wire:click="trigger({{ $systemChatParameter->id }})">
-                        Open modal
-                    </x-filament::button>
-                </x-slot>
-                <x-filament::input.wrapper>
-                    <x-filament::input type="text" wire:model="name" />
-                </x-filament::input.wrapper>
-                <x-slot name="footerActions">
-                    <x-filament::button wire:click="save({{ $systemChatParameter->id }})"
-                        wire:key="$systemChatParameter->id">
-                        Save modal
-                    </x-filament::button>
-                </x-slot>
-            </x-filament::modal>
-        @endforeach
+    <x-slot name="title">
+        {{ __('Settings') }}
+    </x-slot>
 
-        <x-slot name="heading">
-            User details
-        </x-slot>
+    <x-slot name="header">
+        {{ __('Settings') }}
+    </x-slot>
 
-        {{-- Content --}}
-    </x-filament::section>
+    <div class="p-4">
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ __('Settings') }}</h1>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('Manage your application settings here.') }}</p>
+    </div>
+
+    <div class="p-4">
+
+    </div>
+    <div class="p-4">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ __('General Settings') }}</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('Configure general application settings.') }}</p>
+    </div>
+    <div class="p-4">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ __('User Management') }}</h2>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ __('Manage user roles and permissions.') }}</p>
+    </div>
 </x-filament-panels::page>

@@ -42,6 +42,7 @@ final class DashboardPanelServiceProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandLogo(fn ()=>view('filament.dashboard.logo'))
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')
             ->discoverPages(in: app_path('Filament/Dashboard/Pages'), for: 'App\\Filament\\Dashboard\\Pages')
             ->discoverClusters(in: app_path('Filament/Dashboard/Clusters'), for: 'App\\Filament\\Dashboard\\Clusters')

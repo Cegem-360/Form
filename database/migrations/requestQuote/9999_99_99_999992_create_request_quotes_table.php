@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('billing_address')->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_address')->nullable();
+            $table->string('company_vat_number')->nullable();
             $table->longText('project_description')->nullable();
             // website type
             $table->foreignIdFor(WebsiteType::class)->nullable(false);

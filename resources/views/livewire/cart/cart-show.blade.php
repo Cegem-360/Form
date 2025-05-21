@@ -80,39 +80,42 @@
                 </ul>
             </div>
             <!-- Nyelvek szekció -->
-            <div class="mb-8">
-                <h2 class="mb-4 text-xl font-bold">Kiválasztott nyelvek</h2>
-                <ul class="bg-white divide-y divide-gray-200 rounded-lg shadow-md">
-                    <li class="flex items-center justify-between p-4">
-                        <div>
-                            <div class="font-medium">Alapértelmezett nyelv:
-                                {{ WebsiteLanguage::find($requestQuote->default_language)->name }}</div>
-
-                        </div>
-
-                    </li>
-                    @forelse ($this->requestQuote->getLanguages() ?? [] as $language)
+            @if ($requestQuote->is_multilangual)
+                <div class="mb-8">
+                    <h2 class="mb-4 text-xl font-bold">Kiválasztott nyelvek</h2>
+                    <ul class="bg-white divide-y divide-gray-200 rounded-lg shadow-md">
                         <li class="flex items-center justify-between p-4">
                             <div>
-                                <div class="font-medium">{{ $language->name }}</div>
-                                <div class="text-xs text-gray-500">{{ $language->description ?? 'Nincs leírás' }}</div>
+                                <div class="font-medium">Alapértelmezett nyelv:
+                                    {{ WebsiteLanguage::find($requestQuote->default_language)?->name }}</div>
+
                             </div>
-                            <div class=" min-w-[140px]">
-                                <div class="font-bold text-green-700">
-                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()), in: 'HUF', locale: 'hu', precision: 0) }}
-                                    <span class="font-normal text-gray-700">+ Áfa</span>
-                                </div>
-                                <div class="text-sm text-gray-500">
-                                    (Bruttó:
-                                    {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
-                                </div>
-                            </div>
+
                         </li>
-                    @empty
-                        <li class="p-4 text-center text-gray-500">Nincs kiválasztott nyelv.</li>)
-                    @endforelse
-                </ul>
-            </div>
+                        @forelse ($this->requestQuote->getLanguages() ?? [] as $language)
+                            <li class="flex items-center justify-between p-4">
+                                <div>
+                                    <div class="font-medium">{{ $language->name }}</div>
+                                    <div class="text-xs text-gray-500">{{ $language->description ?? 'Nincs leírás' }}
+                                    </div>
+                                </div>
+                                <div class=" min-w-[140px]">
+                                    <div class="font-bold text-green-700">
+                                        {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()), in: 'HUF', locale: 'hu', precision: 0) }}
+                                        <span class="font-normal text-gray-700">+ Áfa</span>
+                                    </div>
+                                    <div class="text-sm text-gray-500">
+                                        (Bruttó:
+                                        {{ Number::currency(round($requestQuote->getTotalPriceAttributeNoLanguages() * $requestQuote->requestQuotePercent()) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }}
+                                    </div>
+                                </div>
+                            </li>
+                        @empty
+                            <li class="p-4 text-center text-gray-500">Nincs kiválasztott nyelv.</li>)
+                        @endforelse
+                    </ul>
+                </div>
+            @endif
         </div>
 
         <!-- Jobb oldal: Összegző kártya -->

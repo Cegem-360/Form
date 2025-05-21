@@ -38,8 +38,9 @@ final class PaymentPage extends Component implements HasActions, HasForms
     {
 
         // $this->requestQuote = $requestQuote; // Load order details
-
-        $this->form->fill($this->requestQuote->toArray());
+        $data = $requestQuote?->toArray() ?? [];
+        $data['company_vat_number'] = Auth::user()->company_vat_number;
+        $this->form->fill($data);
 
     }
 
@@ -87,7 +88,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
-                TextInput::make('company_registration_number')
+                TextInput::make('company_vat_number')
                     ->translateLabel()
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
@@ -159,7 +160,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
                 return Auth::user()->checkoutCharge(
                     amount: ($this->requestQuote->total_price / 2) * 100,
-                    name: 'Website Laravel',
+                    name: $this->requestQuote->websiteType->name. " ". $this->requestQuote->website_engine,
                     quantity: 1,
                     sessionOptions: [
                         'success_url' => route('checkout.success', ['requestQuote' => $this->requestQuote->id]),
