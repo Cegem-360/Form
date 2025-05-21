@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\Checkout;
 
-use App\Enums\TransactionStatus;
 use App\Models\Order;
-use App\Models\RequestQuote;
-use Illuminate\Support\Facades\Session;
+use App\Enums\RolesEnum;
 use Livewire\Component;
+use App\Models\RequestQuote;
+use App\Enums\TransactionStatus;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 /**
  * @var Order $order
@@ -35,6 +37,8 @@ final class CheckoutSuccess extends Component
 
         ]);
         Session::forget('request_quote');
+        Auth::user()->removeRole(RolesEnum::GUEST);
+        Auth::user()->assignRole(RolesEnum::USER);
     }
 
     public function render()

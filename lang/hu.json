@@ -127,5 +127,8 @@
     "Remember me": "Emlékezz rám",
     "Forgot your password?": "Elfelejtetted a jelszavad?",
     "Reset password": "Jelszó visszaállítása",
-    "Log in": "Bejelentkezés"
+    "Log in": "Bejelentkezés",
+    "Email already registered": "Email már regisztrálva van",
+    "This email is already registered. Please use a different email address.": "Ez az email már regisztrálva van. Kérlek használj egy másik email címet.",
+    "Yes, sure I do": "Igen, Biztosan van"
 }

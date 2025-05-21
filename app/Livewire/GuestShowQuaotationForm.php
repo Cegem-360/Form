@@ -10,29 +10,16 @@ use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
-use Filament\Actions\Action as SubbmitButton;
+use Filament\Actions\Action as SubmitButton;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\ViewField;
-use Filament\Forms\Components\Wizard;
+use Filament\Forms\Components\{Checkbox, CheckboxList, FileUpload, Grid, Repeater, RichEditor, Select, TextInput, Toggle, ToggleButtons, ViewField, Wizard};
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Forms\{Form, Get, Set};
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Registered;
@@ -89,23 +76,23 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     $this->getConstentSchema(),
                 ])
                     ->skippable()
-                    ->submitAction($this->subbmitButtonAction()),
+                    ->submitAction($this->submitButtonAction()),
             ])
             ->statePath('data')
             ->model(RequestQuote::class);
     }
 
-    public function subbmitButtonAction(): SubbmitButton
+    public function submitButtonAction(): SubmitButton
     {
         $form = $this->data;
 
-        return SubbmitButton::make('submit')
+        return SubmitButton::make('submit')
             ->view('filament.forms.components.quotation-submit-button', ['data' => $form]);
     }
 
-    public function orderAction(): SubbmitButton
+    public function orderAction(): SubmitButton
     {
-        return SubbmitButton::make('order')
+        return SubmitButton::make('order')
             ->action(function (): void {
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
@@ -121,9 +108,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function registerAndSendAction(): SubbmitButton
+    public function registerAndSendAction(): SubmitButton
     {
-        return SubbmitButton::make('registerAndSendAction')
+        return SubmitButton::make('registerAndSendAction')
             ->label(__('Register and Create Quotation'))
 
             ->requiresConfirmation()
@@ -150,8 +137,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $data['phone'],
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => $data['company_registration_number'] ?? null,
-                    'company_registration_number' => $data['company_registration_number'] ?? null,
+                    'company_vat_number' => $data['company_vat_number'] ?? null,
                     'client_type' => $data['client_type'] ?? null,
                 ];
             })->form([
@@ -216,7 +202,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => ['required', 'string', 'max:255'],
                     'company_name' => ['nullable', 'string', 'max:255'],
                     'company_address' => ['nullable', 'string', 'max:255'],
-                    'company_registration_number' => ['nullable', 'string', 'max:255'],
+                    'company_vat_number' => ['nullable', 'string', 'max:255'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
@@ -227,8 +213,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
-                    'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
+                    'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
 
                 ]);
@@ -248,17 +233,15 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 Session::put('requestQuote', $requestQuote->id);
 
-                return $this->redirect(route('filament.dashboard.resources.request-quotes.view', [
-                    'record' => $requestQuote->id,
-                ]));
+                return $this->redirect(route('filament.dashboard.pages.dashboard'));
             })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function orderAndRegisterAction(): SubbmitButton
+    public function orderAndRegisterAction(): SubmitButton
     {
-        return SubbmitButton::make('orderAndRegisterAction')
+        return SubmitButton::make('orderAndRegisterAction')
             ->label(__('Register and Order'))
 
             ->requiresConfirmation()
@@ -283,8 +266,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $data['phone'],
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => null,
-                    'company_registration_number' => $data['company_registration_number'] ?? null,
+                    'company_vat_number' => $data['company_vat_number'] ?? null,
                     'client_type' => $data['client_type'] ?? null,
                     'password' => $data['password'] ?? null,
                     'password_confirmation' => $data['password_confirmation'] ?? null,
@@ -306,7 +288,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
-                TextInput::make('company_registration_number')
+                TextInput::make('company_vat_number')
                     ->translateLabel()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
@@ -362,8 +344,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
-                    'company_registration_number' => $validatedfillDataForRegister['company_registration_number'] ?? null,
+                    'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
                 $user->assignRole('guest');
@@ -388,9 +369,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     }
 
-    public function sendEmailToMeAction(): SubbmitButton
+    public function sendEmailToMeAction(): SubmitButton
     {
-        return SubbmitButton::make('sendEmailToMeAction')
+        return SubmitButton::make('sendEmailToMeAction')
             ->action(function () {
                 $data = $this->form->getState();
                 $record = RequestQuote::create($data);
@@ -645,8 +626,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
                         ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalSubmitActionLabel(__('Igen, Biztosan van'))
-                        ->modalCancelActionLabel(__('mégsem'))
+                        ->modalSubmitActionLabel(__('Yes, sure I do'))
+                        ->modalCancelActionLabel(__('Cancel'))
                         ->modalAlignment(Alignment::Center)
                         ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
                         ->action(function (Set $set): void {
@@ -657,7 +638,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->requiresConfirmation()
                         ->modalHeading(__('Website graphic'))
                         ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalCancelActionLabel(__('mégsem'))
+                        ->modalCancelActionLabel(__('Cancel'))
                         ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
                         ->modalAlignment(Alignment::Center)
                         ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')

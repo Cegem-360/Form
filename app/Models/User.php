@@ -37,13 +37,11 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
         'company_name',
         'company_address',
         'company_vat_number',
-        'company_registration_number',
         'email_verified_at',
         'stripe_id',
         'pm_type',
         'pm_last_four',
         'trial_ends_at',
-        'password',
     ];
 
     /**
