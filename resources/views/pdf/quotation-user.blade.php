@@ -6,7 +6,18 @@
     <div class="font-sans text-gray-900 bg-white">
         <style>
             .page-break {
-                page-break-after: always;
+                page-break-before: always;
+            }
+
+            @page {
+                margin-top: 40in;
+                padding-top: 50in;
+            }
+
+            tr {
+                -webkit-column-break-inside: avoid;
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
         </style>
         <!-- Borító -->
@@ -17,7 +28,7 @@
         <div class="px-12 py-8">
             <div class="flex items-center justify-between mb-8">
                 <img src="data:image/png;base64,{{ base64_encode(Vite::content('resources/images/cegem360-logo.png')) }}"
-                    alt="Logo" class="h-20" />
+                    alt="Logo" class="h-20" style="display: none;" />
                 <div class="text-right">
                     <h1 class="text-4xl font-bold text-blue-700">Árajánlat</h1>
                     <h3 class="text-lg">Sorszám: {{ $requestQuote->id }}</h3>
@@ -55,7 +66,6 @@
 
         <!-- Projekt leírása -->
         <div class="px-12 py-8">
-            <x-layouts.pdf.partials.logo />
             <h3 class="mb-4 text-2xl font-bold">A projekt leírása</h3>
             <p class="mb-4">Letisztult, igényes, átlátható weboldal készítése, megújítása a legújabb trendeknek és az
                 ügyfél igényeinek megfelelően
@@ -108,7 +118,6 @@
         <div class="page-break"></div>
         <!-- Díjazás táblázat -->
         <div class="px-12 py-8">
-            <x-layouts.pdf.partials.logo />
             <h2 class="mb-4 text-2xl font-bold">A feladat díjazása</h2>
             <table class="min-w-full text-sm border border-gray-300">
                 <thead>
@@ -168,22 +177,26 @@
                             </td>
                         </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="2" class="px-4 py-2 text-right border">
-                            <h3 class="font-bold">Összesen:</h3>
-                        </td>
-                        <td colspan="2" class="px-4 py-2 text-right border">
-                            <h3 class="font-bold">
-                                {{ Number::currency($requestQuote->getTotalPriceAttribute(), in: 'HUF', locale: 'hu', precision: 0) }}
-                                + ÁFA
-                            </h3>
-                        </td>
-                    </tr>
+                    @if ($requestQuote->is_multilangual)
+                        <tr>
+                            <td colspan="2" class="px-4 py-2 text-right border">
+                                <h3 class="font-bold">Részösszeg:</h3>
+                            </td>
+                            <td colspan="2" class="px-4 py-2 text-right border">
+                                <h3 class="font-bold">
+                                    {{ Number::currency($requestQuote->getTotalPriceAttributeNoLanguages(), in: 'HUF', locale: 'hu', precision: 0) }}
+                                    + ÁFA
+                                </h3>
+                            </td>
+                        </tr>
+                    @endif
                     @if ($requestQuote->is_multilangual)
                         <tr>
                             <td class="px-4 py-2 font-bold border">Nyelvesítés</td>
                             <td class="px-4 py-2 border"></td>
-                            <td class="px-4 py-2 border">felár 30%</td>
+                            <td class="px-4 py-2 border">
+                                felár {{ intval($requestQuote->requestQuotePercent() * 100) }}%
+                            </td>
                             <td class="px-4 py-2 border"></td>
                         </tr>
                         @if ($requestQuote?->languages)
@@ -203,6 +216,17 @@
                     @endif
                     <tr>
                         <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">Összesen:</h3>
+                        </td>
+                        <td colspan="2" class="px-4 py-2 text-right border">
+                            <h3 class="font-bold">
+                                {{ Number::currency($requestQuote->getTotalPriceAttribute(), in: 'HUF', locale: 'hu', precision: 0) }}
+                                + ÁFA
+                            </h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="px-4 py-2 text-right border">
                             <h3 class="font-bold">Előleg összeg:</h3>
                         </td>
                         <td colspan="2" class="px-4 py-2 text-right border">
@@ -212,11 +236,11 @@
                             </h3>
                         </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
         <div class="px-12 py-8">
-            <x-layouts.pdf.partials.logo />
             <x-layouts.pdf.partials.financial-commitment-terms />
 
         </div>

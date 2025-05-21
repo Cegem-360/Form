@@ -37,8 +37,14 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
         $headerHtml = view('pdf.header')->render();
         Browsershot::html($template)->showBrowserHeaderAndFooter()
-            ->headerHtml($headerHtml)
             ->showBackground()
+            ->margins(
+                35,
+                0,
+                0,
+                0,
+            )
+            ->headerHtml($headerHtml)
             ->format('A4')
             ->savePdf(storage_path('app/public/quotation.pdf'));
 
