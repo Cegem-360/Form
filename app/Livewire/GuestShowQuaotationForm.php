@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Enums\ClientType;
+use App\Enums\RolesEnum;
 use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
@@ -217,7 +218,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'password' => Hash::make($validatedfillDataForRegister['password']),
 
                 ]);
-                $user->assignRole('guest');
+                $user->assignRole(RolesEnum::GUEST);
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
@@ -347,7 +348,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
-                $user->assignRole('guest');
+               $user->assignRole(RolesEnum::GUEST);
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();

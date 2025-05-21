@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Enums\GuardName;
-use App\Enums\OpenAIRole;
-use App\Models\Domain;
 use App\Models\Form;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\SystemChatParameter;
 use App\Models\User;
-use Illuminate\Database\Seeder;
+use App\Models\Domain;
+use App\Enums\GuardName;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Enums\RolesEnum;
+use App\Enums\OpenAIRole;
+use App\Enums\PermissionsEnum;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use App\Models\SystemChatParameter;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 final class DatabaseSeeder extends Seeder
 {
@@ -65,21 +67,21 @@ final class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => now(),
         ]);
-        $guest->assignRole('guest');
+        $guest->assignRole(RolesEnum::GUEST);
 
-        foreach (['view-any', 'view', 'create', 'update', 'delete', 'delete-any', 'replicate', 'restore', 'restore-any', 'reorder', 'force-delete', 'force-delete-any'] as $value) {
+        foreach ([PermissionsEnum::VIEW_ANY->value, PermissionsEnum::VIEW->value, PermissionsEnum::CREATE->value, PermissionsEnum::UPDATE->value, PermissionsEnum::DELETE->value, PermissionsEnum::DELETE_ANY->value, PermissionsEnum::REPLICATE->value, PermissionsEnum::RESTORE->value, PermissionsEnum::RESTORE_ANY->value, PermissionsEnum::REORDER->value, PermissionsEnum::FORCE_DELETE->value, PermissionsEnum::FORCE_DELETE_ANY->value] as $value) {
             Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value.' Role']);
             Permission::create(['guard_name' => GuardName::WEB->value, 'name' => $value.' Permission']);
         }
 
         Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission): void {
-            $permission->assignRole('super-admin');
+            $permission->assignRole(RolesEnum::SUPER_ADMIN);
         });
         Permission::whereGuardName(GuardName::WEB->value)->get()->each(function ($permission): void {
-            $permission->assignRole('admin');
+            $permission->assignRole(RolesEnum::ADMIN);
         });
 
-        Role::findByName('guest')->givePermissionTo([
+        Role::findByName(RolesEnum::GUEST->value)->givePermissionTo([
             'update User',
             'delete User',
             'view-any RequestQuote',
@@ -93,7 +95,7 @@ final class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'email_verified_at' => Carbon::now(),
         ]);
-        User::find($superAdmin->id)->assignRole('super-admin');
+        User::find($superAdmin->id)->assignRole(RolesEnum::SUPER_ADMIN);
 
     }
 }

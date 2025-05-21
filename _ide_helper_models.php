@@ -544,6 +544,36 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property int|null $project_id
+ * @property int|null $user_id
+ * @property int|null $commission_amount
+ * @property int|null $commission_percent
+ * @property int|null $commission_paid_amount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Project|null $project
+ * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\ProjectCommissionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereCommissionAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereCommissionPaidAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereCommissionPercent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereProjectId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereUserId($value)
+ */
+	class ProjectCommission extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int|null $user_id
  * @property string|null $quotation_name
  * @property string|null $name
