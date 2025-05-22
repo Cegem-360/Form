@@ -8,7 +8,7 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use App\Filament\Dashboard\Pages\Auth\EditProfile;
 use App\Filament\Dashboard\Pages\Auth\Login;
 use App\Filament\Dashboard\Pages\Dashboard;
-use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuoteFormChart;
+use App\Filament\Dashboard\Widgets\RequestQuoteFormChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
