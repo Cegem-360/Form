@@ -7,7 +7,6 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\OptionResource\Pages\CreateOption;
 use App\Filament\Admin\Resources\OptionResource\Pages\EditOption;
 use App\Filament\Admin\Resources\OptionResource\Pages\ListOptions;
-use App\Filament\Admin\Resources\OptionResource\Pages\Settings;
 use App\Models\Option;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;

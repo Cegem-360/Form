@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum RolesEnum: string
@@ -18,15 +20,15 @@ enum RolesEnum: string
     public function label(): string
     {
         return match ($this) {
-            static::ADMIN => 'Administrators',
-            static::EDITOR => 'Editors',
-            static::USER => 'Users',
-            static::MODERATOR => 'Moderators',
-            static::CUSTOMER => 'Customers',
-            static::GUEST => 'Guests',
-            static::VENDOR => 'Vendors',
-            static::RESELLER => 'Resellers',
-            static::SUPER_ADMIN => 'Super Administrators',
+            self::ADMIN => 'Administrators',
+            self::EDITOR => 'Editors',
+            self::USER => 'Users',
+            self::MODERATOR => 'Moderators',
+            self::CUSTOMER => 'Customers',
+            self::GUEST => 'Guests',
+            self::VENDOR => 'Vendors',
+            self::RESELLER => 'Resellers',
+            self::SUPER_ADMIN => 'Super Administrators',
 
         };
     }

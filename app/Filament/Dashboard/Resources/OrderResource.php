@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
+use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\ListOrders;
@@ -17,6 +18,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 final class OrderResource extends Resource
 {
@@ -32,22 +34,29 @@ final class OrderResource extends Resource
             ->schema([
                 TextInput::make('request_quote_id')
                     ->required()
+                    ->visible(fn (): bool => Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
                     ->maxLength(255),
                 TextInput::make('amount')
+                    ->translateLabel()
                     ->required()
                     ->numeric(),
                 TextInput::make('currency')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(3),
                 TextInput::make('status')
+                    ->translateLabel()
                     ->required()
                     ->maxLength(255),
                 TextInput::make('customer_email')
+                    ->translateLabel()
                     ->email()
                     ->maxLength(255),
                 TextInput::make('customer_name')
+                    ->translateLabel()
                     ->maxLength(255),
                 Select::make('user_id')
+                    ->visible(fn (): bool => Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
                     ->relationship('user', 'name'),
             ]);
     }
@@ -56,22 +65,22 @@ final class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('request_quote_id.name')
-                    ->searchable(),
                 TextColumn::make('amount')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('currency')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('status')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_email')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_name')
+                    ->translateLabel()
                     ->searchable(),
-                TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\WebsiteTypePrice;
 use App\Models\User;
 
-class WebsiteTypePricePolicy
+final class WebsiteTypePricePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function view(User $user): bool
     {
         return $user->checkPermissionTo('view WebsiteTypePrice');
     }
@@ -35,7 +35,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function update(User $user): bool
     {
         return $user->checkPermissionTo('update WebsiteTypePrice');
     }
@@ -43,7 +43,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function delete(User $user): bool
     {
         return $user->checkPermissionTo('delete WebsiteTypePrice');
     }
@@ -59,7 +59,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function restore(User $user): bool
     {
         return $user->checkPermissionTo('restore WebsiteTypePrice');
     }
@@ -75,7 +75,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can replicate the model.
      */
-    public function replicate(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function replicate(User $user): bool
     {
         return $user->checkPermissionTo('replicate WebsiteTypePrice');
     }
@@ -91,7 +91,7 @@ class WebsiteTypePricePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, WebsiteTypePrice $websitetypeprice): bool
+    public function forceDelete(User $user): bool
     {
         return $user->checkPermissionTo('force-delete WebsiteTypePrice');
     }

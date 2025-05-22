@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Models\Order;
 use App\Models\User;
 
 final class OrderPolicy

@@ -160,7 +160,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
                 return Auth::user()->checkoutCharge(
                     amount: ($this->requestQuote->total_price / 2) * 100,
-                    name: $this->requestQuote->websiteType->name. " ". $this->requestQuote->website_engine,
+                    name: $this->requestQuote->websiteType->name.' '.$this->requestQuote->website_engine,
                     quantity: 1,
                     sessionOptions: [
                         'success_url' => route('checkout.success', ['requestQuote' => $this->requestQuote->id]),

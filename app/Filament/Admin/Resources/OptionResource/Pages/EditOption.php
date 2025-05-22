@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\OptionResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Admin\Resources\OptionResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditOption extends EditRecord
+final class EditOption extends EditRecord
 {
     protected static string $resource = OptionResource::class;
 

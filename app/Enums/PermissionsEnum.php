@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums;
 
 enum PermissionsEnum: string
@@ -16,25 +18,23 @@ enum PermissionsEnum: string
     case REORDER = 'reorder';
     case FORCE_DELETE = 'force-delete';
     case FORCE_DELETE_ANY = 'force-delete-any';
-   
-
 
     // extra helper to allow for greater customization of displayed values, without disclosing the name/value data directly
     public function label(): string
     {
         return match ($this) {
-            static::VIEW => 'View',
-            static::VIEW_ANY => 'View Any',
-            static::CREATE => 'Create',
-            static::UPDATE => 'Update',
-            static::DELETE => 'Delete',
-            static::DELETE_ANY => 'Delete Any',
-            static::REPLICATE => 'Replicate',
-            static::RESTORE => 'Restore',
-            static::RESTORE_ANY => 'Restore Any',
-            static::REORDER => 'Reorder',
-            static::FORCE_DELETE => 'Force Delete',
-            static::FORCE_DELETE_ANY => 'Force Delete Any',
+            self::VIEW => 'View',
+            self::VIEW_ANY => 'View Any',
+            self::CREATE => 'Create',
+            self::UPDATE => 'Update',
+            self::DELETE => 'Delete',
+            self::DELETE_ANY => 'Delete Any',
+            self::REPLICATE => 'Replicate',
+            self::RESTORE => 'Restore',
+            self::RESTORE_ANY => 'Restore Any',
+            self::REORDER => 'Reorder',
+            self::FORCE_DELETE => 'Force Delete',
+            self::FORCE_DELETE_ANY => 'Force Delete Any',
         };
     }
 }

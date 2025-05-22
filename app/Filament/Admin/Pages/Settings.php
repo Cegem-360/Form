@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Pages;
 
-use Filament\Facades\Filament;
-use Filament\Pages\Page;
 use App\Models\Option;
+use Filament\Pages\Page;
 
-class Settings extends Page
+final class Settings extends Page
 {
     protected static ?string $model = Option::class;
 
@@ -18,7 +19,7 @@ class Settings extends Page
 
     protected static ?string $navigationLabel = 'Global Options';
 
-     /**
+    /**
      * @var view-string
      */
     protected static string $view = 'filament.pages.settings';

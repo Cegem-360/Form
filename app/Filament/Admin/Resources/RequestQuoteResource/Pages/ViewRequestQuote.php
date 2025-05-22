@@ -4,28 +4,26 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Pages;
 
-use App\Filament\Admin\Resources\RequestQuoteResource;
-use Filament\Actions\EditAction;
-use Filament\Resources\Pages\ViewRecord;
 use App\Enums\ProjectStatus;
+use App\Filament\Admin\Resources\RequestQuoteResource;
 use App\Mail\QuotationSendedToUser;
 use App\Models\Project;
 use App\Models\RequestQuote;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+
 final class ViewRequestQuote extends ViewRecord
 {
     protected static string $resource = RequestQuoteResource::class;
 
-   
     public function createPdf()
     {
         $record = $this->record;

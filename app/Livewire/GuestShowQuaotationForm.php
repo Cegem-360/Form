@@ -16,11 +16,24 @@ use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\{Checkbox, CheckboxList, FileUpload, Grid, Repeater, RichEditor, Select, TextInput, Toggle, ToggleButtons, ViewField, Wizard};
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Forms\Components\ViewField;
+use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\{Form, Get, Set};
+use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Registered;
@@ -348,7 +361,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
-               $user->assignRole(RolesEnum::GUEST);
+                $user->assignRole(RolesEnum::GUEST);
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();

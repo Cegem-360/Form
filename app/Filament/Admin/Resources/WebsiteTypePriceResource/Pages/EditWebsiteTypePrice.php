@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources\WebsiteTypePriceResource\Pages;
 
-use Filament\Actions\DeleteAction;
 use App\Filament\Admin\Resources\WebsiteTypePriceResource;
-use Filament\Actions;
+use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditWebsiteTypePrice extends EditRecord
+final class EditWebsiteTypePrice extends EditRecord
 {
     protected static string $resource = WebsiteTypePriceResource::class;
 

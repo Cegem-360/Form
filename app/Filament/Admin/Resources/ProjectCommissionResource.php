@@ -1,28 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Admin\Resources;
 
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\CreateProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\EditProjectCommission;
-use App\Filament\Admin\Resources\ProjectCommissionResource\Pages;
-use App\Filament\Admin\Resources\ProjectCommissionResource\RelationManagers;
+use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
 use App\Models\ProjectCommission;
-use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProjectCommissionResource extends Resource
+final class ProjectCommissionResource extends Resource
 {
     protected static ?string $model = ProjectCommission::class;
 
