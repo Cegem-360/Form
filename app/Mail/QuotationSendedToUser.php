@@ -54,8 +54,18 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
     public function attachments(): Attachment
     {
         $template = view('pdf.quotation-user', ['requestQuote' => $this->requestQuote])->render();
-
-        Browsershot::html($template)->showBackground()->format('A4')->savePdf(storage_path('app/public/quotation.pdf'));
+        $headerHtml = view('pdf.header')->render();
+        Browsershot::html($template)->showBrowserHeaderAndFooter()
+            ->showBackground()
+            ->margins(
+                35,
+                0,
+                0,
+                0,
+            )
+            ->headerHtml($headerHtml)
+            ->format('A4')
+            ->savePdf(storage_path('app/public/quotation.pdf'));
 
         return Attachment::fromPath(storage_path('app/public/quotation.pdf'));
     }

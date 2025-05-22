@@ -546,7 +546,7 @@ namespace App\Models{
  * @property int $id
  * @property int|null $project_id
  * @property int|null $user_id
- * @property int|null $commission_amount
+ * @property int|float $commission_amount
  * @property int|null $commission_percent
  * @property int|null $commission_paid_amount
  * @property \Illuminate\Support\Carbon|null $created_at
