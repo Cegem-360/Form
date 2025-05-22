@@ -8,6 +8,7 @@ use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugi
 use App\Filament\Dashboard\Pages\Auth\EditProfile;
 use App\Filament\Dashboard\Pages\Auth\Login;
 use App\Filament\Dashboard\Pages\Dashboard;
+use App\Filament\Dashboard\Widgets\DashboardUser;
 use App\Filament\Dashboard\Widgets\RequestQuoteFormChart;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -55,6 +56,7 @@ final class DashboardPanelServiceProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 RequestQuoteFormChart::class,
+                DashboardUser::class,
             ])
             ->middleware([
                 EncryptCookies::class,

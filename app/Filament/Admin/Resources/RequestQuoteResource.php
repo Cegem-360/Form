@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\ClientType;
+use App\Enums\RolesEnum;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
@@ -53,7 +54,7 @@ final class RequestQuoteResource extends Resource
             ->schema([
                 Grid::make(2)->schema([
                     Select::make('user_id')
-                        ->visible(Auth::user()->hasRole(['admin', 'super-admin']))
+                        ->visible(Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN]))
                         ->relationship('user', 'name')
                         ->preload()
                         ->searchable()
@@ -263,7 +264,7 @@ final class RequestQuoteResource extends Resource
 
         return $table
             ->modifyQueryUsing(function (Builder $query) use ($userId) {
-                if (Auth::user()->hasRole(['admin', 'super-admin'])) {
+                if (Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN])) {
                     return $query;
                 }
 

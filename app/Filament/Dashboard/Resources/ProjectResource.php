@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Enums\UserRole;
+use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ListProjects;
@@ -38,10 +38,10 @@ final class ProjectResource extends Resource
         return $form
             ->schema([
                 Select::make('user_id')
-                    ->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN]))
+                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
                     ->relationship('user', 'name'),
                 Select::make('request_quote_id')
-                    ->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN]))
+                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
                     ->relationship('requestQuote', 'name'),
                 TextInput::make('name')
                     ->required()

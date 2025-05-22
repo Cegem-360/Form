@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Enums\UserRole;
+use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\CreateFormQuestion;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ListFormQuestions;
@@ -62,7 +62,7 @@ final class FormQuestionResource extends Resource
                         ->columns(2),
                     Select::make('user_id')
                         ->relationship('user', 'name'),
-                ])->visible(Auth::user()->hasRole([UserRole::SUPER_ADMIN, UserRole::ADMIN])),
+                ])->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN])),
 
                 Split::make([
                     Section::make('website')->schema([
