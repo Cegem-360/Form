@@ -89,12 +89,14 @@ final class DatabaseSeeder extends Seeder
             'create RequestQuote',
         ]);
 
-        Role::findByName(RolesEnum::GUEST->value)->givePermissionTo([
+        Role::findByName(RolesEnum::USER->value)->givePermissionTo([
             'update User',
             'delete User',
             'view-any RequestQuote',
             'view RequestQuote',
             'create RequestQuote',
+            'view-any Order',
+            'view Order',
         ]);
 
         $superAdmin = User::factory()->create([
