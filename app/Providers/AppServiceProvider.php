@@ -6,8 +6,6 @@ namespace App\Providers;
 
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
-use Filament\Forms\Components\Actions\Action;
-use Filament\Forms\Components\Field;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -40,18 +38,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->migrationsCustomPath();
 
         Table::$defaultNumberLocale = 'hu';
-        /* Field::macro('tooltip', function (string $tooltip) {
-            return $this->hintAction(
-                function () use ($tooltip) {
-                    return Action::make('help')
-                        ->icon('heroicon-o-question-mark-circle')
-                        ->extraAttributes(['class' => 'text-gray-500'])
-                        ->label('')
-                        ->tooltip($tooltip);
 
-                }
-            );
-        }); */
     }
 
     private function migrationsCustomPath(): void
@@ -64,7 +51,6 @@ final class AppServiceProvider extends ServiceProvider
             database_path('migrations/requestQuote'),
             database_path('migrations/project'),
             database_path('migrations/formQuestion'),
-            /*  database_path('migrations/basics'), */
 
         ]);
     }

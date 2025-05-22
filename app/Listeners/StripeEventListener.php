@@ -19,6 +19,9 @@ final class StripeEventListener
             'payload' => $event->payload,
         ]);
         if ($event->payload['type'] === 'checkout.payment_succeeded') {
+            Log::info('Payment succeeded:', [
+                'payload' => $event->payload,
+            ]);
             Order::create([
                 'request_quote_id' => $event->payload['data']['object']['metadata']['request_quote_id'],
             ]);
