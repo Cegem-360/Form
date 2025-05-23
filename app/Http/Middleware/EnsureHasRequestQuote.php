@@ -26,9 +26,9 @@ final class EnsureHasRequestQuote
         $requestQuote = RequestQuote::where('id', $request->session()->get('requestQuote'))->firstOr(callback: function (): void {
             abort(403, 'RequestQuote not found.');
         });
-        if (Auth::user()->id !== $requestQuote->user_id) {
+        /* if (Auth::user()->id !== $requestQuote->user_id) {
             abort(403, 'Unauthorized action. No match with user.');
-        }
+        } */
 
         return $next($request);
     }
