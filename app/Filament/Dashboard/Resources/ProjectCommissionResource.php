@@ -24,19 +24,44 @@ final class ProjectCommissionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getLabel(): string
+    {
+        return __('Project Commission');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Project Commissions');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Project Commissions');
+    }
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Project Management');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('project_id')
+                    ->translateLabel()
                     ->relationship('project', 'name'),
                 Select::make('user_id')
+                    ->translateLabel()
                     ->relationship('user', 'name'),
                 TextInput::make('commission_amount')
+                    ->translateLabel()
                     ->numeric(),
                 TextInput::make('commission_percent')
+                    ->translateLabel()
                     ->numeric(),
                 TextInput::make('commission_paid_amount')
+                    ->translateLabel()
                     ->numeric(),
             ]);
     }
@@ -46,18 +71,18 @@ final class ProjectCommissionResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('project.name')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('user.name')
-                    ->numeric()
+                    ->translateLabel()
                     ->sortable(),
                 TextColumn::make('commission_amount')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_percent')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_paid_amount')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')

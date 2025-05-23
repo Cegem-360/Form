@@ -6,7 +6,6 @@ namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ClientType;
 use App\Enums\RolesEnum;
-use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
@@ -75,6 +74,7 @@ final class RequestQuoteResource extends Resource
                         ->searchable()
                         ->default(Auth::user()->id),
                     TextInput::make('quotation_name')
+                        ->translateLabel()
                         ->maxLength(255),
                     TextInput::make('name')
                         ->translateLabel()
@@ -101,8 +101,8 @@ final class RequestQuoteResource extends Resource
                             'underline',
                         ])->columnSpanFull(),
                     TextInput::make('payment_method')
-                        ->disabled()
                         ->translateLabel()
+                        ->disabled()
                         ->maxLength(255),
                     Select::make('client_type')
                         ->translateLabel()
@@ -117,22 +117,17 @@ final class RequestQuoteResource extends Resource
                         ->translateLabel()
                         ->maxLength(255),
                     Select::make('website_type_id')
-                        ->live()
                         ->translateLabel()
+                        ->live()
                         ->required()
                         ->relationship('websiteType', 'name')
-                        ->preload()
-                        ->createOptionForm([
-                            TextInput::make('name')
-                                ->required()
-                                ->maxLength(255),
-                        ])
                         ->afterStateUpdated(function (Set $set): void {
                             $set('request_quote_functionalities', []);
                         })
                         ->searchable(),
                     Select::make('website_engine')
                         ->translateLabel()
+                        ->live()
                         ->options([
                             'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
@@ -247,7 +242,8 @@ final class RequestQuoteResource extends Resource
                             }),
                     ])->label('Do you have a website graphic?')->translateLabel(),
                 ]),
-                CheckboxList::make('request_quote_functionalities')->translateLabel()
+                CheckboxList::make('request_quote_functionalities')
+                    ->translateLabel()
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
@@ -261,14 +257,11 @@ final class RequestQuoteResource extends Resource
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
                     ->options(WebsiteLanguage::all()->pluck('name', 'id'))
-                    ->preload()
                     ->afterStateUpdated(function (Set $set): void {
                         $set('languages', []);
                     })
                     ->searchable(),
                 Select::make('languages')
-                   /*  ->relationship('languages', 'name') */
-                    ->preload()
                     ->translateLabel()
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))
@@ -301,7 +294,6 @@ final class RequestQuoteResource extends Resource
                     ->translateLabel()
                     ->numeric()
                     ->sortable(),
-
                 IconColumn::make('is_multilangual')
                     ->translateLabel()
                     ->boolean(),
@@ -351,7 +343,6 @@ final class RequestQuoteResource extends Resource
     {
         return [
             'index' => ListRequestQuotes::route('/'),
-            'create' => CreateRequestQuote::route('/create'),
             'view' => ViewRequestQuote::route('/{record}'),
             'edit' => EditRequestQuote::route('/{record}/edit'),
         ];

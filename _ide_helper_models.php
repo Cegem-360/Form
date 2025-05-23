@@ -546,8 +546,8 @@ namespace App\Models{
  * @property int $id
  * @property int|null $project_id
  * @property int|null $user_id
- * @property int|float $commission_amount
- * @property int|null $commission_percent
+ * @property int|null $commission_amount
+ * @property int|float $commission_percent
  * @property int|null $commission_paid_amount
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -566,7 +566,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|ProjectCommission whereUserId($value)
  */
-	class ProjectCommission extends \Eloquent {}
+	final class ProjectCommission extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -583,6 +583,7 @@ namespace App\Models{
  * @property string|null $billing_address
  * @property string|null $company_name
  * @property string|null $company_address
+ * @property string|null $company_vat_number
  * @property string|null $project_description
  * @property int $website_type_id
  * @property string|null $website_engine
@@ -615,6 +616,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyVatNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereDefaultLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEmail($value)

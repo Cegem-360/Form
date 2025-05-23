@@ -33,7 +33,6 @@ final class UserFactory extends Factory
             'company_name' => fake()->company(),
             'company_address' => fake()->address(),
             'company_vat_number' => fake()->swiftBicNumber(), // or use another supported method, or a custom VAT generator
-            'company_registration_number' => fake()->regexify('[0-9]{8}'),
             'created_at' => now(),
             'updated_at' => now(),
             'email_verified_at' => now(),
@@ -43,6 +42,7 @@ final class UserFactory extends Factory
             'pm_type' => null,
             'pm_last_four' => null,
             'trial_ends_at' => null,
+            'default_commission_percent' => 0,
         ];
     }
 

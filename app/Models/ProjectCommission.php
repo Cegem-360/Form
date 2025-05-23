@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Database\Factories\ProjectCommissionFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,8 +39,11 @@ final class ProjectCommission extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getCommissionAmountAttribute($value): int|float
+    protected function commissionPercent(): Attribute
     {
-        return $value / 100;
+        return Attribute::make(
+            get: fn (int $value): int|float => $value / 100,
+            set: fn (int|float $value): int => (int) ($value * 100),
+        );
     }
 }

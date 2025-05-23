@@ -20,8 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(Project::class)->nullable();
             $table->foreignIdFor(User::class)->nullable();
             $table->integer('commission_amount')->nullable();
-            $table->integer('commission_percent')->nullable();
-            $table->integer('commission_paid_amount')->nullable();
+            $table->float('commission_percent')->nullable();
+            $table->integer(column: 'commission_paid_amount', autoIncrement: false, unsigned: true)->nullable()->default(0);
             $table->timestamps();
         });
     }
