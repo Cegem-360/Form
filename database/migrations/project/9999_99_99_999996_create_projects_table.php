@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Enums\ProjectStatus;
 use App\Models\ContactChannel;
+use App\Models\Order;
 use App\Models\RequestQuote;
 use App\Models\SupportPack;
 use App\Models\User;
@@ -22,6 +23,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->nullable();
             $table->foreignIdFor(RequestQuote::class)->nullable();
+            $table->foreignIdFor(Order::class)->nullable();
             $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

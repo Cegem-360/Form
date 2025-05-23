@@ -50,7 +50,9 @@ final class ProjectCommissionResource extends Resource
                 Select::make('project_id')
                     ->translateLabel()
                     ->relationship('project', 'name'),
-
+                Select::make('user_id')
+                    ->translateLabel()
+                    ->relationship('user', 'name'),
                 TextInput::make('commission_amount')
                     ->translateLabel()
                     ->numeric(),
