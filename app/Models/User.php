@@ -75,6 +75,8 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'trial_ends_at' => 'datetime',
+            'default_commission_percent' => 'float',
         ];
     }
 }

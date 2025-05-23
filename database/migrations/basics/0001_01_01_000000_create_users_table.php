@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->string('company_address')->nullable();
             $table->string('company_vat_number')->nullable();
-            $table->integer(column: 'default_commission_percent', autoIncrement: false, unsigned: true)->default(value: 0);
+            $table->float(column: 'default_commission_percent', precision: 2)->default(value: 0.00);
             $table->rememberToken();
             $table->timestamps();
         });

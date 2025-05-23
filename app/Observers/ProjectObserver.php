@@ -16,11 +16,15 @@ final class ProjectObserver
     public function created(Project $project): void
     {
         $requestQuote = $project->requestQuote;
-        $user = User::find($requestQuote->user_id);
+        $user = User::whereId($requestQuote->user_id)->whereDefaultCommissionPercent('>', 0)->first();
+        if (! $user) {
+            return;
+        }
+
         ProjectCommission::create([
             'project_id' => $project->id,
             'user_id' => $project->user_id,
-            'commission_amount' => $requestQuote->getTotalPriceAttribute() * $user->default_commission_percent / 100,
+            'commission_amount' => $requestQuote->getTotalPriceAttribute() * $user->default_commission_percent,
             'commission_percent' => $user->default_commission_percent,
             'commission_paid_amount' => 0,
         ]);

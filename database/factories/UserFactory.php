@@ -42,7 +42,7 @@ final class UserFactory extends Factory
             'pm_type' => null,
             'pm_last_four' => null,
             'trial_ends_at' => null,
-            'default_commission_percent' => 0,
+            'default_commission_percent' => 0.00,
         ];
     }
 

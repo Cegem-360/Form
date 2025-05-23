@@ -547,7 +547,7 @@ namespace App\Models{
  * @property int|null $project_id
  * @property int|null $user_id
  * @property int|null $commission_amount
- * @property int|float $commission_percent
+ * @property float|null $commission_percent
  * @property int|null $commission_paid_amount
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -754,14 +754,14 @@ namespace App\Models{
  * @property string|null $company_name
  * @property string|null $company_address
  * @property string|null $company_vat_number
- * @property string|null $company_registration_number
+ * @property float $default_commission_percent
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $stripe_id
  * @property string|null $pm_type
  * @property string|null $pm_last_four
- * @property string|null $trial_ends_at
+ * @property \Illuminate\Support\Carbon|null $trial_ends_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
@@ -780,9 +780,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyRegistrationNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyVatNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereDefaultCommissionPercent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereId($value)
