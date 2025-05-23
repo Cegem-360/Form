@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Enums\RolesEnum;
 use App\Filament\Admin\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\ListProjects;
@@ -23,7 +22,6 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 
 final class ProjectResource extends Resource
 {
@@ -38,11 +36,10 @@ final class ProjectResource extends Resource
         return $form
             ->schema([
                 Select::make('user_id')
-                    ->visible(Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN]))
                     ->relationship('user', 'name'),
                 Select::make('request_quote_id')
-                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
                     ->relationship('requestQuote', 'name'),
+
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -50,6 +47,7 @@ final class ProjectResource extends Resource
                 DatePicker::make('end_date'),
                 Select::make('status')
                     ->options(ProjectStatus::class)
+                    ->enum(ProjectStatus::class)
                     ->required(),
                 RichEditor::make('project_goal')
                     ->columnSpanFull(),
@@ -63,10 +61,10 @@ final class ProjectResource extends Resource
                 DatePicker::make('garanty_end_date'),
                 Select::make('contact')
                     ->relationship('contact', 'name'),
-                TextInput::make('support_pack_id')
-                    ->numeric(),
-                TextInput::make('contact_channel_id')
-                    ->numeric(),
+                Select::make('support_pack_id')
+                    ->relationship('supportPack', 'name'),
+                Select::make('contact_channel_id')
+                    ->relationship('contactChannel', 'name'),
             ]);
     }
 

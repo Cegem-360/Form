@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->enum('status', ProjectStatus::getKeys())->default(ProjectStatus::INACTIVE);
+            $table->enum('status', ProjectStatus::casesArray())->default(ProjectStatus::INACTIVE->value);
             $table->longText('project_goal')->nullable();
             $table->json('original_project_goals')->nullable();
             $table->json('completed_project_elements')->nullable();

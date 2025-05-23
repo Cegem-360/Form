@@ -58,24 +58,34 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         'data.email' => ['required', 'email', 'max:255'],
         'data.phone' => ['required', 'string', 'max:255'],
         'data.company_name' => ['nullable', 'string', 'max:255'],
+        'data.company_address' => ['nullable', 'string', 'max:255'],
+        'data.company_vat_number' => ['nullable', 'string', 'max:255'],
+        'data.client_type' => ['nullable', 'string', 'in:individual,company'],
         'data.website_type_id' => ['required', 'exists:website_types,id'],
         'data.website_engine' => ['required', 'string', 'max:255'],
         'data.websites' => ['array'],
         'data.websites.*.name' => ['required', 'string', 'max:255'],
-        'data.websites.*.length' => ['required', 'string', 'in:short,medium,long'],
-        'data.have_website_graphic' => ['boolean'],
+        'data.websites.*.length' => ['required', 'string', 'in:short,medium,large'],
+        'data.have_website_graphic' => ['nullable', 'boolean'],
         'data.requestQuoteFunctionalities' => ['array'],
         'data.requestQuoteFunctionalities.*' => ['exists:request_quote_functionalities,id'],
         'data.is_multilangual' => ['nullable', 'boolean'],
         'data.languages' => ['array'],
         'data.languages.*' => ['exists:website_languages,id'],
-        'data.is_ecommerce' => ['boolean'],
-        'data.ecommerce_functionalities' => ['nullable', 'string'],
     ])]
     public ?array $data = [];
 
     public function mount(): void
     {
+        if (Auth::check()) {
+            $this->data['name'] = Auth::user()->name;
+            $this->data['email'] = Auth::user()->email;
+            $this->data['phone'] = Auth::user()->phone;
+            $this->data['company_name'] = Auth::user()->company_name;
+            $this->data['company_address'] = Auth::user()->company_address;
+            $this->data['company_vat_number'] = Auth::user()->company_vat_number;
+        }
+
         $this->form->fill();
     }
 
@@ -102,6 +112,24 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
         return SubmitButton::make('submit')
             ->view('filament.forms.components.quotation-submit-button', ['data' => $form]);
+    }
+
+    public function createRequestQuoteAction(): SubmitButton
+    {
+        return SubmitButton::make('createRequestQuoteAction')
+            ->action(function () {
+                $data = $this->form->getState();
+                $data['user_id'] = Auth::id();
+                $requestQuote = RequestQuote::create($data);
+
+                $this->form->model($requestQuote)->saveRelationships();
+                // save to session
+                Session::put('requestQuote', $requestQuote->id);
+                $this->redirect(route('filament.dashboard.resources.request-quotes.index'));
+            })
+            ->label(__('Create Request Quote'))
+            ->color('primary')
+            ->icon('heroicon-o-paper-airplane');
     }
 
     public function orderAction(): SubmitButton
@@ -665,9 +693,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             CheckboxList::make('request_quote_functionalities')
                 ->translateLabel()
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
-                    return $query->where('website_type_id', $get('website_type_id'));
+                    return $query->where('website_type_id', $get('website_type_id'))?->notDefault();
                 })
-                ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s %s', $record->name, $record->websiteType()->first()->name))
+                ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null)
                 ->descriptions(function (Get $get) {
                     return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->notDefault()->pluck('description', 'id')->toArray();
@@ -706,39 +734,43 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->translateLabel()
                     ->live()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->visible(fn () => ! Auth::check()),
                 TextInput::make('email')
                     ->translateLabel()
                     ->email()
                     ->live()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->visible(fn () => ! Auth::check()),
                 TextInput::make('phone')
                     ->translateLabel()
                     ->tel()
                     ->live()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->visible(fn () => ! Auth::check()),
                 Select::make('client_type')
                     ->label('Legal form')
                     ->translateLabel()
                     ->live()
                     ->required()
                     ->options(ClientType::class)
-                    ->preload(),
+                    ->preload()
+                    ->visible(fn () => ! Auth::check()),
                 TextInput::make('company_name')
                     ->translateLabel()
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
                     ->translateLabel()
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_contact_name')
                     ->translateLabel()
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 Checkbox::make('consent')
                     ->live()

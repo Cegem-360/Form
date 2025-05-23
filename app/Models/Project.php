@@ -23,6 +23,7 @@ final class Project extends Model
         // 1
         'user_id',
         'request_quote_id',
+        'order_id',
         'name',
         'contact',
         'start_date',
@@ -49,6 +50,11 @@ final class Project extends Model
         'updated_by', // user_id
     ];
 
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function formQuestions(): HasMany
     {
         return $this->hasMany(FormQuestion::class);
@@ -67,11 +73,6 @@ final class Project extends Model
     public function contact(): BelongsTo
     {
         return $this->belongsTo(User::class, 'contact', 'id');
-    }
-
-    public function ideas(): HasMany
-    {
-        return $this->hasMany(Idea::class);
     }
 
     public function user(): BelongsTo

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\CreateProjectCommission;
-use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\EditProjectCommission;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
+use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ViewProjectCommission;
 use App\Models\ProjectCommission;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -51,9 +50,7 @@ final class ProjectCommissionResource extends Resource
                 Select::make('project_id')
                     ->translateLabel()
                     ->relationship('project', 'name'),
-                Select::make('user_id')
-                    ->translateLabel()
-                    ->relationship('user', 'name'),
+
                 TextInput::make('commission_amount')
                     ->translateLabel()
                     ->numeric(),
@@ -118,8 +115,7 @@ final class ProjectCommissionResource extends Resource
     {
         return [
             'index' => ListProjectCommissions::route('/'),
-            'create' => CreateProjectCommission::route('/create'),
-            'edit' => EditProjectCommission::route('/{record}/edit'),
+            'view' => ViewProjectCommission::route('/{record}'),
         ];
     }
 }

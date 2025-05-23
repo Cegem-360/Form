@@ -1,21 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages;
 
+use Filament\Actions\EditAction;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource;
-use Filament\Actions\DeleteAction;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Actions;
+use Filament\Resources\Pages\ViewRecord;
 
-final class EditProjectCommission extends EditRecord
+class ViewProjectCommission extends ViewRecord
 {
     protected static string $resource = ProjectCommissionResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            EditAction::make(),
         ];
     }
 }

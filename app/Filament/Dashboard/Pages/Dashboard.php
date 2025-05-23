@@ -62,7 +62,7 @@ final class Dashboard extends Page
      */
     public function getColumns(): int|string|array
     {
-        return 2;
+        return 3;
     }
 
     public function getTitle(): string|Htmlable

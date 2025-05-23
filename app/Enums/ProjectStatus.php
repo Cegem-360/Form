@@ -14,19 +14,22 @@ enum ProjectStatus: string implements HasLabel
     case COMPLETED = 'completed';
     case CANCELLED = 'cancelled';
 
-    public static function getKeys(): array
+    public static function casesArray(): array
     {
-        return array_column(self::cases(), 'name');
+        return array_map(
+            fn (self $case) => $case->value,
+            self::cases()
+        );
     }
 
     public function getLabel(): ?string
     {
         return match ($this) {
-            self::ACTIVE => __('ACTIVE'),
-            self::INACTIVE => __('INACTIVE'),
-            self::PENDING => __('PENDING'),
-            self::COMPLETED => __('COMPLETED'),
-            self::CANCELLED => __('CANCELLED'),
+            self::ACTIVE => __('active'),
+            self::INACTIVE => __('inactive'),
+            self::PENDING => __('pending'),
+            self::COMPLETED => __('completed'),
+            self::CANCELLED => __('cancelled'),
         };
     }
 }

@@ -1,22 +1,23 @@
 <div>
-    @if (isset($data['name']) &&
-            isset($data['email']) &&
-            isset($data['phone']) &&
-            isset($data['consent']) &&
-            isset($data['privacy_policy']) &&
-            $data['name'] &&
-            $data['email'] &&
-            $data['phone'] &&
-            $data['consent'] &&
-            $data['privacy_policy']
-    )
+    @if (isset($data['consent']) && isset($data['privacy_policy']) && $data['consent'] && $data['privacy_policy'])
+
         @auth
             {{ $this->orderAction }}
+            {{ $this->createRequestQuoteAction }}
         @else
-            {{ $this->registerAndSendAction }}
-            {{ $this->orderAndRegisterAction }}
+            @if (isset($data['name']) &&
+                    isset($data['email']) &&
+                    isset($data['phone']) &&
+                    $data['name'] &&
+                    $data['email'] &&
+                    $data['phone']
+            )
+                {{ $this->registerAndSendAction }}
+                {{ $this->orderAndRegisterAction }}
+            @endif
         @endauth
 
         {{ $this->sendEmailToMeAction }}
     @endif
+
 </div>

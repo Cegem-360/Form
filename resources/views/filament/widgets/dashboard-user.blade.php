@@ -34,22 +34,55 @@
     ])>
         {{-- Köszöntő szöveg a User-nek a program használatához --}}
 
-        <div class="col-span-full">
-            <h3 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
-                {{ __('Welcome to the application!') }}
-            </h3>
-            <p class="overflow-hidden text-sm text-gray-500 break-words dark:text-gray-400">
-                {{ __('We are glad to have you here. Please take a moment to explore the features and functionalities of our application. If you have any questions, feel free to reach out to our support team.') }}
-            </p>
-            <p class="overflow-hidden text-sm text-gray-500 break-words dark:text-gray-400">
-                {{ __('We hope you enjoy your experience!') }}
-            </p>
-            <p class="overflow-hidden text-sm text-gray-500 break-words dark:text-gray-400">
-                {{ __('Best regards,') }}
-            </p>
-            <p class="overflow-hidden text-sm text-gray-500 break-words dark:text-gray-400">
-                {{ __('The Team') }}
+        <div class="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow dark:bg-gray-900">
+            <h1 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                {{ __('Welcome to the Cégem 360 Quote Request Portal!') }}
+            </h1>
+            <p class="mb-6 text-gray-700 dark:text-gray-300">{{ __('Easily manage your quotes and projects here:') }}
             </p>
 
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="mr-2 font-semibold text-primary-600 dark:text-primary-400">•</span>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>{{ __('Quote Overview:') }}</strong>
+                        {{ __('Browse all your previous quote requests.') }}
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2 font-semibold text-primary-600 dark:text-primary-400">•</span>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>{{ __('New Quote Request:') }}</strong>
+                        {{ __('Submit a new quote quickly and easily.') }}
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2 font-semibold text-primary-600 dark:text-primary-400">•</span>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>{{ __('Order and Payment:') }}</strong>
+                        {{ __('Order directly from your quotes and pay online by card or bank transfer.') }}
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2 font-semibold text-primary-600 dark:text-primary-400">•</span>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>{{ __('Invoices:') }}</strong>
+                        {{ __('Download advance and final invoices after payment.') }}
+                    </p>
+                </li>
+                <li class="flex items-start">
+                    <span class="mr-2 font-semibold text-primary-600 dark:text-primary-400">•</span>
+                    <p class="text-gray-800 dark:text-gray-200">
+                        <strong>{{ __('Project Tracking:') }}</strong>
+                        {{ __('Monitor the status of all your ordered projects and view related materials.') }}
+                    </p>
+                </li>
+            </ul>
+
+            <p class="mt-6 text-gray-600 dark:text-gray-400">
+                {{ __('We hope this platform makes your work easier and more efficient!') }}
+            </p>
         </div>
+    </div>
+
 </x-filament-widgets::widget>

@@ -20,6 +20,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Hash;
 
 final class UserResource extends Resource
 {
@@ -38,12 +39,26 @@ final class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Select::make('roles')->multiple()->relationship('roles', 'name'),
+                TextInput::make('default_commission_percent')
+                    ->translateLabel()
+                    ->numeric()
+                    ->minValue(0)
+                    ->maxValue(100)
+                    ->label('Default Commission (%)')
+                    ->required(),
+                Select::make('roles')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->required()
+                    ->searchable()
+                    ->label('Roles'),
                 DateTimePicker::make('email_verified_at'),
                 TextInput::make('password')
                     ->password()
-                    ->required()
-                    ->maxLength(255),
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                    ->dehydrated(fn (?string $state): bool => filled($state))
+                    ->required(fn (string $operation): bool => $operation === 'create'),
             ]);
     }
 

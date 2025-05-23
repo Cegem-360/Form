@@ -504,8 +504,7 @@ namespace App\Models{
  * @property-read \App\Models\ContactChannel|null $contactChannel
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\FormQuestion> $formQuestions
  * @property-read int|null $form_questions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Idea> $ideas
- * @property-read int|null $ideas_count
+ * @property-read \App\Models\Order|null $order
  * @property-read \App\Models\RequestQuote|null $requestQuote
  * @property-read \App\Models\SupportPack|null $supportPack
  * @property-read \App\Models\User|null $user
