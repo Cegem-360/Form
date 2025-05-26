@@ -36,14 +36,9 @@ final class ProjectResource extends Resource
         return __('Projects');
     }
 
-    public static function getNavigationLabel(): string
-    {
-        return __('Projects');
-    }
-
     public static function getLabel(): string
     {
-        return __('Project');
+        return __('Projects');
     }
 
     public static function getPluralLabel(): string

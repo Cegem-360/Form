@@ -180,5 +180,12 @@
     "Commission amount": "Jutalék összege",
     "Commission percent": "Jutalék százalék",
     "Commission paid amount": "Kifizetett jutalék összege",
-    "Create Request Quote": "Árajánlatkérés létrehozása"
+    "Create Request Quote": "Árajánlatkérés létrehozása",
+    "Form questions": "Űrlap kérdések",
+    "Orders": "Rendelések",
+    "Amount": "Összeg",
+    "Currency": "Pénznem",
+    "Customer email": "Ügyfél email",
+    "Customer phone": "Ügyfél telefon",
+    "Customer name": "Ügyfél név"
 }

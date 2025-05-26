@@ -67,12 +67,6 @@ final class RequestQuoteResource extends Resource
         return $form
             ->schema([
                 Grid::make(2)->schema([
-                    Select::make('user_id')
-                        ->visible(Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN]))
-                        ->relationship('user', 'name')
-                        ->preload()
-                        ->searchable()
-                        ->default(Auth::user()->id),
                     TextInput::make('quotation_name')
                         ->translateLabel()
                         ->maxLength(255),
@@ -292,7 +286,6 @@ final class RequestQuoteResource extends Resource
                     ->searchable(),
                 TextColumn::make('websiteType.name')
                     ->translateLabel()
-                    ->numeric()
                     ->sortable(),
                 IconColumn::make('is_multilangual')
                     ->translateLabel()

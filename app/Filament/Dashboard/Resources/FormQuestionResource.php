@@ -42,7 +42,15 @@ final class FormQuestionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Project';
+    public static function getNavigationGroup(): string
+    {
+        return __('Projects');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Form questions');
+    }
 
     public static function form(Form $form): Form
     {

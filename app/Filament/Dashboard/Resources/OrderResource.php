@@ -26,17 +26,30 @@ final class OrderResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Orders';
+    public static function getNavigationGroup(): string
+    {
+        return __('Orders');
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Orders');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Orders');
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Select::make('request_quote_id')
+                    ->translateLabel()
                     ->relationship('requestQuote', 'name')
                     ->label('Request quote')
-                    ->required()
-                    ->translateLabel(),
+                    ->required(),
                 TextInput::make('amount')
                     ->translateLabel()
                     ->required()

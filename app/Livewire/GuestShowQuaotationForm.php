@@ -117,7 +117,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     public function createRequestQuoteAction(): SubmitButton
     {
         return SubmitButton::make('createRequestQuoteAction')
-            ->action(function () {
+            ->action(function (): void {
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
                 $requestQuote = RequestQuote::create($data);
@@ -735,21 +735,21 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->live()
                     ->required()
                     ->maxLength(255)
-                    ->visible(fn () => ! Auth::check()),
+                    ->visible(fn (): bool => ! Auth::check()),
                 TextInput::make('email')
                     ->translateLabel()
                     ->email()
                     ->live()
                     ->required()
                     ->maxLength(255)
-                    ->visible(fn () => ! Auth::check()),
+                    ->visible(fn (): bool => ! Auth::check()),
                 TextInput::make('phone')
                     ->translateLabel()
                     ->tel()
                     ->live()
                     ->required()
                     ->maxLength(255)
-                    ->visible(fn () => ! Auth::check()),
+                    ->visible(fn (): bool => ! Auth::check()),
                 Select::make('client_type')
                     ->label('Legal form')
                     ->translateLabel()
@@ -757,20 +757,20 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->required()
                     ->options(ClientType::class)
                     ->preload()
-                    ->visible(fn () => ! Auth::check()),
+                    ->visible(fn (): bool => ! Auth::check()),
                 TextInput::make('company_name')
                     ->translateLabel()
-                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
                     ->translateLabel()
-                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_contact_name')
                     ->translateLabel()
-                    ->visible(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get) => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                    ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 Checkbox::make('consent')
                     ->live()
