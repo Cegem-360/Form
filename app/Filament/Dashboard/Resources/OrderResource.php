@@ -32,10 +32,11 @@ final class OrderResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('request_quote_id')
+                Select::make('request_quote_id')
+                    ->relationship('requestQuote', 'name')
+                    ->label('Request quote')
                     ->required()
-                    ->visible(fn (): bool => Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->maxLength(255),
+                    ->translateLabel(),
                 TextInput::make('amount')
                     ->translateLabel()
                     ->required()
