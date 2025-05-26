@@ -61,7 +61,7 @@ final class ProjectResource extends Resource
                 Select::make('order')
                     ->translateLabel()
                     ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->relationship('order', 'name'),
+                    ->relationship('order', 'id'),
                 TextInput::make('name')
                     ->translateLabel()
                     ->required()
