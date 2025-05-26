@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum TransactionStatus: string
+use Filament\Support\Contracts\HasLabel;
+
+enum TransactionStatus: string implements HasLabel
 {
     case PENDING = 'pending';
     case COMPLETED = 'completed';
@@ -18,6 +20,16 @@ enum TransactionStatus: string
             self::COMPLETED => 'Completed',
             self::FAILED => 'Failed',
             self::REFUNDED => 'Refunded',
+        };
+    }
+
+    public function getLabel(): ?string
+    {
+        return match ($this) {
+            self::PENDING => __('pending'),
+            self::COMPLETED => __('completed'),
+            self::FAILED => __('failed'),
+            self::REFUNDED => __('refunded'),
         };
     }
 }

@@ -6,7 +6,6 @@ namespace App\Filament\Dashboard\Resources\RequestQuoteResource\Pages;
 
 use App\Filament\Dashboard\Resources\RequestQuoteResource;
 use Filament\Actions\Action;
-use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +16,7 @@ final class ViewRequestQuote extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            EditAction::make(),
+
             Action::make('Order')
                 ->label(__('Order'))
                 ->action(function ($record) {

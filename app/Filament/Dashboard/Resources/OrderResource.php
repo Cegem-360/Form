@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use App\Enums\RolesEnum;
-use App\Filament\Dashboard\Resources\OrderResource\Pages\CreateOrder;
-use App\Filament\Dashboard\Resources\OrderResource\Pages\EditOrder;
+use App\Enums\TransactionStatus;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\ListOrders;
+use App\Filament\Dashboard\Resources\OrderResource\Pages\ViewOrder;
 use App\Models\Order;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -15,10 +14,9 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 
 final class OrderResource extends Resource
 {
@@ -58,20 +56,20 @@ final class OrderResource extends Resource
                     ->translateLabel()
                     ->required()
                     ->maxLength(3),
-                TextInput::make('status')
-                    ->translateLabel()
-                    ->required()
-                    ->maxLength(255),
                 TextInput::make('customer_email')
                     ->translateLabel()
                     ->email()
                     ->maxLength(255),
+                Select::make('status')
+                    ->label(__('Payment Status'))
+                    ->options(TransactionStatus::class)
+                    ->enum(TransactionStatus::class)
+                    ->translateLabel()
+                    ->required(),
+
                 TextInput::make('customer_name')
                     ->translateLabel()
                     ->maxLength(255),
-                Select::make('user_id')
-                    ->visible(fn (): bool => Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->relationship('user', 'name'),
             ]);
     }
 
@@ -79,14 +77,16 @@ final class OrderResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('requestQuote.name')
+                    ->label(__('Request quote'))
+                    ->translateLabel()
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('amount')
                     ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('currency')
-                    ->translateLabel()
-                    ->searchable(),
-                TextColumn::make('status')
                     ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_email')
@@ -95,6 +95,16 @@ final class OrderResource extends Resource
                 TextColumn::make('customer_name')
                     ->translateLabel()
                     ->searchable(),
+                TextColumn::make('status')
+                    ->label(__('Payment Status'))
+                    ->translateLabel()
+                    ->badge()
+                    ->color(fn (TransactionStatus $state): string => match ($state) {
+                        TransactionStatus::PENDING => 'gray',
+                        TransactionStatus::COMPLETED => 'success',
+                        TransactionStatus::FAILED => 'danger',
+                        TransactionStatus::REFUNDED => 'warning',
+                    }),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -108,7 +118,7 @@ final class OrderResource extends Resource
                 //
             ])
             ->actions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -128,8 +138,7 @@ final class OrderResource extends Resource
     {
         return [
             'index' => ListOrders::route('/'),
-            'create' => CreateOrder::route('/create'),
-            'edit' => EditOrder::route('/{record}/edit'),
+            'view' => ViewOrder::route('/{record}'),
         ];
     }
 }

@@ -6,7 +6,6 @@ namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ClientType;
 use App\Enums\RolesEnum;
-use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Models\RequestQuote;
@@ -31,7 +30,6 @@ use Filament\Support\Enums\Alignment;
 use Filament\Tables\Actions\Action as TableAction;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -306,7 +304,7 @@ final class RequestQuoteResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
-                EditAction::make(),
+
                 TableAction::make('order')
                     ->label(__('Order'))
                     ->action(function (Model $record) {
@@ -337,7 +335,6 @@ final class RequestQuoteResource extends Resource
         return [
             'index' => ListRequestQuotes::route('/'),
             'view' => ViewRequestQuote::route('/{record}'),
-            'edit' => EditRequestQuote::route('/{record}/edit'),
         ];
     }
 }

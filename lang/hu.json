@@ -187,5 +187,13 @@
     "Currency": "Pénznem",
     "Customer email": "Ügyfél email",
     "Customer phone": "Ügyfél telefon",
-    "Customer name": "Ügyfél név"
+    "Customer name": "Ügyfél név",
+    "active": "aktív",
+    "inactive": "inaktív",
+    "pending": "függőben",
+    "completed": "befejezett",
+    "cancelled": "törölve",
+    "failed": "sikertelen",
+    "refunded": "visszatérített",
+    "Payment Status": "Fizetés állapota"
 }
