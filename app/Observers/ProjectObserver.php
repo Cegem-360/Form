@@ -24,7 +24,7 @@ final class ProjectObserver
         ProjectCommission::create([
             'project_id' => $project->id,
             'user_id' => $project->user_id,
-            'commission_amount' => $project->requestQuote->getTotalPriceAttribute() * $user->default_commission_percent,
+            'commission_amount' => $project->requestQuote->getTotalPriceAttribute() * $user->default_commission_percent / 100,
             'commission_percent' => $user->default_commission_percent,
             'commission_paid_amount' => 0,
         ]);

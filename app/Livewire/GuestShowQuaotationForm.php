@@ -45,7 +45,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 final class GuestShowQuaotationForm extends Component implements HasActions, HasForms
@@ -53,27 +52,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     use InteractsWithActions;
     use InteractsWithForms;
 
-    #[Validate([
-        'data.name' => ['required', 'string', 'max:255'],
-        'data.email' => ['required', 'email', 'max:255'],
-        'data.phone' => ['required', 'string', 'max:255'],
-        'data.company_name' => ['nullable', 'string', 'max:255'],
-        'data.company_address' => ['nullable', 'string', 'max:255'],
-        'data.company_vat_number' => ['nullable', 'string', 'max:255'],
-        'data.client_type' => ['nullable', 'string', 'in:individual,company'],
-        'data.website_type_id' => ['required', 'exists:website_types,id'],
-        'data.website_engine' => ['required', 'string', 'max:255'],
-        'data.websites' => ['array'],
-        'data.websites.*.name' => ['required', 'string', 'max:255'],
-        'data.websites.*.length' => ['required', 'string', 'in:short,medium,large'],
-        'data.have_website_graphic' => ['nullable', 'boolean'],
-        'data.requestQuoteFunctionalities' => ['array'],
-        'data.requestQuoteFunctionalities.*' => ['exists:request_quote_functionalities,id'],
-        'data.is_multilangual' => ['nullable', 'boolean'],
-        'data.languages' => ['array'],
-        'data.languages.*' => ['exists:website_languages,id'],
-    ])]
     public ?array $data = [];
+
+    public RequestQuoteFunctionality $requestQuoteFunctionality;
 
     public function mount(): void
     {
@@ -162,80 +143,10 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                $data = $this->form->getState();
-                if (User::where('email', $data['email'])->exists()) {
-                    Notification::make()
-                        ->title(__('Email already registered'))
-                        ->body(__('This email is already registered. Please use a different email address.'))
-                        ->danger()
-                        ->send();
-                    $this->halt();
+                return $data = $this->form->getState();
+            })->form($this->getRegistrationFormSchema())
+            ->action(function (array $data) {
 
-                }
-
-                return [
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'phone' => $data['phone'],
-                    'company_name' => $data['company_name'] ?? null,
-                    'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => $data['company_vat_number'] ?? null,
-                    'client_type' => $data['client_type'] ?? null,
-                ];
-            })->form([
-                Select::make('client_type')
-                    ->label('Legal form')
-                    ->live()
-                    ->required()
-                    ->translateLabel()
-                    ->options(ClientType::class),
-                TextInput::make('company_name')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_address')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_registration_number')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('name')
-                    ->label('Full Name')
-                    ->translateLabel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->translateLabel()
-                    ->email()
-                    ->unique('users', 'email')
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('phone')
-                    ->translateLabel()
-                    ->tel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('password')
-                    ->confirmed()
-                    ->translateLabel()
-                    ->password()
-                    ->revealable()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('password_confirmation')
-                    ->translateLabel()
-                    ->password()
-                    ->revealable()
-                    ->required(),
-            ])->action(function (array $data) {
                 $fillDataForRegister = $data;
                 $data = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
@@ -244,7 +155,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => ['required', 'string', 'max:255'],
                     'company_name' => ['nullable', 'string', 'max:255'],
                     'company_address' => ['nullable', 'string', 'max:255'],
-                    'company_vat_number' => ['nullable', 'string', 'max:255'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
@@ -255,7 +165,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
 
                 ]);
@@ -281,101 +190,29 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function orderAndRegisterAction(): SubmitButton
+    public function registerAndOrderAction(): SubmitButton
     {
-        return SubmitButton::make('orderAndRegisterAction')
+        return SubmitButton::make('registerAndOrderAction')
             ->label(__('Register and Order'))
-
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
-            ->modalDescription(__('Are you sure you want to register?'))
             ->modalSubmitActionLabel(__('Register'))
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                $data = $this->form->getState();
-                if (User::where('email', $data['email'])->exists()) {
-                    Notification::make()
-                        ->title('Email already registered')
-                        ->body('This email is already registered. Please use a different email address.')
-                        ->danger()
-                        ->send();
-                }
+                return $this->form->getState();
+            })->form($this->getRegistrationFormSchema())
+            ->action(function (array $arguments) {
+                dd($arguments);
 
-                return [
-                    'name' => $data['name'],
-                    'email' => $data['email'],
-                    'phone' => $data['phone'],
-                    'company_name' => $data['company_name'] ?? null,
-                    'company_address' => $data['company_address'] ?? null,
-                    'company_vat_number' => $data['company_vat_number'] ?? null,
-                    'client_type' => $data['client_type'] ?? null,
-                    'password' => $data['password'] ?? null,
-                    'password_confirmation' => $data['password_confirmation'] ?? null,
-                ];
-            })->form([
-                Select::make('client_type')
-                    ->label('Legal form')
-                    ->live()
-                    ->required()
-                    ->translateLabel()
-                    ->options(ClientType::class),
-                TextInput::make('company_name')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_address')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_vat_number')
-                    ->translateLabel()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('name')
-                    ->label('Full Name')
-                    ->translateLabel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('email')
-                    ->translateLabel()
-                    ->email()
-                    ->unique('users', 'email')
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('phone')
-                    ->translateLabel()
-                    ->tel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('password')
-                    ->confirmed()
-                    ->translateLabel()
-                    ->password()
-                    ->revealable()
-                    ->required()
-                    ->maxLength(255),
-                TextInput::make('password_confirmation')
-                    ->translateLabel()
-                    ->password()
-                    ->revealable()
-                    ->required(),
-            ])->action(function (array $data) {
-                $fillDataForRegister = $data;
                 $data = $this->form->getState();
-                $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
+
+                $validatedfillDataForRegister = Validator::make($arguments, [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
                     'phone' => ['required', 'string', 'max:255'],
                     'company_name' => ['nullable', 'string', 'max:255'],
                     'company_address' => ['nullable', 'string', 'max:255'],
-                    'company_registration_number' => ['nullable', 'string', 'max:255'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
@@ -386,7 +223,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'phone' => $validatedfillDataForRegister['phone'],
                     'company_name' => $validatedfillDataForRegister['company_name'] ?? null,
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
-                    'company_vat_number' => $validatedfillDataForRegister['company_vat_number'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
                 $user->assignRole(RolesEnum::GUEST);
@@ -642,8 +478,15 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     private function getGraphicsInformationSchema(): Step
     {
         return Step::make('Grafics and functions')->translateLabel()->schema([
-            Grid::make(1)->schema([
+            Grid::make(2)->schema([
+                TextInput::make('quotation_name')
+                    ->columnSpan(1)
+                    ->translateLabel()
+                    ->maxLength(255)
+                    ->required(),
+
                 RichEditor::make('project_description')
+
                     ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
                     ->translateLabel()
                     ->maxLength(20000)
@@ -655,12 +498,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         'underline',
                     ])->columnSpanFull(),
                 Toggle::make('have_website_graphic')
+                    ->columnSpanFull()
                     ->default(false)
                     ->label('Do you have a website graphic?')
                     ->translateLabel()
                     ->hidden(true)
                     ->disabled(),
-                ViewField::make('have_website_graphic')
+                ViewField::make('have_website_graphic')->columnSpanFull()
                     ->view('filament.forms.components.have-website-graphic'),
                 Actions::make([
                     Action::make('yes')
@@ -790,5 +634,63 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->rules(['accepted']),
             ]),
         ]);
+    }
+
+    /**
+     * Get the registration form schema with common fields.
+     */
+    private function getRegistrationFormSchema(): array
+    {
+        return [
+            Select::make('client_type')
+                ->translateLabel()
+                ->label('Legal form')
+                ->live()
+                ->required()
+                ->options(ClientType::class)
+                ->enum(ClientType::class),
+            TextInput::make('company_name')
+                ->translateLabel()
+                ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                ->maxLength(255),
+            TextInput::make('company_address')
+                ->translateLabel()
+                ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                ->maxLength(255),
+            TextInput::make('name')
+                ->label('Full Name')
+                ->translateLabel()
+                ->live()
+                ->required()
+                ->maxLength(255),
+            TextInput::make('email')
+                ->translateLabel()
+                ->email()
+                ->unique('users', 'email')
+                ->live()
+                ->required()
+                ->maxLength(255),
+            TextInput::make('phone')
+                ->translateLabel()
+                ->tel()
+                ->live()
+                ->required()
+                ->maxLength(255),
+            TextInput::make('password')
+                ->confirmed()
+                ->translateLabel()
+                ->password()
+                ->revealable()
+                ->required()
+                ->maxLength(255),
+            TextInput::make('password_confirmation')
+                ->translateLabel()
+                ->confirmed()
+                ->password()
+                ->revealable()
+                ->required(),
+        ];
     }
 }

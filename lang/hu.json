@@ -195,5 +195,13 @@
     "cancelled": "törölve",
     "failed": "sikertelen",
     "refunded": "visszatérített",
-    "Payment Status": "Fizetés állapota"
+    "Payment Status": "Fizetés állapota",
+    "Filament/pages/request-quote.website_type_tooltip": "Segítő tippek a weboldal típusához",
+    "Filament/pages/request-quote.website_engine_wordpress_tooltip": "WordPress - Rugalmas tartalomkezelő rendszer",
+    "Filament/pages/request-quote.website_engine_laravel_tooltip": "Laravel - Modern PHP keretrendszer",
+    "Filament/pages/request-quote.website_engine_shopify_tooltip": "Shopify - Professzionális e-kereskedelmi platform",
+    "Filament/pages/request-quote.website_engine_tooltip": "Válasszon egy weboldal motort",
+    "Filament/pages/request-quote.repeter_webpage_add_test": "Oldal hozzáadása",
+    "Igen, biztosan nincs": "Igen, biztosan nincs",
+    "Company registration number": "Cégjegyzékszám"
 }

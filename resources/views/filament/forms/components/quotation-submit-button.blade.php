@@ -13,7 +13,7 @@
                     $data['phone']
             )
                 {{ $this->registerAndSendAction }}
-                {{ $this->orderAndRegisterAction }}
+                {{ $this->registerAndOrderAction }}
             @endif
         @endauth
 
