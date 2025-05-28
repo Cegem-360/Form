@@ -421,56 +421,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->minItems(1)
                         ->maxItems(30)
                         ->collapsible()
-                        ->defaultItems(10)
-                        ->default([
-                            [
-                                'name' => 'Főoldal',
-                                'length' => 'medium',
-                                'required' => '1',
-                            ],
-                            [
-                                'name' => 'Kapcsolati',
-                                'length' => 'medium',
-                                'required' => '1',
-                            ],
-                            [
-                                'name' => 'Rólunk',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Szolgáltatások',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Blog',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Gyakori kérdések',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Adatvédelmi nyilatkozat',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Általános szerződési feltételek',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-                            [
-                                'name' => 'Webshop',
-                                'length' => 'medium',
-                                'required' => '0',
-                            ],
-
-                        ]),
-
+                        ->defaultItems(10),
                 ]),
             ]);
     }
@@ -486,7 +437,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->required(),
 
                 RichEditor::make('project_description')
-
                     ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
                     ->translateLabel()
                     ->maxLength(20000)
