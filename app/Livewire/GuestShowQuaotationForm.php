@@ -11,6 +11,8 @@ use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
+use App\Models\WebsiteType;
+use Exception;
 use Filament\Actions\Action as SubmitButton;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -143,7 +145,33 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                return $data = $this->form->getState();
+                try {
+                    $data = $this->form->getState();
+
+                    // Összeállítjuk az alapértelmezett értékeket
+                    return [
+                        'name' => $data['name'] ?? '',
+                        'email' => $data['email'] ?? '',
+                        'phone' => $data['phone'] ?? '',
+                        'company_name' => $data['company_name'] ?? null,
+                        'company_address' => $data['company_address'] ?? null,
+                        'client_type' => $data['client_type'] ?? null,
+                        'password' => null,
+                        'password_confirmation' => null,
+                    ];
+                } catch (Exception $e) {
+                    // Ha hibára fut a form->getState(), akkor próbáljuk meg kinyerni az adatokat másképpen
+                    return [
+                        'name' => $this->data['name'] ?? '',
+                        'email' => $this->data['email'] ?? '',
+                        'phone' => $this->data['phone'] ?? '',
+                        'company_name' => $this->data['company_name'] ?? null,
+                        'company_address' => $this->data['company_address'] ?? null,
+                        'client_type' => $this->data['client_type'] ?? null,
+                        'password' => null,
+                        'password_confirmation' => null,
+                    ];
+                }
             })->form($this->getRegistrationFormSchema())
             ->action(function (array $data) {
 
@@ -200,13 +228,36 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                return $this->form->getState();
+                try {
+                    $data = $this->form->getState();
+
+                    // Összeállítjuk az alapértelmezett értékeket
+                    return [
+                        'name' => $data['name'] ?? '',
+                        'email' => $data['email'] ?? '',
+                        'phone' => $data['phone'] ?? '',
+                        'company_name' => $data['company_name'] ?? null,
+                        'company_address' => $data['company_address'] ?? null,
+                        'client_type' => $data['client_type'] ?? null,
+                        'password' => null,
+                        'password_confirmation' => null,
+                    ];
+                } catch (Exception $e) {
+                    // Ha hibára fut a form->getState(), akkor próbáljuk meg kinyerni az adatokat másképpen
+                    return [
+                        'name' => $this->data['name'] ?? '',
+                        'email' => $this->data['email'] ?? '',
+                        'phone' => $this->data['phone'] ?? '',
+                        'company_name' => $this->data['company_name'] ?? null,
+                        'company_address' => $this->data['company_address'] ?? null,
+                        'client_type' => $this->data['client_type'] ?? null,
+                        'password' => null,
+                        'password_confirmation' => null,
+                    ];
+                }
             })->form($this->getRegistrationFormSchema())
             ->action(function (array $arguments) {
-                dd($arguments);
-
                 $data = $this->form->getState();
-
                 $validatedfillDataForRegister = Validator::make($arguments, [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -216,7 +267,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
-
                 $user = User::create([
                     'name' => $validatedfillDataForRegister['name'],
                     'email' => $validatedfillDataForRegister['email'],
@@ -283,21 +333,27 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'filament.forms.components.welcome'
                 ),
                 Grid::make(2)->schema([
-
                     Select::make('website_type_id')
                         ->live()
                         ->required()
                         ->translateLabel()
                         ->relationship('websiteType', 'name', function ($query) {
-
                             $order = ['weboldal', 'webshop', 'landing page'];
 
                             return $query->whereIn('name', $order)
                                 ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
-
                         })
-                        ->afterStateUpdated(function (Set $set): void {
+                        ->afterStateUpdated(function (Set $set, $state): void {
                             $set('request_quote_functionalities', []);
+                            if (WebsiteType::find($state)->name === 'Webshop') {
+                                $set('websites', $this->webshop());
+                            } elseif (WebsiteType::find($state)->name === 'Weboldal') {
+                                $set('websites', $this->website());
+                            } elseif (WebsiteType::find($state)->name === 'Landing Page') {
+                                $set('websites', $this->landingPage());
+                            } else {
+                                $set('websites', []);
+                            }
                         })
                         ->hintAction(function (): Action {
                             return Action::make('help')
@@ -338,73 +394,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getWebsiteInformationSchema(): Step
     {
-        return Step::make('Website Informations')->translateLabel()
-            ->schema([
-                Grid::make(1)->schema([
-                    Repeater::make('websites')->translateLabel()->deletable(false)->schema([
-                        Grid::make(2)->columnSpan(1)->schema([
-                            Grid::make(2)->columnSpan(1)->schema([
-                                TextInput::make('name')
-                                    ->translateLabel()
-                                    ->required()
-                                    ->distinct(),
-                                ToggleButtons::make('required')
-                                    ->label('Want to this page?')
-                                    ->translateLabel()
-                                    ->live()
-                                    ->options([
-                                        '1' => __('Yes'),
-                                        '0' => __('No'),
-                                    ])
-                                    ->default('0')
-                                    ->inline()
-                                    ->required(),
-                                ToggleButtons::make('length')
-                                    ->label('Content length')
-                                    ->translateLabel()
-                                    ->live()
-                                    ->visible(fn ($get) => $get('required'))
-                                    ->default('medium')
-                                    ->required(fn ($get) => $get('required'))
-                                    ->options([
-                                        'short' => __('Short'),
-                                        'medium' => __('Medium'),
-                                        'large' => __('Large'),
-                                    ])
-                                    ->inline()
-                                    ->afterStateUpdated(function ($state, Set $set): void {
-                                        $set('image', $state);
-                                    })
-                                    ->required()
-                                    ->columnSpanFull(),
-                                RichEditor::make('description')
-                                    ->translateLabel()
-                                    ->visible(fn ($get) => $get('required'))
-                                    ->label(__('Page description'))
-                                    ->maxLength(65535)
-                                    ->disableToolbarButtons([
-                                        'attachFiles',
-                                        'codeBlock',
-                                        'italic',
-                                        'strikeThrough',
-                                        'underline',
-                                    ])
-                                    ->columnSpanFull(),
-                                FileUpload::make('images')
-                                    ->translateLabel()
-                                    ->label('Adott oldalhoz esetleges igényelt képek forfeltöltése')
-                                    ->visible(fn ($get) => $get('required'))
-                                    ->disk('public')
-                                    ->directory('website-images')
-                                    ->openable()
-                                    ->downloadable()
-                                    ->reorderable()
-                                    ->maxFiles(10)
-                                    ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
-                                    ->helperText(__('You can upload multiple images'))
-                                    ->columnSpanFull(),
-
-                            ]),
+        return Step::make('Website Informations')->translateLabel()->schema([
+            Grid::make(1)->schema([
+                Repeater::make('websites')->schema([
+                    Grid::make(2)->columnSpan(1)->schema(
+                        [
+                            Grid::make(2)->columnSpan(1)
+                                ->schema($this->getWebsiteRepererSchema()),
                             Grid::make(1)->columnSpan(1)->schema([
                                 ViewField::make('image')
                                     ->view('filament.forms.components.image')
@@ -416,74 +412,74 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                     ),
                             ]),
                         ]),
-                    ])->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
-                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                        ->minItems(1)
-                        ->maxItems(30)
-                        ->collapsible()
-                        ->defaultItems(10),
-                ]),
-            ]);
+                ])
+                    ->translateLabel()
+                    ->deletable(false)
+                    ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
+                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                    ->minItems(1)
+                    ->maxItems(30)
+                    ->collapsible()
+                    ->defaultItems(10),
+            ]),
+        ]);
     }
 
     private function getGraphicsInformationSchema(): Step
     {
-        return Step::make('Grafics and functions')->translateLabel()->schema([
-            Grid::make(2)->schema([
-                TextInput::make('quotation_name')
-                    ->columnSpan(1)
+        return Step::make('Grafics and functions')->translateLabel()->schema([Grid::make(2)->schema([
+            TextInput::make('quotation_name')
+                ->columnSpan(1)
+                ->translateLabel()
+                ->maxLength(255)
+                ->required(),
+            RichEditor::make('project_description')
+                ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
+                ->translateLabel()
+                ->maxLength(20000)
+                ->disableToolbarButtons([
+                    'attachFiles',
+                    'codeBlock',
+                    'italic',
+                    'strikeThrough',
+                    'underline',
+                ])->columnSpanFull(),
+            Toggle::make('have_website_graphic')
+                ->columnSpanFull()
+                ->default(false)
+                ->label('Do you have a website graphic?')
+                ->translateLabel()
+                ->hidden(true)
+                ->disabled(),
+            ViewField::make('have_website_graphic')->columnSpanFull()
+                ->view('filament.forms.components.have-website-graphic'),
+            Actions::make([
+                Action::make('yes')
                     ->translateLabel()
-                    ->maxLength(255)
-                    ->required(),
-
-                RichEditor::make('project_description')
-                    ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
+                    ->requiresConfirmation()
+                    ->modalHeading(__('Website graphic'))
+                    ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                    ->modalSubmitActionLabel(__('Yes, sure I do'))
+                    ->modalCancelActionLabel(__('Cancel'))
+                    ->modalAlignment(Alignment::Center)
+                    ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
+                    ->action(function (Set $set): void {
+                        $set('have_website_graphic', true);
+                    }),
+                Action::make('no')
                     ->translateLabel()
-                    ->maxLength(20000)
-                    ->disableToolbarButtons([
-                        'attachFiles',
-                        'codeBlock',
-                        'italic',
-                        'strikeThrough',
-                        'underline',
-                    ])->columnSpanFull(),
-                Toggle::make('have_website_graphic')
-                    ->columnSpanFull()
-                    ->default(false)
-                    ->label('Do you have a website graphic?')
-                    ->translateLabel()
-                    ->hidden(true)
-                    ->disabled(),
-                ViewField::make('have_website_graphic')->columnSpanFull()
-                    ->view('filament.forms.components.have-website-graphic'),
-                Actions::make([
-                    Action::make('yes')
-                        ->translateLabel()
-                        ->requiresConfirmation()
-                        ->modalHeading(__('Website graphic'))
-                        ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalSubmitActionLabel(__('Yes, sure I do'))
-                        ->modalCancelActionLabel(__('Cancel'))
-                        ->modalAlignment(Alignment::Center)
-                        ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
-                        ->action(function (Set $set): void {
-                            $set('have_website_graphic', true);
-                        }),
-                    Action::make('no')
-                        ->translateLabel()
-                        ->requiresConfirmation()
-                        ->modalHeading(__('Website graphic'))
-                        ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                        ->modalCancelActionLabel(__('Cancel'))
-                        ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
-                        ->modalAlignment(Alignment::Center)
-                        ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
-                        ->action(function (Set $set): void {
-                            $set('have_website_graphic', false);
-
-                        }),
-                ])->label('Do you have a website graphic?')->translateLabel(),
-            ]),
+                    ->requiresConfirmation()
+                    ->modalHeading(__('Website graphic'))
+                    ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
+                    ->modalCancelActionLabel(__('Cancel'))
+                    ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
+                    ->modalAlignment(Alignment::Center)
+                    ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
+                    ->action(function (Set $set): void {
+                        $set('have_website_graphic', false);
+                    }),
+            ])->label('Do you have a website graphic?')->translateLabel(),
+        ]),
             CheckboxList::make('request_quote_functionalities')
                 ->translateLabel()
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
@@ -521,68 +517,67 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getConstentSchema(): Step
     {
-        return Step::make('Consent')->translateLabel()->schema([
-            Grid::make(1)->schema([
-                TextInput::make('name')
-                    ->label('Full Name')
-                    ->translateLabel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255)
-                    ->visible(fn (): bool => ! Auth::check()),
-                TextInput::make('email')
-                    ->translateLabel()
-                    ->email()
-                    ->live()
-                    ->required()
-                    ->maxLength(255)
-                    ->visible(fn (): bool => ! Auth::check()),
-                TextInput::make('phone')
-                    ->translateLabel()
-                    ->tel()
-                    ->live()
-                    ->required()
-                    ->maxLength(255)
-                    ->visible(fn (): bool => ! Auth::check()),
-                Select::make('client_type')
-                    ->label('Legal form')
-                    ->translateLabel()
-                    ->live()
-                    ->required()
-                    ->options(ClientType::class)
-                    ->preload()
-                    ->visible(fn (): bool => ! Auth::check()),
-                TextInput::make('company_name')
-                    ->translateLabel()
-                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_address')
-                    ->translateLabel()
-                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_contact_name')
-                    ->translateLabel()
-                    ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                Checkbox::make('consent')
-                    ->live()
-                    ->default(false)
-                    ->label('I agree to the terms and conditions(note:later has link)')
-                    ->translateLabel()
-                    ->required()
-                    ->helperText(__('You must agree to the terms and conditions to proceed.'))
-                    ->rules(['accepted']),
-                Checkbox::make('privacy_policy')
-                    ->live()
-                    ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
-                    ->translateLabel()
-                    ->default(false)
-                    ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
-                    ->required()
-                    ->rules(['accepted']),
-            ]),
+        return Step::make('Consent')->translateLabel()->schema([Grid::make(1)->schema([
+            TextInput::make('name')
+                ->label('Full Name')
+                ->translateLabel()
+                ->live()
+                ->required()
+                ->maxLength(255)
+                ->visible(fn (): bool => ! Auth::check()),
+            TextInput::make('email')
+                ->translateLabel()
+                ->email()
+                ->live()
+                ->required()
+                ->maxLength(255)
+                ->visible(fn (): bool => ! Auth::check()),
+            TextInput::make('phone')
+                ->translateLabel()
+                ->tel()
+                ->live()
+                ->required()
+                ->maxLength(255)
+                ->visible(fn (): bool => ! Auth::check()),
+            Select::make('client_type')
+                ->label('Legal form')
+                ->translateLabel()
+                ->live()
+                ->required()
+                ->options(ClientType::class)
+                ->preload()
+                ->visible(fn (): bool => ! Auth::check()),
+            TextInput::make('company_name')
+                ->translateLabel()
+                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                ->maxLength(255),
+            TextInput::make('company_address')
+                ->translateLabel()
+                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                ->maxLength(255),
+            TextInput::make('company_contact_name')
+                ->translateLabel()
+                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
+                ->maxLength(255),
+            Checkbox::make('consent')
+                ->live()
+                ->default(false)
+                ->label('I agree to the terms and conditions(note:later has link)')
+                ->translateLabel()
+                ->required()
+                ->helperText(__('You must agree to the terms and conditions to proceed.'))
+                ->rules(['accepted']),
+            Checkbox::make('privacy_policy')
+                ->live()
+                ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
+                ->translateLabel()
+                ->default(false)
+                ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
+                ->required()
+                ->rules(['accepted']),
+        ]),
         ]);
     }
 
@@ -637,10 +632,162 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->maxLength(255),
             TextInput::make('password_confirmation')
                 ->translateLabel()
-                ->confirmed()
                 ->password()
                 ->revealable()
                 ->required(),
         ];
+    }
+
+    private function webshop(): array
+    {
+        return [
+            [
+                'name' => 'Főoldal',
+                'length' => 'medium',
+                'required' => 1,
+            ],
+            [
+                'name' => 'Webshop',
+                'length' => 'medium',
+                'required' => 1,
+            ],
+            [
+                'name' => 'Rólunk',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Szolgáltatások',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Blog',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Gyakori kérdések',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+
+        ];
+
+    }
+
+    private function website(): array
+    {
+        return [
+            [
+                'name' => 'Főoldal',
+                'length' => 'medium',
+                'required' => 1,
+            ],
+            [
+                'name' => 'Kapcsolat',
+                'length' => 'medium',
+                'required' => 1,
+            ],
+            [
+                'name' => 'Rólunk',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Szolgáltatások',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Blog',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
+                'name' => 'Gyakori kérdések',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+        ];
+    }
+
+    private function landingPage(): array
+    {
+        return [
+            [
+                'name' => 'Főoldal',
+                'length' => 'medium',
+                'required' => 1,
+            ],
+        ];
+    }
+
+    private function getWebsiteRepererSchema(): array
+    {
+        return [
+            TextInput::make('name')
+                ->translateLabel()
+                ->required()
+                ->distinct(),
+            ToggleButtons::make('required')
+                ->label('Want to this page?')
+                ->translateLabel()
+                ->live()
+                ->options([
+                    '1' => __('Yes'),
+                    '0' => __('No'),
+                ])
+                ->default('0')
+                ->inline()
+                ->required(),
+            ToggleButtons::make('length')
+                ->label('Content length')
+                ->translateLabel()
+                ->live()
+                ->visible(fn ($get) => $get('required'))
+                ->default('medium')
+                ->required(fn ($get) => $get('required'))
+                ->options([
+                    'short' => __('Short'),
+                    'medium' => __('Medium'),
+                    'large' => __('Large'),
+                ])
+                ->inline()
+                ->afterStateUpdated(function ($state, Set $set): void {
+                    $set('image', $state);
+                })
+                ->required()
+                ->columnSpanFull(),
+            RichEditor::make('description')
+                ->translateLabel()
+                ->visible(fn ($get) => $get('required'))
+                ->label(__('Page description'))
+                ->maxLength(65535)
+                ->disableToolbarButtons([
+                    'attachFiles',
+                    'codeBlock',
+                    'italic',
+                    'strikeThrough',
+                    'underline',
+                ])
+                ->columnSpanFull(),
+            FileUpload::make('images')
+                ->translateLabel()
+                ->label('Adott oldalhoz esetleges igényelt képek feltöltése')
+                ->visible(fn ($get) => $get('required'))
+                ->image()
+                ->multiple()
+                ->disk('public')
+                ->directory('website-images')
+                ->openable()
+                ->downloadable()
+                ->reorderable()
+                ->maxFiles(10)
+
+                ->helperText(__('You can upload multiple images'))
+                ->columnSpanFull(),
+        ];
+
     }
 }
