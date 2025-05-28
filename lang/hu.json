@@ -203,5 +203,6 @@
     "Filament/pages/request-quote.website_engine_tooltip": "Válasszon egy weboldal motort",
     "Filament/pages/request-quote.repeter_webpage_add_test": "Oldal hozzáadása",
     "Igen, biztosan nincs": "Igen, biztosan nincs",
-    "Company registration number": "Cégjegyzékszám"
+    "Company registration number": "Cégjegyzékszám",
+    "Request quote name": "Árajánlat neve"
 }

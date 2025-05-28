@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Checkout;
 
 use App\Enums\ClientType;
+use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
 use App\Models\RequestQuote;
@@ -152,6 +153,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                 $order = Order::create([
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
+                    'currency' => StripeCurrency::HUF,
                     'request_quote_id' => $this->requestQuote->id,
                     'amount' => $this->requestQuote->total_price,
                 ]);
@@ -203,6 +205,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                 $order = Order::create([
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
+                    'currency' => StripeCurrency::HUF,
                     'request_quote_id' => $this->requestQuote->id,
                     'amount' => $this->requestQuote->total_price,
                 ]);

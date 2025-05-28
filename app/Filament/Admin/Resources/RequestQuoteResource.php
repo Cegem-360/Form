@@ -23,7 +23,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
@@ -145,7 +144,6 @@ final class RequestQuoteResource extends Resource
                                     })
                                     ->required(fn ($get) => $get('required')),
                                 RichEditor::make('description')
-                                    ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
                                         'attachFiles',
@@ -170,19 +168,7 @@ final class RequestQuoteResource extends Resource
 
                             ]),
                             Grid::make(1)->columnSpan(1)->schema([
-                                ViewField::make('image')->view('filament.forms.components.image')->viewData(
-                                    [
-                                        'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
-                                        'show_image' => false, // hides the image
-                                    ]
-                                )->formatStateUsing(function (Get $get): ?string {
-                                    return match ($get('length')) {
-                                        'short' => 'website_previews/short_preview.png',
-                                        'medium' => 'website_previews/medium_preview.png',
-                                        'large' => 'website_previews/large_preview.png',
-                                        default => null,
-                                    };
-                                }),
+
                             ]),
                         ]),
 

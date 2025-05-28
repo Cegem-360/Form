@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\StripeCurrency;
 use App\Filament\Admin\Resources\OrderItemResource\Pages\CreateOrderItem;
 use App\Filament\Admin\Resources\OrderItemResource\Pages\EditOrderItem;
 use App\Filament\Admin\Resources\OrderItemResource\Pages\ListOrderItems;
@@ -46,9 +47,9 @@ final class OrderItemResource extends Resource
                     ->required()
                     ->numeric()
                     ->default(1),
-                TextInput::make('currency')
-                    ->required()
-                    ->maxLength(3),
+                Select::make('currency')
+                    ->enum(StripeCurrency::class)
+                    ->required(),
                 TextInput::make('stripe_product_id')
                     ->maxLength(255),
             ]);

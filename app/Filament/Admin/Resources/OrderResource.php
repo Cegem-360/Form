@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\StripeCurrency;
+use App\Enums\TransactionStatus;
 use App\Filament\Admin\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Admin\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Admin\Resources\OrderResource\Pages\ListOrders;
@@ -30,18 +32,24 @@ final class OrderResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('request_quote_id')
-                    ->required()
-                    ->maxLength(255),
+                Select::make('request_quote_id')
+                    ->translateLabel()
+                    ->relationship('requestQuote', 'quotation_name')
+                    ->label('Request quote name')
+                    ->required(),
                 TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                TextInput::make('currency')
-                    ->required()
-                    ->maxLength(3),
-                TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
+                Select::make('currency')
+                    ->options(StripeCurrency::class)
+                    ->enum(StripeCurrency::class)
+                    ->required(),
+                Select::make('status')
+                    ->label(__('Payment Status'))
+                    ->options(TransactionStatus::class)
+                    ->enum(TransactionStatus::class)
+                    ->translateLabel()
+                    ->required(),
                 TextInput::make('customer_email')
                     ->email()
                     ->maxLength(255),

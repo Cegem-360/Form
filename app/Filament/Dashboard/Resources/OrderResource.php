@@ -45,8 +45,8 @@ final class OrderResource extends Resource
             ->schema([
                 Select::make('request_quote_id')
                     ->translateLabel()
-                    ->relationship('requestQuote', 'name')
-                    ->label('Request quote')
+                    ->relationship('requestQuote', 'quotation_name')
+                    ->label('Request quote name')
                     ->required(),
                 TextInput::make('amount')
                     ->translateLabel()

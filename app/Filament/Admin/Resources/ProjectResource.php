@@ -46,6 +46,8 @@ final class ProjectResource extends Resource
                 DatePicker::make('start_date'),
                 DatePicker::make('end_date'),
                 Select::make('status')
+                    ->translateLabel()
+                    ->label('Project Status')
                     ->options(ProjectStatus::class)
                     ->enum(ProjectStatus::class)
                     ->required(),
