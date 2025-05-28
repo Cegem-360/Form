@@ -296,7 +296,7 @@ final class RequestQuoteResource extends Resource
                     ->state(function (Model $record): string {
                         return (string) $record->getTotalPriceAttribute();
                     })
-                    ->money('HUF', locale: 'hu_HU')
+                    ->money('HUF', locale: 'hu_HU'/*  precission: 0 */)
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->translateLabel()
