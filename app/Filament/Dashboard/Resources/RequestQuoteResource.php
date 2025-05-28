@@ -285,9 +285,19 @@ final class RequestQuoteResource extends Resource
                 TextColumn::make('websiteType.name')
                     ->translateLabel()
                     ->sortable(),
+                TextColumn::make('website_engine')
+                    ->translateLabel()
+                    ->sortable(),
                 IconColumn::make('is_multilangual')
                     ->translateLabel()
                     ->boolean(),
+                TextColumn::make('price')
+                    ->translateLabel()
+                    ->state(function (Model $record): string {
+                        return (string) $record->getTotalPriceAttribute();
+                    })
+                    ->money('HUF', locale: 'hu_HU')
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->translateLabel()
                     ->dateTime()

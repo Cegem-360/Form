@@ -12,7 +12,6 @@ use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
 use App\Models\WebsiteType;
-use Exception;
 use Filament\Actions\Action as SubmitButton;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
@@ -145,33 +144,20 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                try {
-                    $data = $this->form->getState();
 
-                    // Összeállítjuk az alapértelmezett értékeket
-                    return [
-                        'name' => $data['name'] ?? '',
-                        'email' => $data['email'] ?? '',
-                        'phone' => $data['phone'] ?? '',
-                        'company_name' => $data['company_name'] ?? null,
-                        'company_address' => $data['company_address'] ?? null,
-                        'client_type' => $data['client_type'] ?? null,
-                        'password' => null,
-                        'password_confirmation' => null,
-                    ];
-                } catch (Exception $e) {
-                    // Ha hibára fut a form->getState(), akkor próbáljuk meg kinyerni az adatokat másképpen
-                    return [
-                        'name' => $this->data['name'] ?? '',
-                        'email' => $this->data['email'] ?? '',
-                        'phone' => $this->data['phone'] ?? '',
-                        'company_name' => $this->data['company_name'] ?? null,
-                        'company_address' => $this->data['company_address'] ?? null,
-                        'client_type' => $this->data['client_type'] ?? null,
-                        'password' => null,
-                        'password_confirmation' => null,
-                    ];
-                }
+                $data = $this->form->getState();
+
+                // Összeállítjuk az alapértelmezett értékeket
+                return [
+                    'name' => $data['name'] ?? '',
+                    'email' => $data['email'] ?? '',
+                    'phone' => $data['phone'] ?? '',
+                    'company_name' => $data['company_name'] ?? null,
+                    'company_address' => $data['company_address'] ?? null,
+                    'client_type' => $data['client_type'] ?? null,
+                    'password' => null,
+                    'password_confirmation' => null,
+                ];
             })->form($this->getRegistrationFormSchema())
             ->action(function (array $data) {
 
@@ -228,33 +214,21 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-                try {
-                    $data = $this->form->getState();
 
-                    // Összeállítjuk az alapértelmezett értékeket
-                    return [
-                        'name' => $data['name'] ?? '',
-                        'email' => $data['email'] ?? '',
-                        'phone' => $data['phone'] ?? '',
-                        'company_name' => $data['company_name'] ?? null,
-                        'company_address' => $data['company_address'] ?? null,
-                        'client_type' => $data['client_type'] ?? null,
-                        'password' => null,
-                        'password_confirmation' => null,
-                    ];
-                } catch (Exception $e) {
-                    // Ha hibára fut a form->getState(), akkor próbáljuk meg kinyerni az adatokat másképpen
-                    return [
-                        'name' => $this->data['name'] ?? '',
-                        'email' => $this->data['email'] ?? '',
-                        'phone' => $this->data['phone'] ?? '',
-                        'company_name' => $this->data['company_name'] ?? null,
-                        'company_address' => $this->data['company_address'] ?? null,
-                        'client_type' => $this->data['client_type'] ?? null,
-                        'password' => null,
-                        'password_confirmation' => null,
-                    ];
-                }
+                $data = $this->form->getState();
+
+                // Összeállítjuk az alapértelmezett értékeket
+                return [
+                    'name' => $data['name'] ?? '',
+                    'email' => $data['email'] ?? '',
+                    'phone' => $data['phone'] ?? '',
+                    'company_name' => $data['company_name'] ?? null,
+                    'company_address' => $data['company_address'] ?? null,
+                    'client_type' => $data['client_type'] ?? null,
+                    'password' => null,
+                    'password_confirmation' => null,
+                ];
+
             })->form($this->getRegistrationFormSchema())
             ->action(function (array $arguments) {
                 $data = $this->form->getState();
@@ -294,7 +268,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             })
             ->color('success')
             ->icon('heroicon-o-paper-airplane');
-
     }
 
     public function sendEmailToMeAction(): SubmitButton
@@ -326,8 +299,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getClientInformationSchema(): Step
     {
-        return
-        Step::make('Client Informations')->translateLabel()->schema(
+        return Step::make('Client Informations')->translateLabel()->schema(
             [
                 ViewField::make('welcomeText')->view(
                     'filament.forms.components.welcome'
@@ -690,6 +662,11 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 'required' => 1,
             ],
             [
+                'name' => 'Termékeink',
+                'length' => 'medium',
+                'required' => 0,
+            ],
+            [
                 'name' => 'Rólunk',
                 'length' => 'medium',
                 'required' => 0,
@@ -727,10 +704,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     {
         return [
             TextInput::make('name')
+                ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->live()
                 ->translateLabel()
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
+                ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->label('Want to this page?')
                 ->translateLabel()
                 ->live()

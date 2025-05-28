@@ -40,7 +40,7 @@ final class ProjectCommissionResource extends Resource
 
     public static function getNavigationGroup(): string
     {
-        return __('Project Management');
+        return __('Projects');
     }
 
     public static function form(Form $form): Form
