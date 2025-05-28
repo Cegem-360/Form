@@ -204,5 +204,9 @@
     "Filament/pages/request-quote.repeter_webpage_add_test": "Oldal hozzáadása",
     "Igen, biztosan nincs": "Igen, biztosan nincs",
     "Company registration number": "Cégjegyzékszám",
-    "Request quote name": "Árajánlat neve"
+    "Request quote name": "Árajánlat neve",
+    "advance_pending": "előleg függőben",
+    "advance_completed": "előleg teljesítve",
+    "final_invoice_pending": "végső számla függőben",
+    "final_invoice_completed": "végső számla teljesítve"
 }

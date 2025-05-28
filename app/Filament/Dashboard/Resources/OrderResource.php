@@ -17,6 +17,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Number;
 
 final class OrderResource extends Resource
 {
@@ -85,8 +86,10 @@ final class OrderResource extends Resource
                 TextColumn::make('amount')
                     ->translateLabel()
                     ->numeric()
+                    ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
                     ->sortable(),
                 TextColumn::make('currency')
+
                     ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_email')
