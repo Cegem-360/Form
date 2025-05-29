@@ -75,14 +75,14 @@ final class ViewRequestQuote extends ViewRecord
 
                     })
                     ->color('primary'),
-                Action::make('createPdf')
+                /*  Action::make('createPdf')
                     ->label('createPdf')
                     ->action('createPdf')
                     ->color('secondary'),
                 Action::make('sendToEmail')
                     ->label('Send to Email')
                     ->action('createPdfAndSendToCurrentUser')
-                    ->color('secondary'),
+                    ->color('secondary'), */
             ]),
         ];
     }

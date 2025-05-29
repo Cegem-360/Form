@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Enums\ProjectStatus;
-use App\Enums\RolesEnum;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\CreateFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ListFormQuestions;
+use App\Filament\Admin\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
@@ -23,7 +22,6 @@ use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -32,7 +30,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
 
@@ -51,18 +48,11 @@ final class FormQuestionResource extends Resource
                 Section::make('ProjectUser')->columns(2)->schema([
                     Select::make('project_id')
                         ->relationship('project', 'name')
-                        ->createOptionForm([
-                            TextInput::make('name')
-                                ->required(),
-                            ToggleButtons::make('status')
-                                ->options(ProjectStatus::class)->required(),
-                        ])
                         ->searchable()
-                        ->preload()
                         ->columns(2),
                     Select::make('user_id')
                         ->relationship('user', 'name'),
-                ])->visible(Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::USER])),
+                ]),
 
                 Split::make([
                     Section::make('website')->schema([
@@ -573,6 +563,7 @@ final class FormQuestionResource extends Resource
             'index' => ListFormQuestions::route('/'),
             'create' => CreateFormQuestion::route('/create'),
             'edit' => EditFormQuestion::route('/{record}/edit'),
+            'view' => ViewFormQuestion::route('/{record}'),
         ];
     }
 }

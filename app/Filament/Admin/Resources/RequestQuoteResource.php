@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources;
 
 use App\Enums\ClientType;
-use App\Enums\RolesEnum;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\EditRequestQuote;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
@@ -249,17 +248,8 @@ final class RequestQuoteResource extends Resource
 
     public static function table(Table $table): Table
     {
-        $user = Auth::user();
-        $userId = $user->id;
 
         return $table
-            ->modifyQueryUsing(function (Builder $query) use ($userId) {
-                if (Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN])) {
-                    return $query;
-                }
-
-                return $query->whereUserId($userId);
-            })
             ->columns([
                 TextColumn::make('quotation_name')
                     ->searchable(),

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
+use App\Enums\ProjectStatus;
 use App\Mail\OrderTransactionDetailsMail;
 use App\Models\Order;
+use App\Models\Project;
 use Illuminate\Support\Facades\Mail;
 
 final class OrderObserver
@@ -22,6 +24,15 @@ final class OrderObserver
         if ($order->requestQuote->payment_method === 'bank_transfer') {
             Mail::to($order->user->email)->send(new OrderTransactionDetailsMail($order));
         }
+
+        Project::create([
+            'request_quote_id' => $order->requestQuote->id,
+            'user_id' => $order->user->id,
+            'name' => $order->requestQuote->quotation_name,
+            'start_date' => now(),
+            'end_date' => now()->addDays(30), // Example: 30 days from now
+            'status' => ProjectStatus::PENDING,
+        ]);
 
     }
 

@@ -38,8 +38,7 @@ final class ProjectResource extends Resource
                 Select::make('user_id')
                     ->relationship('user', 'name'),
                 Select::make('request_quote_id')
-                    ->relationship('requestQuote', 'name'),
-
+                    ->relationship('requestQuote', 'quotation_name'),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),

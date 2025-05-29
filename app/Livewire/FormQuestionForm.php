@@ -55,32 +55,40 @@ final class FormQuestionForm extends Component implements HasForms
         return $form->schema([
             Wizard::make([
                 Step::make('Company basic informations')
+                    ->translateLabel()
                     ->columns(3)
                     ->schema([
                         TextInput::make('company_name')
+                            ->translateLabel()
                             ->visible($visibility->company_name_visible)
                             ->columnSpan(1)
                             ->maxLength(255),
                         TextInput::make('contact_name')
+                            ->translateLabel()
                             ->visible($visibility->contact_name_visible)
                             ->columnSpan(1)
                             ->maxLength(255),
                         TextInput::make('contact_email')
+                            ->translateLabel()
                             ->visible($visibility->contact_email_visible)
                             ->columnSpan(1)
                             ->email()
                             ->maxLength(255),
                         TextInput::make('contact_phone')
+                            ->translateLabel()
                             ->visible($visibility->contact_phone_visible)
                             ->tel()
                             ->maxLength(255),
                         TextInput::make('contact_position')
+                            ->translateLabel()
                             ->visible($visibility->contact_position_visible)
                             ->maxLength(255),
                         Textarea::make('activities')
+                            ->translateLabel()
                             ->visible($visibility->activities_visible)
                             ->columnSpan(1),
                         FileUpload::make('logo')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->visible($visibility->logo_visible)
                             ->image()
@@ -91,46 +99,57 @@ final class FormQuestionForm extends Component implements HasForms
                     ])
                     ->description('The Company basic informations'),
                 Step::make('Theme')
+                    ->translateLabel()
                     ->columns(3)
                     ->schema([
                         Toggle::make('have_exist_website')
+                            ->translateLabel()
                             ->columnSpan(1)
                             ->live()
                             ->inline()
                             ->visible($visibility->have_exist_website_visible),
                         Toggle::make('is_exact_deadline')
+                            ->translateLabel()
                             ->columnSpan(2)
                             ->live()
                             ->visible($visibility->is_exact_deadline_visible),
                         TextInput::make('exist_website_url')
+                            ->translateLabel()
                             ->visible(fn (Get $get): bool => $visibility->exist_website_url_visible && $get('have_exist_website'))
                             ->url(),
 
                         DatePicker::make('deadline')
+                            ->translateLabel()
                             ->visible(fn (Get $get): bool => $visibility->deadline_visible && $get('is_exact_deadline')),
                         MarkdownEditor::make('formating_milestone')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('attachments')
                             ->fileAttachmentsVisibility('public')
                             ->visible($visibility->formating_milestone_visible),
                         MarkdownEditor::make('visual_feeling')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->fileAttachmentsDisk('public')
                             ->fileAttachmentsDirectory('attachments')
                             ->fileAttachmentsVisibility('public')
                             ->visible($visibility->visual_feeling_visible),
                         TextInput::make('tone_of_website')
+                            ->translateLabel()
                             ->visible($visibility->tone_of_website_visible)
                             ->maxLength(255),
                         Textarea::make('other_tone_of_website')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->visible($visibility->other_tone_of_website_visible),
                         Toggle::make('have_exist_design')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->live()
                             ->visible($visibility->have_exist_design_visible),
                         FileUpload::make('design_files')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->visible(fn (Get $get): bool => $visibility->design_files_visible && $get('have_exist_design'))
                             ->downloadable()
@@ -139,6 +158,7 @@ final class FormQuestionForm extends Component implements HasForms
                             ->directory('design_files')
                             ->visibility('public'),
                         Repeater::make('inspire_websites')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->visible($visibility->inspire_websites_visible)
                             ->defaultItems(10)
@@ -147,13 +167,16 @@ final class FormQuestionForm extends Component implements HasForms
                             ->reorderableWithDragAndDrop()
                             ->schema([
                                 TextInput::make('url')
+                                    ->translateLabel()
                                     ->url()
                                     ->required(),
                                 RichEditor::make('description')
+                                    ->translateLabel()
                                     ->required(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['url'] ?? null),
                         Repeater::make('banned_elements')
+                            ->translateLabel()
                             ->columnSpanFull()
                             ->visible($visibility->banned_elements_visible)
                             ->defaultItems(3)
@@ -162,18 +185,23 @@ final class FormQuestionForm extends Component implements HasForms
                             ->reorderableWithDragAndDrop()
                             ->schema([
                                 Textarea::make('element')
+                                    ->translateLabel()
                                     ->columnSpanFull()
                                     ->required(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['element'] ?? null),
                         Section::make('Colors and Fonts')->columns(2)
+                            ->translateLabel()
                             ->compact()
                             ->schema([
                                 ColorPicker::make('primary_color')
+                                    ->translateLabel()
                                     ->visible($visibility->primary_color_visible),
                                 ColorPicker::make('secondary_color')
+                                    ->translateLabel()
                                     ->visible($visibility->secondary_color_visible),
                                 Repeater::make('additional_colors')
+                                    ->translateLabel()
                                     ->columnSpanFull()
                                     ->visible($visibility->additional_colors_visible)
                                     ->defaultItems(3)
@@ -182,15 +210,19 @@ final class FormQuestionForm extends Component implements HasForms
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         ColorPicker::make('color')
+                                            ->translateLabel()
                                             ->required(),
-                                        TextInput::make('description'),
+                                        TextInput::make('description')
+                                            ->translateLabel(),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['description'] ?? null),
                             ]),
                         Repeater::make('prefered_font_types')
+                            ->translateLabel()
                             ->visible($visibility->prefered_font_types_visible)
                             ->schema([
                                 TextInput::make('font_type_name')
+                                    ->translateLabel()
                                     ->required(),
                             ])
                             ->defaultItems(3)
@@ -200,8 +232,9 @@ final class FormQuestionForm extends Component implements HasForms
                             ->itemLabel(fn (array $state): ?string => $state['font_type_name'] ?? null),
                     ]),
 
-                Step::make('Design pages Specifications')->schema([
+                Step::make('Design pages Specifications')->translateLabel()->schema([
                     FileUpload::make('own_company_images')
+                        ->translateLabel()
                         ->visible($visibility->own_company_images_visible)
                         ->maxSize(2048)
                         ->maxFiles(10)
@@ -212,8 +245,10 @@ final class FormQuestionForm extends Component implements HasForms
                         ->visibility('public')
                         ->preserveFilenames(),
                     Toggle::make('use_video_or_animation')
+                        ->translateLabel()
                         ->visible($visibility->use_video_or_animation_visible),
                     FileUpload::make('own_company_videos')
+                        ->translateLabel()
                         ->visible($visibility->own_company_videos_visible)
                         ->maxSize(2048)
                         ->multiple()
@@ -223,16 +258,18 @@ final class FormQuestionForm extends Component implements HasForms
                         ->visibility('public')
                         ->preserveFilenames(),
                     Repeater::make('main_pages')
+                        ->translateLabel()
                         ->visible($visibility->main_pages_visible)
                         ->defaultItems(3)
                         ->collapsible()
                         ->collapsed()
                         ->reorderableWithDragAndDrop()
-                        ->schema([
-                            TextInput::make('name')
-                                ->maxLength(255)
-                                ->required(),
+                        ->schema([TextInput::make('name')
+                            ->translateLabel()
+                            ->maxLength(255)
+                            ->required(),
                             RichEditor::make('description')
+                                ->translateLabel()
                                 ->fileAttachmentsDisk('public')
                                 ->fileAttachmentsDirectory('pages/attachments')
                                 ->fileAttachmentsVisibility('public'),
