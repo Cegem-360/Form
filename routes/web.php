@@ -30,6 +30,7 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
 })->name('quotation.pdf');
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
+    /*
     Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
 
         $requestQuote = RequestQuote::find($requestQuote->id);
@@ -51,19 +52,11 @@ Route::name('quotation.')->prefix('quotation')->group(function (): void {
         return response()->file(storage_path('app/public/quotation.pdf'));
 
     })->name('preview');
-
-    Route::get('preview/pdf/{requestQuote}', function () {
-
-        $requestQuote = RequestQuote::factory()->make([
-            'id' => 1,
-            'company_name' => 'Test Company',
-            'name' => 'Test Name',
-            'email' => '',
-        ]);
-
+ */
+    Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
         return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 
-    })->name('preview.pdf');
+    })->name('preview');
 
 });
 Route::middleware(['auth'])->group(function (): void {

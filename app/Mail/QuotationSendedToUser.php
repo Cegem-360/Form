@@ -51,8 +51,9 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
      *
      * @return array<int, Attachment>
      */
-    public function attachments(): Attachment
+    public function attachments(): ?Attachment
     {
+        /*
         $template = view('pdf.quotation-user', ['requestQuote' => $this->requestQuote])->render();
         $headerHtml = view('pdf.header')->render();
         Browsershot::html($template)->showBrowserHeaderAndFooter()
@@ -68,5 +69,7 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
             ->savePdf(storage_path('app/public/quotation.pdf'));
 
         return Attachment::fromPath(storage_path('app/public/quotation.pdf'));
+        */
+        return null;
     }
 }

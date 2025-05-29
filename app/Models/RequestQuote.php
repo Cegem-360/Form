@@ -102,8 +102,8 @@ final class RequestQuote extends Model
     {
         $total = 0;
 
-        foreach ($this->websites as $website) {
-            if ($website['required']) {
+        foreach ($this->websites ?? [] as $website) {
+            if (isset($website['required']) && $website['required']) {
                 $total += $this->websiteType->websiteTypePrices()
                     ->whereWebsiteEngine($this->website_engine)
                     ->whereSize($website['length'])

@@ -17,7 +17,10 @@
             @endif
         @endauth
 
-        {{ $this->sendEmailToMeAction }}
+        @isset($data['email'])
+            {{ $this->sendEmailToMeAction }}
+        @endisset
+
     @endif
 
 </div>

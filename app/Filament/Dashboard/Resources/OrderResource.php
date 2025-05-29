@@ -89,7 +89,6 @@ final class OrderResource extends Resource
                     ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
                     ->sortable(),
                 TextColumn::make('currency')
-
                     ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_email')

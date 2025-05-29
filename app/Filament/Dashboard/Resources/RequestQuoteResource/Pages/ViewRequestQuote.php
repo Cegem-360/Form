@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources\RequestQuoteResource\Pages;
 
 use App\Filament\Dashboard\Resources\RequestQuoteResource;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuotePriceWidget;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Session;
@@ -18,6 +19,7 @@ final class ViewRequestQuote extends ViewRecord
         return [
 
             Action::make('Order')
+                ->visible(fn ($record): bool => $record->id_payed === false)
                 ->label(__('Order'))
                 ->action(function ($record) {
                     Session::put('requestQuote', $record->id);
@@ -25,6 +27,13 @@ final class ViewRequestQuote extends ViewRecord
                     return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                 }),
 
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            RequestQuotePriceWidget::class,
         ];
     }
 }

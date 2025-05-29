@@ -50,18 +50,6 @@ final class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('user_id')
-                    ->translateLabel()
-                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->relationship('user', 'name'),
-                Select::make('request_quote_id')
-                    ->translateLabel()
-                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->relationship('requestQuote', 'name'),
-                Select::make('order')
-                    ->translateLabel()
-                    ->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN]))
-                    ->relationship('order', 'id'),
                 TextInput::make('name')
                     ->translateLabel()
                     ->required()

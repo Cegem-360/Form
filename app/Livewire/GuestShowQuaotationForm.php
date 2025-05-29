@@ -118,6 +118,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     {
         return SubmitButton::make('order')
             ->action(function (): void {
+
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
                 $requestQuote = RequestQuote::create($data);
@@ -144,21 +145,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-
-                $data = $this->form->getState();
-
-                // Összeállítjuk az alapértelmezett értékeket
-                return [
-                    'name' => $data['name'] ?? '',
-                    'email' => $data['email'] ?? '',
-                    'phone' => $data['phone'] ?? '',
-                    'company_name' => $data['company_name'] ?? null,
-                    'company_address' => $data['company_address'] ?? null,
-                    'client_type' => $data['client_type'] ?? null,
-                    'password' => null,
-                    'password_confirmation' => null,
-                ];
-            })->form($this->getRegistrationFormSchema())
+                return $this->form->getState();
+            })
+            ->form($this->getRegistrationFormSchema())
             ->action(function (array $data) {
 
                 $fillDataForRegister = $data;
@@ -214,22 +203,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->modalCancelActionLabel(__('Cancel'))
             ->modalAlignment(Alignment::Center)
             ->fillForm(function (): array {
-
-                $data = $this->form->getState();
-
-                // Összeállítjuk az alapértelmezett értékeket
-                return [
-                    'name' => $data['name'] ?? '',
-                    'email' => $data['email'] ?? '',
-                    'phone' => $data['phone'] ?? '',
-                    'company_name' => $data['company_name'] ?? null,
-                    'company_address' => $data['company_address'] ?? null,
-                    'client_type' => $data['client_type'] ?? null,
-                    'password' => null,
-                    'password_confirmation' => null,
-                ];
-
-            })->form($this->getRegistrationFormSchema())
+                return $this->form->getState();
+            })
+            ->form($this->getRegistrationFormSchema())
             ->action(function (array $arguments) {
                 $data = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($arguments, [
@@ -280,7 +256,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->title('Quotation created and email sent')
                     ->success()
                     ->send();
-                $this->form->model($record)->saveRelationships();
 
                 Mail::to($data['email'])->send(new QuotationSendedToUser($record));
 

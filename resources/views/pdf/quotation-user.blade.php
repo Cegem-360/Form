@@ -3,21 +3,39 @@
 @use('App\Models\WebsiteTypePrice')
 <x-layouts.app>
 
-    <div class="font-sans text-gray-900 bg-white">
+    <div class="font-sans text-gray-900 bg-white max-w-[210mm] mx-auto">
         <style>
-            .page-break {
-                page-break-before: always;
+            @page {
+                size: A4;
+                margin: 2cm;
             }
 
+            /*
             @page {
                 margin-top: 40in;
                 padding-top: 50in;
+            }
+            */
+            body {
+                width: 100%;
+                max-width: 210mm;
+                margin: 0 auto;
+            }
+
+            .page-break {
+                page-break-before: always;
             }
 
             tr {
                 -webkit-column-break-inside: avoid;
                 page-break-inside: avoid;
                 break-inside: avoid;
+            }
+
+            table {
+                width: 100%;
+                max-width: 100%;
+                table-layout: fixed;
             }
         </style>
         <!-- Borító -->
@@ -77,9 +95,9 @@
             <ul class="pl-8 mb-4 list-disc">
                 <li>minőségi, új webdesign</li>
                 <li>okostelefonra optimalizált megjelenés elkészítése</li>
-                @foreach ($requestQuote->websites as $page)
-                    @if ($page['required'])
-                        <li>{{ $page['name'] }} ({{ __(ucfirst($page['length'])) }} terjedelem)</li>
+                @foreach ($requestQuote->websites ?? [] as $page)
+                    @if (isset($page['required']) && $page['required'])
+                        <li>{{ $page['name'] }} ({{ __(ucfirst($page['length'] ?? 'medium')) }} terjedelem)</li>
                     @endif
                 @endforeach
                 <li>különböző, legújabb védelmi rendszerek telepítése</li>
@@ -150,16 +168,16 @@
                             </td>
                         </tr>
                     @endforeach
-                    @foreach ($requestQuote->websites as $page)
-                        @if ($page['required'])
+                    @foreach ($requestQuote->websites ?? [] as $page)
+                        @if (isset($page['required']) && $page['required'])
                             <tr>
                                 <td class="px-4 py-2 border">{{ $page['name'] }}</td>
-                                <td class="px-4 py-2 border">{{ __(ucfirst($page['length'])) }}</td>
+                                <td class="px-4 py-2 border">{{ __(ucfirst($page['length'] ?? 'medium')) }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price,in: 'HUF',locale: 'hu',precision: 0) }}
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price,in: 'HUF',locale: 'hu',precision: 0) }}
                                 </td>
                             </tr>
                         @endif

@@ -482,6 +482,7 @@ namespace App\Models{
  * @property int $id
  * @property int|null $user_id
  * @property int|null $request_quote_id
+ * @property int|null $order_id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $start_date
  * @property \Illuminate\Support\Carbon|null $end_date
@@ -523,6 +524,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereGarantyEndDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOrderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOriginalProjectGoals($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectGoal($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectNotContainedElements($value)
@@ -592,6 +594,7 @@ namespace App\Models{
  * @property string|null $default_language
  * @property array<array-key, mixed>|null $languages
  * @property string|null $payment_method
+ * @property bool|null $is_payed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read int $total_price
@@ -622,6 +625,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereHaveWebsiteGraphic($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereIsMultilangual($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereIsPayed($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereLanguages($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote wherePaymentMethod($value)

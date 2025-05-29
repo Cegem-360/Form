@@ -8,6 +8,7 @@ use App\Enums\ClientType;
 use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
+use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuotePriceWidget;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\Actions;
@@ -37,6 +38,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Number;
 use Session;
 
 final class RequestQuoteResource extends Resource
@@ -290,11 +292,11 @@ final class RequestQuoteResource extends Resource
                     ->translateLabel()
                     ->boolean(),
                 TextColumn::make('price')
+                    ->label('Deposit Price')
                     ->translateLabel()
-                    ->state(function (Model $record): string {
-                        return (string) $record->getTotalPriceAttribute();
+                    ->state(function (Model $record): string|false {
+                        return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
                     })
-                    ->money('HUF', locale: 'hu_HU'/*  precission: 0 */)
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->translateLabel()
@@ -321,8 +323,7 @@ final class RequestQuoteResource extends Resource
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
-                    ->visible(fn ($record): bool => $record->status !== 'id_payed')
-                    ->visible(fn ($record): bool => $record->status !== 'order')
+                    ->visible(fn ($record): bool => $record->id_payed === false)
                     ->icon('heroicon-o-check'),
             ])
             ->bulkActions([
@@ -344,6 +345,20 @@ final class RequestQuoteResource extends Resource
         return [
             'index' => ListRequestQuotes::route('/'),
             'view' => ViewRequestQuote::route('/{record}'),
+        ];
+    }
+
+    /*   protected static function getWidgets(): array
+      {
+          return [
+              RequestQuotePriceWidget::class,
+          ];
+      } */
+
+    public static function getWidgets(): array
+    {
+        return [
+            RequestQuotePriceWidget::class,
         ];
     }
 }

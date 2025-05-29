@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Checkout;
 
 use App\Enums\RolesEnum;
+use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
 use App\Models\RequestQuote;
@@ -32,10 +33,13 @@ final class CheckoutSuccess extends Component
         $this->order = Order::firstOrcreate([
             'request_quote_id' => $requestQuote->id,
             'user_id' => $requestQuote->user_id,
+            'customer_name' => $requestQuote->user->name,
+            'customer_email' => $requestQuote->user->email,
             'amount' => $requestQuote->getTotalPriceAttribute(),
             'status' => TransactionStatus::PENDING,
-
+            'currency' => StripeCurrency::HUF,
         ]);
+
         Session::forget('request_quote');
         Auth::user()->removeRole(RolesEnum::GUEST);
         Auth::user()->assignRole(RolesEnum::USER);

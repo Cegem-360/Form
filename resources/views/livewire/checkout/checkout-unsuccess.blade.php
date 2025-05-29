@@ -16,9 +16,9 @@
             class="px-6 py-2 font-semibold text-white transition bg-blue-600 rounded-lg shadow hover:bg-blue-700">
             Visszaa kosárhoz
         </a>
-        <a href="{{ route('kerdoiv') }}"
+        {{--  <a href="{{ route('kerdoiv') }}"
             class="px-6 py-2 font-semibold text-gray-800 transition bg-gray-200 rounded-lg shadow hover:bg-gray-300">
             Vissza az árajánlat oldalra
-        </a>
+        </a> --}}
     </div>
 </div>
