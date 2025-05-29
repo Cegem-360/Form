@@ -204,6 +204,8 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'request_quote_id' => $this->requestQuote->id,
                     'user_id' => Auth::user()->id,
                 ], [
+                    'request_quote_id' => $this->requestQuote->id,
+                    'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
                     'currency' => StripeCurrency::HUF,
                     'amount' => $this->requestQuote->getTotalPriceAttribute(),

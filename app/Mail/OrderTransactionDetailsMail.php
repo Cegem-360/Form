@@ -31,7 +31,7 @@ final class OrderTransactionDetailsMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Transaction Details Mail',
+            subject: 'Rendelés visszaigazolása - Banki átutalás adatai',
         );
     }
 

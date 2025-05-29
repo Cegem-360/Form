@@ -64,18 +64,26 @@ final class OrderResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('request_quote_id.name')
+                TextColumn::make('requestQuote.quotation_name')
+                    ->label('Request quote name')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('amount')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('currency')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('status')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('customer_email')
+                    ->translateLabel()
+                    ->label('Customer Email')
                     ->searchable(),
                 TextColumn::make('customer_name')
+                    ->translateLabel()
                     ->searchable(),
                 TextColumn::make('user.name')
                     ->numeric()

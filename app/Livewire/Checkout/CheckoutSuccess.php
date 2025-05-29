@@ -30,20 +30,18 @@ final class CheckoutSuccess extends Component
 
         $this->requestQuote = $requestQuote;
 
-        $this->order = Order::firstOrCreate(
-            [
-                'request_quote_id' => $requestQuote->id,
-                'user_id' => $requestQuote->user_id,
-            ],
-            [
-                'request_quote_id' => $requestQuote->id,
-                'user_id' => $requestQuote->user_id,
-                'customer_name' => $requestQuote->user->name,
-                'customer_email' => $requestQuote->user->email,
-                'amount' => $requestQuote->getTotalPriceAttribute(),
-                'status' => TransactionStatus::PENDING,
-                'currency' => StripeCurrency::HUF,
-            ]);
+        $this->order = Order::whereRequestQuoteId($requestQuote->id)
+            ->whereUserId($requestQuote->user->id)
+            ->firstOrFail();
+        $this->order->update([
+            'request_quote_id' => $requestQuote->id,
+            'user_id' => $requestQuote->user->id,
+            'customer_name' => $requestQuote->user->name,
+            'customer_email' => $requestQuote->user->email,
+            'amount' => $requestQuote->getTotalPriceAttribute(),
+            'status' => TransactionStatus::PENDING,
+            'currency' => StripeCurrency::HUF,
+        ]);
         Session::forget('request_quote');
         Auth::user()->removeRole(RolesEnum::GUEST);
         Auth::user()->assignRole(RolesEnum::USER);

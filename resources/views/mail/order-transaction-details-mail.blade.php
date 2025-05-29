@@ -1,13 +1,16 @@
 <x-mail::message>
-    # Rendelés visszaigazolása
+
+    <h1>Rendelés visszaigazolása</h1>
     Köszönjük a rendelését! Az alábbiakban találja a banki átutalás adatait:
     <x-mail::panel>
-        **Átutalási adatok:**
-        - **Cégnév:** Cegem360 Kft.
-        - **Bankszámlaszám:** 126000161712942518957306
-        - **Bank:** Wise
-        - **Közlemény:** Rendelésszám: {{ $order->id }}
+        <p>Átutalási adatok:</p>
+        <ul>
+            <li>Cégnév: Cegem360 Kft.</li>
+            <li>Bankszámlaszám: 126000161712942518957306</li>
+            <li>Bank: Wise</li>
+            <li>Közlemény: Rendelésszám: {{ $order->id }}</li>
+        </ul>
     </x-mail::panel>
-    Köszönettel,<br>
+    Köszönettel,
     {{ config('app.name') }}
 </x-mail::message>
