@@ -55,7 +55,6 @@ final class DatabaseSeeder extends Seeder
             RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
             OrderSeeder::class,
-            OrderItemSeeder::class,
             OptionSeeder::class,
             PdfOptionSeeder::class,
             PermissionUpSeeder::class,

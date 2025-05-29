@@ -128,7 +128,7 @@ final class RequestQuoteResource extends Resource
                         ->searchable(),
                 ]),
                 Grid::make(1)->schema([
-                    Repeater::make('websites')->schema([
+                    Repeater::make('websites')->translateLabel()->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(1)->columnSpan(1)->schema([
                                 TextInput::make('name')
@@ -198,9 +198,7 @@ final class RequestQuoteResource extends Resource
                                     ),
                             ]),
                         ]),
-
-                    ])
-                        ->translateLabel(),
+                    ]),
 
                 ]),
                 Grid::make(1)->schema([
@@ -323,6 +321,7 @@ final class RequestQuoteResource extends Resource
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
+                    ->visible(fn ($record): bool => $record->status !== 'id_payed')
                     ->visible(fn ($record): bool => $record->status !== 'order')
                     ->icon('heroicon-o-check'),
             ])

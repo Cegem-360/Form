@@ -25,6 +25,10 @@ final class WebsiteLanguageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Settings';
+
+    protected static ?string $navigationLabel = 'Website Languages';
+
     public static function form(Form $form): Form
     {
         return $form

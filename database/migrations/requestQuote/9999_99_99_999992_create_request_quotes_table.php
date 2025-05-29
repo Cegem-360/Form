@@ -39,6 +39,7 @@ return new class extends Migration
             $table->string('default_language', 10)->nullable();
             $table->json('languages')->nullable();
             $table->string('payment_method')->nullable();
+            $table->boolean('is_payed')->default(false)->nullable();
             $table->timestamps();
         });
     }

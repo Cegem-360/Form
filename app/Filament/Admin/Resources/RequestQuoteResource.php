@@ -34,6 +34,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -53,11 +54,14 @@ final class RequestQuoteResource extends Resource
             ->schema([
                 Grid::make(2)->schema([
                     Select::make('user_id')
-                        ->visible(Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN]))
                         ->relationship('user', 'name')
                         ->preload()
                         ->searchable()
                         ->default(Auth::user()->id),
+                    Toggle::make('is_payed')
+                        ->label('Is Payed')
+                        ->default(false)
+                        ->translateLabel(),
                     TextInput::make('quotation_name')
                         ->maxLength(255),
                     TextInput::make('name')
@@ -267,15 +271,14 @@ final class RequestQuoteResource extends Resource
                     ->searchable(),
                 TextColumn::make('company_name')
                     ->searchable(),
-                TextColumn::make('website_type_id')
+                TextColumn::make('website_type_id.name')
+                    ->label('Website Type')
                     ->numeric()
                     ->sortable(),
-                IconColumn::make('have_website_graphic')
-                    ->boolean(),
                 IconColumn::make('is_multilangual')
                     ->boolean(),
-                IconColumn::make('is_ecommerce')
-                    ->boolean(),
+                ToggleColumn::make('is_payed')
+                    ->label('Is Payed'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

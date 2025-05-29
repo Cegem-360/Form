@@ -71,6 +71,7 @@ final class RequestQuoteFactory extends Factory
             'default_language' => $default_language->id,
             'languages' => $languages,
             'payment_method' => $this->faker->randomElement(['stripe',  'bank_transfer']),
+            'is_payed' => $this->faker->boolean(),
         ];
     }
 }

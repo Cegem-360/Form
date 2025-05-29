@@ -39,6 +39,7 @@ final class RequestQuote extends Model
         'payment_method',
         'project_description',
         'billing_address',
+        'is_payed',
     ];
 
     public function requestQuotePercent(): ?float
@@ -143,6 +144,23 @@ final class RequestQuote extends Model
         return WebsiteLanguage::whereIn('id', $this->languages)->get();
     }
 
+    public function isPayed(): bool
+    {
+        // Feltételezve, hogy van egy kapcsolódó rendelés (order) reláció
+        // és annak van egy 'status' mezője, ami 'paid' értéket vehet fel
+        if ($this->order && $this->order->status === 'paid') {
+            return true;
+        }
+
+        return (bool) $this->is_payed;
+    }
+
+    public function canOrderAgain(): bool
+    {
+        // Ha már ki van fizetve, nem lehet újra megrendelni
+        return ! $this->isPayed();
+    }
+
     protected function casts(): array
     {
         return [
@@ -152,6 +170,7 @@ final class RequestQuote extends Model
             'is_multilangual' => 'boolean',
             'have_website_graphic' => 'boolean',
             'client_type' => ClientType::class,
+            'is_payed' => 'boolean',
         ];
     }
 }
