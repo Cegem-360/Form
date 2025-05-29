@@ -31,7 +31,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     public ?array $data = [];
 
-    public $order;
+    public ?Order $order;
 
     public ?RequestQuote $requestQuote;
 
@@ -108,15 +108,20 @@ final class PaymentPage extends Component implements HasActions, HasForms
                         $this->requestQuote->save();
                     })
                     ->required()
+
                     ->live(),
                 Checkbox::make('terms')
                     ->label(__('I have read and accept the terms and conditions'))
                     ->required()
+                    ->accepted()
+                    ->default(false)
                     ->translateLabel()
                     ->live(),
                 Checkbox::make('privacy')
                     ->label(__('I have read and accept the privacy policy'))
                     ->required()
+                    ->accepted()
+                    ->default(false)
                     ->translateLabel()
                     ->live(),
             ])
@@ -129,32 +134,27 @@ final class PaymentPage extends Component implements HasActions, HasForms
         return Action::make('payWithStripe')
             ->extraAttributes(['class' => '!bg-[#2563eb]'])
             ->action(function () {
-                $this->validate([
-                    'data.name' => ['required', 'string'],
-                    'data.email' => ['required', 'email'],
-                    'data.phone' => ['nullable', 'string'],
-                    'data.client_type' => ['required', 'string'],
-                    'data.company_name' => ['nullable', 'string'],
-                    'data.company_address' => ['nullable', 'string'],
-                    'data.company_registration_number' => ['nullable', 'string'],
-                    'data.payment_method' => ['required', 'string'],
-                    'data.terms' => ['accepted'],
-                    'data.privacy' => ['accepted'],
+                $data = $this->form->getState();
+
+                $this->requestQuote->update($data);
+                Auth::user()->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'company_name' => $data['company_name'] ?? null,
+                    'company_address' => $data['company_address'] ?? null,
+                    'company_vat_number' => $data['company_vat_number'] ?? null,
                 ]);
-
-                $this->requestQuote->update($this->data);
-                $this->requestQuote->save();
-
                 Notification::make()
                     ->title(__('Order finalized successfully'))
                     ->success()
                     ->send();
 
-                $order = Order::create([
+                $order = Order::whereRequestQuoteId($this->requestQuote->id)->firstOrCreate([
+                    'request_quote_id' => $this->requestQuote->id,
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
                     'currency' => StripeCurrency::HUF,
-                    'request_quote_id' => $this->requestQuote->id,
                     'amount' => $this->requestQuote->total_price,
                 ]);
 
@@ -182,32 +182,31 @@ final class PaymentPage extends Component implements HasActions, HasForms
         return Action::make('finalizeOrder')
             ->label(__('Finalize Order'))
             ->action(function (): void {
-                $this->validate([
-                    'data.name' => ['required', 'string'],
-                    'data.email' => ['required', 'email'],
-                    'data.phone' => ['nullable', 'string'],
-                    'data.client_type' => ['required', 'string'],
-                    'data.company_name' => ['nullable', 'string'],
-                    'data.company_address' => ['nullable', 'string'],
-                    'data.company_registration_number' => ['nullable', 'string'],
-                    'data.payment_method' => ['required', 'string'],
-                    'data.terms' => ['accepted'],
-                    'data.privacy' => ['accepted'],
+                $data = $this->form->getState();
+
+                $this->requestQuote->update($data);
+
+                Auth::user()->update([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'phone' => $data['phone'],
+                    'company_name' => $data['company_name'] ?? null,
+                    'company_address' => $data['company_address'] ?? null,
+                    'company_vat_number' => $data['company_vat_number'] ?? null,
                 ]);
-                $this->requestQuote->update($this->data);
-                $this->requestQuote->save();
 
                 Notification::make()
                     ->title(__('Order finalized successfully'))
                     ->success()
                     ->send();
 
-                $order = Order::create([
+                $order = Order::firstOrCreate([
+                    'request_quote_id' => $this->requestQuote->id,
                     'user_id' => Auth::user()->id,
+                ], [
                     'status' => TransactionStatus::PENDING,
                     'currency' => StripeCurrency::HUF,
-                    'request_quote_id' => $this->requestQuote->id,
-                    'amount' => $this->requestQuote->total_price,
+                    'amount' => $this->requestQuote->getTotalPriceAttribute(),
                 ]);
 
                 Session::put('order', $order->id);

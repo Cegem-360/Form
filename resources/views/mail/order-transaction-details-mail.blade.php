@@ -1,12 +1,13 @@
 <x-mail::message>
-# Introduction
-
-The body of your message.
-
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
-
-Thanks,<br>
-{{ config('app.name') }}
+    # Rendelés visszaigazolása
+    Köszönjük a rendelését! Az alábbiakban találja a banki átutalás adatait:
+    <x-mail::panel>
+        **Átutalási adatok:**
+        - **Cégnév:** Cegem360 Kft.
+        - **Bankszámlaszám:** 126000161712942518957306
+        - **Bank:** Wise
+        - **Közlemény:** Rendelésszám: {{ $order->id }}
+    </x-mail::panel>
+    Köszönettel,<br>
+    {{ config('app.name') }}
 </x-mail::message>

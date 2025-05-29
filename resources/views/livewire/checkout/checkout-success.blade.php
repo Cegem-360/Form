@@ -71,8 +71,8 @@
                                 <div class="font-medium">{{ $item->name }}</div>
                                 <div class="text-xs text-gray-500">{{ $item->variant ?? '' }}</div>
                             </div>
-                            <div class="font-semibold text-gray-700">{{ number_format($item->price, 2) }}
-                                {{ $order->currency }}</div>
+                            <div class="font-semibold text-gray-700">
+                                {{ Number::currency($item->price, in: 'HUF', locale: 'hu', precision: 0) }}</div>
                         </div>
                     @endforeach
                 </div>
@@ -89,8 +89,9 @@
                                 alábbi
                                 bankszámlára:</p>
                             <ul class="mb-2 text-left list-disc list-inside">
-                                <li><b>Cégnév:</b> Példa Kft.</li>
-                                <li><b>Bankszámlaszám:</b> 12345678-12345678-12345678</li>
+                                <li><b>Cégnév:</b> Cegem360 Kft.</li>
+                                <li><b>Bankszámlaszám:</b> 126000161712942518957306</li>
+                                <li><b>Bank:</b> Wise</li>
                                 <li><b>Közlemény:</b> Rendelésszám: {{ $order->id ?? $requestQuote->id }}</li>
                             </ul>
                             <p class="text-xs text-gray-500">A számlát e-mailben is elküldjük Önnek.</p>

@@ -9,12 +9,10 @@
             # @lang('Hello!')
         @endif
     @endif
-
     {{-- Bevezető sorok --}}
     @foreach ($introLines as $line)
         {{ $line }}
     @endforeach
-
     {{-- Művelet gomb --}}
     @isset($actionText)
         <?php
@@ -27,12 +25,10 @@
             {{ $actionText }}
         </x-mail::button>
     @endisset
-
     {{-- Záró sorok --}}
     @foreach ($outroLines as $line)
         {{ $line }}
     @endforeach
-
     {{-- Üdvözlés --}}
     @if (!empty($salutation))
         {{ $salutation }}
@@ -40,7 +36,6 @@
         @lang('Regards,')<br>
         {{ config('app.name') }}
     @endif
-
     {{-- Almásolat --}}
     @isset($actionText)
         <x-slot:subcopy>

@@ -206,9 +206,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 return $this->form->getState();
             })
             ->form($this->getRegistrationFormSchema())
-            ->action(function (array $arguments) {
-                $data = $this->form->getState();
-                $validatedfillDataForRegister = Validator::make($arguments, [
+            ->action(function (array $data) {
+                $dataTmp = $this->form->getState();
+                $validatedfillDataForRegister = Validator::make($data, [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
                     'phone' => ['required', 'string', 'max:255'],
@@ -228,8 +228,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 $user->assignRole(RolesEnum::GUEST);
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
-                $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
+                $dataTmp['user_id'] = Auth::id();
+                $requestQuote = RequestQuote::create($dataTmp);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))
@@ -591,32 +591,32 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             [
                 'name' => 'Főoldal',
                 'length' => 'medium',
-                'required' => 1,
+                'required' => '1',
             ],
             [
                 'name' => 'Webshop',
                 'length' => 'medium',
-                'required' => 1,
+                'required' => '1',
             ],
             [
                 'name' => 'Rólunk',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Szolgáltatások',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Blog',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Gyakori kérdések',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
 
         ];
@@ -629,37 +629,37 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             [
                 'name' => 'Főoldal',
                 'length' => 'medium',
-                'required' => 1,
+                'required' => '1',
             ],
             [
                 'name' => 'Kapcsolat',
                 'length' => 'medium',
-                'required' => 1,
+                'required' => '1',
             ],
             [
                 'name' => 'Termékeink',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Rólunk',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Szolgáltatások',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Blog',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
             [
                 'name' => 'Gyakori kérdések',
                 'length' => 'medium',
-                'required' => 0,
+                'required' => '0',
             ],
         ];
     }
@@ -670,7 +670,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             [
                 'name' => 'Főoldal',
                 'length' => 'medium',
-                'required' => 1,
+                'required' => '1',
             ],
         ];
     }
@@ -680,12 +680,14 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return [
             TextInput::make('name')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->dehydrated(fn () => true)
                 ->live()
                 ->translateLabel()
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->dehydrated(fn () => true)
                 ->label('Want to this page?')
                 ->translateLabel()
                 ->live()
