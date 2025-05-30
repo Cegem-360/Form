@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages;
 
 use App\Filament\Dashboard\Resources\ProjectCommissionResource;
-use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\ListRecords;
 
 final class ListProjectCommissions extends ListRecords
@@ -15,7 +14,7 @@ final class ListProjectCommissions extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            
+
         ];
     }
 }
