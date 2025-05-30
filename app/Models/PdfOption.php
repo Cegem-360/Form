@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,11 +21,23 @@ final class PdfOption extends Model
         'website_engine',
         'frontend_description',
         'backend_description',
+        'delivery_deadline',
     ];
 
     public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
+    }
+
+    public function deliveryDeadLine(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => $value === null ? 'Vállalási határidő
+
+A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő
+
+30 munkanapon belül elkészül.' : $value,
+        );
     }
 
     #[Scope]

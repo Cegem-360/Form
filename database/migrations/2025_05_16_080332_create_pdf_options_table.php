@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('website_engine')->nullable();
             $table->text('frontend_description')->nullable();
             $table->text('backend_description')->nullable();
+            $table->text('delivery_deadline')->nullable();
 
             $table->timestamps();
         });

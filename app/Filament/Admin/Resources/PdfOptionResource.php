@@ -43,6 +43,9 @@ final class PdfOptionResource extends Resource
                     ->columnSpanFull(),
                 RichEditor::make('backend_description')
                     ->columnSpanFull(),
+                RichEditor::make('delivery_deadline')
+                    ->label('Vállalási határidő')
+                    ->columnSpanFull(),
 
             ]);
     }

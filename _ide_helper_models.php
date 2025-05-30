@@ -116,9 +116,9 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $payment_methods
  * @property bool $have_contracted_online_bank_card_payment
  * @property array<array-key, mixed>|null $online_bank_card_payment_options
+ * @property \App\Enums\FormQuestionStatus $status Status of the form question, e.g. unfilled, temporarily saved, submitted
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Enums\FormQuestionStatus $status
  * @property-read \App\Models\Domain|null $domain
  * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user
@@ -176,6 +176,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereProjectId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereSecondaryColor($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereShippingAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereStoreAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereToneOfWebsite($value)
@@ -434,8 +435,10 @@ namespace App\Models{
  * @property string|null $website_engine
  * @property string|null $frontend_description
  * @property string|null $backend_description
+ * @property string|null $delivery_deadline
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read mixed $delivery_dead_line
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\PdfOptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption newModelQuery()
@@ -443,6 +446,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereBackendDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereDeliveryDeadline($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereFrontendDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereUpdatedAt($value)
