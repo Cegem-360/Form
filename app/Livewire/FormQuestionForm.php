@@ -484,7 +484,7 @@ final class FormQuestionForm extends Component implements HasForms
 
         $this->form->model($record)->saveRelationships();
 
-        return redirect()->route('filament.dashboard.resources.form-questions.view', ['record' => $record->id]);
+        return redirect()->route('filament.dashboard.resources.form-questions.view', ['record' => $record]);
     }
 
     public function updateAndDraft(): void

@@ -48,6 +48,7 @@ final class FormQuestionResource extends Resource
             ->modifyQueryUsing(function ($query) {
                 return $query->whereUserId(Auth::user()->id);
             })
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('project.name')
                     ->translateLabel()

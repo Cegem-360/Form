@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ClientType;
-use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuotePriceWidget;
@@ -272,13 +271,9 @@ final class RequestQuoteResource extends Resource
 
         return $table
             ->modifyQueryUsing(function (Builder $query) use ($userId) {
-
-                if (Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN])) {
-                    return $query;
-                }
-
                 return $query->whereUserId($userId);
             })
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('quotation_name')
                     ->translateLabel()

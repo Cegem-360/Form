@@ -250,6 +250,7 @@ final class RequestQuoteResource extends Resource
     {
 
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('quotation_name')
                     ->searchable(),
