@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Enums\RolesEnum;
-use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\CreateFormQuestion;
-use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ListFormQuestions;
+use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -29,10 +26,9 @@ use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
 
@@ -61,40 +57,47 @@ final class FormQuestionResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('ProjectUser')->columns(2)->schema([
+                Section::make('ProjectUser')->translateLabel()->columns(2)->schema([
                     Select::make('project_id')
+                        ->translateLabel()
                         ->relationship('project', 'name')
                         ->createOptionForm([
                             TextInput::make('name')
+                                ->translateLabel()
                                 ->required(),
                             ToggleButtons::make('status')
+                                ->translateLabel()
                                 ->options(ProjectStatus::class)->required(),
                         ])
                         ->searchable()
                         ->preload()
                         ->columns(2),
-                    Select::make('user_id')
-                        ->relationship('user', 'name'),
-                ])->visible(Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN])),
 
+                ]),
                 Split::make([
-                    Section::make('website')->schema([
-                        Section::make('Company basic informations')
+                    Section::make(__('website'))->translateLabel()->schema([
+                        Section::make(__('Company basic informations'))
+                            ->translateLabel()
                             ->schema([
                                 Select::make('domain_id') // hidden
+                                    ->translateLabel()
                                     ->relationship('domain', 'name')
                                     ->createOptionForm([
                                         TextInput::make('name')
+                                            ->translateLabel()
                                             ->required(),
                                         TextInput::make('url')
+                                            ->translateLabel()
                                             ->url()
                                             ->required(),
                                         TextInput::make('description')
+                                            ->translateLabel()
                                             ->required(),
                                     ])
                                     ->searchable()
                                     ->preload(),
                                 TextInput::make('token') // hidden
+                                    ->translateLabel()
                                     ->hintAction(
                                         CopyAction::make('copyTokenUrl')
                                             ->label('Copy URL for questions form')
@@ -114,29 +117,37 @@ final class FormQuestionResource extends Resource
 
                                     ),
                                 TextInput::make('company_name') // 1. page
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 TextInput::make('contact_name') // 1. page
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 TextInput::make('contact_email') // 1. page
+                                    ->translateLabel()
                                     ->email()
                                     ->maxLength(255),
                                 TextInput::make('contact_phone') // 1. page
+                                    ->translateLabel()
                                     ->tel()
                                     ->maxLength(255),
                                 TextInput::make('contact_position')// 1. page
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 FileUpload::make('logo') // 1. page
+                                    ->translateLabel()
                                     ->image()
                                     ->maxSize(2048)
                                     ->maxFiles(1)
                                     ->downloadable(),
                                 Repeater::make('activities')// serveces etc. 1. page
+                                    ->translateLabel()
                                     ->defaultItems(3)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         TextInput::make('name')
+                                            ->translateLabel()
                                             ->maxLength(255)
                                             ->required(),
                                     ]),
@@ -145,74 +156,97 @@ final class FormQuestionResource extends Resource
                             ->collapsible()
                             ->collapsed(),
                         Section::make('Theme') // 2. page
+                            ->translateLabel()
                             ->schema([
                                 Toggle::make('have_exist_website') // 2. page
+                                    ->translateLabel()
                                     ->required(),
                                 TextInput::make('exist_website_url') // 2. page
+                                    ->translateLabel()
                                     ->url(),
                                 Toggle::make('is_exact_deadline')
+                                    ->translateLabel()
                                     ->required(),
-                                DatePicker::make('deadline'),
+                                DatePicker::make('deadline')
+                                    ->translateLabel(),
                                 MarkdownEditor::make('formating_milestone')->label('Kiemelt értékeink')
+                                    ->translateLabel()
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('attachments')
                                     ->fileAttachmentsVisibility('public'),
                                 MarkdownEditor::make('visual_feeling')
+                                    ->translateLabel()
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('attachments')
                                     ->fileAttachmentsVisibility('public'),
                                 TextInput::make('tone_of_website')
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 Textarea::make('other_tone_of_website')
+                                    ->translateLabel()
                                     ->columnSpanFull(),
                                 Toggle::make('have_exist_design')
+                                    ->translateLabel()
                                     ->required(),
                                 FileUpload::make('design_files')
+                                    ->translateLabel()
                                     ->downloadable()
                                     ->multiple()
                                     ->disk('public')
                                     ->directory('design_files')
                                     ->visibility('public'),
                                 Repeater::make('inspire_websites')
+                                    ->translateLabel()
                                     ->defaultItems(10)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         TextInput::make('url')
+                                            ->translateLabel()
                                             ->url()
                                             ->required(),
                                         RichEditor::make('description')
+                                            ->translateLabel()
                                             ->required(),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['url'] ?? null),
                                 Repeater::make('banned_elements')
+                                    ->translateLabel()
                                     ->defaultItems(3)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         Textarea::make('element')
+                                            ->translateLabel()
                                             ->columnSpanFull()
                                             ->required(),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['element'] ?? null),
-                                ColorPicker::make('primary_color'),
-                                ColorPicker::make('secondary_color'),
+                                ColorPicker::make('primary_color')
+                                    ->translateLabel(),
+                                ColorPicker::make('secondary_color')
+                                    ->translateLabel(),
                                 Repeater::make('additional_colors')
+                                    ->translateLabel()
                                     ->defaultItems(3)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         ColorPicker::make('color')
+                                            ->translateLabel()
                                             ->required(),
-                                        TextInput::make('description'),
+                                        TextInput::make('description')
+                                            ->translateLabel(),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['description'] ?? null),
                                 Repeater::make('prefered_font_types')
+                                    ->translateLabel()
                                     ->schema([
                                         TextInput::make('font_type_name')
+                                            ->translateLabel()
                                             ->required(),
                                     ])
                                     ->defaultItems(3)
@@ -245,25 +279,31 @@ final class FormQuestionResource extends Resource
                                     ->visibility('public')
                                     ->preserveFilenames(),
                                 Repeater::make('main_pages')
+                                    ->translateLabel()
                                     ->defaultItems(3)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         TextInput::make('name')
+                                            ->translateLabel()
                                             ->maxLength(255)
                                             ->required(),
                                         RichEditor::make('description')
+                                            ->translateLabel()
                                             ->fileAttachmentsDisk('public')
                                             ->fileAttachmentsDirectory('pages/attachments')
                                             ->fileAttachmentsVisibility('public'),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                                 Textarea::make('other_pages')
+                                    ->translateLabel()
                                     ->columnSpanFull(),
                                 Toggle::make('have_product_catalog')
+                                    ->translateLabel()
                                     ->required(),
                                 FileUpload::make('product_catalog')
+                                    ->translateLabel()
                                     ->maxSize(2048)
                                     ->multiple()
                                     ->downloadable()
@@ -272,15 +312,21 @@ final class FormQuestionResource extends Resource
                                     ->visibility('public')
                                     ->preserveFilenames(),
 
-                                Toggle::make('need_multi_language'),
+                                Toggle::make('need_multi_language')
+                                    ->translateLabel(),
                                 Textarea::make('languages_for_website')
+                                    ->translateLabel()
                                     ->maxLength(255),
-                                RichEditor::make('call_to_actions'),
+                                RichEditor::make('call_to_actions')
+                                    ->translateLabel(),
                                 Toggle::make('have_blog')
+                                    ->translateLabel()
                                     ->required(),
                                 TextInput::make('exist_blog_count')
+                                    ->translateLabel()
                                     ->numeric(),
                                 Select::make('importance_of_seo')
+                                    ->translateLabel()
                                     ->options([
                                         '1' => '1',
                                         '2' => '2',
@@ -288,18 +334,22 @@ final class FormQuestionResource extends Resource
                                         '4' => '4',
                                         '5' => '5',
                                     ]),
-                                Toggle::make('have_payed_advertising'),
+                                Toggle::make('have_payed_advertising')
+                                    ->translateLabel(),
                                 RichEditor::make('other_expectation_or_request')
+                                    ->translateLabel()
                                     ->columnSpanFull(),
                             ])
                             ->collapsible()
                             ->collapsed(),
 
                         Section::make('Webshop')
+                            ->translateLabel()
                             ->collapsible()
                             ->collapsed()
                             ->schema([
                                 FileUpload::make('products_csv_file')
+                                    ->translateLabel()
                                     ->image()
                                     ->maxSize(2048)
                                     ->maxFiles(1)
@@ -309,6 +359,7 @@ final class FormQuestionResource extends Resource
                                     ->visibility('public')
                                     ->preserveFilenames(),
                                 Repeater::make('highlighted_categories')
+                                    ->translateLabel()
                                     ->defaultItems(3)
                                     ->collapsible()
                                     ->collapsed()
@@ -324,48 +375,59 @@ final class FormQuestionResource extends Resource
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                                 Select::make('bruto_netto')
+                                    ->translateLabel()
                                     ->options([
                                         'bruto' => 'bruto',
                                         'netto' => 'netto',
                                     ]),
                                 TextInput::make('store_address')
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 TextInput::make('shipping_address')
+                                    ->translateLabel()
                                     ->maxLength(255),
                                 Select::make('parcel_points')
+                                    ->translateLabel()
                                     ->options([
                                         'gls' => 'GLS',
                                         'dpd' => 'DPD',
                                         'dhl' => 'DHL',
                                         'mpl' => 'MPL',
                                     ])->multiple(),
-                                Toggle::make('have_contracted_accountant'),
+                                Toggle::make('have_contracted_accountant')
+                                    ->translateLabel(),
                                 Repeater::make('contracted_accountants')
+                                    ->translateLabel()
                                     ->defaultItems(1)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         TextInput::make('name')
+                                            ->translateLabel()
                                             ->maxLength(255)
                                             ->required(),
                                     ])
                                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                                 Select::make('payment_methods')
+                                    ->translateLabel()
                                     ->options([
                                         'cash' => 'cash',
                                         'credit_card' => 'credit card',
                                         'bank_transfer' => 'bank transfer',
                                         'paypal' => 'PayPal',
                                     ])->multiple(),
-                                Toggle::make('have_contracted_online_bank_card_payment'),
+                                Toggle::make('have_contracted_online_bank_card_payment')
+                                    ->translateLabel(),
                                 Repeater::make('online_bank_card_payment_options')
+                                    ->translateLabel()
                                     ->defaultItems(1)
                                     ->collapsible()
                                     ->collapsed()
                                     ->reorderableWithDragAndDrop()
                                     ->schema([
                                         TextInput::make('name')
+                                            ->translateLabel()
                                             ->maxLength(255)
                                             ->required(),
                                     ])
@@ -375,161 +437,7 @@ final class FormQuestionResource extends Resource
                             ->collapsed(),
 
                     ]),
-                    Section::make('Visibilty')
-                        ->id('visibility')
-                        ->relationship('visibility')
-                        ->schema([
-                            Section::make('basic website info')
-                                ->id('basic_website_info')
-                                ->headerActions([
-                                    Action::make('all_set_true')
-                                        ->label('All set to true')
-                                        ->action(function (Set $set): void {
-                                            $set('company_name_visible', true);
-                                            $set('company_name_visible', true);
-                                            $set('contact_name_visible', true);
-                                            $set('contact_email_visible', true);
-                                            $set('contact_phone_visible', true);
-                                            $set('contact_position_visible', true);
-                                            $set('logo_visible', true);
-                                            $set('activities_visible', true);
-                                        }),
-                                ])
-                                ->collapsible()
-                                ->collapsed()
-                                ->schema([
-                                    Toggle::make('company_name_visible')->live(),
-                                    Toggle::make('contact_name_visible')->live(),
-                                    Toggle::make('contact_email_visible')->live(),
-                                    Toggle::make('contact_phone_visible')->live(),
-                                    Toggle::make('contact_position_visible')->live(),
-                                    Toggle::make('logo_visible')->live(),
-                                    Toggle::make('activities_visible')->live(),
-                                ]),
-                            Section::make('Theme')
-                                ->headerActions([
-                                    Action::make('all_set_true')
-                                        ->label('All set to true')
-                                        ->action(function (Set $set): void {
 
-                                            $set('have_exist_website_visible', true);
-                                            $set('exist_website_url_visible', true);
-                                            $set('is_exact_deadline_visible', true);
-                                            $set('deadline_visible', true);
-                                            $set('formating_milestone_visible', true);
-                                            $set('visual_feeling_visible', true);
-                                            $set('tone_of_website_visible', true);
-                                            $set('other_tone_of_website_visible', true);
-                                            $set('have_exist_design_visible', true);
-                                            $set('design_files_visible', true);
-                                            $set('inspire_websites_visible', true);
-                                            $set('banned_elements_visible', true);
-                                            $set('primary_color_visible', true);
-                                            $set('secondary_color_visible', true);
-                                            $set('additional_colors_visible', true);
-                                            $set('prefered_font_types_visible', true);
-
-                                        }),
-                                ])
-                                ->collapsible()
-                                ->collapsed()
-                                ->schema([
-                                    Toggle::make('have_exist_website_visible')->live(),
-                                    Toggle::make('exist_website_url_visible')->live(),
-                                    Toggle::make('is_exact_deadline_visible')->live(),
-                                    Toggle::make('deadline_visible')->live(),
-                                    Toggle::make('formating_milestone_visible')->live(),
-                                    Toggle::make('visual_feeling_visible')->live(),
-                                    Toggle::make('tone_of_website_visible')->live(),
-                                    Toggle::make('other_tone_of_website_visible')->live(),
-                                    Toggle::make('have_exist_design_visible')->live(),
-                                    Toggle::make('design_files_visible')->live(),
-                                    Toggle::make('inspire_websites_visible')->live(),
-                                    Toggle::make('banned_elements_visible')->live(),
-                                    Toggle::make('primary_color_visible')->live(),
-                                    Toggle::make('secondary_color_visible')->live(),
-                                    Toggle::make('additional_colors_visible')->live(),
-                                    Toggle::make('prefered_font_types_visible')->live(),
-                                ]),
-                            Section::make('Design Specifications')
-                                ->headerActions([
-                                    Action::make('all_set_true')
-                                        ->label('All set to true')
-                                        ->action(function (Set $set): void {
-
-                                            $set('own_company_images_visible', true);
-                                            $set('use_video_or_animation_visible', true);
-                                            $set('own_company_videos_visible', true);
-                                            $set('main_pages_visible', true);
-                                            $set('other_pages_visible', true);
-                                            $set('have_product_catalog_visible', true);
-                                            $set('product_catalog_visible', true);
-                                            $set('need_multi_language_visible', true);
-                                            $set('languages_for_website_visible', true);
-                                            $set('call_to_actions_visible', true);
-                                            $set('have_blog_visible', true);
-                                            $set('exist_blog_count_visible', true);
-                                            $set('importance_of_seo_visible', true);
-                                            $set('have_payed_advertising_visible', true);
-                                            $set('other_expectation_or_request_visible', true);
-
-                                        }),
-                                ])
-                                ->collapsible()
-                                ->collapsed()
-                                ->schema([
-                                    Toggle::make('own_company_images_visible')->live(),
-                                    Toggle::make('use_video_or_animation_visible')->live(),
-                                    Toggle::make('own_company_videos_visible')->live(),
-                                    Toggle::make('main_pages_visible')->live(),
-                                    Toggle::make('other_pages_visible')->live(),
-                                    Toggle::make('have_product_catalog_visible')->live(),
-                                    Toggle::make('product_catalog_visible')->live(),
-                                    Toggle::make('need_multi_language_visible')->live(),
-                                    Toggle::make('languages_for_website_visible')->live(),
-                                    Toggle::make('call_to_actions_visible')->live(),
-                                    Toggle::make('have_blog_visible')->live(),
-                                    Toggle::make('exist_blog_count_visible')->live(),
-                                    Toggle::make('importance_of_seo_visible')->live(),
-                                    Toggle::make('have_payed_advertising_visible')->live(),
-                                    Toggle::make('other_expectation_or_request_visible')->live(),
-                                ]),
-                            Section::make('Webshop')
-                                ->headerActions([
-                                    Action::make('all_set_true')
-                                        ->label('All set to true')
-                                        ->action(function (Set $set): void {
-                                            $set('products_csv_file_visible', true);
-                                            $set('highlighted_categories_visible', true);
-                                            $set('bruto_netto_visible', true);
-                                            $set('store_address_visible', true);
-                                            $set('shipping_address_visible', true);
-                                            $set('parcel_points_visible', true);
-                                            $set('have_contracted_accountant_visible', true);
-                                            $set('contracted_accountants_visible', true);
-                                            $set('payment_methods_visible', true);
-                                            $set('have_contracted_online_bank_card_payment_visible', true);
-                                            $set('online_bank_card_payment_options_visible', true);
-
-                                        }),
-                                ])
-                                ->schema([
-                                    Toggle::make('products_csv_file_visible')->live(),
-                                    Toggle::make('highlighted_categories_visible')->live(),
-                                    Toggle::make('bruto_netto_visible')->live(),
-                                    Toggle::make('store_address_visible')->live(),
-                                    Toggle::make('shipping_address_visible')->live(),
-                                    Toggle::make('parcel_points_visible')->live(),
-                                    Toggle::make('have_contracted_accountant_visible')->live(),
-                                    Toggle::make('contracted_accountants_visible')->live(),
-                                    Toggle::make('payment_methods_visible')->live(),
-                                    Toggle::make('have_contracted_online_bank_card_payment_visible')->live(),
-                                    Toggle::make('online_bank_card_payment_options_visible')->live(),
-                                ])
-                                ->collapsible()
-                                ->collapsed(),
-
-                        ])->grow(false),
                 ]),
             ])->columns(1);
     }
@@ -538,18 +446,17 @@ final class FormQuestionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('domain.name')
+                TextColumn::make('project.name')
+                    ->translateLabel()
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('company_name')
-                    ->searchable(),
-                TextColumn::make('contact_name')
-                    ->searchable(),
-                TextColumn::make('contact_email')
-                    ->searchable(),
-                TextColumn::make('contact_phone')
-                    ->searchable(),
-
+                TextColumn::make('project.requestQuote.quotation_name')
+                    ->translateLabel()
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('status')
+                    ->translateLabel()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -563,7 +470,7 @@ final class FormQuestionResource extends Resource
                 //
             ])
             ->actions([
-                EditAction::make(),
+                ViewAction::make(),
 
             ])
             ->bulkActions([
@@ -584,8 +491,8 @@ final class FormQuestionResource extends Resource
     {
         return [
             'index' => ListFormQuestions::route('/'),
-            'create' => CreateFormQuestion::route('/create'),
-            'edit' => EditFormQuestion::route('/{record}/edit'),
+            'view' => ViewFormQuestion::route('/{record}'),
+
         ];
     }
 }

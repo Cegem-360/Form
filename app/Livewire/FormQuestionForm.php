@@ -191,9 +191,7 @@ final class FormQuestionForm extends Component implements HasForms
                                     ->required(),
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['element'] ?? null),
-                        Section::make('Colors and Fonts')->columns(2)
-                            ->label(__('Colors and Fonts'))
-                            ->translateLabel()
+                        Section::make(__('Colors and Fonts'))->columns(2)
                             ->compact()
                             ->schema([
                                 ColorPicker::make('primary_color')
@@ -448,6 +446,14 @@ final class FormQuestionForm extends Component implements HasForms
                         ->translateLabel()
                         ->default(false)
                         ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
+                        ->required()
+                        ->accepted(true),
+                    Checkbox::make('consent_start')
+                        ->live()
+                        ->label('I acknowledge that work can begin')
+                        ->translateLabel()
+                        ->default(false)
+                        ->helperText(__('You must acknowledge that work can begin to proceed.'))
                         ->required()
                         ->accepted(true),
                 ]),

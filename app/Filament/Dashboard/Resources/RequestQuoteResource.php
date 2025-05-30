@@ -34,7 +34,6 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -299,15 +298,6 @@ final class RequestQuoteResource extends Resource
                     ->state(function (Model $record): string|false {
                         return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
                     }),
-                ToggleColumn::make('is_payed')
-                    ->disabled(true)
-                    ->state(function (Model $record): bool {
-                        dump($record);
-
-                        return $record->is_payed;
-                    })
-                    ->translateLabel()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->translateLabel()
                     ->dateTime()
@@ -328,13 +318,15 @@ final class RequestQuoteResource extends Resource
                 TableAction::make('order')
                     ->label(__('Order'))
                     ->action(function (RequestQuote $record) {
-                        dd($record);
+
                         Session::put('requestQuote', $record->id);
 
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
-                    ->visible(fn ($record): bool => $record->id_payed === false)
+                    ->visible(function (RequestQuote $record) {
+                        return ! $record->is_payed;
+                    })
                     ->icon('heroicon-o-check'),
             ])
             ->bulkActions([
