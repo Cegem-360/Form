@@ -34,12 +34,13 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Number;
-use Session;
 
 final class RequestQuoteResource extends Resource
 {
@@ -272,6 +273,7 @@ final class RequestQuoteResource extends Resource
 
         return $table
             ->modifyQueryUsing(function (Builder $query) use ($userId) {
+
                 if (Auth::user()->hasRole([RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN])) {
                     return $query;
                 }
@@ -296,7 +298,15 @@ final class RequestQuoteResource extends Resource
                     ->translateLabel()
                     ->state(function (Model $record): string|false {
                         return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
+                    }),
+                ToggleColumn::make('is_payed')
+                    ->disabled(true)
+                    ->state(function (Model $record): bool {
+                        dump($record);
+
+                        return $record->is_payed;
                     })
+                    ->translateLabel()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->translateLabel()
@@ -317,7 +327,8 @@ final class RequestQuoteResource extends Resource
 
                 TableAction::make('order')
                     ->label(__('Order'))
-                    ->action(function (Model $record) {
+                    ->action(function (RequestQuote $record) {
+                        dd($record);
                         Session::put('requestQuote', $record->id);
 
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);

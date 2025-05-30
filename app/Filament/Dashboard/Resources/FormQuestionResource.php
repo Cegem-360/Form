@@ -49,7 +49,12 @@ final class FormQuestionResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('Form questions');
+        return __('Form Questions');
+    }
+
+    public static function getPluralLabel(): string
+    {
+        return __('Form Questions');
     }
 
     public static function form(Form $form): Form

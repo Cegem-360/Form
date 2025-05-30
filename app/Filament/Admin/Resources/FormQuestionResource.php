@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Enums\FormQuestionStatus;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\CreateFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ListFormQuestions;
@@ -71,6 +72,11 @@ final class FormQuestionResource extends Resource
                                     ])
                                     ->searchable()
                                     ->preload(),
+                                Select::make('status')
+                                    ->options(FormQuestionStatus::class)
+                                    ->default(FormQuestionStatus::UNFILLED)
+                                    ->required()
+                                    ->enum(FormQuestionStatus::class),
                                 TextInput::make('token') // hidden
                                     ->hintAction(
                                         CopyAction::make('copyTokenUrl')
@@ -515,18 +521,13 @@ final class FormQuestionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('domain.name')
-                    ->numeric()
+                TextColumn::make('project.name')
+                    ->searchable()
                     ->sortable(),
-                TextColumn::make('company_name')
-                    ->searchable(),
-                TextColumn::make('contact_name')
-                    ->searchable(),
-                TextColumn::make('contact_email')
-                    ->searchable(),
-                TextColumn::make('contact_phone')
-                    ->searchable(),
-
+                TextColumn::make('status')
+                    ->badge()
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

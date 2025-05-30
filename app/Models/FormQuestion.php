@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\FormQuestionStatus;
 use App\Observers\FormQuestionObserver;
 use Database\Factories\FormQuestionFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -84,6 +85,7 @@ final class FormQuestion extends Model
         'payment_methods',
         'have_contracted_online_bank_card_payment',
         'online_bank_card_payment_options',
+        'status',
     ];
 
     public function domain(): BelongsTo
@@ -145,6 +147,7 @@ final class FormQuestion extends Model
             'contracted_accountants' => 'array',
             'payment_methods' => 'array',
             'online_bank_card_payment_options' => 'array',
+            'status' => FormQuestionStatus::class,
 
         ];
     }

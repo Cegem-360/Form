@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\FormQuestionStatus;
 use App\Models\Domain;
 use App\Models\Project;
 use App\Models\User;
@@ -79,6 +80,9 @@ return new class extends Migration
             $table->json('payment_methods')->nullable();
             $table->boolean('have_contracted_online_bank_card_payment')->default(false);
             $table->json('online_bank_card_payment_options')->nullable();
+            $table->enum('status', FormQuestionStatus::casesArray())
+                ->default(FormQuestionStatus::UNFILLED->value)
+                ->comment('Status of the form question, e.g. unfilled, temporarily saved, submitted');
             $table->timestamps();
         });
 

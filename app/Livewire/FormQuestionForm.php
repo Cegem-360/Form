@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Models\FormQuestion;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -97,7 +98,7 @@ final class FormQuestionForm extends Component implements HasForms
                             ->downloadable(),
 
                     ])
-                    ->description('The Company basic informations'),
+                    ->description(__('The Company basic informations')),
                 Step::make('Theme')
                     ->translateLabel()
                     ->columns(3)
@@ -191,6 +192,7 @@ final class FormQuestionForm extends Component implements HasForms
                             ])
                             ->itemLabel(fn (array $state): ?string => $state['element'] ?? null),
                         Section::make('Colors and Fonts')->columns(2)
+                            ->label(__('Colors and Fonts'))
                             ->translateLabel()
                             ->compact()
                             ->schema([
@@ -276,12 +278,15 @@ final class FormQuestionForm extends Component implements HasForms
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                     Textarea::make('other_pages')
+                        ->translateLabel()
                         ->visible($visibility->other_pages_visible)
                         ->columnSpanFull(),
                     Toggle::make('have_product_catalog')
+                        ->translateLabel()
                         ->live()
                         ->visible($visibility->have_product_catalog_visible),
                     FileUpload::make('product_catalog')
+                        ->translateLabel()
                         ->visible(fn (Get $get): bool => $visibility->product_catalog_visible && $get('have_product_catalog'))
                         ->maxSize(2048)
                         ->multiple()
@@ -291,20 +296,26 @@ final class FormQuestionForm extends Component implements HasForms
                         ->visibility('public')
                         ->preserveFilenames(),
                     Toggle::make('need_multi_language')
+                        ->translateLabel()
                         ->live()
                         ->visible($visibility->need_multi_language_visible),
                     Textarea::make('languages_for_website')
+                        ->translateLabel()
                         ->visible(fn (Get $get): bool => $visibility->languages_for_website_visible && $get('need_multi_language'))
                         ->maxLength(255),
                     RichEditor::make('call_to_actions')
+                        ->translateLabel()
                         ->visible($visibility->call_to_actions_visible),
                     Toggle::make('have_blog')
+                        ->translateLabel()
                         ->live()
                         ->visible($visibility->have_blog_visible),
                     TextInput::make('exist_blog_count')
+                        ->translateLabel()
                         ->visible(fn (Get $get): bool => $visibility->exist_blog_count_visible && $get('have_blog'))
                         ->numeric(),
                     Select::make('importance_of_seo')
+                        ->translateLabel()
                         ->visible($visibility->importance_of_seo_visible)
                         ->options([
                             '1' => '1',
@@ -314,14 +325,17 @@ final class FormQuestionForm extends Component implements HasForms
                             '5' => '5',
                         ]),
                     Toggle::make('have_payed_advertising')
+                        ->translateLabel()
                         ->visible($visibility->have_payed_advertising_visible),
                     RichEditor::make('other_expectation_or_request')
+                        ->translateLabel()
                         ->visible($visibility->other_expectation_or_request_visible)
                         ->columnSpanFull(),
                 ]),
 
-                Step::make('Webshop')->schema([
+                Step::make('Webshop')->translateLabel()->schema([
                     FileUpload::make('products_csv_file')
+                        ->translateLabel()
                         ->visible($visibility->products_csv_file_visible)
                         ->maxSize(2048)
                         ->maxFiles(1)
@@ -331,6 +345,7 @@ final class FormQuestionForm extends Component implements HasForms
                         ->visibility('public')
                         ->preserveFilenames(),
                     Repeater::make('highlighted_categories')
+                        ->translateLabel()
                         ->visible($visibility->highlighted_categories_visible)
                         ->defaultItems(3)
                         ->collapsible()
@@ -338,27 +353,33 @@ final class FormQuestionForm extends Component implements HasForms
                         ->reorderableWithDragAndDrop()
                         ->schema([
                             TextInput::make('name')
+                                ->translateLabel()
                                 ->maxLength(255)
                                 ->required(),
                             RichEditor::make('description')
+                                ->translateLabel()
                                 ->fileAttachmentsDisk('public')
                                 ->fileAttachmentsDirectory('categories/attachments')
                                 ->fileAttachmentsVisibility('public'),
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                     Select::make('bruto_netto')
+                        ->translateLabel()
                         ->visible($visibility->bruto_netto_visible)
                         ->options([
                             'bruto' => 'bruto',
                             'netto' => 'netto',
                         ]),
                     TextInput::make('store_address')
+                        ->translateLabel()
                         ->visible($visibility->store_address_visible)
                         ->maxLength(255),
                     TextInput::make('shipping_address')
+                        ->translateLabel()
                         ->visible($visibility->shipping_address_visible)
                         ->maxLength(255),
                     Select::make('parcel_points')
+                        ->translateLabel()
                         ->visible($visibility->parcel_points_visible)
                         ->options([
                             'gls' => 'GLS',
@@ -367,8 +388,10 @@ final class FormQuestionForm extends Component implements HasForms
                             'mpl' => 'MPL',
                         ])->multiple(),
                     Toggle::make('have_contracted_accountant')
+                        ->translateLabel()
                         ->visible($visibility->have_contracted_accountant_visible),
                     Repeater::make('contracted_accountants')
+                        ->translateLabel()
                         ->visible($visibility->contracted_accountants_visible)
                         ->defaultItems(1)
                         ->collapsible()
@@ -376,11 +399,13 @@ final class FormQuestionForm extends Component implements HasForms
                         ->reorderableWithDragAndDrop()
                         ->schema([
                             TextInput::make('name')
+                                ->translateLabel()
                                 ->maxLength(255)
                                 ->required(),
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                     Select::make('payment_methods')
+                        ->translateLabel()
                         ->visible($visibility->payment_methods_visible)
                         ->multiple()
                         ->options([
@@ -390,8 +415,10 @@ final class FormQuestionForm extends Component implements HasForms
                             'paypal' => 'PayPal',
                         ]),
                     Toggle::make('have_contracted_online_bank_card_payment')
+                        ->translateLabel()
                         ->visible($visibility->have_contracted_online_bank_card_payment_visible),
                     Repeater::make('online_bank_card_payment_options')
+                        ->translateLabel()
                         ->visible($visibility->online_bank_card_payment_options_visible)
                         ->defaultItems(1)
                         ->collapsible()
@@ -399,10 +426,30 @@ final class FormQuestionForm extends Component implements HasForms
                         ->reorderableWithDragAndDrop()
                         ->schema([
                             TextInput::make('name')
+                                ->translateLabel()
                                 ->maxLength(255)
                                 ->required(),
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
+
+                ]),
+                Step::make('Véglegesítés')->translateLabel()->schema([
+                    Checkbox::make('consent')
+                        ->live()
+                        ->default(false)
+                        ->label('I agree to the terms and conditions(note:later has link)')
+                        ->translateLabel()
+                        ->required()
+                        ->helperText(__('You must agree to the terms and conditions to proceed.'))
+                        ->accepted(true),
+                    Checkbox::make('privacy_policy')
+                        ->live()
+                        ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
+                        ->translateLabel()
+                        ->default(false)
+                        ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
+                        ->required()
+                        ->accepted(true),
                 ]),
             ])->skippable(),
         ])

@@ -118,6 +118,7 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $online_bank_card_payment_options
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \App\Enums\FormQuestionStatus $status
  * @property-read \App\Models\Domain|null $domain
  * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user

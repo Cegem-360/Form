@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum PermissionsEnum: string
+use Filament\Support\Contracts\HasLabel;
+
+enum PermissionsEnum: string implements HasLabel
 {
     case VIEW = 'view';
     case VIEW_ANY = 'view-any';
@@ -20,7 +22,7 @@ enum PermissionsEnum: string
     case FORCE_DELETE_ANY = 'force-delete-any';
 
     // extra helper to allow for greater customization of displayed values, without disclosing the name/value data directly
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
             self::VIEW => 'View',

@@ -14,6 +14,13 @@ final class ViewRequestQuote extends ViewRecord
 {
     protected static string $resource = RequestQuoteResource::class;
 
+    public function createPdf()
+    {
+        $record = $this->record;
+
+        return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -26,6 +33,10 @@ final class ViewRequestQuote extends ViewRecord
 
                     return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                 }),
+            Action::make('createPdf')
+                ->label('Árajánlat megtekintése')
+                ->action('createPdf')
+                ->color('primary'),
 
         ];
     }

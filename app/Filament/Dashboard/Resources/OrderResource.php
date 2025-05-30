@@ -106,6 +106,7 @@ final class OrderResource extends Resource
                         TransactionStatus::COMPLETED => 'success',
                         TransactionStatus::FAILED => 'danger',
                         TransactionStatus::REFUNDED => 'warning',
+                        default => 'gray',
                     }),
                 TextColumn::make('created_at')
                     ->dateTime()

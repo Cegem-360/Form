@@ -16,7 +16,7 @@ final class RequestQuoteSeeder extends Seeder
     public function run(): void
     {
         $websiteTypes = WebsiteType::all();
-        RequestQuote::factory()->count(100)->create([
+        RequestQuote::factory()->count(2)->create([
             'user_id' => null,
             'website_type_id' => $websiteTypes->random()->id,
         ]);
