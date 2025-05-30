@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Enums\FormQuestionStatus;
 use App\Models\FormQuestion;
+use Filament\Actions\Action as SubmitButton;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
@@ -434,11 +436,11 @@ final class FormQuestionForm extends Component implements HasForms
                 Step::make('Véglegesítés')->translateLabel()->schema([
                     Checkbox::make('consent')
                         ->live()
-                        ->default(false)
                         ->label('I agree to the terms and conditions(note:later has link)')
                         ->translateLabel()
-                        ->required()
+                        ->default(false)
                         ->helperText(__('You must agree to the terms and conditions to proceed.'))
+                        ->required()
                         ->accepted(true),
                     Checkbox::make('privacy_policy')
                         ->live()
@@ -456,28 +458,41 @@ final class FormQuestionForm extends Component implements HasForms
                         ->helperText(__('You must acknowledge that work can begin to proceed.'))
                         ->required()
                         ->accepted(true),
-                ]),
-            ])->skippable(),
+                ]), ])
+                ->skippable()
+                ->submitAction($this->submitButtonAction($this->data)),
         ])
             ->statePath('data')
             ->model(FormQuestion::class);
     }
 
-    public function create(): void
+    public function submitButtonAction($data): SubmitButton
+    {
+        dump($data);
+
+        return SubmitButton::make('submit')
+            ->view('filament.forms.components.form-question-submit-button', ['data' => $data]);
+    }
+
+    public function updateAndClose()
     {
         $data = $this->form->getState();
 
-        $record = FormQuestion::create($data);
+        $data['status'] = FormQuestionStatus::SUBMITTED;
+
+        $record = FormQuestion::update($data);
 
         $this->form->model($record)->saveRelationships();
+
+        return redirect()->route('filament.dashboard.resources.form-questions.view', ['record' => $record->id]);
     }
 
-    public function update(): void
+    public function updateAndDraft(): void
     {
         $data = $this->form->getState();
 
         $this->post->update($data);
-
+        $data['status'] = FormQuestionStatus::TEMPORARILY_SAVED;
         $this->form->saveRelationships();
 
         Notification::make()
