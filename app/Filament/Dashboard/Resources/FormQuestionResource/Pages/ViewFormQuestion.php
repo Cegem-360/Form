@@ -14,11 +14,16 @@ final class ViewFormQuestion extends ViewRecord
 
     protected static string $view = 'filament.dashboard.resources.form-question-resource.pages.view-form-question';
 
+    public function getTitle(): string
+    {
+        return __('View Form Question').' - '.$this->record->project->name;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
             Action::make('view-form')
-                ->label(__('Form megtekintése'))
+                ->label(__('View Form'))
                 ->icon('heroicon-o-eye')
                 ->url(fn () => route('kerdoiv', ['token' => $this->record->token]))
                 ->openUrlInNewTab()

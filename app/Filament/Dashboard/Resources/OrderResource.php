@@ -17,6 +17,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Number;
 
 final class OrderResource extends Resource
@@ -77,45 +78,48 @@ final class OrderResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                return $query->whereUserId(Auth::user()->id);
+            })
             ->columns([
-                TextColumn::make('requestQuote.name')
-                    ->label(__('Request quote'))
-                    ->translateLabel()
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('amount')
-                    ->translateLabel()
-                    ->numeric()
-                    ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
-                    ->sortable(),
-                TextColumn::make('currency')
-                    ->translateLabel()
-                    ->searchable(),
-                TextColumn::make('customer_email')
-                    ->translateLabel()
-                    ->searchable(),
-                TextColumn::make('customer_name')
-                    ->translateLabel()
-                    ->searchable(),
-                TextColumn::make('status')
-                    ->label(__('Payment Status'))
-                    ->translateLabel()
-                    ->badge()
-                    ->color(fn (TransactionStatus $state): string => match ($state) {
-                        TransactionStatus::PENDING => 'gray',
-                        TransactionStatus::COMPLETED => 'success',
-                        TransactionStatus::FAILED => 'danger',
-                        TransactionStatus::REFUNDED => 'warning',
-                        default => 'gray',
-                    }),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+               TextColumn::make('requestQuote.name')
+                   ->label(__('Request quote'))
+                   ->translateLabel()
+                   ->searchable()
+                   ->sortable(),
+               TextColumn::make('amount')
+                   ->translateLabel()
+                   ->numeric()
+                   ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
+                   ->sortable(),
+               TextColumn::make('currency')
+                   ->translateLabel()
+                   ->searchable(),
+               TextColumn::make('customer_email')
+                   ->translateLabel()
+                   ->searchable(),
+               TextColumn::make('customer_name')
+                   ->translateLabel()
+                   ->searchable(),
+               TextColumn::make('status')
+                   ->label(__('Payment Status'))
+                   ->translateLabel()
+                   ->badge()
+                   ->color(fn (TransactionStatus $state): string => match ($state) {
+                       TransactionStatus::PENDING => 'gray',
+                       TransactionStatus::COMPLETED => 'success',
+                       TransactionStatus::FAILED => 'danger',
+                       TransactionStatus::REFUNDED => 'warning',
+                       default => 'gray',
+                   }),
+               TextColumn::make('created_at')
+                   ->dateTime()
+                   ->sortable()
+                   ->toggleable(isToggledHiddenByDefault: true),
+               TextColumn::make('updated_at')
+                   ->dateTime()
+                   ->sortable()
+                   ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -125,7 +129,7 @@ final class OrderResource extends Resource
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                   DeleteBulkAction::make(),
                 ]),
             ]);
     }

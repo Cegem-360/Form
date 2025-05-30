@@ -240,5 +240,7 @@
     "Color": "Szín",
     "You must acknowledge that work can begin to proceed.": "El kell fogadni, a munka megkezdéséhez.",
     "I acknowledge that work can begin": "Tudomásul veszem hogy elkezdődhet a munka",
-    "website": "weboldal"
+    "website": "weboldal",
+    "View Form": "Űrlap megtekintése",
+    "View Form Question": "Űrlap kérdés megtekintése"
 }

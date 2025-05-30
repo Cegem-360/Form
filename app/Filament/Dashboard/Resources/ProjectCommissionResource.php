@@ -13,9 +13,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 final class ProjectCommissionResource extends Resource
 {
@@ -65,6 +66,9 @@ final class ProjectCommissionResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(function ($query) {
+                return $query->whereUserId(Auth::user()->id);
+            })
             ->columns([
                 TextColumn::make('project.name')
                     ->translateLabel()
@@ -94,7 +98,7 @@ final class ProjectCommissionResource extends Resource
                 //
             ])
             ->actions([
-                EditAction::make(),
+                ViewAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

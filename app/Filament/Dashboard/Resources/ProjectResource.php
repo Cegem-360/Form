@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ListProjects;
@@ -19,7 +18,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -49,6 +47,7 @@ final class ProjectResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
                 TextInput::make('name')
                     ->translateLabel()
@@ -98,11 +97,7 @@ final class ProjectResource extends Resource
     {
         return $table
             ->modifyQueryUsing(function ($query) {
-                if (Auth::user()->hasRole([RolesEnum::SUPER_ADMIN, RolesEnum::ADMIN])) {
-                    return $query;
-                }
-
-                return $query->where('user_id', Auth::user()->id);
+                return $query->whereUserId(Auth::user()->id);
             })
             ->columns([
                 TextColumn::make('name')
@@ -152,7 +147,6 @@ final class ProjectResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
-                EditAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
