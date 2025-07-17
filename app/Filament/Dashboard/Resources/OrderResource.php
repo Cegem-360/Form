@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\TransactionStatus;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\ListOrders;
 use App\Filament\Dashboard\Resources\OrderResource\Pages\ViewOrder;
 use App\Models\Order;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getNavigationGroup(): string
     {
@@ -46,31 +47,31 @@ final class OrderResource extends Resource
         return $schema
             ->components([
                 Select::make('request_quote_id')
-                    ->translateLabel()
+
                     ->relationship('requestQuote', 'quotation_name')
                     ->label('Request quote name')
                     ->required(),
                 TextInput::make('amount')
-                    ->translateLabel()
+
                     ->required()
                     ->numeric(),
                 TextInput::make('currency')
-                    ->translateLabel()
+
                     ->required()
                     ->maxLength(3),
                 TextInput::make('customer_email')
-                    ->translateLabel()
+
                     ->email()
                     ->maxLength(255),
                 Select::make('status')
                     ->label(__('Payment Status'))
                     ->options(TransactionStatus::class)
                     ->enum(TransactionStatus::class)
-                    ->translateLabel()
+
                     ->required(),
 
                 TextInput::make('customer_name')
-                    ->translateLabel()
+
                     ->maxLength(255),
             ]);
     }
@@ -85,26 +86,26 @@ final class OrderResource extends Resource
             ->columns([
                 TextColumn::make('requestQuote.name')
                     ->label(__('Request quote'))
-                    ->translateLabel()
+
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('amount')
-                    ->translateLabel()
+
                     ->numeric()
                     ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
                     ->sortable(),
                 TextColumn::make('currency')
-                    ->translateLabel()
+
                     ->searchable(),
                 TextColumn::make('customer_email')
-                    ->translateLabel()
+
                     ->searchable(),
                 TextColumn::make('customer_name')
-                    ->translateLabel()
+
                     ->searchable(),
                 TextColumn::make('status')
                     ->label(__('Payment Status'))
-                    ->translateLabel()
+
                     ->badge()
                     ->color(fn (TransactionStatus $state): string => match ($state) {
                         TransactionStatus::PENDING => 'gray',

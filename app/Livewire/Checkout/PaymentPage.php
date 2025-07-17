@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire\Checkout;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Utilities\Get;
 use App\Enums\ClientType;
 use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
@@ -20,6 +18,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -51,52 +51,52 @@ final class PaymentPage extends Component implements HasActions, HasForms
             ->components([
                 TextInput::make('name')
                     ->label('Name')
-                    ->translateLabel()
+
                     ->live()
                     ->required(),
                 TextInput::make('email')
                     ->label('Email')
-                    ->translateLabel()
+
                     ->required()
                     ->live()
                     ->email(),
                 TextInput::make('phone')
                     ->label('Phone')
-                    ->translateLabel()
+
                     ->live()
                     ->required(),
                 Select::make('client_type')
                     ->label('Legal form')
-                    ->translateLabel()
+
                     ->live()
                     ->required()
                     ->options(ClientType::class),
                 TextInput::make('billing_address')
                     ->label('Billing Address')
-                    ->translateLabel()
+
                     ->live()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value),
                 TextInput::make('company_name')
-                    ->translateLabel()
+
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
-                    ->translateLabel()
+
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_vat_number')
-                    ->translateLabel()
+
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 Select::make('payment_method')
-                    ->translateLabel()
+
                     ->label('Payment Method')
                     ->options([
                         'stripe' => 'Stripe',
@@ -115,14 +115,14 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->required()
                     ->accepted()
                     ->default(false)
-                    ->translateLabel()
+
                     ->live(),
                 Checkbox::make('privacy')
                     ->label(__('I have read and accept the privacy policy'))
                     ->required()
                     ->accepted()
                     ->default(false)
-                    ->translateLabel()
+
                     ->live(),
             ])
             ->statePath('data')

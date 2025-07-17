@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ViewProjectCommission;
 use App\Models\ProjectCommission;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,7 @@ final class ProjectCommissionResource extends Resource
 {
     protected static ?string $model = ProjectCommission::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getLabel(): string
     {
@@ -49,16 +50,16 @@ final class ProjectCommissionResource extends Resource
         return $schema
             ->components([
                 Select::make('project_id')
-                    ->translateLabel()
+
                     ->relationship('project', 'name'),
                 TextInput::make('commission_amount')
-                    ->translateLabel()
+
                     ->numeric(),
                 TextInput::make('commission_percent')
-                    ->translateLabel()
+
                     ->numeric(),
                 TextInput::make('commission_paid_amount')
-                    ->translateLabel()
+
                     ->numeric(),
             ]);
     }
@@ -72,18 +73,18 @@ final class ProjectCommissionResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('project.name')
-                    ->translateLabel()
+
                     ->sortable(),
                 TextColumn::make('commission_amount')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_percent')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_paid_amount')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')

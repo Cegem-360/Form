@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
@@ -20,7 +21,7 @@ final class FormQuestionResource extends Resource
 {
     protected static ?string $model = FormQuestion::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getNavigationGroup(): string
     {
@@ -51,15 +52,15 @@ final class FormQuestionResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('project.name')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('project.requestQuote.quotation_name')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('status')
-                    ->translateLabel()
+
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

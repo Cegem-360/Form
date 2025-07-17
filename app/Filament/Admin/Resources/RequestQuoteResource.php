@@ -4,16 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Actions;
-use Filament\Actions\Action;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\ClientType;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\EditRequestQuote;
@@ -21,6 +11,12 @@ use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -30,6 +26,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -38,14 +39,15 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use UnitEnum;
 
 final class RequestQuoteResource extends Resource
 {
     protected static ?string $model = RequestQuote::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
 
     public static function form(Schema $schema): Schema
     {
@@ -59,8 +61,7 @@ final class RequestQuoteResource extends Resource
                         ->default(Auth::user()->id),
                     Toggle::make('is_payed')
                         ->label('Is Payed')
-                        ->default(false)
-                        ->translateLabel(),
+                        ->default(false),
                     TextInput::make('quotation_name')
                         ->maxLength(255),
                     TextInput::make('name')
@@ -156,7 +157,7 @@ final class RequestQuoteResource extends Resource
                                         'underline',
                                     ]),
                                 FileUpload::make('images')
-                                    ->translateLabel()
+
                                     ->label('Image')
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
@@ -175,20 +176,18 @@ final class RequestQuoteResource extends Resource
                             ]),
                         ]),
 
-                    ])
-                        ->translateLabel(),
+                    ]),
 
                 ]),
                 Grid::make(1)->schema([
                     Toggle::make('have_website_graphic')
                         ->default(false)
                         ->label('Do you have a website graphic?')
-                        ->translateLabel()
+
                         ->disabled(),
                     Actions::make([
                         Action::make('yes')
 
-                            ->translateLabel()
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -198,7 +197,7 @@ final class RequestQuoteResource extends Resource
                                 $set('have_website_graphic', true);
                             }),
                         Action::make('no')
-                            ->translateLabel()
+
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -207,9 +206,9 @@ final class RequestQuoteResource extends Resource
                             ->action(function (Set $set): void {
                                 $set('have_website_graphic', false);
                             }),
-                    ])->label('Do you have a website graphic?')->translateLabel(),
+                    ])->label('Do you have a website graphic?'),
                 ]),
-                CheckboxList::make('request_quote_functionalities')->translateLabel()
+                CheckboxList::make('request_quote_functionalities')
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
@@ -219,10 +218,10 @@ final class RequestQuoteResource extends Resource
                         // return $get('')->functionalities?->pluck('id', 'description')->toArray();
                     }) */,
                 Toggle::make('is_multilangual')
-                    ->translateLabel()
+
                     ->live(),
                 Select::make('default_language')
-                    ->translateLabel()
+
                     ->live()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
@@ -235,7 +234,7 @@ final class RequestQuoteResource extends Resource
                 Select::make('languages')
                    /*  ->relationship('languages', 'name') */
                     ->preload()
-                    ->translateLabel()
+
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->options(function (Get $get) {

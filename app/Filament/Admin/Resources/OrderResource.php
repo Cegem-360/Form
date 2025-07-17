@@ -4,36 +4,38 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
 use App\Filament\Admin\Resources\OrderResource\Pages\CreateOrder;
 use App\Filament\Admin\Resources\OrderResource\Pages\EditOrder;
 use App\Filament\Admin\Resources\OrderResource\Pages\ListOrders;
 use App\Models\Order;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Orders';
+    protected static string|UnitEnum|null $navigationGroup = 'Orders';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Select::make('request_quote_id')
-                    ->translateLabel()
+
                     ->relationship('requestQuote', 'quotation_name')
                     ->label('Request quote name')
                     ->required(),

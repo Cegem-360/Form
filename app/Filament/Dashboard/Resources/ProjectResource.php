@@ -4,21 +4,22 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\ProjectStatus;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ListProjects;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ViewProject;
 use App\Models\Project;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ final class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getNavigationGroup(): string
     {
@@ -50,44 +51,36 @@ final class ProjectResource extends Resource
 
             ->components([
                 TextInput::make('name')
-                    ->translateLabel()
+
                     ->required()
                     ->maxLength(255),
-                DatePicker::make('start_date')
-                    ->translateLabel(),
-                DatePicker::make('end_date')
-                    ->translateLabel(),
+                DatePicker::make('start_date'),
+                DatePicker::make('end_date'),
                 Select::make('status')
-                    ->translateLabel()
+
                     ->options(ProjectStatus::class)
                     ->required(),
                 RichEditor::make('project_goal')
-                    ->translateLabel()
+
                     ->columnSpanFull(),
-                TextInput::make('original_project_goals')
-                    ->translateLabel(),
-                TextInput::make('completed_project_elements')
-                    ->translateLabel(),
-                TextInput::make('project_not_contained_elements')
-                    ->translateLabel(),
-                TextInput::make('completed_elements')
-                    ->translateLabel(),
-                TextInput::make('solved_problems')
-                    ->translateLabel(),
+                TextInput::make('original_project_goals'),
+                TextInput::make('completed_project_elements'),
+                TextInput::make('project_not_contained_elements'),
+                TextInput::make('completed_elements'),
+                TextInput::make('solved_problems'),
                 TextInput::make('garanty')
-                    ->translateLabel()
+
                     ->numeric(),
-                DatePicker::make('garanty_end_date')
-                    ->translateLabel(),
+                DatePicker::make('garanty_end_date'),
                 Select::make('contact')
-                    ->translateLabel()
+
                     ->relationship('contact', 'name'),
                 Select::make('support_pack_id')
-                    ->translateLabel()
+
                     ->label('Support Pack')
                     ->relationship('supportPack', 'name'),
                 Select::make('contact_channel_id')
-                    ->translateLabel()
+
                     ->label('Contact Channel')
                     ->relationship('contactChannel', 'name'),
             ]);
@@ -102,36 +95,35 @@ final class ProjectResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
-                    ->translateLabel()
+
                     ->searchable(),
                 TextColumn::make('start_date')
-                    ->translateLabel()
+
                     ->date()
                     ->sortable(),
                 TextColumn::make('end_date')
-                    ->translateLabel()
+
                     ->date()
                     ->sortable(),
-                TextColumn::make('status')
-                    ->translateLabel(),
+                TextColumn::make('status'),
                 TextColumn::make('garanty')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('garanty_end_date')
-                    ->translateLabel()
+
                     ->date()
                     ->sortable(),
                 TextColumn::make('contact')
-                    ->translateLabel()
+
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('support_pack_id.name')
-                    ->translateLabel()
+
                     ->label('Support Pack')
                     ->sortable(),
                 TextColumn::make('contact_channel_id.name')
-                    ->translateLabel()
+
                     ->label('Contact Channel')
                     ->sortable(),
                 TextColumn::make('created_at')

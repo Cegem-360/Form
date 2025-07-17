@@ -4,32 +4,34 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\ProjectStatus;
 use App\Filament\Admin\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\ListProjects;
 use App\Filament\Admin\Resources\ProjectResource\Pages\ViewProject;
 use App\Models\Project;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Project';
+    protected static string|UnitEnum|null $navigationGroup = 'Project';
 
     public static function form(Schema $schema): Schema
     {
@@ -45,7 +47,7 @@ final class ProjectResource extends Resource
                 DatePicker::make('start_date'),
                 DatePicker::make('end_date'),
                 Select::make('status')
-                    ->translateLabel()
+
                     ->label('Project Status')
                     ->options(ProjectStatus::class)
                     ->enum(ProjectStatus::class)

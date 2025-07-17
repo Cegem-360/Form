@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Actions;
-use Filament\Actions\Action;
-use Filament\Actions\ViewAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\ClientType;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuotePriceWidget;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
@@ -29,6 +25,11 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\ViewField;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Actions;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -43,7 +44,7 @@ final class RequestQuoteResource extends Resource
 {
     protected static ?string $model = RequestQuote::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getNavigationGroup(): ?string
     {
@@ -66,24 +67,24 @@ final class RequestQuoteResource extends Resource
             ->components([
                 Grid::make(2)->schema([
                     TextInput::make('quotation_name')
-                        ->translateLabel()
+
                         ->maxLength(255),
                     TextInput::make('name')
-                        ->translateLabel()
+
                         ->required()
                         ->maxLength(255),
                     TextInput::make('email')
-                        ->translateLabel()
+
                         ->required()
                         ->email()
                         ->maxLength(255),
                     TextInput::make('phone')
-                        ->translateLabel()
+
                         ->required()
                         ->tel()
                         ->maxLength(255),
                     RichEditor::make('project_description')
-                        ->translateLabel()
+
                         ->maxLength(65535)
                         ->disableToolbarButtons([
                             'attachFiles',
@@ -93,23 +94,23 @@ final class RequestQuoteResource extends Resource
                             'underline',
                         ])->columnSpanFull(),
                     TextInput::make('payment_method')
-                        ->translateLabel()
+
                         ->disabled()
                         ->maxLength(255),
                     Select::make('client_type')
-                        ->translateLabel()
+
                         ->required()
                         ->options(ClientType::class)
                         ->preload()
                         ->searchable(),
                     TextInput::make('company_name')
-                        ->translateLabel()
+
                         ->maxLength(255),
                     TextInput::make('company_address')
-                        ->translateLabel()
+
                         ->maxLength(255),
                     Select::make('website_type_id')
-                        ->translateLabel()
+
                         ->live()
                         ->required()
                         ->relationship('websiteType', 'name')
@@ -118,7 +119,7 @@ final class RequestQuoteResource extends Resource
                         })
                         ->searchable(),
                     Select::make('website_engine')
-                        ->translateLabel()
+
                         ->live()
                         ->options([
                             'wordpress' => 'Wordpress',
@@ -128,14 +129,14 @@ final class RequestQuoteResource extends Resource
                         ->searchable(),
                 ]),
                 Grid::make(1)->schema([
-                    Repeater::make('websites')->translateLabel()->schema([
+                    Repeater::make('websites')->schema([
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(1)->columnSpan(1)->schema([
                                 TextInput::make('name')
-                                    ->translateLabel()
+
                                     ->required(),
                                 ToggleButtons::make('required')
-                                    ->translateLabel()
+
                                     ->live()
                                     ->options([
                                         '1' => __('Yes'),
@@ -145,7 +146,7 @@ final class RequestQuoteResource extends Resource
                                     ->required(),
                                 ToggleButtons::make('length')
                                     ->label('Content length')
-                                    ->translateLabel()
+
                                     ->live()
                                     ->options([
                                         'short' => __('Short'),
@@ -163,7 +164,7 @@ final class RequestQuoteResource extends Resource
                                     })
                                     ->required(fn ($get) => $get('required')),
                                 RichEditor::make('description')
-                                    ->translateLabel()
+
                                     ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535)
                                     ->disableToolbarButtons([
@@ -174,7 +175,7 @@ final class RequestQuoteResource extends Resource
                                         'underline',
                                     ]),
                                 FileUpload::make('images')
-                                    ->translateLabel()
+
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
                                     ->directory('website-images')
@@ -205,12 +206,12 @@ final class RequestQuoteResource extends Resource
                     Toggle::make('have_website_graphic')
                         ->default(false)
                         ->label('Do you have a website graphic?')
-                        ->translateLabel()
+
                         ->disabled(),
                     Actions::make([
                         Action::make('yes')
                             ->hidden()
-                            ->translateLabel()
+
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -221,7 +222,7 @@ final class RequestQuoteResource extends Resource
                             }),
                         Action::make('no')
                             ->hidden()
-                            ->translateLabel()
+
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -230,19 +231,19 @@ final class RequestQuoteResource extends Resource
                             ->action(function (Set $set): void {
                                 $set('have_website_graphic', false);
                             }),
-                    ])->label('Do you have a website graphic?')->translateLabel(),
+                    ])->label('Do you have a website graphic?'),
                 ]),
                 CheckboxList::make('request_quote_functionalities')
-                    ->translateLabel()
+
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
                     ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name)),
                 Toggle::make('is_multilangual')
-                    ->translateLabel()
+
                     ->live(),
                 Select::make('default_language')
-                    ->translateLabel()
+
                     ->live()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
@@ -252,7 +253,7 @@ final class RequestQuoteResource extends Resource
                     })
                     ->searchable(),
                 Select::make('languages')
-                    ->translateLabel()
+
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->options(function (Get $get) {
@@ -275,30 +276,30 @@ final class RequestQuoteResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('quotation_name')
-                    ->translateLabel()
+
                     ->searchable(),
                 TextColumn::make('websiteType.name')
-                    ->translateLabel()
+
                     ->sortable(),
                 TextColumn::make('website_engine')
-                    ->translateLabel()
+
                     ->sortable(),
                 IconColumn::make('is_multilangual')
-                    ->translateLabel()
+
                     ->boolean(),
                 TextColumn::make('price')
                     ->label('Deposit Price')
-                    ->translateLabel()
+
                     ->state(function (Model $record): string|false {
                         return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
                     }),
                 TextColumn::make('created_at')
-                    ->translateLabel()
+
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->translateLabel()
+
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

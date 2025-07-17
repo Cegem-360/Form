@@ -6,6 +6,16 @@ namespace App\Providers;
 
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
+use Filament\Actions\Action;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Wizard\Step;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -38,6 +48,37 @@ final class AppServiceProvider extends ServiceProvider
         $this->migrationsCustomPath();
 
         Table::configureUsing(fn (Table $table) => $table->defaultNumberLocale('hu'));
+
+        ToggleButtons::configureUsing(function (ToggleButtons $component) {
+            $component->translateLabel();
+        });
+        TextInput::configureUsing(function (TextInput $component) {
+            $component->translateLabel();
+        });
+        Select::configureUsing(function (Select $component) {
+            $component->translateLabel();
+        });
+        Checkbox::configureUsing(function (Checkbox $component) {
+            $component->translateLabel();
+        });
+        CheckboxList::configureUsing(function (CheckboxList $component) {
+            $component->translateLabel();
+        });
+        Repeater::configureUsing(function (Repeater $component) {
+            $component->translateLabel();
+        });
+        Step::configureUsing(function (Step $component) {
+            $component->translateLabel();
+        });
+        RichEditor::configureUsing(function (RichEditor $component) {
+            $component->translateLabel();
+        });
+        FileUpload::configureUsing(function (FileUpload $component) {
+            $component->translateLabel();
+        });
+        Action::configureUsing(function (Action $component) {
+            $component->translateLabel();
+        });
 
     }
 

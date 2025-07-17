@@ -282,7 +282,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     private function getClientInformationSchema(): Step
     {
         return Step::make('Client Informations')
-            ->translateLabel()
+
             ->schema(
                 [
                     ViewField::make('welcomeText')->view(
@@ -292,7 +292,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         Select::make('website_type_id')
                             ->live()
                             ->required()
-                            ->translateLabel()
+
                             ->preload()
                             ->relationship('websiteType', 'name', function ($query) {
                                 $order = ['weboldal', 'webshop', 'landing page'];
@@ -337,7 +337,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                         };
                                     })
                             )
-                            ->translateLabel()
+
                             ->options([
                                 'wordpress' => 'Wordpress',
                                 'laravel' => 'Laravel',
@@ -350,7 +350,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getWebsiteInformationSchema(): Step
     {
-        return Step::make('Website Informations')->translateLabel()->schema([
+        return Step::make('Website Informations')->schema([
             Grid::make(1)->schema([
                 Repeater::make('websites')->schema([
                     Grid::make(2)->columnSpan(1)->schema(
@@ -369,7 +369,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                             ]),
                         ]),
                 ])
-                    ->translateLabel()
+
                     ->deletable(false)
                     ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
@@ -383,29 +383,29 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getGraphicsInformationSchema(): Step
     {
-        return Step::make('Grafics and functions')->translateLabel()->schema([Grid::make(2)->schema([
+        return Step::make('Grafics and functions')->schema([Grid::make(2)->schema([
             TextInput::make('quotation_name')
                 ->columnSpan(1)
-                ->translateLabel()
+
                 ->maxLength(255)
                 ->required(),
             RichEditor::make('project_description')
                 ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
-                ->translateLabel()
+
                 ->maxLength(20000)
                 ->columnSpanFull(),
             Toggle::make('have_website_graphic')
                 ->columnSpanFull()
                 ->default(false)
                 ->label('Do you have a website graphic?')
-                ->translateLabel()
+
                 ->hidden(true)
                 ->disabled(),
             ViewField::make('have_website_graphic')->columnSpanFull()
                 ->view('filament.forms.components.have-website-graphic'),
             ToggleButtons::make('have_website_graphic')
                 ->label('Do you have a website graphic?')
-                ->translateLabel()
+
                 ->live()
                 ->options([
                     true => __('Yes'),
@@ -416,7 +416,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->required(),
         ]),
             CheckboxList::make('request_quote_functionalities')
-                ->translateLabel()
+
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'))?->notDefault();
                 })
@@ -426,10 +426,10 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->notDefault()->pluck('description', 'id')->toArray();
                 }),
             Toggle::make('is_multilangual')
-                ->translateLabel()
+
                 ->live(),
             Select::make('default_language')
-                ->translateLabel()
+
                 ->live()
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->default(WebsiteLanguage::whereName('Magyar')->firstOrCreate(['name' => 'Magyar'])->id)
@@ -440,7 +440,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 })
                 ->searchable(),
             Select::make('languages')
-                ->translateLabel()
+
                 ->multiple()
                 ->visible(fn ($get) => $get('is_multilangual'))
                 ->options(function (Get $get) {
@@ -452,23 +452,23 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getConstentSchema(): Step
     {
-        return Step::make('Consent')->translateLabel()->schema([Grid::make(1)->schema([
+        return Step::make('Consent')->schema([Grid::make(1)->schema([
             TextInput::make('name')
                 ->label('Full Name')
-                ->translateLabel()
+
                 ->live()
                 ->required()
                 ->maxLength(255)
                 ->visible(fn (): bool => ! Auth::check()),
             TextInput::make('email')
-                ->translateLabel()
+
                 ->email()
                 ->live()
                 ->required()
                 ->maxLength(255)
                 ->visible(fn (): bool => ! Auth::check()),
             TextInput::make('phone')
-                ->translateLabel()
+
                 ->tel()
                 ->live()
                 ->required()
@@ -476,23 +476,23 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->visible(fn (): bool => ! Auth::check()),
             Select::make('client_type')
                 ->label('Legal form')
-                ->translateLabel()
+
                 ->live()
                 ->required()
                 ->options(ClientType::class)
                 ->preload()
                 ->visible(fn (): bool => ! Auth::check()),
             TextInput::make('company_name')
-                ->translateLabel()
+
                 ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                 ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                 ->maxLength(255),
             TextInput::make('company_address')
-                ->translateLabel()
+
                 ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                 ->maxLength(255),
             TextInput::make('company_contact_name')
-                ->translateLabel()
+
                 ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                 ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
                 ->maxLength(255),
@@ -500,14 +500,14 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->live()
                 ->default(false)
                 ->label('I agree to the terms and conditions(note:later has link)')
-                ->translateLabel()
+
                 ->required()
                 ->helperText(__('You must agree to the terms and conditions to proceed.'))
                 ->rules(['accepted']),
             Checkbox::make('privacy_policy')
                 ->live()
                 ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
-                ->translateLabel()
+
                 ->default(false)
                 ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
                 ->required()
@@ -523,50 +523,50 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     {
         return [
             Select::make('client_type')
-                ->translateLabel()
+
                 ->label('Legal form')
                 ->live()
                 ->required()
                 ->options(ClientType::class)
                 ->enum(ClientType::class),
             TextInput::make('company_name')
-                ->translateLabel()
+
                 ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                 ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                 ->maxLength(255),
             TextInput::make('company_address')
-                ->translateLabel()
+
                 ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                 ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                 ->maxLength(255),
             TextInput::make('name')
                 ->label('Full Name')
-                ->translateLabel()
+
                 ->live()
                 ->required()
                 ->maxLength(255),
             TextInput::make('email')
-                ->translateLabel()
+
                 ->email()
                 ->unique('users', 'email')
                 ->live()
                 ->required()
                 ->maxLength(255),
             TextInput::make('phone')
-                ->translateLabel()
+
                 ->tel()
                 ->live()
                 ->required()
                 ->maxLength(255),
             TextInput::make('password')
                 ->confirmed()
-                ->translateLabel()
+
                 ->password()
                 ->revealable()
                 ->required()
                 ->maxLength(255),
             TextInput::make('password_confirmation')
-                ->translateLabel()
+
                 ->password()
                 ->revealable()
                 ->required(),
@@ -669,15 +669,15 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             TextInput::make('name')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->live()
-                ->translateLabel()
+
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->label('Want to this page?')
-                ->translateLabel()
 
                 ->live()
+                ->grouped()
                 ->options([
                     '1' => __('Yes'),
                     '0' => __('No'),
@@ -688,7 +688,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->required(),
             ToggleButtons::make('length')
                 ->label('Content length')
-                ->translateLabel()
+
                 ->live()
                 ->visible(fn ($get) => $get('required'))
                 ->default('medium')
@@ -705,13 +705,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->required()
                 ->columnSpanFull(),
             RichEditor::make('description')
-                ->translateLabel()
+
                 ->visible(fn ($get) => $get('required'))
                 ->label(__('Page description'))
                 ->maxLength(65535)
                 ->columnSpanFull(),
             FileUpload::make('images')
-                ->translateLabel()
+
                 ->label('Adott oldalhoz esetleges igényelt képek feltöltése')
                 ->visible(fn ($get) => $get('required'))
                 ->image()
