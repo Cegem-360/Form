@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
 use App\Models\FormQuestionVisibility;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -23,16 +23,16 @@ final class FormQuestionVisibilityResource extends Resource
 {
     protected static ?string $model = FormQuestionVisibility::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     // protected static ?string $navigationParentItem = 'Projects';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static string | \UnitEnum | null $navigationGroup = 'Settings';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('form_question_id')
                     ->relationship('formQuestion', 'id')
                     ->required(),
@@ -206,10 +206,10 @@ final class FormQuestionVisibilityResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

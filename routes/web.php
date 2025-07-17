@@ -11,7 +11,6 @@ use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Models\RequestQuote;
 use Illuminate\Support\Facades\Route;
-use Spatie\Browsershot\Browsershot;
 
 require_once __DIR__.'/auth.php';
 
@@ -30,29 +29,7 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
 })->name('quotation.pdf');
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
-    /*
-    Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
 
-        $requestQuote = RequestQuote::find($requestQuote->id);
-
-        $template = view('pdf.quotation-user', ['requestQuote' => $requestQuote])->render();
-        $headerHtml = view('pdf.header')->render();
-        Browsershot::html($template)->showBrowserHeaderAndFooter()
-            ->showBackground()
-            ->margins(
-                35,
-                0,
-                0,
-                0,
-            )
-            ->headerHtml($headerHtml)
-            ->format('A4')
-            ->savePdf(storage_path('app/public/quotation.pdf'));
-
-        return response()->file(storage_path('app/public/quotation.pdf'));
-
-    })->name('preview');
- */
     Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
         return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 

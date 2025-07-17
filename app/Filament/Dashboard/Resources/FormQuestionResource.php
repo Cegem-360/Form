@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Filament\Dashboard\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ final class FormQuestionResource extends Resource
 {
     protected static ?string $model = FormQuestion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getNavigationGroup(): string
     {
@@ -73,11 +73,11 @@ final class FormQuestionResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 ViewAction::make(),
 
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

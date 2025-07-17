@@ -33,11 +33,11 @@ final class AppServiceProvider extends ServiceProvider
         Cashier::calculateTaxes();
         Number::useCurrency('HUF');
         Model::automaticallyEagerLoadRelationships();
-        Gate::policy(Role::class, RolePolicy::class);
-        Gate::policy(Permission::class, PermissionPolicy::class);
+        /*   Gate::policy(Role::class, RolePolicy::class);
+          Gate::policy(Permission::class, PermissionPolicy::class); */
         $this->migrationsCustomPath();
 
-        Table::$defaultNumberLocale = 'hu';
+        Table::configureUsing(fn (Table $table) => $table->defaultNumberLocale('hu'));
 
     }
 

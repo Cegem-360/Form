@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Actions\Action;
+use Filament\Actions\EditAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use App\Enums\FormQuestionStatus;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\CreateFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -38,14 +38,14 @@ final class FormQuestionResource extends Resource
 {
     protected static ?string $model = FormQuestion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Project';
+    protected static string | \UnitEnum | null $navigationGroup = 'Project';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Section::make('ProjectUser')->columns(2)->schema([
                     Select::make('project_id')
                         ->relationship('project', 'name')
@@ -55,7 +55,7 @@ final class FormQuestionResource extends Resource
                         ->relationship('user', 'name'),
                 ]),
 
-                Split::make([
+                Flex::make([
                     Section::make('website')->schema([
                         Section::make('Company basic informations')
                             ->schema([
@@ -540,11 +540,11 @@ final class FormQuestionResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 EditAction::make(),
 
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

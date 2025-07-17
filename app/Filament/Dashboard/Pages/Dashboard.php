@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Pages;
 
+use Filament\Panel;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
 use Filament\Support\Facades\FilamentIcon;
@@ -20,7 +21,7 @@ final class Dashboard extends Page
     /**
      * @var view-string
      */
-    protected static string $view = 'filament.pages.dashboard';
+    protected string $view = 'filament.pages.dashboard';
 
     public static function getNavigationLabel(): string
     {
@@ -36,7 +37,7 @@ final class Dashboard extends Page
             ?? (Filament::hasTopNavigation() ? 'heroicon-m-home' : 'heroicon-o-home');
     }
 
-    public static function getRoutePath(): string
+    public static function getRoutePath(Panel $panel): string
     {
         return self::$routePath;
     }

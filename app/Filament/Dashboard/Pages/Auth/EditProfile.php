@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Pages\Auth;
 
-use Filament\Forms\Form;
-use Filament\Pages\Auth\EditProfile as BasePage;
+use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 
-final class EditProfile extends BasePage
+final class EditProfile extends \Filament\Auth\Pages\EditProfile
 {
     public function mount(): void
     {
@@ -20,10 +19,10 @@ final class EditProfile extends BasePage
         ]);
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 $this->getNameFormComponent(),
                 $this->getEmailFormComponent(),
                 $this->getPasswordFormComponent(),

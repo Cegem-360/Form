@@ -12,7 +12,7 @@ final class ViewFormQuestion extends ViewRecord
 {
     protected static string $resource = FormQuestionResource::class;
 
-    protected static string $view = 'filament.dashboard.resources.form-question-resource.pages.view-form-question';
+    protected string $view = 'filament.dashboard.resources.form-question-resource.pages.view-form-question';
 
     public function getTitle(): string
     {

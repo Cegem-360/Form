@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Cart;
 
+use Filament\Schemas\Schema;
 use App\Models\RequestQuote;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -33,10 +33,10 @@ final class CartShow extends Component implements HasActions, HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
 
             ])
             ->statePath('data');

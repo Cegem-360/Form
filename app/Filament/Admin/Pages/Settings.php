@@ -11,7 +11,7 @@ final class Settings extends Page
 {
     protected static ?string $model = Option::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog';
 
     /* protected static ?string $navigationGroup = 'Settings';
 
@@ -22,5 +22,5 @@ final class Settings extends Page
     /**
      * @var view-string
      */
-    protected static string $view = 'filament.pages.settings';
+    protected string $view = 'filament.pages.settings';
 }

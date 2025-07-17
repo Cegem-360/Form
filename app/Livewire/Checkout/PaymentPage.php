@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Checkout;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Utilities\Get;
 use App\Enums\ClientType;
 use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
@@ -17,8 +19,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -45,10 +45,10 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 TextInput::make('name')
                     ->label('Name')
                     ->translateLabel()

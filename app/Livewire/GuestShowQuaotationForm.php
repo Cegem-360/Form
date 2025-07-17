@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Actions;
 use App\Enums\ClientType;
 use App\Enums\RolesEnum;
 use App\Mail\QuotationSendedToUser;
@@ -15,12 +22,9 @@ use App\Models\WebsiteType;
 use Filament\Actions\Action as SubmitButton;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -28,13 +32,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\ViewField;
-use Filament\Forms\Components\Wizard;
-use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Registered;
@@ -71,10 +70,10 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Wizard::make([
                     $this->getClientInformationSchema(),
                     $this->getWebsiteInformationSchema(),
@@ -146,7 +145,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->fillForm(function (): array {
                 return $this->form->getState();
             })
-            ->form($this->getRegistrationFormSchema())
+            ->schema($this->getRegistrationFormSchema())
             ->action(function (array $data) {
 
                 $fillDataForRegister = $data;
@@ -204,7 +203,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->fillForm(function (): array {
                 return $this->form->getState();
             })
-            ->form($this->getRegistrationFormSchema())
+            ->schema($this->getRegistrationFormSchema())
             ->action(function (array $data) {
                 $dataTmp = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($data, [
@@ -301,8 +300,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                 $set('websites', []);
                             }
                         })
-                        ->hintAction(function (): Action {
-                            return Action::make('help')
+                        ->hintAction(function (): SubmitButton {
+                            return SubmitButton::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
                                 ->label('')
@@ -313,8 +312,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->preload(),
                     Select::make('website_engine')
                         ->live()
-                        ->hintAction(function (): Action {
-                            return Action::make('help')
+                        ->hintAction(function (): SubmitButton {
+                            return SubmitButton::make('help')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->extraAttributes(['class' => 'text-gray-500'])
                                 ->label('')
@@ -400,7 +399,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ViewField::make('have_website_graphic')->columnSpanFull()
                 ->view('filament.forms.components.have-website-graphic'),
             Actions::make([
-                Action::make('yes')
+                SubmitButton::make('yes')
                     ->translateLabel()
                     ->requiresConfirmation()
                     ->modalHeading(__('Website graphic'))
@@ -412,7 +411,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     ->action(function (Set $set): void {
                         $set('have_website_graphic', true);
                     }),
-                Action::make('no')
+                SubmitButton::make('no')
                     ->translateLabel()
                     ->requiresConfirmation()
                     ->modalHeading(__('Website graphic'))

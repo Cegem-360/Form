@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\Livewire\SystemChatParameter;
 
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Enums\RecordActionsPosition;
 use App\Models\SystemChatParameter;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Enums\ActionsPosition;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -34,11 +34,11 @@ final class ListSystemChatParameters extends Component implements HasForms, HasT
                     ->searchable(),
                 TextColumn::make('role'),
             ])
-            ->actions([
+            ->recordActions([
                 ViewAction::make('viewFormContent')
                     ->icon('heroicon-o-eye')
                     ->label(__('filament-actions::view.single.label'))
-                    ->form(
+                    ->schema(
                         [
                             Textarea::make('content')
                                 ->disabled()
@@ -66,7 +66,7 @@ final class ListSystemChatParameters extends Component implements HasForms, HasT
 
                         return $record;
                     })
-                    ->form([
+                    ->schema([
                         RichEditor::make('content')
                             ->toolbarButtons([
                                 'blockquote',
@@ -84,7 +84,7 @@ final class ListSystemChatParameters extends Component implements HasForms, HasT
                                 'undo',
                             ]),
                     ]),
-            ], position: ActionsPosition::BeforeColumns);
+            ], position: RecordActionsPosition::BeforeColumns);
     }
 
     public function render(): View

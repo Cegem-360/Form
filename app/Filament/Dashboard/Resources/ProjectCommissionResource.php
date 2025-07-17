@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
+use Filament\Schemas\Schema;
+use Filament\Actions\ViewAction;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ViewProjectCommission;
 use App\Models\ProjectCommission;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,7 @@ final class ProjectCommissionResource extends Resource
 {
     protected static ?string $model = ProjectCommission::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getLabel(): string
     {
@@ -44,10 +44,10 @@ final class ProjectCommissionResource extends Resource
         return __('Projects');
     }
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([
+        return $schema
+            ->components([
                 Select::make('project_id')
                     ->translateLabel()
                     ->relationship('project', 'name'),
@@ -98,10 +98,10 @@ final class ProjectCommissionResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([
+            ->recordActions([
                 ViewAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

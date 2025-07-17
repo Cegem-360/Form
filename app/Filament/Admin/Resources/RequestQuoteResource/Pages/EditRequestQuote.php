@@ -49,7 +49,7 @@ final class EditRequestQuote extends EditRecord
             ActionGroup::make([
                 Action::make('convertToProject')
                     ->label('Convert to Project')
-                    ->form([
+                    ->schema([
                         TextInput::make('project_name')
                             ->label('Project Name')
                             ->required()

@@ -8,7 +8,7 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 final class DashboardUser extends BaseWidget
 {
-    protected static string $view = 'filament.widgets.dashboard-user';
+    protected string $view = 'filament.widgets.dashboard-user';
 
     // Widget sorrendjének beállítása (kisebb szám = előrébb jelenik meg)
     protected static ?int $sort = 1;

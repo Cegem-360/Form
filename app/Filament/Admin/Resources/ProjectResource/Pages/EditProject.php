@@ -25,7 +25,7 @@ final class EditProject extends EditRecord
             ActionGroup::make([
                 Action::make('convertToStarter')
                     ->label('Convert to Starter')
-                    ->form([
+                    ->schema([
                         // formquestion
                     ])
                     ->action(function (array $data, Project $record) {
