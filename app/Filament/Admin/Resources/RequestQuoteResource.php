@@ -77,13 +77,7 @@ final class RequestQuoteResource extends Resource
                         ->maxLength(255),
                     RichEditor::make('project_description')
                         ->maxLength(65535)
-                        ->disableToolbarButtons([
-                            'attachFiles',
-                            'codeBlock',
-                            'italic',
-                            'strikeThrough',
-                            'underline',
-                        ])->columnSpanFull(),
+                        ->columnSpanFull(),
                     TextInput::make('payment_method')
                         ->maxLength(255),
                     Select::make('client_type')
@@ -148,14 +142,7 @@ final class RequestQuoteResource extends Resource
                                     })
                                     ->required(fn ($get) => $get('required')),
                                 RichEditor::make('description')
-                                    ->maxLength(65535)
-                                    ->disableToolbarButtons([
-                                        'attachFiles',
-                                        'codeBlock',
-                                        'italic',
-                                        'strikeThrough',
-                                        'underline',
-                                    ]),
+                                    ->maxLength(65535),
                                 FileUpload::make('images')
 
                                     ->label('Image')

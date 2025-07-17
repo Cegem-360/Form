@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Flex;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Actions\Action;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\FormQuestionStatus;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\CreateFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\EditFormQuestion;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ListFormQuestions;
 use App\Filament\Admin\Resources\FormQuestionResource\Pages\ViewFormQuestion;
 use App\Models\FormQuestion;
+use BackedEnum;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -29,18 +26,21 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Flex;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Support\Str;
-use Webbingbrasil\FilamentCopyActions\Forms\Actions\CopyAction;
+use UnitEnum;
 
 final class FormQuestionResource extends Resource
 {
     protected static ?string $model = FormQuestion::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Project';
+    protected static string|UnitEnum|null $navigationGroup = 'Project';
 
     public static function form(Schema $schema): Schema
     {
@@ -77,25 +77,7 @@ final class FormQuestionResource extends Resource
                                     ->default(FormQuestionStatus::UNFILLED)
                                     ->required()
                                     ->enum(FormQuestionStatus::class),
-                                TextInput::make('token') // hidden
-                                    ->hintAction(
-                                        CopyAction::make('copyTokenUrl')
-                                            ->label('Copy URL for questions form')
-                                            ->icon('heroicon-o-clipboard')
-                                            ->copyable(function (Set $set, $state) {
-                                                $token = Str::random(60);
-                                                if ($state === null) {
-                                                    $set('token', $token);
-                                                }
-
-                                                if ($state !== null) {
-                                                    $token = $state;
-                                                }
-
-                                                return route('kerdoiv', ['token' => $token]);
-                                            })
-
-                                    ),
+                                TextInput::make('token'),
                                 TextInput::make('company_name') // 1. page
                                     ->maxLength(255),
                                 TextInput::make('contact_name') // 1. page

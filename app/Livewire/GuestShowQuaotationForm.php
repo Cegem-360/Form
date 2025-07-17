@@ -669,21 +669,20 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             TextInput::make('name')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->live()
-
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->label('Want to this page?')
-
                 ->live()
                 ->grouped()
-                ->options([
-                    '1' => __('Yes'),
-                    '0' => __('No'),
-                ])
+
                 ->default('0')
                 ->boolean()
+                ->colors([
+                    'true' => 'success',
+                    'false' => 'danger',
+                ])
                 ->inline()
                 ->required(),
             ToggleButtons::make('length')
