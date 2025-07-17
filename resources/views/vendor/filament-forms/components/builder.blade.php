@@ -244,7 +244,7 @@
 
                                 @if ($editActionIsVisible && (! $hasInteractiveBlockPreviews))
                                     <div
-                                        class="absolute inset-0 z-[1] cursor-pointer"
+                                        class="absolute inset-0 z-1 cursor-pointer"
                                         role="button"
                                         x-on:click.stop="{{ '$wire.mountFormComponentAction(\'' . $statePath . '\', \'edit\', { item: \'' . $uuid . '\' })' }}"
                                     ></div>
@@ -257,7 +257,7 @@
 
                     @if (! $loop->last)
                         @if ($isAddable && $addBetweenAction(['afterItem' => $uuid])->isVisible())
-                            <li class="relative -top-2 !mt-0 h-0">
+                            <li class="relative -top-2 mt-0! h-0">
                                 <div
                                     class="flex w-full justify-center opacity-0 transition duration-75 hover:opacity-100"
                                 >

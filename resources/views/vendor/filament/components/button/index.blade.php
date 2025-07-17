@@ -54,7 +54,7 @@
             'fi-btn relative grid-flow-col items-center justify-center font-semibold outline-none transition duration-75 focus-visible:ring-2',
             'pointer-events-none opacity-70' => $disabled,
             'rounded-lg' => ! $grouped,
-            'flex-1 [&:nth-child(1_of_.fi-btn)]:rounded-s-lg [&:nth-last-child(1_of_.fi-btn)]:rounded-e-lg [&:not(:nth-child(1_of_.fi-btn))]:shadow-[-1px_0_0_0_theme(colors.gray.200)] [&:not(:nth-last-child(1_of_.fi-btn))]:me-px dark:[&:not(:nth-child(1_of_.fi-btn))]:shadow-[-1px_0_0_0_theme(colors.white/20%)]' => $grouped,
+            'flex-1 nth-[1_of_.fi-btn]:rounded-s-lg nth-last-[1_of_.fi-btn]:rounded-e-lg not-nth-[1_of_.fi-btn]:shadow-[-1px_0_0_0_var(--color-gray-200)] not-nth-last-[1_of_.fi-btn]:me-px dark:not-nth-[1_of_.fi-btn]:shadow-[-1px_0_0_0_--theme(--color-white/20%)]' => $grouped,
             'cursor-pointer' => $tag === 'label',
             match ($color) {
                 'gray' => null,
@@ -125,7 +125,7 @@
         '[:checked+*>&]:text-white' => $tag === 'label',
     ]);
 
-    $badgeContainerClasses = 'fi-btn-badge-ctn absolute start-full top-0 z-[1] w-max -translate-x-1/2 -translate-y-1/2 rounded-md bg-white dark:bg-gray-900 rtl:translate-x-1/2';
+    $badgeContainerClasses = 'fi-btn-badge-ctn absolute start-full top-0 z-1 w-max -translate-x-1/2 -translate-y-1/2 rounded-md bg-white dark:bg-gray-900 rtl:translate-x-1/2';
 
     $labelClasses = \Illuminate\Support\Arr::toCssClasses([
         'fi-btn-label',

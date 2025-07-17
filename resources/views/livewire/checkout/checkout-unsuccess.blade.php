@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-center min-h-[60vh] py-12 bg-gradient-to-br from-red-50 to-white">
+<div class="flex flex-col items-center justify-center min-h-[60vh] py-12 bg-linear-to-br from-red-50 to-white">
     <div class="w-full max-w-lg px-8 py-8 mb-8 text-center bg-white border border-red-200 shadow-lg rounded-2xl">
         <div class="flex justify-center mb-4">
             <svg class="w-16 h-16 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

@@ -182,7 +182,7 @@
                             'fi-modal-slide-over-window ms-auto overflow-y-auto' => $slideOver,
                             // Using an arbitrary value instead of the h-dvh class that was added in Tailwind CSS v3.4.0
                             // to ensure compatibility with custom themes that may use an older version of Tailwind CSS.
-                            'h-[100dvh]' => $slideOver || ($width === MaxWidth::Screen),
+                            'h-dvh' => $slideOver || ($width === MaxWidth::Screen),
                             'mx-auto rounded-xl' => ! ($slideOver || ($width === MaxWidth::Screen)),
                             'hidden' => ! $visible,
                             match ($width) {
@@ -202,11 +202,11 @@
                                 MaxWidth::MaxContent => 'max-w-max',
                                 MaxWidth::FitContent => 'max-w-fit',
                                 MaxWidth::Prose => 'max-w-prose',
-                                MaxWidth::ScreenSmall => 'max-w-screen-sm',
-                                MaxWidth::ScreenMedium => 'max-w-screen-md',
-                                MaxWidth::ScreenLarge => 'max-w-screen-lg',
-                                MaxWidth::ScreenExtraLarge => 'max-w-screen-xl',
-                                MaxWidth::ScreenTwoExtraLarge => 'max-w-screen-2xl',
+                                MaxWidth::ScreenSmall => 'max-w-(--breakpoint-sm)',
+                                MaxWidth::ScreenMedium => 'max-w-(--breakpoint-md)',
+                                MaxWidth::ScreenLarge => 'max-w-(--breakpoint-lg)',
+                                MaxWidth::ScreenExtraLarge => 'max-w-(--breakpoint-xl)',
+                                MaxWidth::ScreenTwoExtraLarge => 'max-w-(--breakpoint-2xl)',
                                 MaxWidth::Screen => 'fixed inset-0',
                                 default => $width,
                             },
@@ -326,7 +326,7 @@
                             @class([
                                 'fi-modal-content flex flex-col gap-y-4 py-6',
                                 'flex-1' => ($width === MaxWidth::Screen) || $slideOver,
-                                'pe-6 ps-[5.25rem]' => $hasIcon && ($alignment === Alignment::Start) && (! $stickyHeader),
+                                'pe-6 ps-21' => $hasIcon && ($alignment === Alignment::Start) && (! $stickyHeader),
                                 'px-6' => ! ($hasIcon && ($alignment === Alignment::Start) && (! $stickyHeader)),
                             ])
                         >
@@ -338,7 +338,7 @@
                         <div
                             @class([
                                 'fi-modal-footer w-full',
-                                'pe-6 ps-[5.25rem]' => $hasIcon && ($alignment === Alignment::Start) && ($footerActionsAlignment !== Alignment::Center) && (! $stickyFooter),
+                                'pe-6 ps-21' => $hasIcon && ($alignment === Alignment::Start) && ($footerActionsAlignment !== Alignment::Center) && (! $stickyFooter),
                                 'px-6' => ! ($hasIcon && ($alignment === Alignment::Start) && ($footerActionsAlignment !== Alignment::Center) && (! $stickyFooter)),
                                 'fi-sticky sticky bottom-0 border-t border-gray-200 bg-white py-5 dark:border-white/10 dark:bg-gray-900' => $stickyFooter,
                                 'rounded-b-xl' => $stickyFooter && ! ($slideOver || ($width === MaxWidth::Screen)),

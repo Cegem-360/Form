@@ -132,7 +132,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
     public function payWithStripe(): Action
     {
         return Action::make('payWithStripe')
-            ->extraAttributes(['class' => '!bg-[#2563eb]'])
+            ->extraAttributes(['class' => 'bg-[#2563eb]!'])
             ->action(function () {
                 $data = $this->form->getState();
 

@@ -155,7 +155,7 @@
                 x-trap.noscroll="isEditorOpen"
                 x-on:keydown.escape.window="closeEditor"
                 @class([
-                    'fixed inset-0 isolate z-50 h-[100dvh] w-screen p-2 sm:p-10 md:p-20',
+                    'fixed inset-0 isolate z-50 h-dvh w-screen p-2 sm:p-10 md:p-20',
                     'fi-fo-file-upload-circle-cropper' => $hasCircleCropper,
                 ])
             >
@@ -178,7 +178,7 @@
                         </div>
 
                         <div
-                            class="shadow-top z-[1] flex h-96 w-full flex-col overflow-auto bg-gray-50 dark:bg-gray-900/30 lg:h-full lg:max-w-xs lg:shadow-none"
+                            class="shadow-top z-1 flex h-96 w-full flex-col overflow-auto bg-gray-50 dark:bg-gray-900/30 lg:h-full lg:max-w-xs lg:shadow-none"
                         >
                             <div class="flex-1 overflow-hidden">
                                 <div
@@ -286,7 +286,7 @@
                                                                     :x-tooltip="'{ content: ' . \Illuminate\Support\Js::from(__('filament-forms::components.file_upload.editor.actions.set_aspect_ratio.label', ['ratio' => $label])) . ', theme: $store.theme }'"
                                                                     x-on:click.stop.prevent="currentRatio = '{{ $label }}'; editor.setAspectRatio({{ $ratio }})"
                                                                     color="gray"
-                                                                    x-bind:class="{'!bg-gray-50 dark:!bg-gray-700': currentRatio === '{{ $label }}'}"
+                                                                    x-bind:class="{'bg-gray-50! dark:bg-gray-700!': currentRatio === '{{ $label }}'}"
                                                                     grouped
                                                                 >
                                                                     {{ $label }}

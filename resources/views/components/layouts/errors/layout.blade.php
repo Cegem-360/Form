@@ -9,7 +9,7 @@
     </head>
 
     <body
-        class="flex items-center justify-center min-h-screen antialiased bg-gradient-to-br from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-800">
+        class="flex items-center justify-center min-h-screen antialiased bg-linear-to-br from-gray-50 to-gray-200 dark:from-gray-900 dark:to-gray-800">
         <div
             class="w-full max-w-md p-10 text-center border border-gray-200 shadow-2xl bg-white/80 dark:bg-gray-900/80 rounded-2xl dark:border-gray-800">
             <div class="flex flex-col items-center gap-4">

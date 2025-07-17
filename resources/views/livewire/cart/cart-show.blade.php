@@ -151,7 +151,7 @@
                     </div>
                 </div>
                 <button type="button" wire:click="checkout"
-                    class="w-full py-3 mt-4 text-lg font-bold text-white transition !bg-[#2563eb] rounded-lg hover:bg-orange-600">
+                    class="w-full py-3 mt-4 text-lg font-bold text-white transition bg-[#2563eb]! rounded-lg hover:bg-orange-600">
                     Tovább a fizetéshez
                 </button>
             </div>
