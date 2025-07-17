@@ -4,13 +4,6 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Wizard;
-use Filament\Schemas\Components\Wizard\Step;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Actions;
 use App\Enums\ClientType;
 use App\Enums\RolesEnum;
 use App\Mail\QuotationSendedToUser;
@@ -32,9 +25,15 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\ViewField;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Wizard;
+use Filament\Schemas\Components\Wizard\Step;
+use Filament\Schemas\Concerns\InteractsWithSchemas;
+use Filament\Schemas\Contracts\HasSchemas;
+use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
@@ -47,14 +46,20 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
-final class GuestShowQuaotationForm extends Component implements HasActions, HasForms
+final class GuestShowQuaotationForm extends Component implements HasActions, HasSchemas
 {
     use InteractsWithActions;
-    use InteractsWithForms;
+    use InteractsWithSchemas;
 
     public ?array $data = [];
 
     public RequestQuoteFunctionality $requestQuoteFunctionality;
+
+    /*  public function mount(): void
+     {
+
+
+     } */
 
     public function mount(): void
     {
@@ -66,7 +71,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             $this->data['company_address'] = Auth::user()->company_address;
             $this->data['company_vat_number'] = Auth::user()->company_vat_number;
         }
-
         $this->form->fill();
     }
 
@@ -265,6 +269,11 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-envelope');
     }
 
+    public function create(): void
+    {
+        dd($this->form->getState());
+    }
+
     public function render(): View
     {
         return view('livewire.guest-show-quaotation-form');
@@ -272,69 +281,71 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getClientInformationSchema(): Step
     {
-        return Step::make('Client Informations')->translateLabel()->schema(
-            [
-                ViewField::make('welcomeText')->view(
-                    'filament.forms.components.welcome'
-                ),
-                Grid::make(2)->schema([
-                    Select::make('website_type_id')
-                        ->live()
-                        ->required()
-                        ->translateLabel()
-                        ->relationship('websiteType', 'name', function ($query) {
-                            $order = ['weboldal', 'webshop', 'landing page'];
+        return Step::make('Client Informations')
+            ->translateLabel()
+            ->schema(
+                [
+                    ViewField::make('welcomeText')->view(
+                        'filament.forms.components.welcome'
+                    ),
+                    Grid::make(2)->gridContainer()->schema([
+                        Select::make('website_type_id')
+                            ->live()
+                            ->required()
+                            ->translateLabel()
+                            ->preload()
+                            ->relationship('websiteType', 'name', function ($query) {
+                                $order = ['weboldal', 'webshop', 'landing page'];
 
-                            return $query->whereIn('name', $order)
-                                ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
-                        })
-                        ->afterStateUpdated(function (Set $set, $state): void {
-                            $set('request_quote_functionalities', []);
-                            if (WebsiteType::find($state)->name === 'Webshop') {
-                                $set('websites', $this->webshop());
-                            } elseif (WebsiteType::find($state)->name === 'Weboldal') {
-                                $set('websites', $this->website());
-                            } elseif (WebsiteType::find($state)->name === 'Landing Page') {
-                                $set('websites', $this->landingPage());
-                            } else {
-                                $set('websites', []);
-                            }
-                        })
-                        ->hintAction(function (): SubmitButton {
-                            return SubmitButton::make('help')
-                                ->icon('heroicon-o-question-mark-circle')
-                                ->extraAttributes(['class' => 'text-gray-500'])
-                                ->label('')
-                                ->tooltip(function ($state) {
-                                    return __('Filament/pages/request-quote.website_type_tooltip');
-                                });
-                        })
-                        ->preload(),
-                    Select::make('website_engine')
-                        ->live()
-                        ->hintAction(function (): SubmitButton {
-                            return SubmitButton::make('help')
-                                ->icon('heroicon-o-question-mark-circle')
-                                ->extraAttributes(['class' => 'text-gray-500'])
-                                ->label('')
-                                ->tooltip(function ($state) {
-                                    return match ($state) {
-                                        'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
-                                        'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
-                                        'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
-                                        default => __('Filament/pages/request-quote.website_engine_tooltip'),
-                                    };
-                                });
-                        })
-                        ->translateLabel()
-                        ->options([
-                            'wordpress' => 'Wordpress',
-                            'laravel' => 'Laravel',
-                            'shopify' => 'Shopify',
-                        ])->required(),
+                                return $query->whereIn('name', $order)
+                                    ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
+                            })
+                            ->afterStateUpdated(function (Set $set, $state): void {
+                                $set('request_quote_functionalities', []);
+                                if (WebsiteType::find($state)->name === 'Webshop') {
+                                    $set('websites', $this->webshop());
+                                } elseif (WebsiteType::find($state)->name === 'Weboldal') {
+                                    $set('websites', $this->website());
+                                } elseif (WebsiteType::find($state)->name === 'Landing Page') {
+                                    $set('websites', $this->landingPage());
+                                } else {
+                                    $set('websites', []);
+                                }
+                            })
+                            ->hintAction(
+                                SubmitButton::make('help')
+                                    ->icon('heroicon-o-question-mark-circle')
+                                    ->extraAttributes(['class' => 'text-gray-500'])
+                                    ->label('')
+                                    ->tooltip(function ($state) {
+                                        return __('Filament/pages/request-quote.website_type_tooltip');
+                                    })
+                            ),
+                        Select::make('website_engine')
+                            ->live()
+                            ->hintAction(
+                                SubmitButton::make('help')
+                                    ->icon('heroicon-o-question-mark-circle')
+                                    ->extraAttributes(['class' => 'text-gray-500'])
+                                    ->label('')
+                                    ->tooltip(function ($state) {
+                                        return match ($state) {
+                                            'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
+                                            'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
+                                            'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
+                                            default => __('Filament/pages/request-quote.website_engine_tooltip'),
+                                        };
+                                    })
+                            )
+                            ->translateLabel()
+                            ->options([
+                                'wordpress' => 'Wordpress',
+                                'laravel' => 'Laravel',
+                                'shopify' => 'Shopify',
+                            ])->required(),
 
-                ]),
-            ]);
+                    ]),
+                ]);
     }
 
     private function getWebsiteInformationSchema(): Step
@@ -382,13 +393,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
                 ->translateLabel()
                 ->maxLength(20000)
-                ->disableToolbarButtons([
-                    'attachFiles',
-                    'codeBlock',
-                    'italic',
-                    'strikeThrough',
-                    'underline',
-                ])->columnSpanFull(),
+                ->columnSpanFull(),
             Toggle::make('have_website_graphic')
                 ->columnSpanFull()
                 ->default(false)
@@ -398,32 +403,17 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->disabled(),
             ViewField::make('have_website_graphic')->columnSpanFull()
                 ->view('filament.forms.components.have-website-graphic'),
-            Actions::make([
-                SubmitButton::make('yes')
-                    ->translateLabel()
-                    ->requiresConfirmation()
-                    ->modalHeading(__('Website graphic'))
-                    ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                    ->modalSubmitActionLabel(__('Yes, sure I do'))
-                    ->modalCancelActionLabel(__('Cancel'))
-                    ->modalAlignment(Alignment::Center)
-                    ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === true ? 'primary' : 'gray')
-                    ->action(function (Set $set): void {
-                        $set('have_website_graphic', true);
-                    }),
-                SubmitButton::make('no')
-                    ->translateLabel()
-                    ->requiresConfirmation()
-                    ->modalHeading(__('Website graphic'))
-                    ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
-                    ->modalCancelActionLabel(__('Cancel'))
-                    ->modalSubmitActionLabel(__('Igen, biztosan nincs'))
-                    ->modalAlignment(Alignment::Center)
-                    ->color(fn ($livewire): string => $livewire->data['have_website_graphic'] === false ? 'primary' : 'gray')
-                    ->action(function (Set $set): void {
-                        $set('have_website_graphic', false);
-                    }),
-            ])->label('Do you have a website graphic?')->translateLabel(),
+            ToggleButtons::make('have_website_graphic')
+                ->label('Do you have a website graphic?')
+                ->translateLabel()
+                ->live()
+                ->options([
+                    true => __('Yes'),
+                    false => __('No'),
+                ])
+                ->default(false)
+                ->inline()
+                ->required(),
         ]),
             CheckboxList::make('request_quote_functionalities')
                 ->translateLabel()
@@ -678,22 +668,22 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return [
             TextInput::make('name')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
-                ->dehydrated(fn () => true)
                 ->live()
                 ->translateLabel()
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
                 ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
-                ->dehydrated(fn () => true)
                 ->label('Want to this page?')
                 ->translateLabel()
+
                 ->live()
                 ->options([
                     '1' => __('Yes'),
                     '0' => __('No'),
                 ])
                 ->default('0')
+                ->boolean()
                 ->inline()
                 ->required(),
             ToggleButtons::make('length')
@@ -719,13 +709,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->visible(fn ($get) => $get('required'))
                 ->label(__('Page description'))
                 ->maxLength(65535)
-                ->disableToolbarButtons([
-                    'attachFiles',
-                    'codeBlock',
-                    'italic',
-                    'strikeThrough',
-                    'underline',
-                ])
                 ->columnSpanFull(),
             FileUpload::make('images')
                 ->translateLabel()

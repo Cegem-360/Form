@@ -2,7 +2,6 @@
     "Whoops!": "Hoppá!",
     "Hello!": "Üdvözöljük!",
     "Regards,": "Üdvözlettel,",
-    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:": "Ha problémába ütközik a \":actionText\" gomb használatakor, másolja és illessze be az alábbi URL-t a böngészőjébe:",
     "Welcome to the Cégem 360 Quote Request Portal!": "Üdvözöljük a Cégem 360 Árajánlatkérő Portálon!",
     "Easily manage your quotes and projects here:": "Könnyen kezelheti árajánlatait és projektjeit itt:",
     "Quote Overview:": "Árajánlat áttekintés:",
@@ -246,5 +245,14 @@
     "Please click the button below to verify your email address.": "Kérjük, kattintson az alábbi gombra az email címe ellenőrzéséhez.",
     "If you did not create an account, no further action is required.": "Ha nem hozott létre fiókot, további teendőre nincs szükség.",
     "Verify Email Address": "Email cím megerősítése",
-    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\n into your web browser:": "Ha problémába ütközik a \":actionText\" gomb használatakor, másolja és illessze be az alábbi URL-t a böngészőjébe:"
+    "Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.": " Elfelejtetted a jelszavad? Semmi gond. Csak add meg az email címed és küldünk egy linket, amivel visszaállíthatod a jelszavad.",
+    "Email Password Reset Link": "Jelszó visszaállító link küldése emailben",
+    "We can't find a user with that email address.": "Nem található felhasználó ezzel az email címmel.",
+    "You are receiving this email because we received a password reset request for your account.": "Ezt az emailt azért kapja, mert jelszó visszaállítási kérelmet kaptunk az Ön fiókjához.",
+    "This password reset link will expire in 60 minutes.": "Ez a jelszó visszaállító link 60 perc múlva lejár.",
+    "If you did not request a password reset, no further action is required.": "Ha nem kérte a jelszó visszaállítást, akkor nincs további teendő.",
+    "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below into your web browser:": "Ha problémába ütközik a \":actionText\" gomb használatakor, másolja és illessze be az alábbi URL-t a böngészőjébe:",
+    "Reset Password": "Jelszó visszaállítása",
+    "This password reset link will expire in :count minutes.": "Ez a jelszó visszaállító link :count perc múlva lejár.",
+    "Reset Password Notification": "Jelszó visszaállító értesítés"
 }

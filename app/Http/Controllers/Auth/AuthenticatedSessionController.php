@@ -27,8 +27,8 @@ final class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-        $request->session()->regenerate(); // Ensure $request is an instance of Illuminate\Http\Request
+        Auth::authenticate();
+        Session::regenerate(); // Ensure $request is an instance of Illuminate\Http\Request
 
         return redirect()->intended(route('home', absolute: false));
     }
@@ -40,9 +40,9 @@ final class AuthenticatedSessionController extends Controller
     {
         Auth::guard('web')->logout();
 
-        $request->session()->invalidate();
+        Session::invalidate();
 
-        $request->session()->regenerateToken();
+        Session::regenerateToken();
 
         return redirect('/');
     }
