@@ -4,27 +4,29 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\WebsiteTypePriceResource\Pages\CreateWebsiteTypePrice;
 use App\Filament\Admin\Resources\WebsiteTypePriceResource\Pages\EditWebsiteTypePrice;
 use App\Filament\Admin\Resources\WebsiteTypePriceResource\Pages\ListWebsiteTypePrices;
 use App\Models\WebsiteTypePrice;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class WebsiteTypePriceResource extends Resource
 {
     protected static ?string $model = WebsiteTypePrice::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
 
     public static function form(Schema $schema): Schema
     {

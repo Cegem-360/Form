@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Pages;
 
 use App\Models\Option;
+use BackedEnum;
 use Filament\Pages\Page;
 
 final class Settings extends Page
 {
     protected static ?string $model = Option::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
 
     /* protected static ?string $navigationGroup = 'Settings';
 

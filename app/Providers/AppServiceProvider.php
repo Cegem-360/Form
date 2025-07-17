@@ -14,6 +14,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Wizard\Step;
 use Filament\Tables\Table;
@@ -47,36 +48,39 @@ final class AppServiceProvider extends ServiceProvider
           Gate::policy(Permission::class, PermissionPolicy::class); */
         $this->migrationsCustomPath();
 
-        Table::configureUsing(fn (Table $table) => $table->defaultNumberLocale('hu'));
+        Table::configureUsing(fn (Table $table): Table => $table->defaultNumberLocale('hu'));
 
-        ToggleButtons::configureUsing(function (ToggleButtons $component) {
+        ToggleButtons::configureUsing(function (ToggleButtons $component): void {
             $component->translateLabel();
         });
-        TextInput::configureUsing(function (TextInput $component) {
+        TextInput::configureUsing(function (TextInput $component): void {
             $component->translateLabel();
         });
-        Select::configureUsing(function (Select $component) {
+        Select::configureUsing(function (Select $component): void {
             $component->translateLabel();
         });
-        Checkbox::configureUsing(function (Checkbox $component) {
+        Checkbox::configureUsing(function (Checkbox $component): void {
             $component->translateLabel();
         });
-        CheckboxList::configureUsing(function (CheckboxList $component) {
+        CheckboxList::configureUsing(function (CheckboxList $component): void {
             $component->translateLabel();
         });
-        Repeater::configureUsing(function (Repeater $component) {
+        Repeater::configureUsing(function (Repeater $component): void {
             $component->translateLabel();
         });
-        Step::configureUsing(function (Step $component) {
+        Step::configureUsing(function (Step $component): void {
             $component->translateLabel();
         });
-        RichEditor::configureUsing(function (RichEditor $component) {
+        RichEditor::configureUsing(function (RichEditor $component): void {
             $component->translateLabel();
         });
-        FileUpload::configureUsing(function (FileUpload $component) {
+        FileUpload::configureUsing(function (FileUpload $component): void {
             $component->translateLabel();
         });
-        Action::configureUsing(function (Action $component) {
+        Action::configureUsing(function (Action $component): void {
+            $component->translateLabel();
+        });
+        Toggle::configureUsing(function (Toggle $component): void {
             $component->translateLabel();
         });
 

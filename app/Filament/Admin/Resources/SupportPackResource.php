@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\CreateSupportPack;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\EditSupportPack;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\ListSupportPacks;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\ViewSupportPack;
 use App\Models\SupportPack;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class SupportPackResource extends Resource
 {
     protected static ?string $model = SupportPack::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Project';
+    protected static string|UnitEnum|null $navigationGroup = 'Project';
 
     public static function form(Schema $schema): Schema
     {

@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\IdeaResource\Pages\CreateIdea;
 use App\Filament\Admin\Resources\IdeaResource\Pages\EditIdea;
 use App\Filament\Admin\Resources\IdeaResource\Pages\ListIdeas;
 use App\Filament\Admin\Resources\IdeaResource\Pages\ViewIdea;
 use App\Models\Idea;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class IdeaResource extends Resource
 {
     protected static ?string $model = Idea::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Project';
+    protected static string|UnitEnum|null $navigationGroup = 'Project';
 
     protected static ?string $navigationParentItem = 'Projects';
 

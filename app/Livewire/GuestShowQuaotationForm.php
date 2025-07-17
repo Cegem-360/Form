@@ -27,6 +27,9 @@ use Filament\Forms\Components\ToggleButtons;
 use Filament\Forms\Components\ViewField;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Html;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Text;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard;
@@ -71,6 +74,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             $this->data['company_address'] = Auth::user()->company_address;
             $this->data['company_vat_number'] = Auth::user()->company_vat_number;
         }
+
         $this->form->fill();
     }
 
@@ -292,7 +296,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         Select::make('website_type_id')
                             ->live()
                             ->required()
-
                             ->preload()
                             ->relationship('websiteType', 'name', function ($query) {
                                 $order = ['weboldal', 'webshop', 'landing page'];
@@ -389,11 +392,13 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 ->maxLength(255)
                 ->required(),
-            RichEditor::make('project_description')
-                ->placeholder('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.')
+            Section::make()->columnSpanFull()->components([
+                Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
+                RichEditor::make('project_description')
+                    ->placeholder('')
+                    ->maxLength(20000)
+                    ->columnSpanFull(), ]),
 
-                ->maxLength(20000)
-                ->columnSpanFull(),
             Toggle::make('have_website_graphic')
                 ->columnSpanFull()
                 ->default(false)
@@ -401,18 +406,29 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
                 ->hidden(true)
                 ->disabled(),
-            ViewField::make('have_website_graphic')->columnSpanFull()
-                ->view('filament.forms.components.have-website-graphic'),
+            Section::make()
+                ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
+                ->components([
+                    /*  Text::make('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?'), */
+                    Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
+                    Html::make(null)->content('<p>
+        A grafikai terv vagy látványterv (User Interface – UI) a weboldal vizuális megjelenését, elrendezését és
+        felhasználói
+        felületét mutatja be még a fejlesztés megkezdése előtt. Ez magában foglalja a színsémákat, tipográfiát, képek és
+        szövegek elhelyezkedését, gombok stílusát és minden olyan vizuális elemet, amely befolyásolja a felhasználói
+        élményt,
+        egyfajta "digitális makettként" szolgálva.
+    </p>'),
+                    /*  ViewField::make('have_website_graphic')->columnSpanFull()
+                        ->view('filament.forms.components.have-website-graphic'), */
+                ]),
+
             ToggleButtons::make('have_website_graphic')
                 ->label('Do you have a website graphic?')
-
                 ->live()
-                ->options([
-                    true => __('Yes'),
-                    false => __('No'),
-                ])
                 ->default(false)
                 ->inline()
+                ->boolean()
                 ->required(),
         ]),
             CheckboxList::make('request_quote_functionalities')
@@ -667,12 +683,12 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     {
         return [
             TextInput::make('name')
-                ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->live()
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
-                ->disabled(fn ($get) => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->label('Want to this page?')
                 ->live()
                 ->grouped()

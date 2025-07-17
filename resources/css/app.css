@@ -1,7 +1,20 @@
 @import 'tailwindcss';
 @import '../../vendor/filament/filament/resources/css/theme.css';
-@source '../../../../app/Filament';
-@source '../../../../resources/views/filament';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
 
-@layer utilities {
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+/* Filament ToggleButtons custom checked color (if needed) */
+input:checked + .fi-btn:is(label):not(.fi-outlined).fi-color {
+    background-color: var(--bg);
+    color: var(--text);
+}
+.dark input:checked + .fi-btn:is(label):not(.fi-outlined).fi-color {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
 }

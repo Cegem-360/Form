@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\CreateWebsiteType;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\EditWebsiteType;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\ViewWebsiteType;
 use App\Filament\Admin\Resources\WebsiteTypeResource\RelationManagers\RequestQuoteFunctionalitiesRelationManager;
 use App\Models\WebsiteType;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class WebsiteTypeResource extends Resource
 {
     protected static ?string $model = WebsiteType::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
 
     public static function form(Schema $schema): Schema
     {

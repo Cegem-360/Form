@@ -130,12 +130,8 @@ final class RequestQuoteResource extends Resource
 
                                     ->required(),
                                 ToggleButtons::make('required')
-
                                     ->live()
-                                    ->options([
-                                        '1' => __('Yes'),
-                                        '0' => __('No'),
-                                    ])
+                                    ->boolean(trueLabel: __('Yes'), falseLabel: __('No'))
                                     ->inline()
                                     ->required(),
                                 ToggleButtons::make('length')
@@ -306,7 +302,7 @@ final class RequestQuoteResource extends Resource
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
-                    ->visible(function (RequestQuote $record) {
+                    ->visible(function (RequestQuote $record): bool {
                         return ! $record->is_payed;
                     })
                     ->icon('heroicon-o-check'),

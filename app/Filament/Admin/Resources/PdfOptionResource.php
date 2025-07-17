@@ -4,27 +4,29 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\CreatePdfOption;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\EditPdfOption;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\ListPdfOptions;
 use App\Models\PdfOption;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class PdfOptionResource extends Resource
 {
     protected static ?string $model = PdfOption::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
 
     public static function form(Schema $schema): Schema
     {

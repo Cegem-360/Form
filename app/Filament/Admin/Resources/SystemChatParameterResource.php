@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Enums\OpenAIRole;
 use App\Filament\Admin\Resources\SystemChatParameterResource\Pages\CreateSystemChatParameter;
 use App\Filament\Admin\Resources\SystemChatParameterResource\Pages\EditSystemChatParameter;
 use App\Filament\Admin\Resources\SystemChatParameterResource\Pages\ListSystemChatParameters;
 use App\Models\SystemChatParameter;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -25,7 +26,7 @@ final class SystemChatParameterResource extends Resource
 {
     protected static ?string $model = SystemChatParameter::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema
     {

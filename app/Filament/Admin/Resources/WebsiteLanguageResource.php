@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\ViewWebsiteLanguage;
 use App\Models\WebsiteLanguage;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use UnitEnum;
 
 final class WebsiteLanguageResource extends Resource
 {
     protected static ?string $model = WebsiteLanguage::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Settings';
+    protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
     protected static ?string $navigationLabel = 'Website Languages';
 

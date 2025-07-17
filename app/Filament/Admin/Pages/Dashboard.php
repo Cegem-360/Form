@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Pages;
 
-use Filament\Panel;
 use Filament\Facades\Filament;
 use Filament\Pages\Page;
+use Filament\Panel;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Widgets\Widget;
 use Filament\Widgets\WidgetConfiguration;

@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use Filament\Schemas\Schema;
-use Filament\Actions\ViewAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\CreateContactChannel;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\EditContactChannel;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\ListContactChannels;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\ViewContactChannel;
 use App\Models\ContactChannel;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -23,7 +24,7 @@ final class ContactChannelResource extends Resource
 {
     protected static ?string $model = ContactChannel::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Schema $schema): Schema
     {

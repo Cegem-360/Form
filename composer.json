@@ -11,11 +11,15 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1.1",
+        "filament/actions": "^4.0",
         "filament/filament": "^4.0",
         "filament/forms": "^4.0",
+        "filament/schemas": "^4.0",
+        "filament/tables": "^4.0",
         "laravel/cashier": "^15.6.4",
         "laravel/framework": "^12.16",
         "laravel/tinker": "^2.10.1",
+        "nunomaduro/essentials": "^0.1",
         "spatie/browsershot": "^5.0.10",
         "spatie/laravel-pdf": "^1.5.5"
     },
