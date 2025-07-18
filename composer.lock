@@ -3561,20 +3561,20 @@
         },
         {
             "name": "madbox-99/filament-essentials",
-            "version": "v1.0.2",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MadBox-99/filament-essentials.git",
-                "reference": "7c82cafca53f0db9e70f97c7798fd91472e40132"
+                "reference": "aaec266d2e29552e71d16cd28b8d2055ca42cfb0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MadBox-99/filament-essentials/zipball/7c82cafca53f0db9e70f97c7798fd91472e40132",
-                "reference": "7c82cafca53f0db9e70f97c7798fd91472e40132",
+                "url": "https://api.github.com/repos/MadBox-99/filament-essentials/zipball/aaec266d2e29552e71d16cd28b8d2055ca42cfb0",
+                "reference": "aaec266d2e29552e71d16cd28b8d2055ca42cfb0",
                 "shasum": ""
             },
             "require": {
-                "filament/filament": "^3.0 || ^4.0",
+                "filament/filament": ">=3.0 || >=4.0",
                 "laravel/framework": "^10.0 || ^11.0 || ^12.0",
                 "php": "^8.1",
                 "spatie/laravel-package-tools": "^1.15"
@@ -3621,9 +3621,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MadBox-99/filament-essentials/issues",
-                "source": "https://github.com/MadBox-99/filament-essentials/tree/v1.0.2"
+                "source": "https://github.com/MadBox-99/filament-essentials/tree/v1.0.0"
             },
-            "time": "2025-07-18T07:00:33+00:00"
+            "time": "2025-07-18T08:33:03+00:00"
         },
         {
             "name": "masterminds/html5",

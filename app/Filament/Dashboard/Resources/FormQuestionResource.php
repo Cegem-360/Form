@@ -52,15 +52,12 @@ final class FormQuestionResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('project.name')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('project.requestQuote.quotation_name')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('status')
-
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
