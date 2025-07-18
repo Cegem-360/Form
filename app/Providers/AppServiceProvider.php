@@ -43,47 +43,11 @@ final class AppServiceProvider extends ServiceProvider
     {
         Cashier::calculateTaxes();
         Number::useCurrency('HUF');
-        Model::automaticallyEagerLoadRelationships();
         /*   Gate::policy(Role::class, RolePolicy::class);
           Gate::policy(Permission::class, PermissionPolicy::class); */
         $this->migrationsCustomPath();
 
-        Table::configureUsing(fn (Table $table): Table => $table->defaultNumberLocale('hu'));
-
-        ToggleButtons::configureUsing(function (ToggleButtons $component): void {
-            $component->translateLabel();
-        });
-        TextInput::configureUsing(function (TextInput $component): void {
-            $component->translateLabel();
-        });
-        Select::configureUsing(function (Select $component): void {
-            $component->translateLabel();
-        });
-        Checkbox::configureUsing(function (Checkbox $component): void {
-            $component->translateLabel();
-        });
-        CheckboxList::configureUsing(function (CheckboxList $component): void {
-            $component->translateLabel();
-        });
-        Repeater::configureUsing(function (Repeater $component): void {
-            $component->translateLabel();
-        });
-        Step::configureUsing(function (Step $component): void {
-            $component->translateLabel();
-        });
-        RichEditor::configureUsing(function (RichEditor $component): void {
-            $component->translateLabel();
-        });
-        FileUpload::configureUsing(function (FileUpload $component): void {
-            $component->translateLabel();
-        });
-        Action::configureUsing(function (Action $component): void {
-            $component->translateLabel();
-        });
-        Toggle::configureUsing(function (Toggle $component): void {
-            $component->translateLabel();
-        });
-
+        Table::configureUsing(fn(Table $table): Table => $table->defaultNumberLocale('hu'));
     }
 
     private function migrationsCustomPath(): void

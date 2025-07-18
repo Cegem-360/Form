@@ -24038,6 +24038,30 @@ namespace Livewire {
             }
     }
 
+namespace FilamentEssentials\Facades {
+    /**
+     * @see \FilamentEssentials\FilamentEssentials
+     */
+    class FilamentEssentials {
+        /**
+         * @static
+         */
+        public static function getDefaultConfig()
+        {
+            return \FilamentEssentials\FilamentEssentials::getDefaultConfig();
+        }
+
+        /**
+         * @static
+         */
+        public static function isTranslatableByDefault()
+        {
+            return \FilamentEssentials\FilamentEssentials::isTranslatableByDefault();
+        }
+
+            }
+    }
+
 namespace  {
     /**
      * @method static BasePDF setBaseHost(string $baseHost)
@@ -32573,6 +32597,7 @@ namespace  {
     class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Livewire extends \Livewire\Livewire {}
+    class FilamentEssentials extends \FilamentEssentials\Facades\FilamentEssentials {}
     class LaravelPdf extends \Pdf {}
 }
 

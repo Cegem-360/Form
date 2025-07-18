@@ -19,6 +19,7 @@
         "laravel/cashier": "^15.6.4",
         "laravel/framework": "^12.16",
         "laravel/tinker": "^2.10.1",
+        "madbox-99/filament-essentials": "^1.0",
         "nunomaduro/essentials": "^0.1",
         "spatie/browsershot": "^5.0.10",
         "spatie/laravel-pdf": "^1.5.5"
