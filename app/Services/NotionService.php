@@ -165,14 +165,124 @@ final class NotionService
                 $page->setPhoneNumber('Telefonszám', $requestQuote->phone);
             }
 
+            // Ajánlat neve
+            if (! empty($requestQuote->quotation_name)) {
+                $page->setText('Ajánlat neve', $requestQuote->quotation_name);
+            }
+
+            // Ügyfél típus
+            if ($requestQuote->client_type) {
+                $page->setSelect('Ügyfél típus', $requestQuote->client_type->value);
+            }
+
+            // Cég neve (ha cég)
+            if (! empty($requestQuote->company_name)) {
+                $page->setText('Cég neve', $requestQuote->company_name);
+            }
+
+            // Cég címe
+            if (! empty($requestQuote->company_address)) {
+                $page->setText('Cég címe', $requestQuote->company_address);
+            }
+
             // Weboldal típus
             if ($requestQuote->websiteType) {
                 $page->setSelect('Weboldal típus', $requestQuote->websiteType->name);
             }
 
+            // Weboldal engine
+            if (! empty($requestQuote->website_engine)) {
+                $page->setSelect('Weboldal engine', $requestQuote->website_engine);
+            }
+
+            // Van-e grafika
+            $page->setCheckbox('Van grafika', $requestQuote->have_website_graphic ?? false);
+
+            // Többnyelvű-e
+            $page->setCheckbox('Többnyelvű', $requestQuote->is_multilangual ?? false);
+
+            // Alapértelmezett nyelv
+            if (! empty($requestQuote->default_language)) {
+                $page->setSelect('Alapértelmezett nyelv', $requestQuote->default_language);
+            }
+
+            // Nyelvek (array formátumban)
+            if (! empty($requestQuote->languages) && is_array($requestQuote->languages)) {
+                $languageNames = [];
+                try {
+                    $languages = $requestQuote->getLanguages();
+                    $languageNames = $languages->pluck('name')->toArray();
+                } catch (Exception $e) {
+                    // Ha nem sikerül betölteni a nyelveket, használjuk az ID-kat
+                    $languageNames = $requestQuote->languages;
+                }
+                $page->setMultiSelect('Nyelvek', $languageNames);
+            }
+
+            // Fizetési mód
+            if (! empty($requestQuote->payment_method)) {
+                $page->setSelect('Fizetési mód', $requestQuote->payment_method);
+            }
+
+            // Projekt leírás
+            if (! empty($requestQuote->project_description)) {
+                $page->setText('Projekt leírás', $requestQuote->project_description);
+            }
+
+            // Számlázási cím
+            if (! empty($requestQuote->billing_address)) {
+                $page->setText('Számlázási cím', $requestQuote->billing_address);
+            }
+
+            // Kifizetve-e
+            $page->setCheckbox('Kifizetve', $requestQuote->is_payed ?? false);
+
             // Teljes ár
             if (! empty($requestQuote->total_price)) {
                 $page->setNumber('Teljes ár', (float) $requestQuote->total_price);
+            }
+
+            // Alap ár (nyelvek nélkül)
+            try {
+                $basePriceNoLanguages = $requestQuote->getTotalPriceAttributeNoLanguages();
+                $page->setNumber('Alap ár (nyelvek nélkül)', (float) $basePriceNoLanguages);
+            } catch (Exception $e) {
+                // Ha nem sikerül kiszámolni, kihagyjuk
+            }
+
+            // Weboldal adatok (JSON formátumban, ha van)
+            if (! empty($requestQuote->websites) && is_array($requestQuote->websites)) {
+                $websitesText = '';
+                foreach ($requestQuote->websites as $index => $website) {
+                    $websitesText .= 'Weboldal '.($index + 1).":\n";
+                    if (isset($website['length'])) {
+                        $websitesText .= '- Méret: '.$website['length']."\n";
+                    }
+                    if (isset($website['required'])) {
+                        $websitesText .= '- Szükséges: '.($website['required'] ? 'Igen' : 'Nem')."\n";
+                    }
+                    $websitesText .= "\n";
+                }
+                if ($websitesText) {
+                    $page->setText('Weboldal részletek', mb_trim($websitesText));
+                }
+            }
+
+            // Funkciók
+            if ($requestQuote->requestQuoteFunctionalities) {
+                try {
+                    $functionalities = $requestQuote->requestQuoteFunctionalities()->get();
+                    if ($functionalities->isNotEmpty()) {
+                        $functionalityNames = $functionalities->pluck('name')->toArray();
+                        $page->setMultiSelect('Funkciók', $functionalityNames);
+
+                        // Funkciók teljes ára
+                        $functionalitiesPrice = $functionalities->sum('price');
+                        $page->setNumber('Funkciók ára', (float) $functionalitiesPrice);
+                    }
+                } catch (Exception $e) {
+                    // Ha nem sikerül betölteni a funkciókat, kihagyjuk
+                }
             }
 
             // Státusz
@@ -181,6 +291,11 @@ final class NotionService
             // Létrehozás dátuma
             if ($requestQuote->created_at) {
                 $page->setDate('Létrehozva', $requestQuote->created_at);
+            }
+
+            // Frissítés dátuma
+            if ($requestQuote->updated_at) {
+                $page->setDate('Frissítve', $requestQuote->updated_at);
             }
 
             return $this->createPageInDatabase($databaseId, $page);

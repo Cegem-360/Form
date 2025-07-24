@@ -71,7 +71,7 @@ namespace App\Models{
  * @property bool $have_exist_website
  * @property string|null $exist_website_url
  * @property bool $is_exact_deadline
- * @property \Illuminate\Support\Carbon|null $deadline
+ * @property \Carbon\CarbonImmutable|null $deadline
  * @property string|null $formating_milestone
  * @property string|null $visual_feeling
  * @property string|null $tone_of_website
@@ -111,8 +111,8 @@ namespace App\Models{
  * @property bool $have_contracted_online_bank_card_payment
  * @property array<array-key, mixed>|null $online_bank_card_payment_options
  * @property \App\Enums\FormQuestionStatus $status Status of the form question, e.g. unfilled, temporarily saved, submitted
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\Domain|null $domain
  * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user
@@ -330,8 +330,8 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property array<array-key, mixed>|null $options
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Database\Factories\OptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Option newQuery()
@@ -355,8 +355,8 @@ namespace App\Models{
  * @property string|null $customer_name
  * @property int|null $user_id
  * @property int|null $request_quote_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\OrderItem> $orderItems
  * @property-read int|null $order_items_count
  * @property-read \App\Models\RequestQuote|null $requestQuote
@@ -389,8 +389,8 @@ namespace App\Models{
  * @property int $quantity
  * @property string $currency
  * @property string|null $stripe_product_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\Order|null $order
  * @method static \Database\Factories\OrderItemFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderItem newModelQuery()
@@ -418,14 +418,17 @@ namespace App\Models{
  * @property string|null $frontend_description
  * @property string|null $backend_description
  * @property string|null $delivery_deadline
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read mixed $delivery_dead_line
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\PdfOptionFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption landingPage()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption webShop()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption webSite()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereBackendDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption whereDeliveryDeadline($value)
@@ -444,8 +447,8 @@ namespace App\Models{
  * @property string|null $stripe_product_id
  * @property string $name
  * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Database\Factories\ProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
@@ -467,8 +470,8 @@ namespace App\Models{
  * @property int|null $request_quote_id
  * @property int|null $order_id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $start_date
- * @property \Illuminate\Support\Carbon|null $end_date
+ * @property \Carbon\CarbonImmutable|null $start_date
+ * @property \Carbon\CarbonImmutable|null $end_date
  * @property \App\Enums\ProjectStatus $status
  * @property string|null $project_goal
  * @property array<array-key, mixed>|null $original_project_goals
@@ -483,8 +486,8 @@ namespace App\Models{
  * @property int|null $contact_channel_id
  * @property int|null $created_by
  * @property int|null $updated_by
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\ContactChannel|null $contactChannel
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\FormQuestion> $formQuestions
  * @property-read int|null $form_questions_count
@@ -531,8 +534,8 @@ namespace App\Models{
  * @property int|null $commission_amount
  * @property float|null $commission_percent
  * @property int|null $commission_paid_amount
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\Project|null $project
  * @property-read \App\Models\User|null $user
  * @method static \Database\Factories\ProjectCommissionFactory factory($count = null, $state = [])
@@ -574,8 +577,8 @@ namespace App\Models{
  * @property array<array-key, mixed>|null $languages
  * @property string|null $payment_method
  * @property bool|null $is_payed
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read int $total_price
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
  * @property-read int|null $pdf_options_count
@@ -590,9 +593,12 @@ namespace App\Models{
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote landingPage()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote webShop()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote webSite()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereBillingAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyAddress($value)
@@ -628,15 +634,20 @@ namespace App\Models{
  * @property string|null $description
  * @property int $website_type_id
  * @property bool|null $default
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuote> $requestQuotes
  * @property-read int|null $request_quotes_count
  * @property-read \App\Models\WebsiteType|null $websiteType
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality default()
  * @method static \Database\Factories\RequestQuoteFunctionalityFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality landingPage()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality notDefault()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality webShop()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality webSite()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereDefault($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuoteFunctionality whereDescription($value)
@@ -655,8 +666,8 @@ namespace App\Models{
  * @property string|null $stripe_product_id
  * @property string $name
  * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Database\Factories\StripeProductFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|StripeProduct newQuery()
@@ -721,19 +732,19 @@ namespace App\Models{
  * @property string $name
  * @property string|null $phone
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property \Carbon\CarbonImmutable|null $email_verified_at
  * @property string $password
  * @property string|null $company_name
  * @property string|null $company_address
  * @property string|null $company_vat_number
  * @property float $default_commission_percent
  * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property string|null $stripe_id
  * @property string|null $pm_type
  * @property string|null $pm_last_four
- * @property \Illuminate\Support\Carbon|null $trial_ends_at
+ * @property \Carbon\CarbonImmutable|null $trial_ends_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Cashier\Subscription> $subscriptions
@@ -770,8 +781,8 @@ namespace App\Models{
  * @property int $id
  * @property string|null $name
  * @property string|null $code
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Database\Factories\WebsiteLanguageFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteLanguage newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteLanguage newQuery()
@@ -789,8 +800,8 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
  * @property-read int|null $pdf_options_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
@@ -818,8 +829,8 @@ namespace App\Models{
  * @property string $website_engine
  * @property string $size
  * @property int|null $price
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\WebsiteTypePriceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|WebsiteTypePrice newModelQuery()

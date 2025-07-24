@@ -41,6 +41,7 @@ final class AppServiceProvider extends ServiceProvider
         // Register NotionFacade
         $loader = AliasLoader::getInstance();
         $loader->alias('Notion', \FiveamCode\LaravelNotionApi\NotionFacade::class);
+
     }
 
     private function migrationsCustomPath(): void
