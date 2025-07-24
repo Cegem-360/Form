@@ -290,12 +290,12 @@ final class NotionService
 
             // Létrehozás dátuma
             if ($requestQuote->created_at) {
-                $page->setDate('Létrehozva', $requestQuote->created_at);
+                $page->setDate('Létrehozva', $requestQuote->created_at->toDateTime());
             }
 
             // Frissítés dátuma
             if ($requestQuote->updated_at) {
-                $page->setDate('Frissítve', $requestQuote->updated_at);
+                $page->setDate('Frissítve', $requestQuote->updated_at->toDateTime());
             }
 
             return $this->createPageInDatabase($databaseId, $page);
