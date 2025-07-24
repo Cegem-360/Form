@@ -34,7 +34,6 @@
             }
         </style>
     </head>
-    {{-- @var FormQuestionForm $formQuestion --}}
 
     <body>
         <h1>Form Question</h1>

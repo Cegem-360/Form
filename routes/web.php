@@ -51,12 +51,30 @@ Route::middleware(['auth'])->group(function (): void {
     });
 
     Route::name('checkout.')->prefix('checkout')->group(function (): void {
-
         Route::get('success/{requestQuote}', CheckoutSuccess::class)->name('success');
-
     });
 
 });
+
+Route::get('notion/api/', function () {
+
+    return response()->json([
+        'status' => 'success',
+        'data' => Notion::pages()->find('239b80d668ac81c6bcd1ed79739679c8'),
+    ]);
+});
+
+// Notion API endpoints
+Route::prefix('notion')->name('notion.')->group(function () {
+    Route::get('/test-upload', [App\Http\Controllers\NotionController::class, 'uploadTestData'])->name('test-upload');
+    Route::get('/save-quote/{requestQuote}', [App\Http\Controllers\NotionController::class, 'saveRequestQuote'])->name('save-quote');
+    Route::get('/query-database', [App\Http\Controllers\NotionController::class, 'queryDatabase'])->name('query-database');
+    Route::post('/create-page', [App\Http\Controllers\NotionController::class, 'createCustomPage'])->name('create-page');
+    Route::get('/page/{pageId}', [App\Http\Controllers\NotionController::class, 'getPage'])->name('get-page');
+});
+
 Route::get('kerdoiv/{token}', FormQuestionForm::class)->name('kerdoiv');
+
+Route::get('notion-upload', App\Livewire\NotionUpload::class)->name('notion-upload');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');

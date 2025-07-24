@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 12.20.0.
+ * Generated for Laravel 12.21.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -6831,7 +6831,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get a database connection instance.
          *
-         * @param string|null $name
+         * @param \UnitEnum|string|null $name
          * @return \Illuminate\Database\Connection
          * @static
          */
@@ -7245,7 +7245,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Begin a fluent query against a database table.
          *
-         * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|string $table
+         * @param \Closure|\Illuminate\Database\Query\Builder|\Illuminate\Contracts\Database\Query\Expression|\UnitEnum|string $table
          * @param string|null $as
          * @return \Illuminate\Database\Query\Builder
          * @static
@@ -10491,6 +10491,17 @@ namespace Illuminate\Support\Facades {
             return $instance->macroCall($method, $parameters);
         }
 
+        /**
+         * @see \FiveamCode\LaravelNotionApi\Macros\PestHttpRecorder::register()
+         * @param array|string $urls
+         * @return \Illuminate\Http\Client\PendingRequest
+         * @static
+         */
+        public static function recordAndFakeLater($urls = [])
+        {
+            return \Illuminate\Http\Client\Factory::recordAndFakeLater($urls);
+        }
+
             }
     /**
      * @see \Illuminate\Translation\Translator
@@ -13683,12 +13694,6 @@ namespace Illuminate\Support\Facades {
 
             }
     /**
-     * @method static array validate(array $rules, ...$params)
-     * @method static array validateWithBag(string $errorBag, array $rules, ...$params)
-     * @method static bool hasValidSignature(bool $absolute = true)
-     * @method static bool hasValidRelativeSignature()
-     * @method static bool hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
-     * @method static bool hasValidRelativeSignatureWhileIgnoring($ignoreQuery = [])
      * @see \Illuminate\Http\Request
      */
     class Request {
@@ -16017,7 +16022,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string $key
          * @param string|null $format
-         * @param string|null $tz
+         * @param \UnitEnum|string|null $tz
          * @return \Illuminate\Support\Carbon|null
          * @throws \Carbon\Exceptions\InvalidFormatException
          * @static
@@ -16194,6 +16199,69 @@ namespace Illuminate\Support\Facades {
         public static function flushMacros()
         {
             \Illuminate\Http\Request::flushMacros();
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestValidation()
+         * @param array $rules
+         * @param mixed $params
+         * @static
+         */
+        public static function validate($rules, ...$params)
+        {
+            return \Illuminate\Http\Request::validate($rules, ...$params);
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestValidation()
+         * @param string $errorBag
+         * @param array $rules
+         * @param mixed $params
+         * @static
+         */
+        public static function validateWithBag($errorBag, $rules, ...$params)
+        {
+            return \Illuminate\Http\Request::validateWithBag($errorBag, $rules, ...$params);
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
+         * @param mixed $absolute
+         * @static
+         */
+        public static function hasValidSignature($absolute = true)
+        {
+            return \Illuminate\Http\Request::hasValidSignature($absolute);
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
+         * @static
+         */
+        public static function hasValidRelativeSignature()
+        {
+            return \Illuminate\Http\Request::hasValidRelativeSignature();
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
+         * @param mixed $ignoreQuery
+         * @param mixed $absolute
+         * @static
+         */
+        public static function hasValidSignatureWhileIgnoring($ignoreQuery = [], $absolute = true)
+        {
+            return \Illuminate\Http\Request::hasValidSignatureWhileIgnoring($ignoreQuery, $absolute);
+        }
+
+        /**
+         * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestSignatureValidation()
+         * @param mixed $ignoreQuery
+         * @static
+         */
+        public static function hasValidRelativeSignatureWhileIgnoring($ignoreQuery = [])
+        {
+            return \Illuminate\Http\Request::hasValidRelativeSignatureWhileIgnoring($ignoreQuery);
         }
 
             }
@@ -17646,7 +17714,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes yearly()
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes yearlyOn(int $month = 1, int|string $dayOfMonth = 1, string $time = '0:0')
      * @method static \Illuminate\Console\Scheduling\PendingEventAttributes days(array|mixed $days)
-     * @method static \Illuminate\Console\Scheduling\PendingEventAttributes timezone(\DateTimeZone|string $timezone)
+     * @method static \Illuminate\Console\Scheduling\PendingEventAttributes timezone(\UnitEnum|\DateTimeZone|string $timezone)
      * @see \Illuminate\Console\Scheduling\Schedule
      */
     class Schedule {
@@ -17682,8 +17750,8 @@ namespace Illuminate\Support\Facades {
          * Add a new job callback event to the schedule.
          *
          * @param object|string $job
-         * @param string|null $queue
-         * @param string|null $connection
+         * @param \UnitEnum|string|null $queue
+         * @param \UnitEnum|string|null $connection
          * @return \Illuminate\Console\Scheduling\CallbackEvent
          * @static
          */
@@ -19392,7 +19460,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get a filesystem instance.
          *
-         * @param string|null $name
+         * @param \UnitEnum|string|null $name
          * @return \Illuminate\Filesystem\LocalFilesystemAdapter
          * @static
          */
@@ -22705,7 +22773,7 @@ namespace Barryvdh\Debugbar\Facades {
      * @method static void warning(mixed $message)
      * @see \Barryvdh\Debugbar\LaravelDebugbar
      */
-    class Debugbar {
+    class Debugbar extends \DebugBar\DebugBar {
         /**
          * Returns the HTTP driver
          * 
@@ -22788,12 +22856,13 @@ namespace Barryvdh\Debugbar\Facades {
          * @param string $name Internal name, used to stop the measure
          * @param string $label Public name
          * @param string|null $collector
+         * @param string|null $group
          * @static
          */
-        public static function startMeasure($name, $label = null, $collector = null)
+        public static function startMeasure($name, $label = null, $collector = null, $group = null)
         {
             /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
-            return $instance->startMeasure($name, $label, $collector);
+            return $instance->startMeasure($name, $label, $collector, $group);
         }
 
         /**
@@ -22942,12 +23011,13 @@ namespace Barryvdh\Debugbar\Facades {
          * @param float $end
          * @param array|null $params
          * @param string|null $collector
+         * @param string|null $group
          * @static
          */
-        public static function addMeasure($label, $start, $end, $params = [], $collector = null)
+        public static function addMeasure($label, $start, $end, $params = [], $collector = null, $group = null)
         {
             /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
-            return $instance->addMeasure($label, $start, $end, $params, $collector);
+            return $instance->addMeasure($label, $start, $end, $params, $collector, $group);
         }
 
         /**
@@ -22956,13 +23026,14 @@ namespace Barryvdh\Debugbar\Facades {
          * @param string $label
          * @param \Closure $closure
          * @param string|null $collector
+         * @param string|null $group
          * @return mixed
          * @static
          */
-        public static function measure($label, $closure, $collector = null)
+        public static function measure($label, $closure, $collector = null, $group = null)
         {
             /** @var \Barryvdh\Debugbar\LaravelDebugbar $instance */
-            return $instance->measure($label, $closure, $collector);
+            return $instance->measure($label, $closure, $collector, $group);
         }
 
         /**
@@ -23652,6 +23723,168 @@ namespace Barryvdh\DomPDF\Facade {
             }
     }
 
+namespace FiveamCode\LaravelNotionApi {
+    /**
+     * Class NotionFacade.
+     *
+     */
+    class NotionFacade {
+        /**
+         * Set version of notion-api.
+         *
+         * @param string $version
+         * @return \Notion
+         * @throws HandlingException
+         * @static
+         */
+        public static function setVersion($version)
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->setVersion($version);
+        }
+
+        /**
+         * Wrapper function to set version to v1.
+         *
+         * @return \FiveamCode\LaravelNotionApi\Notion
+         * @throws HandlingException
+         * @static
+         */
+        public static function v1()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->v1();
+        }
+
+        /**
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Databases
+         * @throws HandlingException
+         * @static
+         */
+        public static function databases()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->databases();
+        }
+
+        /**
+         * @param string $databaseId
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Database
+         * @throws Exceptions\LaravelNotionAPIException
+         * @throws HandlingException
+         * @static
+         */
+        public static function database($databaseId)
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->database($databaseId);
+        }
+
+        /**
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Pages
+         * @throws HandlingException
+         * @static
+         */
+        public static function pages()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->pages();
+        }
+
+        /**
+         * @param string $blockId
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Block
+         * @throws Exceptions\LaravelNotionAPIException
+         * @throws HandlingException
+         * @static
+         */
+        public static function block($blockId)
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->block($blockId);
+        }
+
+        /**
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Users
+         * @throws HandlingException
+         * @static
+         */
+        public static function users()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->users();
+        }
+
+        /**
+         * @param string|null $searchText
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Search
+         * @throws Exceptions\LaravelNotionAPIException
+         * @throws HandlingException
+         * @static
+         */
+        public static function search($searchText = '')
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->search($searchText);
+        }
+
+        /**
+         * @return \FiveamCode\LaravelNotionApi\Endpoints\Comments
+         * @throws Exceptions\LaravelNotionAPIException
+         * @throws HandlingException
+         * @static
+         */
+        public static function comments()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->comments();
+        }
+
+        /**
+         * @static
+         */
+        public static function resolve()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->resolve();
+        }
+
+        /**
+         * @return string
+         * @static
+         */
+        public static function getVersion()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->getVersion();
+        }
+
+        /**
+         * @return \Illuminate\Http\Client\PendingRequest|null
+         * @static
+         */
+        public static function getConnection()
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->getConnection();
+        }
+
+        /**
+         * Checks if given version for notion-api is valid.
+         *
+         * @param string $version
+         * @throws HandlingException
+         * @static
+         */
+        public static function checkValidVersion($version)
+        {
+            /** @var \FiveamCode\LaravelNotionApi\Notion $instance */
+            return $instance->checkValidVersion($version);
+        }
+
+            }
+    }
+
 namespace Livewire {
     /**
      * @see \Livewire\LivewireManager
@@ -24322,7 +24555,7 @@ namespace Illuminate\Support {
 namespace Illuminate\Http {
     /**
      */
-    class Request {
+    class Request extends \Symfony\Component\HttpFoundation\Request {
         /**
          * @see \Illuminate\Foundation\Providers\FoundationServiceProvider::registerRequestValidation()
          * @param array $rules
@@ -24384,6 +24617,25 @@ namespace Illuminate\Http {
         public static function hasValidRelativeSignatureWhileIgnoring($ignoreQuery = [])
         {
             return \Illuminate\Http\Request::hasValidRelativeSignatureWhileIgnoring($ignoreQuery);
+        }
+
+            }
+    }
+
+namespace Illuminate\Http\Client {
+    /**
+     * @mixin \Illuminate\Http\Client\PendingRequest
+     */
+    class Factory {
+        /**
+         * @see \FiveamCode\LaravelNotionApi\Macros\PestHttpRecorder::register()
+         * @param array|string $urls
+         * @return \Illuminate\Http\Client\PendingRequest
+         * @static
+         */
+        public static function recordAndFakeLater($urls = [])
+        {
+            return \Illuminate\Http\Client\Factory::recordAndFakeLater($urls);
         }
 
             }
@@ -30570,6 +30822,65 @@ namespace  {
         }
 
         /**
+         * Add a where between columns statement using a value to the query.
+         *
+         * @param mixed $value
+         * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
+         * @param string $boolean
+         * @param bool $not
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function whereValueBetween($value, $columns, $boolean = 'and', $not = false)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->whereValueBetween($value, $columns, $boolean, $not);
+        }
+
+        /**
+         * Add an or where between columns statement using a value to the query.
+         *
+         * @param mixed $value
+         * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function orWhereValueBetween($value, $columns)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->orWhereValueBetween($value, $columns);
+        }
+
+        /**
+         * Add a where not between columns statement using a value to the query.
+         *
+         * @param mixed $value
+         * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
+         * @param string $boolean
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function whereValueNotBetween($value, $columns, $boolean = 'and')
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->whereValueNotBetween($value, $columns, $boolean);
+        }
+
+        /**
+         * Add an or where not between columns statement using a value to the query.
+         *
+         * @param mixed $value
+         * @param array{\Illuminate\Contracts\Database\Query\Expression|string, \Illuminate\Contracts\Database\Query\Expression|string} $columns
+         * @return \Illuminate\Database\Eloquent\Builder<static>
+         * @static
+         */
+        public static function orWhereValueNotBetween($value, $columns)
+        {
+            /** @var \Illuminate\Database\Query\Builder $instance */
+            return $instance->orWhereValueNotBetween($value, $columns);
+        }
+
+        /**
          * Add an "or where not null" clause to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
@@ -32596,6 +32907,7 @@ namespace  {
     class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
     class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
     class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
+    class Notion extends \FiveamCode\LaravelNotionApi\NotionFacade {}
     class Livewire extends \Livewire\Livewire {}
     class FilamentEssentials extends \FilamentEssentials\Facades\FilamentEssentials {}
     class LaravelPdf extends \Pdf {}

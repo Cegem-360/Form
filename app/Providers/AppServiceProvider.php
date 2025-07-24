@@ -6,19 +6,8 @@ namespace App\Providers;
 
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
-use Filament\Actions\Action;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
-use Filament\Schemas\Components\Wizard\Step;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
@@ -47,7 +36,11 @@ final class AppServiceProvider extends ServiceProvider
           Gate::policy(Permission::class, PermissionPolicy::class); */
         $this->migrationsCustomPath();
 
-        Table::configureUsing(fn(Table $table): Table => $table->defaultNumberLocale('hu'));
+        Table::configureUsing(fn (Table $table): Table => $table->defaultNumberLocale('hu'));
+
+        // Register NotionFacade
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Notion', \FiveamCode\LaravelNotionApi\NotionFacade::class);
     }
 
     private function migrationsCustomPath(): void
