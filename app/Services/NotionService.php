@@ -7,9 +7,9 @@ namespace App\Services;
 use Exception;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException;
+use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
 use InvalidArgumentException;
 use Log;
-use Notion;
 
 final class NotionService
 {

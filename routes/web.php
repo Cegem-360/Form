@@ -10,6 +10,7 @@ use App\Livewire\Checkout\PaymentPage;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Models\RequestQuote;
+use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
 use Illuminate\Support\Facades\Route;
 
 require_once __DIR__.'/auth.php';
