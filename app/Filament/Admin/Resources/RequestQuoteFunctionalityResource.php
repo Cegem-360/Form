@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Clusters\RequestQuotes\RequestQuotesCluster;
+use App\Filament\Admin\Clusters\RequestQuoteOprions\RequestQuoteOprionsCluster;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
@@ -33,7 +33,7 @@ final class RequestQuoteFunctionalityResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
 
-    protected static ?string $cluster = RequestQuotesCluster::class;
+    protected static ?string $cluster = RequestQuoteOprionsCluster::class;
 
     public static function form(Schema $schema): Schema
     {

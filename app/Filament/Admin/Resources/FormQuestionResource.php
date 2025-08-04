@@ -42,6 +42,14 @@ final class FormQuestionResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Project';
 
+    protected static ?string $navigationLabel = 'Form kérdések';
+
+    protected static ?string $modelLabel = 'form kérdés';
+
+    protected static ?string $pluralModelLabel = 'form kérdések';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return $schema

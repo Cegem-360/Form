@@ -28,7 +28,15 @@ final class OrderResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Orders';
+    protected static string|UnitEnum|null $navigationGroup = 'Rendelés';
+
+    protected static ?string $navigationLabel = 'Rendelések';
+
+    protected static ?string $modelLabel = 'Rendelés';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $pluralModelLabel = 'Rendelések';
 
     public static function form(Schema $schema): Schema
     {

@@ -32,6 +32,14 @@ final class UserResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
+    protected static ?string $navigationLabel = 'Felhasználók';
+
+    protected static ?string $modelLabel = 'Felhasználó';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $pluralModelLabel = 'Felhasználók';
+
     public static function form(Schema $schema): Schema
     {
         return $schema

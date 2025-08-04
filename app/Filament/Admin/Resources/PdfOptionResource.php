@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Clusters\RequestQuotes\RequestQuotesCluster;
+use App\Filament\Admin\Clusters\RequestQuoteOprions\RequestQuoteOprionsCluster;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\CreatePdfOption;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\EditPdfOption;
 use App\Filament\Admin\Resources\PdfOptionResource\Pages\ListPdfOptions;
@@ -29,7 +29,7 @@ final class PdfOptionResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
 
-    protected static ?string $cluster = RequestQuotesCluster::class;
+    protected static ?string $cluster = RequestQuoteOprionsCluster::class;
 
     public static function form(Schema $schema): Schema
     {

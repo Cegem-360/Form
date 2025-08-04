@@ -33,6 +33,8 @@ final class ProjectResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Project';
 
+    protected static ?int $navigationSort = 0;
+
     public static function form(Schema $schema): Schema
     {
         return $schema

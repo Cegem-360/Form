@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\Settings\SettingsCluster;
 use App\Filament\Admin\Resources\DomainResource\Pages\CreateDomain;
 use App\Filament\Admin\Resources\DomainResource\Pages\EditDomain;
 use App\Filament\Admin\Resources\DomainResource\Pages\ListDomains;
@@ -28,6 +29,8 @@ final class DomainResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static string|UnitEnum|null $navigationGroup = 'Settings';
+
+    protected static ?string $cluster = SettingsCluster::class;
 
     public static function form(Schema $schema): Schema
     {

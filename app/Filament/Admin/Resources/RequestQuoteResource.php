@@ -46,6 +46,14 @@ final class RequestQuoteResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
 
+    protected static ?string $navigationLabel = 'Árajánlatok';
+
+    protected static ?string $modelLabel = 'Árajánlat';
+
+    protected static ?int $navigationSort = 0;
+
+    protected static ?string $pluralModelLabel = 'Árajánlatok';
+
     public static function form(Schema $schema): Schema
     {
         return $schema

@@ -121,7 +121,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     public function orderAction(): SubmitButton
     {
         return SubmitButton::make('order')
-            ->action(function (): void {
+            ->action(function () {
 
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
@@ -428,20 +428,19 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         ->placeholder('')
                         ->maxLength(20000)
                         ->columnSpanFull(), ]),
-
                 Toggle::make('have_website_graphic')
                     ->columnSpanFull()
                     ->default(false)
                     ->label('Do you have a website graphic?')
-
                     ->hidden(true)
                     ->disabled(),
                 Section::make()
                     ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
                     ->components([
-                        /*  Text::make('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?'), */
+
                         Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
-                        Html::make(null)->content('<p>
+                        Html::make()
+                            ->content('<p>
         A grafikai terv vagy látványterv (User Interface – UI) a weboldal vizuális megjelenését, elrendezését és
         felhasználói
         felületét mutatja be még a fejlesztés megkezdése előtt. Ez magában foglalja a színsémákat, tipográfiát, képek és
@@ -449,8 +448,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         élményt,
         egyfajta "digitális makettként" szolgálva.
     </p>'),
-                        /*  ViewField::make('have_website_graphic')->columnSpanFull()
-                        ->view('filament.forms.components.have-website-graphic'), */
+
                     ]),
 
                 ToggleButtons::make('have_website_graphic')

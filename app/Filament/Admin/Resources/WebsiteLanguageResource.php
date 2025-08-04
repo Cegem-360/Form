@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\RequestQuoteOprions\RequestQuoteOprionsCluster;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\CreateWebsiteLanguage;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\EditWebsiteLanguage;
 use App\Filament\Admin\Resources\WebsiteLanguageResource\Pages\ListWebsiteLanguages;
@@ -30,6 +31,8 @@ final class WebsiteLanguageResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
     protected static ?string $navigationLabel = 'Website Languages';
+
+    protected static ?string $cluster = RequestQuoteOprionsCluster::class;
 
     public static function form(Schema $schema): Schema
     {

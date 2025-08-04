@@ -27,8 +27,6 @@ final class FormQuestionVisibilityResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // protected static ?string $navigationParentItem = 'Projects';
-
     protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
     public static function form(Schema $schema): Schema

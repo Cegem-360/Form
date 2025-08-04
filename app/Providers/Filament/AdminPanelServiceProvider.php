@@ -42,7 +42,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ])
             ->navigationGroups([
                 'Árajánlat',
-                'Orders',
+                'Rendelés',
                 'Project',
                 'Settings',
             ])

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\RequestQuoteOprions\RequestQuoteOprionsCluster;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\CreateWebsiteType;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\EditWebsiteType;
 use App\Filament\Admin\Resources\WebsiteTypeResource\Pages\ListWebsiteTypes;
@@ -20,7 +21,6 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use UnitEnum;
 
 final class WebsiteTypeResource extends Resource
 {
@@ -28,7 +28,7 @@ final class WebsiteTypeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
+    protected static ?string $cluster = RequestQuoteOprionsCluster::class;
 
     public static function form(Schema $schema): Schema
     {
