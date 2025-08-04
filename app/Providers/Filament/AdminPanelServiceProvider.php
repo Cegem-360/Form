@@ -40,6 +40,12 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->navigationGroups([
+                'Request Quote',
+                'Orders',
+                'Project',
+                'Settings',
+            ])
             ->brandLogo(fn () => view('filament.dashboard.logo'))
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')

@@ -35,8 +35,8 @@ final class OrderResource extends Resource
         return $schema
             ->components([
                 Select::make('request_quote_id')
-
                     ->relationship('requestQuote', 'quotation_name')
+                    ->preload()
                     ->label('Request quote name')
                     ->required(),
                 TextInput::make('amount')
@@ -50,6 +50,13 @@ final class OrderResource extends Resource
                     ->label(__('Payment Status'))
                     ->options(TransactionStatus::class)
                     ->enum(TransactionStatus::class)
+                    ->afterStateUpdated(function ($state, $record) {
+                        if ($state === TransactionStatus::COMPLETED && $record && $record->requestQuote) {
+                            $record->requestQuote->update(['is_payed' => true]);
+                        } else {
+                            $record->requestQuote?->update(['is_payed' => false]);
+                        }
+                    })
                     ->translateLabel()
                     ->required(),
                 TextInput::make('customer_email')
@@ -57,7 +64,8 @@ final class OrderResource extends Resource
                     ->maxLength(255),
                 TextInput::make('customer_name')
                     ->maxLength(255),
-                Select::make('user_id')
+                Select::make('user_id')->required()
+                    ->preload()
                     ->relationship('user', 'name'),
             ]);
     }

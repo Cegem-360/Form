@@ -7,6 +7,7 @@ namespace App\Filament\Admin\Pages;
 use App\Models\Option;
 use BackedEnum;
 use Filament\Pages\Page;
+use UnitEnum;
 
 final class Settings extends Page
 {
@@ -14,9 +15,9 @@ final class Settings extends Page
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
 
-    /* protected static ?string $navigationGroup = 'Settings';
+    protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
-    protected static ?string $navigationParentItem = 'Options'; */
+    protected static ?string $navigationParentItem = 'Options';
 
     protected static ?string $navigationLabel = 'Global Options';
 

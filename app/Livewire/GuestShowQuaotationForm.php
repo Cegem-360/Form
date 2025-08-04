@@ -61,12 +61,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public RequestQuoteFunctionality $requestQuoteFunctionality;
 
-    /*  public function mount(): void
-     {
-
-
-     } */
-
     public function mount(): void
     {
         if (Auth::check()) {
@@ -283,15 +277,15 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function render(): View
     {
-        return view('livewire.guest-show-quaotation-form');
+        return view('livewire.quotations.guest-show-form');
     }
 
     private function getClientInformationSchema(): Step
     {
         return Step::make('Client Informations')
 
-            ->schema(
-                [
+            ->schema([
+                Grid::make(1)->schema([
                     ViewField::make('welcomeText')->view(
                         'filament.forms.components.welcome'
                     ),
@@ -299,6 +293,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                         Select::make('website_type_id')
                             ->live()
                             ->required()
+                            ->searchable(false)
                             ->preload()
                             ->relationship('websiteType', 'name', function ($query) {
                                 $order = ['weboldal', 'webshop', 'landing page'];
@@ -343,7 +338,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                                         };
                                     })
                             )
-
+                            ->searchable(false)
                             ->options([
                                 'wordpress' => 'Wordpress',
                                 'laravel' => 'Laravel',
@@ -351,7 +346,8 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                             ])->required(),
 
                     ]),
-                ]);
+                ]),
+            ]);
     }
 
     private function getWebsiteInformationSchema(): Step
@@ -359,64 +355,54 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return Step::make('Website Informations')->schema([
             Grid::make(1)->schema([
                 Repeater::make('websites')->schema([
-                    Grid::make(2)->columnSpan(1)->schema(
-                        [
-                            Grid::make(2)->columnSpan(1)
-                                ->schema($this->getWebsiteRepererSchema()),
-                            Grid::make(1)->columnSpan(1)->schema([
-                                Section::make()
-                                    ->components(
-                                        components: [
-                                            Text::make(' Ideális választás a lényegre törő, gyorsan áttekinthető aloldalakhoz, mint például egy szolgáltatás rövid bemutatása vagy egy kapcsolati oldal. Maximum 2 szakaszt tartalmaz, melyekben 1-1 szövegdoboz és 1-1 kép helyezhető el.')
-                                                ->weight(FontWeight::Bold),
-                                            Image::make(
-                                                url: Storage::url(path: 'website_previews/short_preview.png'),
-                                                alt: 'Rövid méretű előnézet')
-                                                ->alignCenter()
-                                                ->imageSize('22rem'),
-                                        ]
-                                    )
-                                    ->visible(function (Get $get) {
-                                        return $get('required') && $get('length') === 'short' ? true : false;
-                                    }),
-                                Section::make()
-                                    ->components([
-                                        Text::make('Ez az opció lehetőséget biztosít részletesebb információk megjelenítésére, elegendő térrel egy termék vagy szolgáltatás komplexebb leírásához. Tartalmazhat maximum 5 képet, 5 szövegdobozt és 2 bannert, biztosítva az optimális egyensúlyt a szöveg és a vizuális elemek között.')
+                    Grid::make(2)->columnSpan(1)->schema([
+                        Grid::make(2)->columnSpan(1)
+                            ->schema($this->getWebsiteRepererSchema()),
+                        Grid::make(1)->columnSpan(1)->schema([
+                            Section::make()
+                                ->components(
+                                    components: [
+                                        Text::make(' Ideális választás a lényegre törő, gyorsan áttekinthető aloldalakhoz, mint például egy szolgáltatás rövid bemutatása vagy egy kapcsolati oldal. Maximum 2 szakaszt tartalmaz, melyekben 1-1 szövegdoboz és 1-1 kép helyezhető el.')
                                             ->weight(FontWeight::Bold),
                                         Image::make(
-                                            url: Storage::url(path: 'website_previews/medium_preview.png'),
-                                            alt: 'Közepes méretű előnézet')
+                                            url: Storage::url(path: 'website_previews/short_preview.png'),
+                                            alt: 'Rövid méretű előnézet')
                                             ->alignCenter()
                                             ->imageSize('22rem'),
-                                    ])
-                                    ->visible(function (Get $get) {
-                                        return $get('required') && $get('length') === 'medium' ? true : false;
-                                    }),
-                                Section::make()
-                                    ->components([
-                                        Text::make('A legátfogóbb választás, tökéletes részletes termékoldalakhoz, szolgáltatásbemutatókhoz, amelyek alapos tájékoztatást nyújtanak. Akár 10 kép és 10 szövegdoboz, 5 banner, valamint olyan elemek, mint „előnyeink” szekció, egyedi kép-szöveg kompozíciók, visszaszámláló, "rólunk mondták" idézetek, értékelések, valamint termék- és szolgáltatáskategóriák behúzása is beilleszthető.')
-                                            ->weight(FontWeight::Bold),
-                                        Image::make(
-                                            url: Storage::url(path: 'website_previews/large_preview.png'),
-                                            alt: 'Nagy méretű előnézet')
-                                            ->alignCenter()
-                                            ->imageSize('22rem'),
-                                    ])
-                                    ->visible(function (Get $get) {
-                                        return $get('required') && $get('length') === 'large' ? true : false;
-                                    }),
-                                /* ViewField::make('image')
-                                    ->view('filament.forms.components.image')
-                                    ->viewData(
-                                        [
-                                            'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
-                                            'show_image' => true, // hides the image
-                                        ]
-                                    ), */
-                            ]),
+                                    ]
+                                )
+                                ->visible(function (Get $get) {
+                                    return $get('required') && $get('length') === 'short' ? true : false;
+                                }),
+                            Section::make()
+                                ->components([
+                                    Text::make('Ez az opció lehetőséget biztosít részletesebb információk megjelenítésére, elegendő térrel egy termék vagy szolgáltatás komplexebb leírásához. Tartalmazhat maximum 5 képet, 5 szövegdobozt és 2 bannert, biztosítva az optimális egyensúlyt a szöveg és a vizuális elemek között.')
+                                        ->weight(FontWeight::Bold),
+                                    Image::make(
+                                        url: Storage::url(path: 'website_previews/medium_preview.png'),
+                                        alt: 'Közepes méretű előnézet')
+                                        ->alignCenter()
+                                        ->imageSize('22rem'),
+                                ])
+                                ->visible(function (Get $get) {
+                                    return $get('required') && $get('length') === 'medium' ? true : false;
+                                }),
+                            Section::make()
+                                ->components([
+                                    Text::make('A legátfogóbb választás, tökéletes részletes termékoldalakhoz, szolgáltatásbemutatókhoz, amelyek alapos tájékoztatást nyújtanak. Akár 10 kép és 10 szövegdoboz, 5 banner, valamint olyan elemek, mint „előnyeink” szekció, egyedi kép-szöveg kompozíciók, visszaszámláló, "rólunk mondták" idézetek, értékelések, valamint termék- és szolgáltatáskategóriák behúzása is beilleszthető.')
+                                        ->weight(FontWeight::Bold),
+                                    Image::make(
+                                        url: Storage::url(path: 'website_previews/large_preview.png'),
+                                        alt: 'Nagy méretű előnézet')
+                                        ->alignCenter()
+                                        ->imageSize('22rem'),
+                                ])
+                                ->visible(function (Get $get) {
+                                    return $get('required') && $get('length') === 'large' ? true : false;
+                                }),
                         ]),
+                    ]),
                 ])
-
                     ->deletable(false)
                     ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
                     ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
@@ -430,32 +416,32 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     private function getGraphicsInformationSchema(): Step
     {
-        return Step::make('Grafics and functions')->schema([Grid::make(2)->schema([
-            TextInput::make('quotation_name')
-                ->columnSpan(1)
+        return Step::make('Grafics and functions')->schema([
+            Grid::make(2)->schema([
+                TextInput::make('quotation_name')
+                    ->columnSpan(1)
+                    ->maxLength(255)
+                    ->required(),
+                Section::make()->columnSpanFull()->components([
+                    Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
+                    RichEditor::make('project_description')
+                        ->placeholder('')
+                        ->maxLength(20000)
+                        ->columnSpanFull(), ]),
 
-                ->maxLength(255)
-                ->required(),
-            Section::make()->columnSpanFull()->components([
-                Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
-                RichEditor::make('project_description')
-                    ->placeholder('')
-                    ->maxLength(20000)
-                    ->columnSpanFull(), ]),
+                Toggle::make('have_website_graphic')
+                    ->columnSpanFull()
+                    ->default(false)
+                    ->label('Do you have a website graphic?')
 
-            Toggle::make('have_website_graphic')
-                ->columnSpanFull()
-                ->default(false)
-                ->label('Do you have a website graphic?')
-
-                ->hidden(true)
-                ->disabled(),
-            Section::make()
-                ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
-                ->components([
-                    /*  Text::make('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?'), */
-                    Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
-                    Html::make(null)->content('<p>
+                    ->hidden(true)
+                    ->disabled(),
+                Section::make()
+                    ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
+                    ->components([
+                        /*  Text::make('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?'), */
+                        Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
+                        Html::make(null)->content('<p>
         A grafikai terv vagy látványterv (User Interface – UI) a weboldal vizuális megjelenését, elrendezését és
         felhasználói
         felületét mutatja be még a fejlesztés megkezdése előtt. Ez magában foglalja a színsémákat, tipográfiát, képek és
@@ -463,20 +449,20 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         élményt,
         egyfajta "digitális makettként" szolgálva.
     </p>'),
-                    /*  ViewField::make('have_website_graphic')->columnSpanFull()
+                        /*  ViewField::make('have_website_graphic')->columnSpanFull()
                         ->view('filament.forms.components.have-website-graphic'), */
-                ]),
+                    ]),
 
-            ToggleButtons::make('have_website_graphic')
-                ->label('Do you have a website graphic?')
-                ->live()
-                ->default(false)
-                ->inline()
-                ->boolean()
-                ->required(),
-        ]),
+                ToggleButtons::make('have_website_graphic')
+                    ->label('Do you have a website graphic?')
+                    ->live()
+                    ->default(false)
+                    ->inline()
+                    ->boolean()
+                    ->required(),
+            ]),
             CheckboxList::make('request_quote_functionalities')
-
+                ->searchable(false)
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'))?->notDefault();
                 })
@@ -747,7 +733,6 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->required(),
             ToggleButtons::make('length')
                 ->label('Content length')
-
                 ->live()
                 ->visible(fn ($get) => $get('required'))
                 ->default('medium')
@@ -764,7 +749,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                 ->required()
                 ->columnSpanFull(),
             RichEditor::make('description')
-
+                ->disableToolbarButtons(['attachFiles'])
                 ->visible(fn ($get) => $get('required'))
                 ->label(__('Page description'))
                 ->maxLength(65535)

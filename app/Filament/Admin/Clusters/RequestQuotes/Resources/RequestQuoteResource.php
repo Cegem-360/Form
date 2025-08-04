@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Admin\Clusters\RequestQuotes\Resources;
 
 use App\Enums\ClientType;
-use App\Filament\Admin\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
-use App\Filament\Admin\Resources\RequestQuoteResource\Pages\EditRequestQuote;
-use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
-use App\Filament\Admin\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
+use App\Filament\Admin\Clusters\RequestQuotes\RequestQuotesCluster;
+use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages\CreateRequestQuote;
+use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages\EditRequestQuote;
+use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages\ListRequestQuotes;
+use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages\ViewRequestQuote;
 use App\Models\RequestQuote;
 use App\Models\WebsiteLanguage;
 use BackedEnum;
@@ -49,6 +50,8 @@ final class RequestQuoteResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
 
+    protected static ?string $cluster = RequestQuotesCluster::class;
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -61,6 +64,7 @@ final class RequestQuoteResource extends Resource
                         ->default(Auth::user()->id),
                     Toggle::make('is_payed')
                         ->label('Is Payed')
+                        ->disabled()
                         ->default(false),
                     TextInput::make('quotation_name')
                         ->maxLength(255),

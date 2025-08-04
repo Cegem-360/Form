@@ -1,11 +1,11 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CgLVE5B9.js",
+    "file": "assets/app-DWu9bpQp.js",
     "name": "app",
     "src": "resources/css/app.css",
     "isEntry": true,
     "css": [
-      "assets/app-DlbLyLSk.css"
+      "assets/app-Bq2nEpM9.css"
     ]
   },
   "resources/css/filament/admin/theme.css": {
@@ -55,7 +55,7 @@
     "src": "resources/images/weboldal-arajanlat-borito-03.jpg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CquR4-H-.js",
+    "file": "assets/app-eh0Mp4YK.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
