@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\RequestQuotes\RequestQuotesCluster;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\CreateRequestQuoteFunctionality;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\EditRequestQuoteFunctionality;
 use App\Filament\Admin\Resources\RequestQuoteFunctionalityResource\Pages\ListRequestQuoteFunctionalities;
@@ -30,7 +31,9 @@ final class RequestQuoteFunctionalityResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
+
+    protected static ?string $cluster = RequestQuotesCluster::class;
 
     public static function form(Schema $schema): Schema
     {

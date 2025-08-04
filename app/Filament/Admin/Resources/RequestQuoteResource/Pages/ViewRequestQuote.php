@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages;
+namespace App\Filament\Admin\Resources\RequestQuoteResource\Pages;
 
 use App\Enums\ProjectStatus;
-use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource;
+use App\Filament\Admin\Resources\RequestQuoteResource;
 use App\Mail\QuotationSendedToUser;
 use App\Models\Project;
 use App\Models\RequestQuote;
@@ -47,7 +47,7 @@ final class ViewRequestQuote extends ViewRecord
             EditAction::make(),
             DeleteAction::make(),
             ActionGroup::make([
-                Action::make('convertToProject')
+                /*  Action::make('convertToProject')
                     ->label('Convert to Project')
                     ->schema([
                         TextInput::make('project_name')
@@ -74,15 +74,8 @@ final class ViewRequestQuote extends ViewRecord
                         return redirect()->route('filament.admin.resources.projects.edit', ['record' => $project->id]);
 
                     })
-                    ->color('primary'),
-                /*  Action::make('createPdf')
-                    ->label('createPdf')
-                    ->action('createPdf')
-                    ->color('secondary'),
-                Action::make('sendToEmail')
-                    ->label('Send to Email')
-                    ->action('createPdfAndSendToCurrentUser')
-                    ->color('secondary'), */
+                    ->color('primary'), */
+
             ]),
         ];
     }

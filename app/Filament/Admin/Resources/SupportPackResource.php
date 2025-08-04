@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\ProjectOption\ProjectOptionCluster;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\CreateSupportPack;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\EditSupportPack;
 use App\Filament\Admin\Resources\SupportPackResource\Pages\ListSupportPacks;
@@ -28,6 +29,8 @@ final class SupportPackResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static string|UnitEnum|null $navigationGroup = 'Project';
+
+    protected static ?string $cluster = ProjectOptionCluster::class;
 
     public static function form(Schema $schema): Schema
     {

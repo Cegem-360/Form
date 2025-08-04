@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\ProjectOption\ProjectOptionCluster;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\CreateProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\EditProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
@@ -24,6 +25,8 @@ final class ProjectCommissionResource extends Resource
     protected static ?string $model = ProjectCommission::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $cluster = ProjectOptionCluster::class;
 
     public static function form(Schema $schema): Schema
     {

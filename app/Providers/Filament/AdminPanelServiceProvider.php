@@ -41,7 +41,7 @@ final class AdminPanelServiceProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->navigationGroups([
-                'Request Quote',
+                'Árajánlat',
                 'Orders',
                 'Project',
                 'Settings',

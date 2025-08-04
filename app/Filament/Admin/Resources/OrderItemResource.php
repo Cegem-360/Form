@@ -29,6 +29,8 @@ final class OrderItemResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Orders';
 
+    protected static ?string $navigationParentItem = 'Orders';
+
     public static function form(Schema $schema): Schema
     {
         return $schema

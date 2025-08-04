@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
+use App\Filament\Admin\Clusters\Reseller\ResellerCluster;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\CreateContactChannel;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\EditContactChannel;
 use App\Filament\Admin\Resources\ContactChannelResource\Pages\ListContactChannels;
@@ -25,6 +26,8 @@ final class ContactChannelResource extends Resource
     protected static ?string $model = ContactChannel::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $cluster = ResellerCluster::class;
 
     public static function form(Schema $schema): Schema
     {

@@ -23,13 +23,13 @@ final class EditProject extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             ActionGroup::make([
-                Action::make('convertToStarter')
+                /*  Action::make('convertToStarter')
                     ->label('Convert to Starter')
                     ->schema([
-                        // formquestion
+
                     ])
                     ->action(function (array $data, Project $record) {
-                        /*  dump($record->requestQuote); */
+
                         $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
                             return [
                                 'description' => $page['description'],
@@ -46,7 +46,7 @@ final class EditProject extends EditRecord
                         return redirect()->route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]);
 
                     })
-                    ->color('primary'),
+                    ->color('primary'), */
             ]),
         ];
     }

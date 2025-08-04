@@ -26,7 +26,7 @@ final class WebsiteTypePriceResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Request Quote';
+    protected static string|UnitEnum|null $navigationGroup = 'Árajánlat';
 
     public static function form(Schema $schema): Schema
     {

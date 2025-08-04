@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource\Pages;
+namespace App\Filament\Admin\Resources\RequestQuoteResource\Pages;
 
-use App\Filament\Admin\Clusters\RequestQuotes\Resources\RequestQuoteResource;
+use App\Filament\Admin\Resources\RequestQuoteResource;
 use Filament\Resources\Pages\CreateRecord;
 
 final class CreateRequestQuote extends CreateRecord
