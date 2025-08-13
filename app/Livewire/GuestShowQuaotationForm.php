@@ -4,51 +4,31 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Enums\ClientType;
 use App\Enums\RolesEnum;
+use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Registration;
+use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\ClientInformation;
+use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\Consent;
+use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\GraphicsInformation;
+use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\WebsiteInformation;
 use App\Mail\QuotationSendedToUser;
 use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
-use App\Models\WebsiteLanguage;
-use App\Models\WebsiteType;
-use Filament\Actions\Action as SubmitButton;
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\ViewField;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Grid;
-use Filament\Schemas\Components\Html;
-use Filament\Schemas\Components\Image;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Text;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard;
-use Filament\Schemas\Components\Wizard\Step;
 use Filament\Schemas\Concerns\InteractsWithSchemas;
 use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Enums\Alignment;
-use Filament\Support\Enums\FontWeight;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
 
@@ -80,10 +60,10 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
         return $schema
             ->components([
                 Wizard::make([
-                    $this->getClientInformationSchema(),
-                    $this->getWebsiteInformationSchema(),
-                    $this->getGraphicsInformationSchema(),
-                    $this->getConstentSchema(),
+                    ClientInformation::make(),
+                    WebsiteInformation::make(),
+                    GraphicsInformation::make(),
+                    Consent::make(),
                 ])
                     ->skippable()
                     ->submitAction($this->submitButtonAction()),
@@ -92,17 +72,17 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->model(RequestQuote::class);
     }
 
-    public function submitButtonAction(): SubmitButton
+    public function submitButtonAction(): Action
     {
         $form = $this->data;
 
-        return SubmitButton::make('submit')
+        return Action::make('submit')
             ->view('filament.forms.components.quotation-submit-button', ['data' => $form]);
     }
 
-    public function createRequestQuoteAction(): SubmitButton
+    public function createRequestQuoteAction(): Action
     {
-        return SubmitButton::make('createRequestQuoteAction')
+        return Action::make('createRequestQuoteAction')
             ->action(function (): void {
                 $data = $this->form->getState();
                 $data['user_id'] = Auth::id();
@@ -118,14 +98,19 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function orderAction(): SubmitButton
+    public function orderAction(): Action
     {
-        return SubmitButton::make('order')
+        return Action::make('order')
             ->action(function () {
 
                 $data = $this->form->getState();
+
                 $data['user_id'] = Auth::id();
+                unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
                 $requestQuote = RequestQuote::create($data);
+                if (isset($this->form->getState()['requestQuoteFunctionalities'])) {
+                    $requestQuote->requestQuoteFunctionalities()->sync($this->form->getState()['requestQuoteFunctionalities']);
+                }
 
                 $this->form->model($requestQuote)->saveRelationships();
                 // save to session
@@ -137,9 +122,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function registerAndSendAction(): SubmitButton
+    public function registerAndSendAction(): Action
     {
-        return SubmitButton::make('registerAndSendAction')
+        return Action::make('registerAndSendAction')
             ->label(__('Register and Create Quotation'))
 
             ->requiresConfirmation()
@@ -150,7 +135,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->fillForm(function (): array {
                 return $this->form->getState();
             })
-            ->schema($this->getRegistrationFormSchema())
+            ->schema(Registration::make())
             ->action(function (array $data) {
 
                 $fillDataForRegister = $data;
@@ -196,9 +181,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function registerAndOrderAction(): SubmitButton
+    public function registerAndOrderAction(): Action
     {
-        return SubmitButton::make('registerAndOrderAction')
+        return Action::make('registerAndOrderAction')
             ->label(__('Register and Order'))
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
@@ -208,7 +193,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->fillForm(function (): array {
                 return $this->form->getState();
             })
-            ->schema($this->getRegistrationFormSchema())
+            ->schema(Registration::make())
             ->action(function (array $data) {
                 $dataTmp = $this->form->getState();
                 $validatedfillDataForRegister = Validator::make($data, [
@@ -249,9 +234,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->icon('heroicon-o-paper-airplane');
     }
 
-    public function sendEmailToMeAction(): SubmitButton
+    public function sendEmailToMeAction(): Action
     {
-        return SubmitButton::make('sendEmailToMeAction')
+        return Action::make('sendEmailToMeAction')
             ->action(function () {
                 $data = $this->form->getState();
                 $record = RequestQuote::create($data);
@@ -278,496 +263,5 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     public function render(): View
     {
         return view('livewire.quotations.guest-show-form');
-    }
-
-    private function getClientInformationSchema(): Step
-    {
-        return Step::make('Client Informations')
-
-            ->schema([
-                Grid::make(1)->schema([
-                    ViewField::make('welcomeText')->view(
-                        'filament.forms.components.welcome'
-                    ),
-                    Grid::make(2)->gridContainer()->schema([
-                        Select::make('website_type_id')
-                            ->live()
-                            ->required()
-                            ->searchable(false)
-                            ->preload()
-                            ->relationship('websiteType', 'name', function ($query) {
-                                $order = ['weboldal', 'webshop', 'landing page'];
-
-                                return $query->whereIn('name', $order)
-                                    ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
-                            })
-                            ->afterStateUpdated(function (Set $set, $state): void {
-                                $set('request_quote_functionalities', []);
-                                if (WebsiteType::find($state)->name === 'Webshop') {
-                                    $set('websites', $this->webshop());
-                                } elseif (WebsiteType::find($state)->name === 'Weboldal') {
-                                    $set('websites', $this->website());
-                                } elseif (WebsiteType::find($state)->name === 'Landing Page') {
-                                    $set('websites', $this->landingPage());
-                                } else {
-                                    $set('websites', []);
-                                }
-                            })
-                            ->hintAction(
-                                SubmitButton::make('help')
-                                    ->icon('heroicon-o-question-mark-circle')
-                                    ->extraAttributes(['class' => 'text-gray-500'])
-                                    ->label('')
-                                    ->tooltip(function ($state) {
-                                        return __('Filament/pages/request-quote.website_type_tooltip');
-                                    })
-                            ),
-                        Select::make('website_engine')
-                            ->live()
-                            ->hintAction(
-                                SubmitButton::make('help')
-                                    ->icon('heroicon-o-question-mark-circle')
-                                    ->extraAttributes(['class' => 'text-gray-500'])
-                                    ->label('')
-                                    ->tooltip(function ($state) {
-                                        return match ($state) {
-                                            'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
-                                            'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
-                                            'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
-                                            default => __('Filament/pages/request-quote.website_engine_tooltip'),
-                                        };
-                                    })
-                            )
-                            ->searchable(false)
-                            ->options([
-                                'wordpress' => 'Wordpress',
-                                'laravel' => 'Laravel',
-                                'shopify' => 'Shopify',
-                            ])->required(),
-
-                    ]),
-                ]),
-            ]);
-    }
-
-    private function getWebsiteInformationSchema(): Step
-    {
-        return Step::make('Website Informations')->schema([
-            Grid::make(1)->schema([
-                Repeater::make('websites')->schema([
-                    Grid::make(2)->columnSpan(1)->schema([
-                        Grid::make(2)->columnSpan(1)
-                            ->schema($this->getWebsiteRepererSchema()),
-                        Grid::make(1)->columnSpan(1)->schema([
-                            Section::make()
-                                ->components(
-                                    components: [
-                                        Text::make(' Ideális választás a lényegre törő, gyorsan áttekinthető aloldalakhoz, mint például egy szolgáltatás rövid bemutatása vagy egy kapcsolati oldal. Maximum 2 szakaszt tartalmaz, melyekben 1-1 szövegdoboz és 1-1 kép helyezhető el.')
-                                            ->weight(FontWeight::Bold),
-                                        Image::make(
-                                            url: Storage::url(path: 'website_previews/short_preview.png'),
-                                            alt: 'Rövid méretű előnézet')
-                                            ->alignCenter()
-                                            ->imageSize('22rem'),
-                                    ]
-                                )
-                                ->visible(function (Get $get) {
-                                    return $get('required') && $get('length') === 'short' ? true : false;
-                                }),
-                            Section::make()
-                                ->components([
-                                    Text::make('Ez az opció lehetőséget biztosít részletesebb információk megjelenítésére, elegendő térrel egy termék vagy szolgáltatás komplexebb leírásához. Tartalmazhat maximum 5 képet, 5 szövegdobozt és 2 bannert, biztosítva az optimális egyensúlyt a szöveg és a vizuális elemek között.')
-                                        ->weight(FontWeight::Bold),
-                                    Image::make(
-                                        url: Storage::url(path: 'website_previews/medium_preview.png'),
-                                        alt: 'Közepes méretű előnézet')
-                                        ->alignCenter()
-                                        ->imageSize('22rem'),
-                                ])
-                                ->visible(function (Get $get) {
-                                    return $get('required') && $get('length') === 'medium' ? true : false;
-                                }),
-                            Section::make()
-                                ->components([
-                                    Text::make('A legátfogóbb választás, tökéletes részletes termékoldalakhoz, szolgáltatásbemutatókhoz, amelyek alapos tájékoztatást nyújtanak. Akár 10 kép és 10 szövegdoboz, 5 banner, valamint olyan elemek, mint „előnyeink” szekció, egyedi kép-szöveg kompozíciók, visszaszámláló, "rólunk mondták" idézetek, értékelések, valamint termék- és szolgáltatáskategóriák behúzása is beilleszthető.')
-                                        ->weight(FontWeight::Bold),
-                                    Image::make(
-                                        url: Storage::url(path: 'website_previews/large_preview.png'),
-                                        alt: 'Nagy méretű előnézet')
-                                        ->alignCenter()
-                                        ->imageSize('22rem'),
-                                ])
-                                ->visible(function (Get $get) {
-                                    return $get('required') && $get('length') === 'large' ? true : false;
-                                }),
-                        ]),
-                    ]),
-                ])
-                    ->deletable(false)
-                    ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
-                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                    ->minItems(1)
-                    ->maxItems(30)
-                    ->collapsible()
-                    ->defaultItems(10),
-            ]),
-        ]);
-    }
-
-    private function getGraphicsInformationSchema(): Step
-    {
-        return Step::make('Grafics and functions')->schema([
-            Grid::make(2)->schema([
-                TextInput::make('quotation_name')
-                    ->columnSpan(1)
-                    ->maxLength(255)
-                    ->required(),
-                Section::make()->columnSpanFull()->components([
-                    Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
-                    RichEditor::make('project_description')
-                        ->placeholder('')
-                        ->maxLength(20000)
-                        ->columnSpanFull(), ]),
-                Toggle::make('have_website_graphic')
-                    ->columnSpanFull()
-                    ->default(false)
-                    ->label('Do you have a website graphic?')
-                    ->hidden(true)
-                    ->disabled(),
-                Section::make()
-                    ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
-                    ->components([
-
-                        Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
-                        Html::make()
-                            ->content('<p>
-        A grafikai terv vagy látványterv (User Interface – UI) a weboldal vizuális megjelenését, elrendezését és
-        felhasználói
-        felületét mutatja be még a fejlesztés megkezdése előtt. Ez magában foglalja a színsémákat, tipográfiát, képek és
-        szövegek elhelyezkedését, gombok stílusát és minden olyan vizuális elemet, amely befolyásolja a felhasználói
-        élményt,
-        egyfajta "digitális makettként" szolgálva.
-    </p>'),
-
-                    ]),
-
-                ToggleButtons::make('have_website_graphic')
-                    ->label('Do you have a website graphic?')
-                    ->live()
-                    ->default(false)
-                    ->inline()
-                    ->boolean()
-                    ->required(),
-            ]),
-            CheckboxList::make('request_quote_functionalities')
-                ->searchable(false)
-                ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
-                    return $query->where('website_type_id', $get('website_type_id'))?->notDefault();
-                })
-                ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))
-                ->disabled(fn ($get): bool => $get('website_type_id') === null)
-                ->descriptions(function (Get $get) {
-                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->notDefault()->pluck('description', 'id')->toArray();
-                }),
-            Toggle::make('is_multilangual')
-
-                ->live(),
-            Select::make('default_language')
-
-                ->live()
-                ->visible(fn ($get) => $get('is_multilangual'))
-                ->default(WebsiteLanguage::whereName('Magyar')->firstOrCreate(['name' => 'Magyar'])->id)
-                ->options(WebsiteLanguage::all()->pluck('name', 'id'))
-                ->preload()
-                ->afterStateUpdated(function (Set $set): void {
-                    $set('languages', []);
-                })
-                ->searchable(),
-            Select::make('languages')
-
-                ->multiple()
-                ->visible(fn ($get) => $get('is_multilangual'))
-                ->options(function (Get $get) {
-                    return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
-                })
-                ->searchable(),
-        ]);
-    }
-
-    private function getConstentSchema(): Step
-    {
-        return Step::make('Consent')->schema([Grid::make(1)->schema([
-            TextInput::make('name')
-                ->label('Full Name')
-
-                ->live()
-                ->required()
-                ->maxLength(255)
-                ->visible(fn (): bool => ! Auth::check()),
-            TextInput::make('email')
-
-                ->email()
-                ->live()
-                ->required()
-                ->maxLength(255)
-                ->visible(fn (): bool => ! Auth::check()),
-            TextInput::make('phone')
-
-                ->tel()
-                ->live()
-                ->required()
-                ->maxLength(255)
-                ->visible(fn (): bool => ! Auth::check()),
-            Select::make('client_type')
-                ->label('Legal form')
-
-                ->live()
-                ->required()
-                ->options(ClientType::class)
-                ->preload()
-                ->visible(fn (): bool => ! Auth::check()),
-            TextInput::make('company_name')
-
-                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                ->maxLength(255),
-            TextInput::make('company_address')
-
-                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                ->maxLength(255),
-            TextInput::make('company_contact_name')
-
-                ->visible(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                ->required(fn ($get): bool => ! Auth::check() && $get('client_type') === ClientType::COMPANY->value)
-                ->maxLength(255),
-            Checkbox::make('consent')
-                ->live()
-                ->default(false)
-                ->label('I agree to the terms and conditions(note:later has link)')
-
-                ->required()
-                ->helperText(__('You must agree to the terms and conditions to proceed.'))
-                ->rules(['accepted']),
-            Checkbox::make('privacy_policy')
-                ->live()
-                ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
-
-                ->default(false)
-                ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
-                ->required()
-                ->rules(['accepted']),
-        ]),
-        ]);
-    }
-
-    /**
-     * Get the registration form schema with common fields.
-     */
-    private function getRegistrationFormSchema(): array
-    {
-        return [
-            Select::make('client_type')
-
-                ->label('Legal form')
-                ->live()
-                ->required()
-                ->options(ClientType::class)
-                ->enum(ClientType::class),
-            TextInput::make('company_name')
-
-                ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                ->maxLength(255),
-            TextInput::make('company_address')
-
-                ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                ->maxLength(255),
-            TextInput::make('name')
-                ->label('Full Name')
-
-                ->live()
-                ->required()
-                ->maxLength(255),
-            TextInput::make('email')
-
-                ->email()
-                ->unique('users', 'email')
-                ->live()
-                ->required()
-                ->maxLength(255),
-            TextInput::make('phone')
-
-                ->tel()
-                ->live()
-                ->required()
-                ->maxLength(255),
-            TextInput::make('password')
-                ->confirmed()
-
-                ->password()
-                ->revealable()
-                ->required()
-                ->maxLength(255),
-            TextInput::make('password_confirmation')
-
-                ->password()
-                ->revealable()
-                ->required(),
-        ];
-    }
-
-    private function webshop(): array
-    {
-        return [
-            [
-                'name' => 'Főoldal',
-                'length' => 'medium',
-                'required' => '1',
-            ],
-            [
-                'name' => 'Webshop',
-                'length' => 'medium',
-                'required' => '1',
-            ],
-            [
-                'name' => 'Rólunk',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Szolgáltatások',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Blog',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Gyakori kérdések',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-
-        ];
-
-    }
-
-    private function website(): array
-    {
-        return [
-            [
-                'name' => 'Főoldal',
-                'length' => 'medium',
-                'required' => '1',
-            ],
-            [
-                'name' => 'Kapcsolat',
-                'length' => 'medium',
-                'required' => '1',
-            ],
-            [
-                'name' => 'Termékeink',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Rólunk',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Szolgáltatások',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Blog',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-            [
-                'name' => 'Gyakori kérdések',
-                'length' => 'medium',
-                'required' => '0',
-            ],
-        ];
-    }
-
-    private function landingPage(): array
-    {
-        return [
-            [
-                'name' => 'Főoldal',
-                'length' => 'medium',
-                'required' => '1',
-            ],
-        ];
-    }
-
-    private function getWebsiteRepererSchema(): array
-    {
-        return [
-            TextInput::make('name')
-                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
-                ->live()
-                ->required()
-                ->distinct(),
-            ToggleButtons::make('required')
-                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
-                ->label('Want to this page?')
-                ->live()
-                ->grouped()
-
-                ->default('0')
-                ->boolean()
-                ->colors([
-                    'true' => 'success',
-                    'false' => 'danger',
-                ])
-                ->inline()
-                ->required(),
-            ToggleButtons::make('length')
-                ->label('Content length')
-                ->live()
-                ->visible(fn ($get) => $get('required'))
-                ->default('medium')
-                ->required(fn ($get) => $get('required'))
-                ->options([
-                    'short' => __('Short'),
-                    'medium' => __('Medium'),
-                    'large' => __('Large'),
-                ])
-                ->inline()
-                ->afterStateUpdated(function ($state, Set $set): void {
-                    $set('image', $state);
-                })
-                ->required()
-                ->columnSpanFull(),
-            RichEditor::make('description')
-                ->disableToolbarButtons(['attachFiles'])
-                ->visible(fn ($get) => $get('required'))
-                ->label(__('Page description'))
-                ->maxLength(65535)
-                ->columnSpanFull(),
-            FileUpload::make('images')
-
-                ->label('Adott oldalhoz esetleges igényelt képek feltöltése')
-                ->visible(fn ($get) => $get('required'))
-                ->image()
-                ->multiple()
-                ->disk('public')
-                ->directory('website-images')
-                ->openable()
-                ->downloadable()
-                ->reorderable()
-                ->maxFiles(10)
-
-                ->helperText(__('You can upload multiple images'))
-                ->columnSpanFull(),
-        ];
-
     }
 }

@@ -306,29 +306,6 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
- * @property string|null $description
- * @property int $project_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static IdeaFactory factory($count = null, $state = [])
- * @method static Builder<static>|Idea newModelQuery()
- * @method static Builder<static>|Idea newQuery()
- * @method static Builder<static>|Idea query()
- * @method static Builder<static>|Idea whereCreatedAt($value)
- * @method static Builder<static>|Idea whereDescription($value)
- * @method static Builder<static>|Idea whereId($value)
- * @method static Builder<static>|Idea whereName($value)
- * @method static Builder<static>|Idea whereProjectId($value)
- * @method static Builder<static>|Idea whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-	final class Idea extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * @property int $id
- * @property string $name
  * @property array<array-key, mixed>|null $options
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at

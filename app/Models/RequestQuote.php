@@ -43,6 +43,7 @@ final class RequestQuote extends Model
         'project_description',
         'billing_address',
         'is_payed',
+
     ];
 
     public function requestQuotePercent(): ?float

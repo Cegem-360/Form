@@ -12,7 +12,7 @@
             <div class="mb-8">
                 <ul class="bg-white divide-y divide-gray-200 rounded-lg shadow-md">
                     @foreach ($this->requestQuote->websites ?? [] as $page)
-                        @if ($page['required'])
+                        @if ($page['required'] ?? false)
                             <li class="flex items-center justify-between p-4">
                                 <div class="flex items-center gap-4">
 
