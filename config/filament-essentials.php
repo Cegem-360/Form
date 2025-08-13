@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -9,7 +11,7 @@ return [
     | This value determines whether form components should have translatable
     | labels by default using translateLabel(). This automatically translates
     | field labels based on your Laravel localization files.
-    | 
+    |
     | Safe to enable - doesn't require additional packages!
     |
     */

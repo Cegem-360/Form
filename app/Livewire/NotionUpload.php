@@ -42,18 +42,18 @@ final class NotionUpload extends Component
         ];
 
         // Üres értékek eltávolítása
-        $data = array_filter($data, fn($value) => $value !== null && $value !== '');
+        $data = array_filter($data, fn ($value) => $value !== null && $value !== '');
 
         // Most nem kell database ID-t megadni, ha van alapértelmezett config-ban
         $result = $notionService->createSimpleEntry($data);
 
         if ($result['success']) {
             $this->success = true;
-            $this->message = 'Sikeresen feltöltve a Notion-ba! Page ID: ' . $result['page_id'];
+            $this->message = 'Sikeresen feltöltve a Notion-ba! Page ID: '.$result['page_id'];
             $this->reset(['név', 'email', 'telefon', 'ár', 'megjegyzés']);
         } else {
             $this->success = false;
-            $this->message = 'Hiba történt: ' . $result['error'];
+            $this->message = 'Hiba történt: '.$result['error'];
         }
     }
 
