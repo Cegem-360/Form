@@ -61,7 +61,7 @@ final class RequestQuoteObserver
     /**
      * Handle the RequestQuote "force deleted" event.
      */
-    public function forceDeleted(RequestQuote $requestQuote): void
+    public function forceDeleted(): void
     {
         //
     }
@@ -88,10 +88,10 @@ final class RequestQuoteObserver
                     'error' => $result['error'],
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             Log::error('Hiba a RequestQuote Notion küldésekor', [
                 'request_quote_id' => $requestQuote->id,
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
             ]);
         }
     }

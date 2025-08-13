@@ -66,11 +66,11 @@ final class NotionController extends Controller
     public function createCustomPage(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'név' => 'required|string|max:255',
-            'email' => 'nullable|email',
-            'telefon' => 'nullable|string',
-            'ár' => 'nullable|numeric',
-            'megjegyzés' => 'nullable|string',
+            'név' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'email'],
+            'telefon' => ['nullable', 'string'],
+            'ár' => ['nullable', 'numeric'],
+            'megjegyzés' => ['nullable', 'string'],
         ]);
 
         $result = $this->notionService->createSimpleEntry($data);

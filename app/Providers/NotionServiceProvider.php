@@ -14,7 +14,7 @@ final class NotionServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(NotionService::class, function ($app) {
+        $this->app->singleton(NotionService::class, function ($app): NotionService {
             return new NotionService();
         });
 

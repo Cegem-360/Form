@@ -116,10 +116,10 @@ final class NotionService
                 'success' => true,
                 'data' => $response,
             ];
-        } catch (LaravelNotionAPIException $e) {
+        } catch (LaravelNotionAPIException $laravelNotionAPIException) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $laravelNotionAPIException->getMessage(),
             ];
         }
     }
@@ -136,10 +136,10 @@ final class NotionService
                 'success' => true,
                 'data' => $response,
             ];
-        } catch (LaravelNotionAPIException $e) {
+        } catch (LaravelNotionAPIException $laravelNotionAPIException) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $laravelNotionAPIException->getMessage(),
             ];
         }
     }
@@ -216,6 +216,7 @@ final class NotionService
                     // Ha nem sikerül betölteni a nyelveket, használjuk az ID-kat
                     $languageNames = $requestQuote->languages;
                 }
+
                 $page->setMultiSelect('Nyelvek', $languageNames);
             }
 
@@ -258,12 +259,15 @@ final class NotionService
                     if (isset($website['length'])) {
                         $websitesText .= '- Méret: '.$website['length']."\n";
                     }
+
                     if (isset($website['required'])) {
                         $websitesText .= '- Szükséges: '.($website['required'] ? 'Igen' : 'Nem')."\n";
                     }
+
                     $websitesText .= "\n";
                 }
-                if ($websitesText) {
+
+                if ($websitesText !== '0') {
                     $page->setText('Weboldal részletek', mb_trim($websitesText));
                 }
             }
@@ -300,10 +304,10 @@ final class NotionService
 
             return $this->createPageInDatabase($databaseId, $page);
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
             ];
         }
     }
@@ -329,10 +333,10 @@ final class NotionService
 
             return $this->createPageInDatabase($databaseId, $page);
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
             ];
         }
     }
@@ -351,10 +355,10 @@ final class NotionService
                 'title' => $page->getTitle(),
                 'id' => $page->getId(),
             ];
-        } catch (LaravelNotionAPIException $e) {
+        } catch (LaravelNotionAPIException $laravelNotionAPIException) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => $laravelNotionAPIException->getMessage(),
             ];
         }
     }

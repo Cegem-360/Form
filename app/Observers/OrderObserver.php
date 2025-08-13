@@ -39,7 +39,7 @@ final class OrderObserver
     /**
      * Handle the Order "updated" event.
      */
-    public function updated(Order $order): void
+    public function updated(): void
     {
         //
     }
@@ -47,7 +47,7 @@ final class OrderObserver
     /**
      * Handle the Order "deleted" event.
      */
-    public function deleted(Order $order): void
+    public function deleted(): void
     {
         //
     }
@@ -55,7 +55,7 @@ final class OrderObserver
     /**
      * Handle the Order "restored" event.
      */
-    public function restored(Order $order): void
+    public function restored(): void
     {
         //
     }
@@ -63,7 +63,7 @@ final class OrderObserver
     /**
      * Handle the Order "force deleted" event.
      */
-    public function forceDeleted(Order $order): void
+    public function forceDeleted(): void
     {
         //
     }

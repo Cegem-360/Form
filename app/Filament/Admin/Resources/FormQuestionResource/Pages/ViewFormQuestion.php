@@ -30,6 +30,7 @@ final class ViewFormQuestion extends ViewRecord
                     if ($record->token !== null) {
                         $token = $record->token;
                     }
+
                     $record->save();
 
                     return route('kerdoiv', ['token' => $token]);

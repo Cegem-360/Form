@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\WebsiteLanguage;
 use App\Enums\ClientType;
 use App\Jobs\SendRequestQuoteToNotion;
 use App\Models\RequestQuote;
@@ -9,7 +10,7 @@ use App\Models\RequestQuoteFunctionality;
 use App\Models\WebsiteType;
 use Illuminate\Support\Facades\Queue;
 
-beforeEach(function () {
+beforeEach(function (): void {
     Queue::fake();
 
     // Hozzunk létre szükséges adatokat
@@ -17,18 +18,18 @@ beforeEach(function () {
         'name' => 'weboldal',
     ]);
 
-    $this->defaultLanguage = App\Models\WebsiteLanguage::factory()->create([
+    $this->defaultLanguage = WebsiteLanguage::factory()->create([
         'name' => 'hu',
         'label' => 'Magyar',
     ]);
 
-    $this->secondLanguage = App\Models\WebsiteLanguage::factory()->create([
+    $this->secondLanguage = WebsiteLanguage::factory()->create([
         'name' => 'en',
         'label' => 'English',
     ]);
 });
 
-it('creates RequestQuote and automatically triggers Notion integration via Observer', function () {
+it('creates RequestQuote and automatically triggers Notion integration via Observer', function (): void {
     // Act - RequestQuote létrehozása automatikusan aktiválja az Observer-t
     $requestQuote = RequestQuote::create([
         'name' => 'Integration Test Ügyfél',
@@ -54,12 +55,12 @@ it('creates RequestQuote and automatically triggers Notion integration via Obser
     expect($requestQuote->client_type)->toBe(ClientType::INDIVIDUAL);
 
     // Ellenőrizzük, hogy a Notion integráció Job elindult
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('handles RequestQuote with functionalities and calculates total price', function () {
+it('handles RequestQuote with functionalities and calculates total price', function (): void {
     // Arrange
     $functionality1 = RequestQuoteFunctionality::factory()->create([
         'name' => 'SEO optimalizálás',
@@ -107,7 +108,7 @@ it('handles RequestQuote with functionalities and calculates total price', funct
     Queue::assertPushed(SendRequestQuoteToNotion::class, 2);
 });
 
-it('creates RequestQuote with multilingual settings', function () {
+it('creates RequestQuote with multilingual settings', function (): void {
     // Act
     $requestQuote = RequestQuote::create([
         'name' => 'Multilingual Test',
@@ -133,14 +134,14 @@ it('creates RequestQuote with multilingual settings', function () {
     expect($requestQuote->languages)->toContain('en');
     expect($requestQuote->default_language)->toBe($this->defaultLanguage->id);
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id &&
                $job->requestQuote->is_multilangual === true &&
                is_array($job->requestQuote->languages);
     });
 });
 
-it('handles RequestQuote creation with minimal required data', function () {
+it('handles RequestQuote creation with minimal required data', function (): void {
     // Act - Csak a minimális adatokkal
     $requestQuote = RequestQuote::create([
         'name' => 'Minimal Data Test',
@@ -157,12 +158,12 @@ it('handles RequestQuote creation with minimal required data', function () {
     expect($requestQuote->client_type)->toBeNull();
     expect($requestQuote->is_payed)->toBeFalse();
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('multiple RequestQuote creations trigger multiple Notion integrations', function () {
+it('multiple RequestQuote creations trigger multiple Notion integrations', function (): void {
     // Act
     $requestQuote1 = RequestQuote::create([
         'name' => 'Batch Test 1',
@@ -199,20 +200,20 @@ it('multiple RequestQuote creations trigger multiple Notion integrations', funct
 
     Queue::assertPushed(SendRequestQuoteToNotion::class, 3);
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1): bool {
         return $job->requestQuote->id === $requestQuote1->id;
     });
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2): bool {
         return $job->requestQuote->id === $requestQuote2->id;
     });
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote3) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote3): bool {
         return $job->requestQuote->id === $requestQuote3->id;
     });
 });
 
-it('RequestQuote update also triggers Notion sync', function () {
+it('RequestQuote update also triggers Notion sync', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Update Test',

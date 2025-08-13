@@ -101,7 +101,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
     public function orderAction(): Action
     {
         return Action::make('order')
-            ->action(function () {
+            ->action(function (): void {
 
                 $data = $this->form->getState();
 

@@ -16,8 +16,9 @@ use Throwable;
 
 final class SendRequestQuoteToNotion implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
-
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
     /**
      * The number of times the job may be attempted.
      */
@@ -60,15 +61,15 @@ final class SendRequestQuoteToNotion implements ShouldQueue
                 // Újrapróbálkozás
                 $this->fail($result['error']);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             Log::error('Hiba a RequestQuote Notion küldésekor (aszinkron)', [
                 'request_quote_id' => $this->requestQuote->id,
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
                 'job_id' => $this->job->uuid(),
             ]);
 
             // Újrapróbálkozás
-            $this->fail($e);
+            $this->fail($exception);
         }
     }
 

@@ -8,14 +8,14 @@ use App\Models\WebsiteType;
 use App\Services\NotionService;
 use Illuminate\Support\Facades\Queue;
 
-beforeEach(function () {
+beforeEach(function (): void {
     Queue::fake();
 
     // Létrehozunk egy WebsiteType-ot minden teszthez
     $this->websiteType = WebsiteType::create(['name' => 'Test Website Type']);
 });
 
-it('can create and configure SendRequestQuoteToNotion job', function () {
+it('can create and configure SendRequestQuoteToNotion job', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Teszt Ügyfél',
@@ -34,7 +34,7 @@ it('can create and configure SendRequestQuoteToNotion job', function () {
     expect($job->timeout)->toBe(60);
 });
 
-it('can manually dispatch SendRequestQuoteToNotion job', function () {
+it('can manually dispatch SendRequestQuoteToNotion job', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Manual Test',
@@ -46,12 +46,12 @@ it('can manually dispatch SendRequestQuoteToNotion job', function () {
     SendRequestQuoteToNotion::dispatch($requestQuote);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('SendRequestQuoteToNotion job has correct configuration', function () {
+it('SendRequestQuoteToNotion job has correct configuration', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Config Test',
@@ -66,7 +66,7 @@ it('SendRequestQuoteToNotion job has correct configuration', function () {
     expect($job->requestQuote->id)->toBe($requestQuote->id);
 });
 
-it('job can be instantiated and has correct properties', function () {
+it('job can be instantiated and has correct properties', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Success Test',
@@ -81,7 +81,7 @@ it('job can be instantiated and has correct properties', function () {
     expect($job->timeout)->toBe(60);
 });
 
-it('job can handle method call', function () {
+it('job can handle method call', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Handle Test',
@@ -95,7 +95,7 @@ it('job can handle method call', function () {
         ->not->toThrow(TypeError::class); // Legalább a tipus helyes legyen
 });
 
-it('job failed method can be called', function () {
+it('job failed method can be called', function (): void {
     // Arrange
     $requestQuote = RequestQuote::create([
         'name' => 'Failed Test',

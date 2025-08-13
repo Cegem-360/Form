@@ -58,7 +58,7 @@ final class OrderResource extends Resource
                     ->label(__('Payment Status'))
                     ->options(TransactionStatus::class)
                     ->enum(TransactionStatus::class)
-                    ->afterStateUpdated(function ($state, $record) {
+                    ->afterStateUpdated(function ($state, $record): void {
                         if ($state === TransactionStatus::COMPLETED && $record && $record->requestQuote) {
                             $record->requestQuote->update(['is_payed' => true]);
                         } else {

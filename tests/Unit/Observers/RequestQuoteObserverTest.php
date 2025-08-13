@@ -10,7 +10,7 @@ use App\Observers\RequestQuoteObserver;
 use App\Services\NotionService;
 use Illuminate\Support\Facades\Queue;
 
-beforeEach(function () {
+beforeEach(function (): void {
     Queue::fake();
 
     // Mock NotionService a dependency injection miatt
@@ -21,7 +21,7 @@ beforeEach(function () {
     $this->observer = new RequestQuoteObserver($notionServiceMock);
 });
 
-it('observer dispatches job when RequestQuote is created', function () {
+it('observer dispatches job when RequestQuote is created', function (): void {
     // Arrange
     $websiteType = WebsiteType::factory()->create(['name' => 'Weboldal']);
     $requestQuote = RequestQuote::factory()->create([
@@ -34,12 +34,12 @@ it('observer dispatches job when RequestQuote is created', function () {
     $this->observer->created($requestQuote);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('observer dispatches job when RequestQuote is updated', function () {
+it('observer dispatches job when RequestQuote is updated', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Original Name',
@@ -50,12 +50,12 @@ it('observer dispatches job when RequestQuote is updated', function () {
     $this->observer->updated($requestQuote);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('observer handles RequestQuote with minimal data', function () {
+it('observer handles RequestQuote with minimal data', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Minimal Test',
@@ -68,12 +68,12 @@ it('observer handles RequestQuote with minimal data', function () {
     $this->observer->created($requestQuote);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('observer handles RequestQuote with all fields', function () {
+it('observer handles RequestQuote with all fields', function (): void {
     // Arrange
     $websiteType = WebsiteType::factory()->create(['name' => 'Webshop']);
     $requestQuote = RequestQuote::factory()->create([
@@ -100,14 +100,14 @@ it('observer handles RequestQuote with all fields', function () {
     $this->observer->created($requestQuote);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id &&
                $job->requestQuote->name === 'Complete Test' &&
                $job->requestQuote->client_type === ClientType::COMPANY;
     });
 });
 
-it('multiple RequestQuote creations dispatch multiple jobs', function () {
+it('multiple RequestQuote creations dispatch multiple jobs', function (): void {
     // Arrange & Act
     $requestQuote1 = RequestQuote::factory()->create(['name' => 'Test 1']);
     $requestQuote2 = RequestQuote::factory()->create(['name' => 'Test 2']);
@@ -120,19 +120,19 @@ it('multiple RequestQuote creations dispatch multiple jobs', function () {
     // Assert
     Queue::assertPushed(SendRequestQuoteToNotion::class, 3);
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1): bool {
         return $job->requestQuote->id === $requestQuote1->id;
     });
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2): bool {
         return $job->requestQuote->id === $requestQuote2->id;
     });
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote3) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote3): bool {
         return $job->requestQuote->id === $requestQuote3->id;
     });
 });
 
-afterEach(function () {
+afterEach(function (): void {
     Mockery::close();
 });

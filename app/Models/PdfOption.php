@@ -32,7 +32,7 @@ final class PdfOption extends Model
     public function deliveryDeadLine(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => $value === null ? 'Vállalási határidő
+            get: fn (string $value): string => $value === null ? 'Vállalási határidő
 
 A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információk) átadását követő
 

@@ -40,11 +40,11 @@ trait SendsToNotion
                     'error' => $result['error'],
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             Log::error('Hiba a model Notion küldésekor', [
                 'model' => get_class($this),
                 'model_id' => $this->id,
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
             ]);
         }
     }
@@ -54,7 +54,7 @@ trait SendsToNotion
      */
     protected static function bootSendsToNotion(): void
     {
-        static::created(function ($model) {
+        static::created(function ($model): void {
             $model->sendToNotion();
         });
     }

@@ -12,7 +12,7 @@ use App\Services\NotionService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 
-beforeEach(function () {
+beforeEach(function (): void {
     Event::fake();
     Queue::fake();
 
@@ -24,7 +24,7 @@ beforeEach(function () {
     $this->listener = new SendRequestQuoteToNotionListener($notionServiceMock);
 });
 
-it('RequestQuoteCreated event can be dispatched', function () {
+it('RequestQuoteCreated event can be dispatched', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Event Test',
@@ -35,12 +35,12 @@ it('RequestQuoteCreated event can be dispatched', function () {
     event(new RequestQuoteCreated($requestQuote));
 
     // Assert
-    Event::assertDispatched(RequestQuoteCreated::class, function ($event) use ($requestQuote) {
+    Event::assertDispatched(RequestQuoteCreated::class, function ($event) use ($requestQuote): bool {
         return $event->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('listener handles RequestQuoteCreated event and dispatches job', function () {
+it('listener handles RequestQuoteCreated event and dispatches job', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Listener Test',
@@ -53,12 +53,12 @@ it('listener handles RequestQuoteCreated event and dispatches job', function () 
     $this->listener->handle($event);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id;
     });
 });
 
-it('listener handles event with complex RequestQuote data', function () {
+it('listener handles event with complex RequestQuote data', function (): void {
     // Arrange
     $websiteType = WebsiteType::factory()->create(['name' => 'E-commerce']);
     $requestQuote = RequestQuote::factory()->create([
@@ -82,14 +82,14 @@ it('listener handles event with complex RequestQuote data', function () {
     $this->listener->handle($event);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id &&
                $job->requestQuote->name === 'Complex Event Test' &&
                $job->requestQuote->client_type === ClientType::COMPANY;
     });
 });
 
-it('RequestQuoteCreated event contains correct data', function () {
+it('RequestQuoteCreated event contains correct data', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Data Test',
@@ -108,7 +108,7 @@ it('RequestQuoteCreated event contains correct data', function () {
     expect($event->requestQuote->quotation_name)->toBe('Data Validation Test');
 });
 
-it('listener works with minimal RequestQuote data', function () {
+it('listener works with minimal RequestQuote data', function (): void {
     // Arrange
     $requestQuote = RequestQuote::factory()->create([
         'name' => 'Minimal Event Test',
@@ -123,13 +123,13 @@ it('listener works with minimal RequestQuote data', function () {
     $this->listener->handle($event);
 
     // Assert
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {
         return $job->requestQuote->id === $requestQuote->id &&
                $job->requestQuote->name === 'Minimal Event Test';
     });
 });
 
-it('multiple events dispatch multiple jobs', function () {
+it('multiple events dispatch multiple jobs', function (): void {
     // Arrange
     $requestQuote1 = RequestQuote::factory()->create(['name' => 'Event Test 1']);
     $requestQuote2 = RequestQuote::factory()->create(['name' => 'Event Test 2']);
@@ -144,15 +144,15 @@ it('multiple events dispatch multiple jobs', function () {
     // Assert
     Queue::assertPushed(SendRequestQuoteToNotion::class, 2);
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote1): bool {
         return $job->requestQuote->id === $requestQuote1->id;
     });
 
-    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2) {
+    Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote2): bool {
         return $job->requestQuote->id === $requestQuote2->id;
     });
 });
 
-afterEach(function () {
+afterEach(function (): void {
     Mockery::close();
 });

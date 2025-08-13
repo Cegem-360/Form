@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use FiveamCode\LaravelNotionApi\NotionFacade;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use Filament\Forms\Components\ToggleButtons;
@@ -41,9 +42,9 @@ final class AppServiceProvider extends ServiceProvider
 
         // Register NotionFacade
         $loader = AliasLoader::getInstance();
-        $loader->alias('Notion', \FiveamCode\LaravelNotionApi\NotionFacade::class);
+        $loader->alias('Notion', NotionFacade::class);
 
-        ToggleButtons::configureUsing(function (ToggleButtons $toggleButtons) {
+        ToggleButtons::configureUsing(function (ToggleButtons $toggleButtons): void {
             $toggleButtons->translateLabel();
 
         });

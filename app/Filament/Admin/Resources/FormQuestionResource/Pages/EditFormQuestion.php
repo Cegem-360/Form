@@ -26,7 +26,7 @@ final class EditFormQuestion extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             Action::make('Generate and View pdf')
-                ->action(function (FormQuestion $formQuestion) {
+                ->action(function (FormQuestion $formQuestion): void {
                     /*  $pdf = Pdf::loadView('pdf.form-question', ['formQuestion' => $formQuestion], encoding: 'UTF-8');
                      $pdf->setPaper('A4', 'portrait');
                      $pdf->setOption('isHtml5ParserEnabled', true);

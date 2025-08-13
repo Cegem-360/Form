@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\NotionController;
+use App\Livewire\NotionUpload;
 use App\Http\Middleware\EnsureHasRequestQuote;
 use App\Livewire\Cart\CartShow;
 use App\Livewire\Checkout\CheckoutSuccess;
@@ -66,16 +68,16 @@ Route::get('notion/api/', function () {
 });
 
 // Notion API endpoints
-Route::prefix('notion')->name('notion.')->group(function () {
-    Route::get('/test-upload', [App\Http\Controllers\NotionController::class, 'uploadTestData'])->name('test-upload');
-    Route::get('/save-quote/{requestQuote}', [App\Http\Controllers\NotionController::class, 'saveRequestQuote'])->name('save-quote');
-    Route::get('/query-database', [App\Http\Controllers\NotionController::class, 'queryDatabase'])->name('query-database');
-    Route::post('/create-page', [App\Http\Controllers\NotionController::class, 'createCustomPage'])->name('create-page');
-    Route::get('/page/{pageId}', [App\Http\Controllers\NotionController::class, 'getPage'])->name('get-page');
+Route::prefix('notion')->name('notion.')->group(function (): void {
+    Route::get('/test-upload', [NotionController::class, 'uploadTestData'])->name('test-upload');
+    Route::get('/save-quote/{requestQuote}', [NotionController::class, 'saveRequestQuote'])->name('save-quote');
+    Route::get('/query-database', [NotionController::class, 'queryDatabase'])->name('query-database');
+    Route::post('/create-page', [NotionController::class, 'createCustomPage'])->name('create-page');
+    Route::get('/page/{pageId}', [NotionController::class, 'getPage'])->name('get-page');
 });
 
 Route::get('kerdoiv/{token}', FormQuestionForm::class)->name('kerdoiv');
 
-Route::get('notion-upload', App\Livewire\NotionUpload::class)->name('notion-upload');
+Route::get('notion-upload', NotionUpload::class)->name('notion-upload');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');

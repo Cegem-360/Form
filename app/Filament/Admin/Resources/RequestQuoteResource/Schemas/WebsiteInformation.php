@@ -39,8 +39,8 @@ final class WebsiteInformation
                                                     ->imageSize('22rem'),
                                             ]
                                         )
-                                        ->visible(function (Get $get) {
-                                            return $get('required') && $get('length') === 'short' ? true : false;
+                                        ->visible(function (Get $get): bool {
+                                            return $get('required') && $get('length') === 'short';
                                         }),
                                     Section::make()
                                         ->components([
@@ -52,8 +52,8 @@ final class WebsiteInformation
                                                 ->alignCenter()
                                                 ->imageSize('22rem'),
                                         ])
-                                        ->visible(function (Get $get) {
-                                            return $get('required') && $get('length') === 'medium' ? true : false;
+                                        ->visible(function (Get $get): bool {
+                                            return $get('required') && $get('length') === 'medium';
                                         }),
                                     Section::make()
                                         ->components([
@@ -65,8 +65,8 @@ final class WebsiteInformation
                                                 ->alignCenter()
                                                 ->imageSize('22rem'),
                                         ])
-                                        ->visible(function (Get $get) {
-                                            return $get('required') && $get('length') === 'large' ? true : false;
+                                        ->visible(function (Get $get): bool {
+                                            return $get('required') && $get('length') === 'large';
                                         }),
                                 ]),
                             ]),

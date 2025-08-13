@@ -29,7 +29,7 @@ final class NotionUpload extends Component
 
     public bool $success = false;
 
-    public function submit(NotionService $notionService)
+    public function submit(NotionService $notionService): void
     {
         $this->validate();
 
@@ -42,7 +42,7 @@ final class NotionUpload extends Component
         ];
 
         // Üres értékek eltávolítása
-        $data = array_filter($data, fn ($value) => $value !== null && $value !== '');
+        $data = array_filter($data, fn ($value): bool => $value !== null && $value !== '');
 
         // Most nem kell database ID-t megadni, ha van alapértelmezett config-ban
         $result = $notionService->createSimpleEntry($data);
