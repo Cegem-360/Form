@@ -267,9 +267,7 @@ final class NotionService
                     $websitesText .= "\n";
                 }
 
-                if ($websitesText !== '0') {
-                    $page->setText('Weboldal részletek', mb_trim($websitesText));
-                }
+                $page->setText('Weboldal részletek', mb_trim($websitesText));
             }
 
             // Funkciók

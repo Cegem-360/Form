@@ -44,6 +44,7 @@ final class AdminPanelServiceProvider extends PanelProvider
                 'Árajánlat',
                 'Rendelés',
                 'Project',
+                'Reseller',
                 'Settings',
             ])
             ->brandLogo(fn () => view('filament.dashboard.logo'))
@@ -52,6 +53,7 @@ final class AdminPanelServiceProvider extends PanelProvider
             ->discoverClusters(in: app_path('Filament/Admin/Clusters'), for: 'App\\Filament\\Admin\\Clusters')
             ->pages([
                 Dashboard::class,
+
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([

@@ -38,9 +38,12 @@ final class PaymentPage extends Component implements HasActions, HasForms
     public function mount(?RequestQuote $requestQuote = null): void
     {
 
-        // $this->requestQuote = $requestQuote; // Load order details
         $data = $requestQuote?->toArray() ?? [];
         $data['company_vat_number'] = Auth::user()->company_vat_number;
+        $data['name'] = Auth::user()->name;
+        $data['email'] = Auth::user()->email;
+        $data['phone'] = Auth::user()->phone;
+        $data['client_type'] = Auth::user()->client_type ?? ClientType::INDIVIDUAL->value;
         $this->form->fill($data);
 
     }
@@ -51,52 +54,43 @@ final class PaymentPage extends Component implements HasActions, HasForms
             ->components([
                 TextInput::make('name')
                     ->label('Name')
-
                     ->live()
                     ->required(),
                 TextInput::make('email')
                     ->label('Email')
-
                     ->required()
                     ->live()
                     ->email(),
                 TextInput::make('phone')
                     ->label('Phone')
-
                     ->live()
                     ->required(),
                 Select::make('client_type')
                     ->label('Legal form')
-
                     ->live()
                     ->required()
                     ->options(ClientType::class),
                 TextInput::make('billing_address')
                     ->label('Billing Address')
-
                     ->live()
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value),
                 TextInput::make('company_name')
-
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_address')
-
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 TextInput::make('company_vat_number')
-
                     ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
                     ->maxLength(255),
                 Select::make('payment_method')
-
                     ->label('Payment Method')
                     ->options([
                         'stripe' => 'Stripe',
@@ -108,21 +102,18 @@ final class PaymentPage extends Component implements HasActions, HasForms
                         $this->requestQuote->save();
                     })
                     ->required()
-
                     ->live(),
                 Checkbox::make('terms')
                     ->label(__('I have read and accept the terms and conditions'))
                     ->required()
                     ->accepted()
                     ->default(false)
-
                     ->live(),
                 Checkbox::make('privacy')
                     ->label(__('I have read and accept the privacy policy'))
                     ->required()
                     ->accepted()
                     ->default(false)
-
                     ->live(),
             ])
             ->statePath('data')
@@ -135,7 +126,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
             ->extraAttributes(['class' => 'bg-[#2563eb]!'])
             ->action(function () {
                 $data = $this->form->getState();
-
+                unset($data['terms'], $data['privacy']);
                 $this->requestQuote->update($data);
                 Auth::user()->update([
                     'name' => $data['name'],

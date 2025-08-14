@@ -67,44 +67,34 @@ final class RequestQuoteResource extends Resource
             ->components([
                 Grid::make(2)->schema([
                     TextInput::make('quotation_name')
-
                         ->maxLength(255),
                     TextInput::make('name')
-
                         ->required()
                         ->maxLength(255),
                     TextInput::make('email')
-
                         ->required()
                         ->email()
                         ->maxLength(255),
                     TextInput::make('phone')
-
                         ->required()
                         ->tel()
                         ->maxLength(255),
                     RichEditor::make('project_description')
-
                         ->maxLength(65535)
                         ->columnSpanFull(),
                     TextInput::make('payment_method')
-
                         ->disabled()
                         ->maxLength(255),
                     Select::make('client_type')
-
                         ->required()
                         ->options(ClientType::class)
                         ->preload()
                         ->searchable(),
                     TextInput::make('company_name')
-
                         ->maxLength(255),
                     TextInput::make('company_address')
-
                         ->maxLength(255),
                     Select::make('website_type_id')
-
                         ->live()
                         ->required()
                         ->relationship('websiteType', 'name')
@@ -113,7 +103,6 @@ final class RequestQuoteResource extends Resource
                         })
                         ->searchable(),
                     Select::make('website_engine')
-
                         ->live()
                         ->options([
                             'wordpress' => 'Wordpress',
@@ -127,7 +116,6 @@ final class RequestQuoteResource extends Resource
                         Grid::make(2)->columnSpan(1)->schema([
                             Grid::make(1)->columnSpan(1)->schema([
                                 TextInput::make('name')
-
                                     ->required(),
                                 ToggleButtons::make('required')
                                     ->live()
@@ -136,7 +124,6 @@ final class RequestQuoteResource extends Resource
                                     ->required(),
                                 ToggleButtons::make('length')
                                     ->label('Content length')
-
                                     ->live()
                                     ->options([
                                         'short' => __('Short'),
@@ -154,11 +141,9 @@ final class RequestQuoteResource extends Resource
                                     })
                                     ->required(fn ($get) => $get('required')),
                                 RichEditor::make('description')
-
                                     ->required(fn ($get) => $get('required'))
                                     ->maxLength(65535),
                                 FileUpload::make('images')
-
                                     ->visible(fn ($get) => $get('required'))
                                     ->disk('public')
                                     ->directory('website-images')
@@ -189,12 +174,10 @@ final class RequestQuoteResource extends Resource
                     Toggle::make('have_website_graphic')
                         ->default(false)
                         ->label('Do you have a website graphic?')
-
                         ->disabled(),
                     Actions::make([
                         Action::make('yes')
                             ->hidden()
-
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -205,7 +188,6 @@ final class RequestQuoteResource extends Resource
                             }),
                         Action::make('no')
                             ->hidden()
-
                             ->requiresConfirmation()
                             ->modalHeading(__('Website graphic'))
                             ->modalDescription(__("Are you sure you'd have website graphic form UI/UX designer?"))
@@ -217,16 +199,13 @@ final class RequestQuoteResource extends Resource
                     ])->label('Do you have a website graphic?'),
                 ]),
                 CheckboxList::make('request_quote_functionalities')
-
                     ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                         return $query->where('website_type_id', $get('website_type_id'));
                     })
                     ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name)),
                 Toggle::make('is_multilangual')
-
                     ->live(),
                 Select::make('default_language')
-
                     ->live()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->default(WebsiteLanguage::whereName('Hungarian')->firstOrCreate(['name' => 'Hungarian'])->id)
@@ -236,7 +215,6 @@ final class RequestQuoteResource extends Resource
                     })
                     ->searchable(),
                 Select::make('languages')
-
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->options(function (Get $get) {
@@ -259,30 +237,23 @@ final class RequestQuoteResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('quotation_name')
-
                     ->searchable(),
                 TextColumn::make('websiteType.name')
-
                     ->sortable(),
                 TextColumn::make('website_engine')
-
                     ->sortable(),
                 IconColumn::make('is_multilangual')
-
                     ->boolean(),
                 TextColumn::make('price')
                     ->label('Deposit Price')
-
                     ->state(function (Model $record): string|false {
                         return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
                     }),
                 TextColumn::make('created_at')
-
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -292,11 +263,9 @@ final class RequestQuoteResource extends Resource
             ])
             ->recordActions([
                 ViewAction::make(),
-
                 Action::make('order')
                     ->label(__('Order'))
                     ->action(function (RequestQuote $record) {
-
                         Session::put('requestQuote', $record->id);
 
                         return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
@@ -316,9 +285,7 @@ final class RequestQuoteResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -328,13 +295,6 @@ final class RequestQuoteResource extends Resource
             'view' => ViewRequestQuote::route('/{record}'),
         ];
     }
-
-    /*   protected static function getWidgets(): array
-      {
-          return [
-              RequestQuotePriceWidget::class,
-          ];
-      } */
 
     public static function getWidgets(): array
     {

@@ -69,7 +69,7 @@ final class GraphicsInformation
             ]),
             CheckboxList::make('requestQuoteFunctionalities')
                 ->searchable(false)
-                ->relationship(modifyQueryUsing: function (Get $get, Builder $query) {
+                ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->where('website_type_id', $get('website_type_id'))?->notDefault();
                 })
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))

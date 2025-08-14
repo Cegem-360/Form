@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('form_field_name')->nullable(false);
             $table->integer('form_field_id')->nullable(false);
-            $table->enum('role', array_map(fn ($role) => $role->value, OpenAIRole::cases()))->default(OpenAIRole::SYSTEM->value);
+            $table->enum('role', array_map(fn (OpenAIRole $role) => $role->value, OpenAIRole::cases()))->default(OpenAIRole::SYSTEM->value);
             $table->longText('content')->nullable(false);
             $table->timestamps();
         });

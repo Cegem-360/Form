@@ -52,7 +52,6 @@ final class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('default_commission_percent')
-
                     ->numeric()
                     ->minValue(0)
                     ->maxValue(100)
@@ -122,6 +121,7 @@ final class UserResource extends Resource
             'create' => CreateUser::route('/create'),
             'view' => ViewUser::route('/{record}'),
             'edit' => EditUser::route('/{record}/edit'),
+
         ];
     }
 }

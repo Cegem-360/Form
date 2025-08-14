@@ -29,6 +29,16 @@ final class ContactChannelResource extends Resource
 
     protected static ?string $cluster = ResellerCluster::class;
 
+    public static function getNavigationGroup(): string
+    {
+        return __('Projects');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Contact Channels');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

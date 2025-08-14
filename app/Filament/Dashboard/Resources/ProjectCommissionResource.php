@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Dashboard\Resources;
 
+use App\Enums\RolesEnum;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
 use App\Filament\Dashboard\Resources\ProjectCommissionResource\Pages\ViewProjectCommission;
 use App\Models\ProjectCommission;
@@ -24,6 +25,11 @@ final class ProjectCommissionResource extends Resource
     protected static ?string $model = ProjectCommission::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function canAccess(): bool
+    {
+        return Auth::user()?->hasAnyRole(RolesEnum::RESELLER, RolesEnum::ADMIN, RolesEnum::SUPER_ADMIN);
+    }
 
     public static function getLabel(): string
     {
@@ -50,16 +56,12 @@ final class ProjectCommissionResource extends Resource
         return $schema
             ->components([
                 Select::make('project_id')
-
                     ->relationship('project', 'name'),
                 TextInput::make('commission_amount')
-
                     ->numeric(),
                 TextInput::make('commission_percent')
-
                     ->numeric(),
                 TextInput::make('commission_paid_amount')
-
                     ->numeric(),
             ]);
     }
@@ -73,18 +75,14 @@ final class ProjectCommissionResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('project.name')
-
                     ->sortable(),
                 TextColumn::make('commission_amount')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_percent')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('commission_paid_amount')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -111,9 +109,7 @@ final class ProjectCommissionResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

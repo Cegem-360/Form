@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Clusters\Settings\SettingsCluster;
+use App\Filament\Admin\Clusters\Reseller\ResellerCluster;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\CreateProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\EditProjectCommission;
 use App\Filament\Admin\Resources\ProjectCommissionResource\Pages\ListProjectCommissions;
@@ -26,7 +26,17 @@ final class ProjectCommissionResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $cluster = SettingsCluster::class;
+    protected static ?string $cluster = ResellerCluster::class;
+
+    public static function getNavigationGroup(): string
+    {
+        return __('Projects');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Project Commissions');
+    }
 
     public static function form(Schema $schema): Schema
     {

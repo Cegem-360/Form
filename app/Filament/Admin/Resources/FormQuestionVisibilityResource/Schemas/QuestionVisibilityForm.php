@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\ProjectResource\Schemas;
+namespace App\Filament\Admin\Resources\FormQuestionVisibilityResource\Schemas;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;

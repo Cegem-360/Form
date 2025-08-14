@@ -51,17 +51,14 @@ final class ProjectResource extends Resource
 
             ->components([
                 TextInput::make('name')
-
                     ->required()
                     ->maxLength(255),
                 DatePicker::make('start_date'),
                 DatePicker::make('end_date'),
                 Select::make('status')
-
                     ->options(ProjectStatus::class)
                     ->required(),
                 RichEditor::make('project_goal')
-
                     ->columnSpanFull(),
                 TextInput::make('original_project_goals'),
                 TextInput::make('completed_project_elements'),
@@ -69,18 +66,14 @@ final class ProjectResource extends Resource
                 TextInput::make('completed_elements'),
                 TextInput::make('solved_problems'),
                 TextInput::make('garanty')
-
                     ->numeric(),
                 DatePicker::make('garanty_end_date'),
                 Select::make('contact')
-
                     ->relationship('contact', 'name'),
                 Select::make('support_pack_id')
-
                     ->label('Support Pack')
                     ->relationship('supportPack', 'name'),
                 Select::make('contact_channel_id')
-
                     ->label('Contact Channel')
                     ->relationship('contactChannel', 'name'),
             ]);
@@ -95,35 +88,27 @@ final class ProjectResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
-
                     ->searchable(),
                 TextColumn::make('start_date')
-
                     ->date()
                     ->sortable(),
                 TextColumn::make('end_date')
-
                     ->date()
                     ->sortable(),
                 TextColumn::make('status'),
                 TextColumn::make('garanty')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('garanty_end_date')
-
                     ->date()
                     ->sortable(),
                 TextColumn::make('contact')
-
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('support_pack_id.name')
-
                     ->label('Support Pack')
                     ->sortable(),
                 TextColumn::make('contact_channel_id.name')
-
                     ->label('Contact Channel')
                     ->sortable(),
                 TextColumn::make('created_at')
@@ -150,9 +135,7 @@ final class ProjectResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

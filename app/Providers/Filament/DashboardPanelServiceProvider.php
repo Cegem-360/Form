@@ -71,6 +71,7 @@ final class DashboardPanelServiceProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->spa()
             ->viteTheme('resources/css/filament/admin/theme.css');
     }
 }

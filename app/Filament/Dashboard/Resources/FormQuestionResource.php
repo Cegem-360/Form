@@ -11,7 +11,6 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -37,11 +36,6 @@ final class FormQuestionResource extends Resource
     {
         return __('Form Questions');
     }
-
-    /* public static function form(Form $form): Form
-    {
-        return $form;
-    } */
 
     public static function table(Table $table): Table
     {
@@ -73,7 +67,6 @@ final class FormQuestionResource extends Resource
             ])
             ->recordActions([
                 ViewAction::make(),
-
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -84,9 +77,7 @@ final class FormQuestionResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

@@ -7,8 +7,8 @@ namespace App\Filament\Admin\Resources;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\CreateFormQuestionVisibility;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\EditFormQuestionVisibility;
 use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Pages\ListFormQuestionVisibilities;
-use App\Filament\Admin\Resources\ProjectResource\Schemas\QuestionVisibilityForm;
-use App\Filament\Admin\Resources\ProjectResource\Schemas\QuestionVisibilityTable;
+use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Schemas\QuestionVisibilityForm;
+use App\Filament\Admin\Resources\FormQuestionVisibilityResource\Schemas\QuestionVisibilityTable;
 use App\Models\FormQuestionVisibility;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -36,9 +36,7 @@ final class FormQuestionVisibilityResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

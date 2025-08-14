@@ -47,31 +47,25 @@ final class OrderResource extends Resource
         return $schema
             ->components([
                 Select::make('request_quote_id')
-
                     ->relationship('requestQuote', 'quotation_name')
                     ->label('Request quote name')
                     ->required(),
                 TextInput::make('amount')
-
                     ->required()
                     ->numeric(),
                 TextInput::make('currency')
-
                     ->required()
                     ->maxLength(3),
                 TextInput::make('customer_email')
-
                     ->email()
                     ->maxLength(255),
                 Select::make('status')
                     ->label(__('Payment Status'))
                     ->options(TransactionStatus::class)
                     ->enum(TransactionStatus::class)
-
                     ->required(),
 
                 TextInput::make('customer_name')
-
                     ->maxLength(255),
             ]);
     }
@@ -86,26 +80,20 @@ final class OrderResource extends Resource
             ->columns([
                 TextColumn::make('requestQuote.name')
                     ->label(__('Request quote'))
-
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('amount')
-
                     ->numeric()
                     ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
                     ->sortable(),
                 TextColumn::make('currency')
-
                     ->searchable(),
                 TextColumn::make('customer_email')
-
                     ->searchable(),
                 TextColumn::make('customer_name')
-
                     ->searchable(),
                 TextColumn::make('status')
                     ->label(__('Payment Status'))
-
                     ->badge()
                     ->color(fn (TransactionStatus $state): string => match ($state) {
                         TransactionStatus::PENDING => 'gray',
@@ -138,9 +126,7 @@ final class OrderResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array

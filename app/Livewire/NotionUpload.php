@@ -42,7 +42,7 @@ final class NotionUpload extends Component
         ];
 
         // Üres értékek eltávolítása
-        $data = array_filter($data, fn ($value): bool => $value !== null && $value !== '');
+        $data = array_filter($data, fn (float|string|null $value): bool => $value !== null && $value !== '');
 
         // Most nem kell database ID-t megadni, ha van alapértelmezett config-ban
         $result = $notionService->createSimpleEntry($data);
