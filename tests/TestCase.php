@@ -18,10 +18,6 @@ abstract class TestCase extends BaseTestCase
         $user = User::factory()->create();
         $role = Role::create(['name' => 'admin']);
         Artisan::call('permissions:sync');
-        /* $permissions[] = Permission::create(['guard_name' => GuardName::WEB->value, 'name' => 'create User']);
-        $permissions[] = Permission::create(['guard_name' => GuardName::WEB->value, 'name' => 'view User']);
-        $permissions[] = Permission::create(['guard_name' => GuardName::WEB->value, 'name' => 'view-any User']);
-        $permissions[] = Permission::create(['guard_name' => GuardName::WEB->value, 'name' => 'update User']); */
         $permissions = Permission::all();
         $role->syncPermissions($permissions);
 
