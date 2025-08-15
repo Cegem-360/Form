@@ -84,8 +84,12 @@ final class RequestQuoteResource extends Resource
                     RichEditor::make('project_description')
                         ->maxLength(65535)
                         ->columnSpanFull(),
-                    TextInput::make('payment_method')
-                        ->maxLength(255),
+                    Select::make('payment_method')
+                        ->options([
+                            'credit_card' => 'Credit Card',
+                            'paypal' => 'PayPal',
+                            'bank_transfer' => 'Bank Transfer',
+                        ]),
                     Select::make('client_type')
                         ->required()
                         ->options(ClientType::class)
