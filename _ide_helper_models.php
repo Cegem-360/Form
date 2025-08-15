@@ -15,17 +15,16 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static ContactChannelFactory factory($count = null, $state = [])
- * @method static Builder<static>|ContactChannel newModelQuery()
- * @method static Builder<static>|ContactChannel newQuery()
- * @method static Builder<static>|ContactChannel query()
- * @method static Builder<static>|ContactChannel whereCreatedAt($value)
- * @method static Builder<static>|ContactChannel whereId($value)
- * @method static Builder<static>|ContactChannel whereName($value)
- * @method static Builder<static>|ContactChannel whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Database\Factories\ContactChannelFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|ContactChannel whereUpdatedAt($value)
  */
 	final class ContactChannel extends \Eloquent {}
 }
@@ -36,9 +35,9 @@ namespace App\Models{
  * @property string $name
  * @property string $url
  * @property string $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read FormQuestion|null $formQuestion
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \App\Models\FormQuestion|null $formQuestion
  * @method static \Database\Factories\DomainFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain newQuery()
@@ -49,7 +48,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Domain whereUrl($value)
- * @mixin \Eloquent
  */
 	final class Domain extends \Eloquent {}
 }
@@ -236,68 +234,67 @@ namespace App\Models{
  * @property bool $payment_methods_visible
  * @property bool $have_contracted_online_bank_card_payment_visible
  * @property bool $online_bank_card_payment_options_visible
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property-read FormQuestion|null $formQuestion
- * @method static FormQuestionVisibilityFactory factory($count = null, $state = [])
- * @method static Builder<static>|FormQuestionVisibility newModelQuery()
- * @method static Builder<static>|FormQuestionVisibility newQuery()
- * @method static Builder<static>|FormQuestionVisibility query()
- * @method static Builder<static>|FormQuestionVisibility whereActivitiesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereAdditionalColorsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereBannedElementsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereBrutoNettoVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereCallToActionsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereCompanyNameVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereContactEmailVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereContactNameVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereContactPhoneVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereContactPositionVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereContractedAccountantsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereCreatedAt($value)
- * @method static Builder<static>|FormQuestionVisibility whereDeadlineVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereDesignFilesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereExistBlogCountVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereExistWebsiteUrlVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereFormQuestionId($value)
- * @method static Builder<static>|FormQuestionVisibility whereFormatingMilestoneVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveBlogVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveContractedAccountantVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveContractedOnlineBankCardPaymentVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveExistDesignVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveExistWebsiteVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHavePayedAdvertisingVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHaveProductCatalogVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereHighlightedCategoriesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereId($value)
- * @method static Builder<static>|FormQuestionVisibility whereImportanceOfSeoVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereInspireWebsitesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereIsExactDeadlineVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereLanguagesForWebsiteVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereLogoVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereMainPagesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereNeedMultiLanguageVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOnlineBankCardPaymentOptionsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOtherExpectationOrRequestVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOtherPagesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOtherToneOfWebsiteVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOwnCompanyImagesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereOwnCompanyVideosVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereParcelPointsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility wherePaymentMethodsVisible($value)
- * @method static Builder<static>|FormQuestionVisibility wherePreferedFontTypesVisible($value)
- * @method static Builder<static>|FormQuestionVisibility wherePrimaryColorVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereProductCatalogVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereProductsCsvFileVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereSecondaryColorVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereShippingAddressVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereStoreAddressVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereTokenVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereToneOfWebsiteVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereUpdatedAt($value)
- * @method static Builder<static>|FormQuestionVisibility whereUseVideoOrAnimationVisible($value)
- * @method static Builder<static>|FormQuestionVisibility whereVisualFeelingVisible($value)
- * @mixin \Eloquent
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property-read \App\Models\FormQuestion|null $formQuestion
+ * @method static \Database\Factories\FormQuestionVisibilityFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereActivitiesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereAdditionalColorsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereBannedElementsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereBrutoNettoVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereCallToActionsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereCompanyNameVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactEmailVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactNameVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactPhoneVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactPositionVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContractedAccountantsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereDeadlineVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereDesignFilesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereExistBlogCountVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereExistWebsiteUrlVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereFormQuestionId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereFormatingMilestoneVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveBlogVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveContractedAccountantVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveContractedOnlineBankCardPaymentVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveExistDesignVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveExistWebsiteVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHavePayedAdvertisingVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHaveProductCatalogVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHighlightedCategoriesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereImportanceOfSeoVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereInspireWebsitesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereIsExactDeadlineVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereLanguagesForWebsiteVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereLogoVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereMainPagesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereNeedMultiLanguageVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOnlineBankCardPaymentOptionsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherExpectationOrRequestVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherPagesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherToneOfWebsiteVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOwnCompanyImagesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOwnCompanyVideosVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereParcelPointsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility wherePaymentMethodsVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility wherePreferedFontTypesVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility wherePrimaryColorVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereProductCatalogVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereProductsCsvFileVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereSecondaryColorVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereShippingAddressVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereStoreAddressVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereTokenVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereToneOfWebsiteVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereUseVideoOrAnimationVisible($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereVisualFeelingVisible($value)
  */
 	final class FormQuestionVisibility extends \Eloquent {}
 }
@@ -397,7 +394,7 @@ namespace App\Models{
  * @property string|null $delivery_deadline
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read mixed $delivery_dead_line
+ * @property-read string $delivery_dead_line
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\PdfOptionFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|PdfOption landingPage()
@@ -663,17 +660,16 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static SupportPackFactory factory($count = null, $state = [])
- * @method static Builder<static>|SupportPack newModelQuery()
- * @method static Builder<static>|SupportPack newQuery()
- * @method static Builder<static>|SupportPack query()
- * @method static Builder<static>|SupportPack whereCreatedAt($value)
- * @method static Builder<static>|SupportPack whereId($value)
- * @method static Builder<static>|SupportPack whereName($value)
- * @method static Builder<static>|SupportPack whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Database\Factories\SupportPackFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereUpdatedAt($value)
  */
 	final class SupportPack extends \Eloquent {}
 }
@@ -683,22 +679,21 @@ namespace App\Models{
  * @property int $id
  * @property string $form_field_name
  * @property int $form_field_id
- * @property OpenAIRole $role
+ * @property \App\Enums\OpenAIRole $role
  * @property string $content
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @method static SystemChatParameterFactory factory($count = null, $state = [])
- * @method static Builder<static>|SystemChatParameter newModelQuery()
- * @method static Builder<static>|SystemChatParameter newQuery()
- * @method static Builder<static>|SystemChatParameter query()
- * @method static Builder<static>|SystemChatParameter whereContent($value)
- * @method static Builder<static>|SystemChatParameter whereCreatedAt($value)
- * @method static Builder<static>|SystemChatParameter whereFormFieldId($value)
- * @method static Builder<static>|SystemChatParameter whereFormFieldName($value)
- * @method static Builder<static>|SystemChatParameter whereId($value)
- * @method static Builder<static>|SystemChatParameter whereRole($value)
- * @method static Builder<static>|SystemChatParameter whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @method static \Database\Factories\SystemChatParameterFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereFormFieldId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereFormFieldName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SystemChatParameter whereUpdatedAt($value)
  */
 	final class SystemChatParameter extends \Eloquent {}
 }
@@ -724,6 +719,10 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $trial_ends_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Cashier\Subscription> $subscriptions
  * @property-read int|null $subscriptions_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
@@ -731,7 +730,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onGenericTrial()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyVatNumber($value)
@@ -749,6 +750,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStripeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTrialEndsAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  */
 	final class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser, \Illuminate\Contracts\Auth\MustVerifyEmail {}
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Listeners;
 
 use App\Models\Order;
+use App\Services\ResellerService;
 use Illuminate\Support\Facades\Log;
 use Laravel\Cashier\Events\WebhookReceived;
 
@@ -22,10 +23,11 @@ final class StripeEventListener
             Log::info('Payment succeeded:', [
                 'payload' => $event->payload,
             ]);
-            Order::create([
+            $order = Order::create([
                 'request_quote_id' => $event->payload['data']['object']['metadata']['request_quote_id'],
             ]);
+            // Reseller commission létrehozása
+            app(ResellerService::class)->createCommissionIfReseller($order);
         }
-
     }
 }

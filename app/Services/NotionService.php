@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\WebsiteLanguage;
 use Exception;
 use FiveamCode\LaravelNotionApi\Entities\Page;
 use FiveamCode\LaravelNotionApi\Exceptions\LaravelNotionAPIException;
@@ -203,7 +204,16 @@ final class NotionService
 
             // Alapértelmezett nyelv
             if (! empty($requestQuote->default_language)) {
-                $page->setSelect('Alapértelmezett nyelv', $requestQuote->default_language);
+                $defaultLanguage = $requestQuote->default_language;
+                // Ha szám, akkor id, különben név
+                if (is_numeric($defaultLanguage)) {
+                    $langModel = WebsiteLanguage::find($defaultLanguage);
+                    $defaultLanguageName = $langModel ? $langModel->name : (string) $defaultLanguage;
+                } else {
+                    $defaultLanguageName = $defaultLanguage;
+                }
+
+                $page->setSelect('Alapértelmezett nyelv', $defaultLanguageName);
             }
 
             // Nyelvek (array formátumban)

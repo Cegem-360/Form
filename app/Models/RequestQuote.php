@@ -145,7 +145,17 @@ final class RequestQuote extends Model
 
     public function getLanguages(): Collection
     {
-        return WebsiteLanguage::whereIn('id', $this->languages)->get();
+        // Ha minden elem szám, akkor id-k, különben nevek
+        if (is_array($this->languages) && $this->languages !== []) {
+            if (is_numeric($this->languages[0])) {
+                return WebsiteLanguage::whereIn('id', $this->languages)->get();
+            }
+
+            return WebsiteLanguage::whereIn('name', $this->languages)->get();
+
+        }
+
+        return collect();
     }
 
     public function isPayed(): bool
