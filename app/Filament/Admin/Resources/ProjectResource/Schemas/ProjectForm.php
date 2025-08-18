@@ -31,12 +31,12 @@ final class ProjectForm
                     ->preload()
                     ->live()
                     ->label('Quotation Name')
-                    ->afterStateUpdated(function ($state, Set $set) {
+                    ->afterStateUpdated(function ($state, Set $set): void {
                         $requestQuote = RequestQuote::find($state);
                         $set('company_name', $requestQuote?->company_name);
                     })
                     ->relationship('requestQuote')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => "{$record->quotation_name} ({$record->company_name})"),
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s (%s)', $record->quotation_name, $record->company_name)),
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
