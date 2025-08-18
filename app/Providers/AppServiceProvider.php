@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use FiveamCode\LaravelNotionApi\NotionFacade;
+use App\Console\Commands\SyncPermissions;
 use App\Policies\PermissionPolicy;
 use App\Policies\RolePolicy;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Table;
+use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
@@ -16,7 +17,6 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Console\Commands\SyncPermissions;
 
 final class AppServiceProvider extends ServiceProvider
 {

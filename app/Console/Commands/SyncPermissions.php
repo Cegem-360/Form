@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
+use Throwable;
 
 final class SyncPermissions extends Command
 {
@@ -38,11 +39,13 @@ final class SyncPermissions extends Command
             if (! $fs->isDirectory($dir)) {
                 continue;
             }
+
             $files = $fs->allFiles($dir);
             foreach ($files as $file) {
                 if ($file->getExtension() !== 'php') {
                     continue;
                 }
+
                 $models[] = Str::studly($file->getBasename('.php'));
             }
         }
@@ -52,7 +55,7 @@ final class SyncPermissions extends Command
         foreach ($models as $modelName) {
             foreach ($affixes as $affix) {
                 // default naming mirrors the package's typical behaviour: "{affix} {ModelName}"
-                $names[] = trim($affix . ' ' . $modelName);
+                $names[] = mb_trim($affix.' '.$modelName);
             }
         }
 
@@ -63,11 +66,12 @@ final class SyncPermissions extends Command
 
         $names = array_values(array_unique(array_filter($names)));
 
-        if (empty($names)) {
+        if ($names === []) {
             $this->line('No permissions generated from config/model directories.');
             if (! empty($customPermissions)) {
                 $this->line('Custom permissions were provided but empty after filtering.');
             }
+
             return self::SUCCESS;
         }
 
@@ -81,28 +85,30 @@ final class SyncPermissions extends Command
                     }
                 }
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $throwable) {
             // DB not ready (migrations not run) or similar - don't fail the whole process
-            $this->warn('Could not persist permissions to DB: ' . $e->getMessage());
+            $this->warn('Could not persist permissions to DB: '.$throwable->getMessage());
             $this->warn('permissions:sync completed in dry-run mode.');
-            $this->info('Generated permissions (count): ' . count($names));
+            $this->info('Generated permissions (count): '.count($names));
+
             return self::SUCCESS;
         }
 
-        $this->info('Permissions synced. Created: ' . $created . ', Total generated: ' . count($names));
+        $this->info('Permissions synced. Created: '.$created.', Total generated: '.count($names));
 
         if ($this->option('clean')) {
             try {
                 $existing = Permission::all();
-                $toRemove = $existing->filter(fn (Permission $p) => ! in_array($p->name, $names, true));
+                $toRemove = $existing->reject(fn (Permission $p): bool => in_array($p->name, $names, true));
                 $deleted = 0;
                 foreach ($toRemove as $rem) {
                     $rem->delete();
                     $deleted++;
                 }
-                $this->info('Cleaned up permissions not in generated set: ' . $deleted);
-            } catch (\Throwable $e) {
-                $this->warn('Could not perform clean: ' . $e->getMessage());
+
+                $this->info('Cleaned up permissions not in generated set: '.$deleted);
+            } catch (Throwable $e) {
+                $this->warn('Could not perform clean: '.$e->getMessage());
             }
         }
 

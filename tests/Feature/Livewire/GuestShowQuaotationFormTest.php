@@ -13,7 +13,7 @@ use function Pest\Livewire\livewire;
 
 it('loads the guest show quotation form page and shows fields', function (): void {
     // Ideiglenes login route a teszthez
-    Route::get('/login', fn () => 'login')->name('login');
+    Route::get('/login', fn (): string => 'login')->name('login');
     // DEBUG: list all route names
     dump(collect(Route::getRoutes())->map->getName()->filter()->all());
 
