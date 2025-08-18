@@ -33,12 +33,12 @@ final class Project extends Model
         'project_goal',
 
         // 2.
-        'original_project_goals',
+
         'completed_project_elements',
         'project_not_contained_elements',
 
         // 3.
-        'completed_elements',
+
         'solved_problems',
 
         // 4.
@@ -90,10 +90,9 @@ final class Project extends Model
         return [
             'status' => ProjectStatus::class,
             'contact' => 'integer',
-            'original_project_goals' => 'json',
             'completed_project_elements' => 'json',
             'project_not_contained_elements' => 'json',
-            'completed_elements' => 'json',
+
             'tests' => 'json',
             'solved_problems' => 'json',
             'start_date' => 'date',

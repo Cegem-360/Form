@@ -39,12 +39,12 @@ final class ProjectFactory extends Factory
             'project_goal' => $this->faker->sentence,
 
             // 2.
-            'original_project_goals' => $this->faker->paragraph,
+
             'completed_project_elements' => $this->faker->numberBetween(0, 100),
             'project_not_contained_elements' => $this->faker->numberBetween(0, 100),
 
             // 3.
-            'completed_elements' => $this->faker->numberBetween(0, 100),
+
             'solved_problems' => $this->faker->numberBetween(0, 50),
 
             // 4.

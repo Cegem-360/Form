@@ -448,10 +448,10 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $end_date
  * @property \App\Enums\ProjectStatus $status
  * @property string|null $project_goal
- * @property array<array-key, mixed>|null $original_project_goals
+ * @property string|null $original_project_goals
  * @property array<array-key, mixed>|null $completed_project_elements
  * @property array<array-key, mixed>|null $project_not_contained_elements
- * @property array<array-key, mixed>|null $completed_elements
+ * @property string|null $completed_elements
  * @property array<array-key, mixed>|null $solved_problems
  * @property int|null $garanty
  * @property string|null $garanty_end_date
@@ -710,6 +710,7 @@ namespace App\Models{
  * @property string|null $company_address
  * @property string|null $company_vat_number
  * @property float $default_commission_percent
+ * @property \App\Enums\ClientType|null $client_type
  * @property string|null $remember_token
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
@@ -717,7 +718,6 @@ namespace App\Models{
  * @property string|null $pm_type
  * @property string|null $pm_last_four
  * @property \Carbon\CarbonImmutable|null $trial_ends_at
- * @property \App\Enums\ClientType $client_type
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
@@ -734,6 +734,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyVatNumber($value)

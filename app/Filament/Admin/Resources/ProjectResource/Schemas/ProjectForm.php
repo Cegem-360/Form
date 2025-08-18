@@ -33,10 +33,10 @@ final class ProjectForm
                     ->required(),
                 RichEditor::make('project_goal')
                     ->columnSpanFull(),
-                TextInput::make('original_project_goals'),
+
                 TextInput::make('completed_project_elements'),
                 TextInput::make('project_not_contained_elements'),
-                TextInput::make('completed_elements'),
+
                 TextInput::make('solved_problems'),
                 TextInput::make('garanty')
                     ->numeric(),

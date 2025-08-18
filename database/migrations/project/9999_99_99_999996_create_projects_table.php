@@ -29,10 +29,9 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->enum('status', ProjectStatus::casesArray())->default(ProjectStatus::INACTIVE->value);
             $table->longText('project_goal')->nullable();
-            $table->json('original_project_goals')->nullable();
+
             $table->json('completed_project_elements')->nullable();
             $table->json('project_not_contained_elements')->nullable();
-            $table->json('completed_elements')->nullable();
             $table->json('solved_problems')->nullable();
             $table->integer('garanty')->nullable();
             $table->date('garanty_end_date')->virtualAs('DATE_ADD(start_date, INTERVAL garanty DAY)')->nullable();
