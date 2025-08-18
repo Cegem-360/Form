@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Enums\ClientType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('company_address')->nullable();
             $table->string('company_vat_number')->nullable();
             $table->float(column: 'default_commission_percent', precision: 2)->default(value: 0.00);
+            $table->enum('client_type', ClientType::cases())->default(ClientType::INDIVIDUAL)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

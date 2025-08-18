@@ -7,18 +7,15 @@ namespace App\Livewire\Checkout;
 use App\Enums\ClientType;
 use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
+use App\Livewire\Filament\Forms\Schemas\PaymentPageForm;
 use App\Models\Order;
 use App\Models\RequestQuote;
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -50,74 +47,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
 
     public function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-                TextInput::make('name')
-                    ->label('Name')
-                    ->live()
-                    ->required(),
-                TextInput::make('email')
-                    ->label('Email')
-                    ->required()
-                    ->live()
-                    ->email(),
-                TextInput::make('phone')
-                    ->label('Phone')
-                    ->live()
-                    ->required(),
-                Select::make('client_type')
-                    ->label('Legal form')
-                    ->live()
-                    ->required()
-                    ->options(ClientType::class),
-                TextInput::make('billing_address')
-                    ->label('Billing Address')
-                    ->live()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value),
-                TextInput::make('company_name')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_address')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                TextInput::make('company_vat_number')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->maxLength(255),
-                Select::make('payment_method')
-                    ->label('Payment Method')
-                    ->options([
-                        'stripe' => 'Stripe',
-                        'bank_transfer' => __('Bank Transfer'),
-                    ])
-                    ->default('stripe')
-                    ->afterStateUpdated(function ($state): void {
-                        $this->requestQuote->payment_method = $state;
-                        $this->requestQuote->save();
-                    })
-                    ->required()
-                    ->live(),
-                Checkbox::make('terms')
-                    ->label(__('I have read and accept the terms and conditions'))
-                    ->required()
-                    ->accepted()
-                    ->default(false)
-                    ->live(),
-                Checkbox::make('privacy')
-                    ->label(__('I have read and accept the privacy policy'))
-                    ->required()
-                    ->accepted()
-                    ->default(false)
-                    ->live(),
-            ])
-            ->statePath('data')
-            ->model(RequestQuote::class);
+        return PaymentPageForm::configure($schema, $this->requestQuote);
     }
 
     public function payWithStripe(): Action
@@ -174,7 +104,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
             ->label(__('Finalize Order'))
             ->action(function (): void {
                 $data = $this->form->getState();
-
+                unset($data['terms'],$data['privacy']);
                 $this->requestQuote->update($data);
 
                 Auth::user()->update([
@@ -207,24 +137,6 @@ final class PaymentPage extends Component implements HasActions, HasForms
                 $this->redirect(route('checkout.success', ['requestQuote' => $this->requestQuote->id]));
             });
     }
-
-    /* public function updateCustomerData(): void
-    {
-        $this->validate([
-            'data.name' => ['required', 'string'],
-            'data.email' => ['required', 'email'],
-            'data.phone' => ['nullable', 'string'],
-            'data.client_type' => ['required', 'string'],
-            'data.company_name' => ['nullable', 'string'],
-            'data.company_address' => ['nullable', 'string'],
-            'data.company_registration_number' => ['nullable', 'string'],
-        ]);
-        $this->requestQuote->save();
-        Notification::make()
-            ->title(__('Customer data updated successfully'))
-            ->success()
-            ->send();
-    } */
 
     public function render()
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\ClientType;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
@@ -44,6 +45,7 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
         'trial_ends_at',
         'default_commission_percent',
         'password',
+        'client_type',
     ];
 
     /**
@@ -77,6 +79,7 @@ final class User extends Authenticatable implements FilamentUser, MustVerifyEmai
             'password' => 'hashed',
             'trial_ends_at' => 'datetime',
             'default_commission_percent' => 'float',
+            'client_type' => ClientType::class,
         ];
     }
 }

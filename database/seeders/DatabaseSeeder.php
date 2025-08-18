@@ -51,7 +51,6 @@ final class DatabaseSeeder extends Seeder
             WebsiteTypeSeeder::class,
             WebsiteLanguageSeeder::class,
             SupportPackSeeder::class,
-            StripeSeeder::class,
             RequestQuoteFunctionalitySeeder::class,
             RequestQuoteSeeder::class,
             OrderSeeder::class,

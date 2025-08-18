@@ -717,6 +717,7 @@ namespace App\Models{
  * @property string|null $pm_type
  * @property string|null $pm_last_four
  * @property \Carbon\CarbonImmutable|null $trial_ends_at
+ * @property \App\Enums\ClientType $client_type
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions

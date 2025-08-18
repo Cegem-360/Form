@@ -16,6 +16,7 @@ use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Console\Commands\SyncPermissions;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -48,6 +49,13 @@ final class AppServiceProvider extends ServiceProvider
             $toggleButtons->translateLabel();
 
         });
+
+        // Register lightweight permissions sync command so tests and seeders can call it.
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                SyncPermissions::class,
+            ]);
+        }
 
     }
 

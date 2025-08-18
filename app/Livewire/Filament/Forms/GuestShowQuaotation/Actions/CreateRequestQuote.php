@@ -18,8 +18,8 @@ final class CreateRequestQuote extends Component
             ->action(function () use ($data, $component): void {
 
                 $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
                 unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
+                $requestQuote = RequestQuote::create($data);
                 $component->form->model($requestQuote)->saveRelationships();
                 // save to session
                 Session::put('requestQuote', $requestQuote->id);
