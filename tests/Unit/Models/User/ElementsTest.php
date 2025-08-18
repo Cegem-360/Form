@@ -38,13 +38,14 @@ describe('User Model', function (): void {
                 'company_name',
                 'company_address',
                 'company_vat_number',
-                'company_registration_number',
+                'default_commission_percent',
                 'created_at',
                 'updated_at',
                 'stripe_id',
                 'pm_type',
                 'pm_last_four',
                 'trial_ends_at',
+
             ]);
     });
 

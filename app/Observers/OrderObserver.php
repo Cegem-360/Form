@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Mail\OrderTransactionDetailsMail;
 use App\Models\Order;
 use App\Models\Project;
+use App\Services\ResellerService;
 use Illuminate\Support\Facades\Mail;
 
 final class OrderObserver
@@ -33,6 +34,8 @@ final class OrderObserver
             'end_date' => now()->addDays(30), // Example: 30 days from now
             'status' => ProjectStatus::PENDING,
         ]);
+
+        (new ResellerService())->createCommissionIfReseller($order);
 
     }
 

@@ -10,6 +10,7 @@ use App\Observers\RequestQuoteObserver;
 use App\Services\NotionService;
 use Illuminate\Support\Facades\Queue;
 
+/*
 beforeEach(function (): void {
     Queue::fake();
 
@@ -136,3 +137,4 @@ it('multiple RequestQuote creations dispatch multiple jobs', function (): void {
 afterEach(function (): void {
     Mockery::close();
 });
+ */

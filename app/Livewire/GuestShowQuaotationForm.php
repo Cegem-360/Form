@@ -10,7 +10,9 @@ use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\ClientInformation;
 use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\Consent;
 use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\GraphicsInformation;
 use App\Filament\Admin\Resources\RequestQuoteResource\Schemas\WebsiteInformation;
-use App\Mail\QuotationSendedToUser;
+use App\Livewire\Filament\Forms\GuestShowQuaotation\Actions\CreateRequestQuote;
+use App\Livewire\Filament\Forms\GuestShowQuaotation\Actions\Order;
+use App\Livewire\Filament\Forms\GuestShowQuaotation\Actions\SendEmailToMe;
 use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
 use App\Models\User;
@@ -27,7 +29,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
@@ -82,51 +83,18 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function createRequestQuoteAction(): Action
     {
-        return Action::make('createRequestQuoteAction')
-            ->action(function (): void {
-                $data = $this->form->getState();
-                $data['user_id'] = Auth::id();
-                $requestQuote = RequestQuote::create($data);
-
-                $this->form->model($requestQuote)->saveRelationships();
-                // save to session
-                Session::put('requestQuote', $requestQuote->id);
-                $this->redirect(route('filament.dashboard.resources.request-quotes.index'));
-            })
-            ->label(__('Create Request Quote'))
-            ->color('primary')
-            ->icon('heroicon-o-paper-airplane');
+        return CreateRequestQuote::make($this->form->getState(), $this);
     }
 
     public function orderAction(): Action
     {
-        return Action::make('order')
-            ->action(function (): void {
-
-                $data = $this->form->getState();
-
-                $data['user_id'] = Auth::id();
-                unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
-                $requestQuote = RequestQuote::create($data);
-                if (isset($this->form->getState()['requestQuoteFunctionalities'])) {
-                    $requestQuote->requestQuoteFunctionalities()->sync($this->form->getState()['requestQuoteFunctionalities']);
-                }
-
-                $this->form->model($requestQuote)->saveRelationships();
-                // save to session
-                Session::put('requestQuote', $requestQuote->id);
-                $this->redirect(route('cart.summary', ['requestQuote' => $requestQuote->id]));
-            })
-            ->label(__('Order'))
-            ->color('primary')
-            ->icon('heroicon-o-paper-airplane');
+        return Order::make($this->form->getState(), $this);
     }
 
     public function registerAndSendAction(): Action
     {
         return Action::make('registerAndSendAction')
             ->label(__('Register and Create Quotation'))
-
             ->requiresConfirmation()
             ->modalHeading(__('Register'))
             ->modalSubmitActionLabel(__('Register'))
@@ -137,9 +105,9 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             })
             ->schema(Registration::make())
             ->action(function (array $data) {
-
                 $fillDataForRegister = $data;
                 $data = $this->form->getState();
+                unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
                 $validatedfillDataForRegister = Validator::make($fillDataForRegister, [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -196,6 +164,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
             ->schema(Registration::make())
             ->action(function (array $data) {
                 $dataTmp = $this->form->getState();
+
                 $validatedfillDataForRegister = Validator::make($data, [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'email', 'max:255', 'unique:users,email'],
@@ -213,10 +182,12 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     'company_address' => $validatedfillDataForRegister['company_address'] ?? null,
                     'password' => Hash::make($validatedfillDataForRegister['password']),
                 ]);
+                unset($dataTmp['requestQuoteFunctionalities'],$dataTmp['consent'], $dataTmp['privacy_policy']);
                 $user->assignRole(RolesEnum::GUEST);
                 event(new Registered($user));
                 Auth::loginUsingId($user->id, true);
                 $dataTmp['user_id'] = Auth::id();
+
                 $requestQuote = RequestQuote::create($dataTmp);
 
                 Notification::make()
@@ -236,28 +207,12 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function sendEmailToMeAction(): Action
     {
-        return Action::make('sendEmailToMeAction')
-            ->action(function () {
-                $data = $this->form->getState();
-                $record = RequestQuote::create($data);
-                Notification::make()
-                    ->title('Quotation created and email sent')
-                    ->success()
-                    ->send();
-
-                Mail::to($data['email'])->send(new QuotationSendedToUser($record));
-
-                return $this->redirect(route('email-sended-to-user'));
-            })
-
-            ->label(__('Send email to me'))
-            ->color('success')
-            ->icon('heroicon-o-envelope');
+        return SendEmailToMe::make($this->form->getState(), $this);
     }
 
     public function create(): void
     {
-        dd($this->form->getState());
+        /*  dd($this->form->getState()); */
     }
 
     public function render(): View

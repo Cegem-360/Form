@@ -6,11 +6,17 @@ use App\Enums\ClientType;
 use App\Livewire\GuestShowQuaotationForm;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
 use function Pest\Livewire\livewire;
 
 it('loads the guest show quotation form page and shows fields', function (): void {
+    // Ideiglenes login route a teszthez
+    Route::get('/login', fn () => 'login')->name('login');
+    // DEBUG: list all route names
+    dump(collect(Route::getRoutes())->map->getName()->filter()->all());
+
     $response = $this->get(route('quotation')); // Állítsd be a helyes route-ot!
     $response->assertStatus(200);
     $response->assertSee('Weboldal típusa');
@@ -30,7 +36,7 @@ it('fill the form', function (): void {
     Livewire::test(GuestShowQuaotationForm::class)
         ->assertStatus(200)
         ->assertSee('Weboldal típusa');
-    // $clientType = fake()->randomElement(ClientType::cases());
+
     livewire(GuestShowQuaotationForm::class)
         ->assertFormExists()
         ->goToWizardStep(4)

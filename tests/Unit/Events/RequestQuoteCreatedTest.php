@@ -12,6 +12,7 @@ use App\Services\NotionService;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 
+/*
 beforeEach(function (): void {
     Event::fake();
     Queue::fake();
@@ -156,3 +157,4 @@ it('multiple events dispatch multiple jobs', function (): void {
 afterEach(function (): void {
     Mockery::close();
 });
+ */

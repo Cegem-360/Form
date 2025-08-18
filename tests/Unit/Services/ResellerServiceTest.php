@@ -11,13 +11,11 @@ use App\Models\RequestQuote;
 use App\Models\User;
 use App\Models\WebsiteLanguage;
 use App\Models\WebsiteType;
-use App\Services\ResellerService;
 use Spatie\Permission\Models\Role;
 
 describe('ResellerService', function (): void {
     beforeEach(function (): void {
-        Option::where('name', 'request_quote')->delete();
-        Option::create([
+        Option::firstOrCreate([
             'name' => 'request_quote',
             'options' => [
                 ['key' => 'language_percent', 'value' => 0.15],
@@ -32,8 +30,7 @@ describe('ResellerService', function (): void {
         $websiteType = WebsiteType::factory()->create();
         $reseller = User::factory()->create();
         $reseller->assignRole(RolesEnum::RESELLER);
-        $reseller->default_commission_percent = 15;
-        $reseller->save();
+        $reseller->update(['default_commission_percent' => 15]);
 
         $requestQuote = RequestQuote::factory()->create([
             'user_id' => $reseller->id,
@@ -44,12 +41,12 @@ describe('ResellerService', function (): void {
         $project = Project::factory()->create([
             'request_quote_id' => $requestQuote->id,
         ]);
-        $order = Order::factory()->create([
+        Order::factory()->create([
             'request_quote_id' => $requestQuote->id,
             'user_id' => $reseller->id,
-            'amount' => 100_000,
+            'amount' => 100000,
         ]);
-        (new ResellerService())->createCommissionIfReseller($order);
+
         expect(ProjectCommission::query()
             ->where('project_id', $project->id)
             ->where('user_id', $reseller->id)
@@ -73,12 +70,12 @@ describe('ResellerService', function (): void {
         $project = Project::factory()->create([
             'request_quote_id' => $requestQuote->id,
         ]);
-        $order = Order::factory()->create([
+        Order::factory()->create([
             'request_quote_id' => $requestQuote->id,
             'user_id' => $user->id,
             'amount' => 100_000,
         ]);
-        (new ResellerService())->createCommissionIfReseller($order);
+
         expect(ProjectCommission::query()
             ->where('project_id', $project->id)
             ->where('user_id', $user->id)

@@ -56,7 +56,6 @@ final class FormQuestion
 
     public static function submitButtonAction($data): Action
     {
-        dump($data);
 
         return Action::make('submit')
             ->view('filament.forms.components.form-question-submit-button', ['data' => $data]);

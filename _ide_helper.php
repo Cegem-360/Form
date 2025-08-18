@@ -23997,6 +23997,7 @@ namespace FiveamCode\LaravelNotionApi {
 
 namespace Laravel\Mcp\Server\Facades {
     /**
+     * @see \Laravel\Mcp\Server\Registrar
      */
     class Mcp {
         /**
