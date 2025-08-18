@@ -54,8 +54,6 @@ final class Website
                     TextInput::make('contact_phone') // 1. page
                         ->tel()
                         ->maxLength(255),
-                    TextInput::make('contact_position')// 1. page
-                        ->maxLength(255),
                     FileUpload::make('logo') // 1. page
                         ->image()
                         ->maxSize(2048)

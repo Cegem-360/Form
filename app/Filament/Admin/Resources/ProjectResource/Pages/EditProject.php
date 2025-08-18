@@ -23,7 +23,7 @@ final class EditProject extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             ActionGroup::make([
-                /*  Action::make('convertToStarter')
+                Action::make('convertToStarter')
                     ->label('Convert to Starter')
                     ->schema([
 
@@ -46,7 +46,7 @@ final class EditProject extends EditRecord
                         return redirect()->route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]);
 
                     })
-                    ->color('primary'), */
+                    ->color('primary'),
             ]),
         ];
     }

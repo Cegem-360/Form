@@ -27,8 +27,6 @@ final class QuestionVisibilityForm
                     ->required(),
                 Toggle::make('contact_phone_visible')
                     ->required(),
-                Toggle::make('contact_position_visible')
-                    ->required(),
                 Toggle::make('have_exist_website_visible')
                     ->required(),
                 Toggle::make('exist_website_url_visible')

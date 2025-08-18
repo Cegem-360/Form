@@ -24,7 +24,6 @@ final class FormQuestionVisibility extends Model
         'contact_name_visible',
         'contact_email_visible',
         'contact_phone_visible',
-        'contact_position_visible',
         'logo_visible',
         'activities_visible',
 
@@ -92,7 +91,6 @@ final class FormQuestionVisibility extends Model
             'contact_name_visible' => 'boolean',
             'contact_email_visible' => 'boolean',
             'contact_phone_visible' => 'boolean',
-            'contact_position_visible' => 'boolean',
             'logo_visible' => 'boolean',
             'activities_visible' => 'boolean',
 

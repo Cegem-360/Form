@@ -191,7 +191,7 @@ namespace App\Models{
  * @property bool $contact_phone_visible
  * @property bool $logo_visible
  * @property bool $activities_visible
- * @property bool $contact_position_visible
+ * @property int $contact_position_visible
  * @property bool $have_exist_website_visible
  * @property bool $exist_website_url_visible
  * @property bool $is_exact_deadline_visible

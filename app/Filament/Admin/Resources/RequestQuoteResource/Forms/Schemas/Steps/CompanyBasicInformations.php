@@ -21,27 +21,19 @@ final class CompanyBasicInformations
                     ->columnSpan(1)
                     ->maxLength(255),
                 TextInput::make('contact_name')
-
                     ->visible($visibility->contact_name_visible)
                     ->columnSpan(1)
                     ->maxLength(255),
                 TextInput::make('contact_email')
-
                     ->visible($visibility->contact_email_visible)
                     ->columnSpan(1)
                     ->email()
                     ->maxLength(255),
                 TextInput::make('contact_phone')
-
                     ->visible($visibility->contact_phone_visible)
                     ->tel()
                     ->maxLength(255),
-                TextInput::make('contact_position')
-
-                    ->visible($visibility->contact_position_visible)
-                    ->maxLength(255),
                 Textarea::make('activities')
-
                     ->visible($visibility->activities_visible)
                     ->columnSpan(1),
                 FileUpload::make('logo')

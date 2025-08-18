@@ -52,7 +52,6 @@
             <li><span class="label">Contact Name:</span> {{ $formQuestion->contact_name }}</li>
             <li><span class="label">Contact Email:</span> {{ $formQuestion->contact_email }}</li>
             <li><span class="label">Contact Phone:</span> {{ $formQuestion->contact_phone }}</li>
-            <li><span class="label">Contact Position:</span> {{ $formQuestion->contact_position }}</li>
             <li><span class="label">Logo:</span> {{ $formQuestion->logo }}</li>
             <li><span class="label">Activities:</span> {{ $formQuestion->activities }}</li>
             <li><span class="label">Have Existing Website:</span> {{ $formQuestion->have_exist_website }}</li>

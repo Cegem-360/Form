@@ -30,8 +30,6 @@ final class QuestionVisibilityTable
                     ->boolean(),
                 IconColumn::make('contact_phone_visible')
                     ->boolean(),
-                IconColumn::make('contact_position_visible')
-                    ->boolean(),
                 IconColumn::make('have_exist_website_visible')
                     ->boolean(),
                 IconColumn::make('exist_website_url_visible')

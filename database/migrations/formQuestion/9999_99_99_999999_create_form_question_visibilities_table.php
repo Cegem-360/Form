@@ -24,7 +24,6 @@ return new class extends Migration
             $table->boolean('contact_phone_visible')->default(true);
             $table->boolean('logo_visible')->default(true);
             $table->boolean('activities_visible')->default(true);
-            $table->boolean('contact_position_visible')->default(true);
             $table->boolean('have_exist_website_visible')->default(true);
             $table->boolean('exist_website_url_visible')->default(true);
             $table->boolean('is_exact_deadline_visible')->default(true);
