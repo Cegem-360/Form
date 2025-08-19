@@ -32,7 +32,7 @@ return new class extends Migration
             $table->boolean('visual_feeling_visible')->default(true);
             $table->boolean('have_exist_design_visible')->default(true);
             $table->boolean('design_files_visible')->default(true);
-            $table->boolean('inspire_websites_visible')->default(true);
+
             $table->boolean('banned_elements_visible')->default(true);
             $table->boolean('primary_color_visible')->default(true);
             $table->boolean('secondary_color_visible')->default(true);

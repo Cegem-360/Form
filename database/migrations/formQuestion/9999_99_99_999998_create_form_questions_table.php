@@ -44,7 +44,7 @@ return new class extends Migration
 
             $table->boolean('have_exist_design')->default(false);
             $table->json('design_files')->nullable();
-            $table->json('inspire_websites')->nullable();
+
             $table->json('banned_elements')->nullable();
             $table->string('primary_color')->nullable();
             $table->string('secondary_color')->nullable();

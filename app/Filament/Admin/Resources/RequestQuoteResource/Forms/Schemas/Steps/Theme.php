@@ -9,7 +9,6 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -66,21 +65,7 @@ final class Theme
                     ->disk('public')
                     ->directory('design_files')
                     ->visibility('public'),
-                Repeater::make('inspire_websites')
-                    ->columnSpanFull()
-                    ->visible($visibility->inspire_websites_visible)
-                    ->defaultItems(10)
-                    ->collapsible()
-                    ->collapsed()
-                    ->reorderableWithDragAndDrop()
-                    ->schema([
-                        TextInput::make('url')
-                            ->url()
-                            ->required(),
-                        RichEditor::make('description')
-                            ->required(),
-                    ])
-                    ->itemLabel(fn (array $state): ?string => $state['url'] ?? null),
+
                 Repeater::make('banned_elements')
                     ->columnSpanFull()
                     ->visible($visibility->banned_elements_visible)

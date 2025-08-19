@@ -47,7 +47,7 @@ final class FormQuestion extends Model
 
         'have_exist_design',
         'design_files',
-        'inspire_websites',
+
         'banned_elements',
         'primary_color',
         'secondary_color',
@@ -125,7 +125,6 @@ final class FormQuestion extends Model
             // arrays
             'activities' => 'array',
             'design_files' => 'array',
-            'inspire_websites' => 'array',
 
             'banned_elements' => 'array',
             'additional_colors' => 'array',

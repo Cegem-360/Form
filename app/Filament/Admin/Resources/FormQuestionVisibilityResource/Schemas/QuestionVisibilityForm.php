@@ -43,8 +43,7 @@ final class QuestionVisibilityForm
                     ->required(),
                 Toggle::make('design_files_visible')
                     ->required(),
-                Toggle::make('inspire_websites_visible')
-                    ->required(),
+
                 Toggle::make('banned_elements_visible')
                     ->required(),
                 Toggle::make('primary_color_visible')

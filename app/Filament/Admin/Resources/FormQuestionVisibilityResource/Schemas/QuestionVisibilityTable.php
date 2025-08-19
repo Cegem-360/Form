@@ -46,8 +46,6 @@ final class QuestionVisibilityTable
                     ->boolean(),
                 IconColumn::make('design_files_visible')
                     ->boolean(),
-                IconColumn::make('inspire_websites_visible')
-                    ->boolean(),
                 IconColumn::make('banned_elements_visible')
                     ->boolean(),
                 IconColumn::make('primary_color_visible')

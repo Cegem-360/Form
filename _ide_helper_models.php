@@ -76,7 +76,7 @@ namespace App\Models{
  * @property string|null $other_tone_of_website
  * @property bool $have_exist_design
  * @property array<array-key, mixed>|null $design_files
- * @property array<array-key, mixed>|null $inspire_websites
+ * @property string|null $inspire_websites
  * @property array<array-key, mixed>|null $banned_elements
  * @property string|null $primary_color
  * @property string|null $secondary_color
@@ -200,7 +200,7 @@ namespace App\Models{
  * @property bool $visual_feeling_visible
  * @property bool $have_exist_design_visible
  * @property bool $design_files_visible
- * @property bool $inspire_websites_visible
+ * @property int $inspire_websites_visible
  * @property bool $banned_elements_visible
  * @property bool $primary_color_visible
  * @property bool $secondary_color_visible

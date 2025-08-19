@@ -34,7 +34,7 @@ it('has fillable attributes', function (): void {
         'tone_of_website',
         'have_exist_design',
         'design_files',
-        'inspire_websites',
+
         'banned_elements',
         'primary_color',
         'secondary_color',

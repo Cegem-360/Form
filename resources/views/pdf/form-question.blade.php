@@ -63,13 +63,7 @@
             <li><span class="label">Tone of Website:</span> {{ $formQuestion->tone_of_website }}</li>
             <li><span class="label">Other Tone of Website:</span> {{ $formQuestion->other_tone_of_website }}</li>
             <li><span class="label">Have Existing Design:</span> {{ $formQuestion->have_exist_design }}</li>
-            <li><span class="label">Inspire Websites:</span>
-                <ul>
-                    @foreach ($formQuestion->inspire_websites ?? [] as $website)
-                        <li>{{ $website }}</li>
-                    @endforeach
-                </ul>
-            </li>
+
             <li><span class="label">Banned Elements:</span>
                 <ul>
                     @foreach ($formQuestion->banned_elements ?? [] as $element)

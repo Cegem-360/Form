@@ -100,19 +100,7 @@ final class Website
                         ->disk('public')
                         ->directory('design_files')
                         ->visibility('public'),
-                    Repeater::make('inspire_websites')
-                        ->defaultItems(10)
-                        ->collapsible()
-                        ->collapsed()
-                        ->reorderableWithDragAndDrop()
-                        ->schema([
-                            TextInput::make('url')
-                                ->url()
-                                ->required(),
-                            RichEditor::make('description')
-                                ->required(),
-                        ])
-                        ->itemLabel(fn (array $state): ?string => $state['url'] ?? null),
+
                     Repeater::make('banned_elements')
                         ->defaultItems(3)
                         ->collapsible()
@@ -251,9 +239,12 @@ final class Website
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
                     Select::make('bruto_netto')
+                        ->label('Brutó vagy netto megjelenés és behúzás')
                         ->options([
-                            'bruto' => 'bruto',
-                            'netto' => 'netto',
+                            'bruto-bruto' => 'Brutó megjelnités és import',
+                            'bruto-netto' => 'Brutó megjelenés és  nettó import',
+                            'netto-bruto' => 'Netto megjelenés és brutó import',
+                            'netto-netto' => 'Netto megjelenés és nettó import',
                         ]),
                     TextInput::make('store_address')
                         ->maxLength(255),

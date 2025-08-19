@@ -39,7 +39,7 @@ final class FormQuestionVisibility extends Model
 
         'have_exist_design_visible',
         'design_files_visible',
-        'inspire_websites_visible',
+
         'banned_elements_visible',
         'primary_color_visible',
         'secondary_color_visible',
@@ -106,7 +106,7 @@ final class FormQuestionVisibility extends Model
 
             'have_exist_design_visible' => 'boolean',
             'design_files_visible' => 'boolean',
-            'inspire_websites_visible' => 'boolean',
+
             'banned_elements_visible' => 'boolean',
             'primary_color_visible' => 'boolean',
             'secondary_color_visible' => 'boolean',
