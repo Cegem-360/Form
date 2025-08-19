@@ -255,5 +255,6 @@
     "Reset Password": "Jelszó visszaállítása",
     "This password reset link will expire in :count minutes.": "Ez a jelszó visszaállító link :count perc múlva lejár.",
     "Reset Password Notification": "Jelszó visszaállító értesítés",
-    "Contact Channels": "Kapcsolattartó csatornák"
+    "Contact Channels": "Kapcsolattartó csatornák",
+    "Length": "Hossz"
 }

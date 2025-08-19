@@ -7,7 +7,6 @@ namespace App\Filament\Admin\Resources\RequestQuoteResource\Schemas;
 use App\Models\RequestQuoteFunctionality;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\CheckboxList;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -34,11 +33,6 @@ final class GraphicsInformation
                     ->required(),
                 Section::make()->columnSpanFull()->components([
                     Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
-                    /* RichEditor::make('project_description')
-                        ->default('<p></p>')
-                        ->placeholder('')
-                        ->maxLength(20000)
-                        ->columnSpanFull(), */
                 ]),
                 Toggle::make('have_website_graphic')
                     ->columnSpanFull()
@@ -49,7 +43,6 @@ final class GraphicsInformation
                 Section::make()
                     ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
                     ->components([
-
                         Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
                         Html::make(null)
                             ->content(

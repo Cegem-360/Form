@@ -19,6 +19,7 @@ final class CreateRequestQuote extends Component
 
                 $data['user_id'] = Auth::id();
                 unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
+                dump($data);
                 $requestQuote = RequestQuote::create($data);
                 $component->form->model($requestQuote)->saveRelationships();
                 // save to session

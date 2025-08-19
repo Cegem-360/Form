@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Schemas\Components\Repeaters;
 
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 
 final class Website
@@ -16,16 +16,15 @@ final class Website
     {
         return [
             TextInput::make('name')
-                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->readOnly(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
                 ->live()
                 ->required()
                 ->distinct(),
             ToggleButtons::make('required')
-                ->disabled(fn ($get): bool => $get('name') === 'Főoldal' || $get('name') === 'Webshop')
+                ->disableOptionWhen(fn (string $value, Get $get): bool => $value === '0' && ($get('name') === 'Főoldal' || $get('name') === 'Webshop'))
                 ->label('Want to this page?')
                 ->live()
                 ->grouped()
-
                 ->default('0')
                 ->boolean()
                 ->colors([
@@ -51,13 +50,6 @@ final class Website
                 })
                 ->required()
                 ->columnSpanFull(),
-            /*  RichEditor::make('description')
-                ->default('<p></p>')
-                ->disableToolbarButtons(['attachFiles'])
-                ->visible(fn ($get) => $get('required'))
-                ->label(__('Page description'))
-                ->maxLength(65535)
-                ->columnSpanFull(), */
             FileUpload::make('images')
                 ->label('Adott oldalhoz esetleges igényelt képek feltöltése')
                 ->visible(fn ($get) => $get('required'))
@@ -71,6 +63,7 @@ final class Website
                 ->maxFiles(10)
                 ->helperText(__('You can upload multiple images'))
                 ->columnSpanFull(),
+
         ];
     }
 }

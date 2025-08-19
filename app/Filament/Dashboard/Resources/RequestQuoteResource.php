@@ -113,60 +113,59 @@ final class RequestQuoteResource extends Resource
                 ]),
                 Grid::make(1)->schema([
                     Repeater::make('websites')->schema([
-                        Grid::make(2)->columnSpan(1)->schema([
-                            Grid::make(1)->columnSpan(1)->schema([
-                                TextInput::make('name')
-                                    ->required(),
-                                ToggleButtons::make('required')
-                                    ->live()
-                                    ->boolean(trueLabel: __('Yes'), falseLabel: __('No'))
-                                    ->inline()
-                                    ->required(),
-                                ToggleButtons::make('length')
-                                    ->label('Content length')
-                                    ->live()
-                                    ->options([
-                                        'short' => __('Short'),
-                                        'medium' => __('Medium'),
-                                        'large' => __('Large'),
-                                    ])
-                                    ->inline()
-                                    ->afterStateUpdated(function ($state, Set $set, Get $get): void {
-                                        $set('image', match ($state) {
-                                            'short' => 'website_previews/short_preview.png',
-                                            'medium' => 'website_previews/medium_preview.png',
-                                            'large' => 'website_previews/large_preview.png',
-                                            default => null,
-                                        });
-                                    })
-                                    ->required(fn ($get) => $get('required')),
-                                RichEditor::make('description')
-                                    ->required(fn ($get) => $get('required'))
-                                    ->maxLength(65535),
-                                FileUpload::make('images')
-                                    ->visible(fn ($get) => $get('required'))
-                                    ->disk('public')
-                                    ->directory('website-images')
-                                    ->openable()
-                                    ->downloadable()
-                                    ->reorderable()
-                                    ->maxFiles(10)
-                                    ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
-                                    ->helperText(__('You can upload multiple images'))
-                                    ->columnSpanFull(),
+                        Grid::make(1)->columnSpan(1)->schema([
+                            TextInput::make('name')
+                                ->required(),
+                            ToggleButtons::make('required')
+                                ->live()
+                                ->boolean(trueLabel: __('Yes'), falseLabel: __('No'))
+                                ->inline()
+                                ->required(),
+                            ToggleButtons::make('length')
+                                ->label('Content length')
+                                ->live()
+                                ->options([
+                                    'short' => __('Short'),
+                                    'medium' => __('Medium'),
+                                    'large' => __('Large'),
+                                ])
+                                ->inline()
+                                ->afterStateUpdated(function ($state, Set $set, Get $get): void {
+                                    $set('image', match ($state) {
+                                        'short' => 'website_previews/short_preview.png',
+                                        'medium' => 'website_previews/medium_preview.png',
+                                        'large' => 'website_previews/large_preview.png',
+                                        default => null,
+                                    });
+                                })
+                                ->required(fn ($get) => $get('required')),
+                            RichEditor::make('description')
+                                ->required(fn ($get) => $get('required'))
+                                ->maxLength(65535),
+                            FileUpload::make('images')
+                                ->visible(fn ($get) => $get('required'))
+                                ->disk('public')
+                                ->directory('website-images')
+                                ->openable()
+                                ->downloadable()
+                                ->reorderable()
+                                ->maxFiles(10)
+                                ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
+                                ->helperText(__('You can upload multiple images'))
+                                ->columnSpanFull(),
 
-                            ]),
-                            Grid::make(1)->columnSpan(1)->schema([
-                                ViewField::make('image')
-                                    ->view('filament.forms.components.image')
-                                    ->viewData(
-                                        [
-                                            'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
-                                            'show_image' => true, // hides the image
-                                        ]
-                                    ),
-                            ]),
                         ]),
+                        Grid::make(1)->columnSpan(1)->schema([
+                            ViewField::make('image')
+                                ->view('filament.forms.components.image')
+                                ->viewData(
+                                    [
+                                        'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
+                                        'show_image' => true, // hides the image
+                                    ]
+                                ),
+                        ]),
+
                     ]),
 
                 ]),
