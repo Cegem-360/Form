@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Observers;
 
-use App\Jobs\SendRequestQuoteToNotion;
 use App\Models\RequestQuote;
 use App\Services\NotionService;
 use Exception;
@@ -21,11 +20,20 @@ final class RequestQuoteObserver
      */
     public function created(RequestQuote $requestQuote): void
     {
-        // Azonnali küldés (szinkron)
+        $websites = $requestQuote->websites;
+        $remove_keys = [];
+        foreach ($websites as $key => $website) {
+            if (isset($website['required']) && $website['required'] === false) {
+                $remove_keys[] = $key;
+            }
+        }
+        foreach ($remove_keys as $key) {
+            unset($websites[$key]);
+        }
+        $requestQuote->update(['websites' => $websites]);
+
         $this->sendToNotionSync($requestQuote);
 
-        // VAGY háttérben küldés (aszinkron) - kommenteld ki a felső sort és használd ezt:
-        // SendRequestQuoteToNotion::dispatch($requestQuote);
     }
 
     /**
@@ -33,8 +41,7 @@ final class RequestQuoteObserver
      */
     public function updated(RequestQuote $requestQuote): void
     {
-        // Opcionálisan frissíthetjük a Notion-ban is
-        // Ha fontos mezők változtak (pl. státusz, ár, stb.)
+
         if ($requestQuote->wasChanged(['name', 'email', 'phone', 'payment_method', 'is_payed'])) {
             $this->sendToNotionSync($requestQuote);
         }
@@ -72,8 +79,6 @@ final class RequestQuoteObserver
     private function sendToNotionSync(RequestQuote $requestQuote): void
     {
         try {
-            // Betöltjük a kapcsolódó adatokat
-            $requestQuote->load('websiteType', 'requestQuoteFunctionalities');
 
             $result = $this->notionService->saveFormQuoteToNotion($requestQuote);
 
