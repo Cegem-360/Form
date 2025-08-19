@@ -47,7 +47,7 @@ final class EditRequestQuote extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             ActionGroup::make([
-                /* Action::make('convertToProject')
+                Action::make('convertToProject')
                     ->label('Convert to Project')
                     ->schema([
                         TextInput::make('project_name')
@@ -82,7 +82,7 @@ final class EditRequestQuote extends EditRecord
                 Action::make('sendToEmail')
                     ->label('Send to Email')
                     ->action('createPdfAndSendToCurrentUser')
-                    ->color('secondary'), */
+                    ->color('secondary'),
             ]),
         ];
     }

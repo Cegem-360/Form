@@ -60,8 +60,8 @@ final class ProjectForm
                     ->relationship('contact', 'name'),
                 Select::make('support_pack_id')
                     ->relationship('supportPack', 'name'),
-                Select::make('contact_channel_id')
-                    ->relationship('contactChannel', 'name'),
+                /*   Select::make('contact_channel_id')
+                    ->relationship('contactChannel', 'name'), */
             ]);
     }
 }

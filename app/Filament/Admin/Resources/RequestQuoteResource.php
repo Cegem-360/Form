@@ -228,7 +228,7 @@ final class RequestQuoteResource extends Resource
                     ->searchable(),
                 TextColumn::make('company_name')
                     ->searchable(),
-                TextColumn::make('website_type_id.name')
+                TextColumn::make('websiteType.name')
                     ->label('Website Type')
                     ->numeric()
                     ->sortable(),
