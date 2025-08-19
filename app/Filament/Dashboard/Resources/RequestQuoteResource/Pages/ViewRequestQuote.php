@@ -26,7 +26,7 @@ final class ViewRequestQuote extends ViewRecord
         return [
 
             Action::make('Order')
-                ->visible(fn ($record): bool => $record->id_payed === false)
+                ->visible(fn ($record): bool => $record->is_payed === false)
                 ->label(__('Order'))
                 ->action(function ($record) {
                     Session::put('requestQuote', $record->id);

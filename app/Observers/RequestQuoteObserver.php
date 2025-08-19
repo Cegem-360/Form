@@ -27,9 +27,11 @@ final class RequestQuoteObserver
                 $remove_keys[] = $key;
             }
         }
+
         foreach ($remove_keys as $key) {
             unset($websites[$key]);
         }
+
         $requestQuote->update(['websites' => $websites]);
 
         $this->sendToNotionSync($requestQuote);

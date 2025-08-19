@@ -23,7 +23,6 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\ViewField;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Grid;
@@ -139,9 +138,7 @@ final class RequestQuoteResource extends Resource
                                     });
                                 })
                                 ->required(fn ($get) => $get('required')),
-                            RichEditor::make('description')
-                                ->required(fn ($get) => $get('required'))
-                                ->maxLength(65535),
+
                             FileUpload::make('images')
                                 ->visible(fn ($get) => $get('required'))
                                 ->disk('public')
@@ -154,16 +151,6 @@ final class RequestQuoteResource extends Resource
                                 ->helperText(__('You can upload multiple images'))
                                 ->columnSpanFull(),
 
-                        ]),
-                        Grid::make(1)->columnSpan(1)->schema([
-                            ViewField::make('image')
-                                ->view('filament.forms.components.image')
-                                ->viewData(
-                                    [
-                                        'image' => fn (Get $get): mixed => $get('image'), // gets the image from the state
-                                        'show_image' => true, // hides the image
-                                    ]
-                                ),
                         ]),
 
                     ]),

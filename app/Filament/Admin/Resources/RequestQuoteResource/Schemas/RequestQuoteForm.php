@@ -104,8 +104,7 @@ final class RequestQuoteForm
                                     '1' => 'Yes',
                                     '0' => 'No',
                                 ])
-                                ->inline()
-                                ->required(),
+                                ->inline(),
                             ToggleButtons::make('length')
                                 ->translateLabel()
                                 ->live()
@@ -115,12 +114,10 @@ final class RequestQuoteForm
                                     'large' => 'Large',
                                 ])
                                 ->inline()
-                                ->required(fn ($get) => $get('required')),
-                            RichEditor::make('description')
-                                ->maxLength(65535),
+                                ->required(fn (Get $get): bool => $get('required')),
                             FileUpload::make('images')
                                 ->label('Images')
-                                ->visible(fn ($get) => $get('required'))
+                                ->visible(fn (Get $get): bool => $get('required'))
                                 ->disk('public')
                                 ->directory('website-images')
                                 ->openable()
