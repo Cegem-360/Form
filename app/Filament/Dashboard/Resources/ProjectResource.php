@@ -5,14 +5,10 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources;
 
 use App\Enums\ProjectStatus;
-use App\Filament\Dashboard\Resources\ProjectResource\Pages\CreateProject;
-use App\Filament\Dashboard\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ListProjects;
 use App\Filament\Dashboard\Resources\ProjectResource\Pages\ViewProject;
 use App\Models\Project;
 use BackedEnum;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
@@ -48,7 +44,6 @@ final class ProjectResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-
             ->components([
                 TextInput::make('name')
                     ->required()
@@ -117,17 +112,8 @@ final class ProjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->recordActions([
+            ])->recordActions([
                 ViewAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
             ]);
     }
 
@@ -140,9 +126,7 @@ final class ProjectResource extends Resource
     {
         return [
             'index' => ListProjects::route('/'),
-            'create' => CreateProject::route('/create'),
             'view' => ViewProject::route('/{record}'),
-            'edit' => EditProject::route('/{record}/edit'),
         ];
     }
 }

@@ -114,7 +114,7 @@
                     @endforeach
                 </ul>
             </li>
-            <li><span class="label">Other Pages:</span> {{ $formQuestion->other_pages }}</li>
+
             <li><span class="label">Have Product Catalog:</span> {{ $formQuestion->have_product_catalog }}</li>
             <li><span class="label">Product Catalog:</span>
                 <ul>

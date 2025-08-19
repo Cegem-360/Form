@@ -41,7 +41,7 @@ return new class extends Migration
             $table->text('formating_milestone')->nullable();
             $table->text('visual_feeling')->nullable();
             $table->text('tone_of_website')->nullable();
-            $table->text('other_tone_of_website')->nullable();
+
             $table->boolean('have_exist_design')->default(false);
             $table->json('design_files')->nullable();
             $table->json('inspire_websites')->nullable();
@@ -56,7 +56,7 @@ return new class extends Migration
             $table->boolean('use_video_or_animation')->nullable();
             $table->json('own_company_videos')->nullable();
             $table->json('main_pages')->nullable();
-            $table->text('other_pages')->nullable();
+
             $table->boolean('have_product_catalog')->default(false);
             $table->json('product_catalog')->nullable();
             $table->boolean('need_multi_language')->nullable();

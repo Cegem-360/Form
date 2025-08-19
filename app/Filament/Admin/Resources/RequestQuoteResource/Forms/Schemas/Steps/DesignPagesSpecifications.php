@@ -56,9 +56,7 @@ final class DesignPagesSpecifications
                         ->fileAttachmentsVisibility('public'),
                 ])
                 ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
-            Textarea::make('other_pages')
-                ->visible($visibility->other_pages_visible)
-                ->columnSpanFull(),
+
             Toggle::make('have_product_catalog')
                 ->live()
                 ->visible($visibility->have_product_catalog_visible),

@@ -63,16 +63,14 @@ final class QuestionVisibilityForm
                     ->required(),
                 Toggle::make('main_pages_visible')
                     ->required(),
-                Toggle::make('other_pages_visible')
-                    ->required(),
+
                 Toggle::make('have_product_catalog_visible')
                     ->required(),
                 Toggle::make('product_catalog_visible')
                     ->required(),
                 Toggle::make('tone_of_website_visible')
                     ->required(),
-                Toggle::make('other_tone_of_website_visible')
-                    ->required(),
+
                 Toggle::make('need_multi_language_visible')
                     ->required(),
                 Toggle::make('languages_for_website_visible')

@@ -66,16 +66,14 @@ final class QuestionVisibilityTable
                     ->boolean(),
                 IconColumn::make('main_pages_visible')
                     ->boolean(),
-                IconColumn::make('other_pages_visible')
-                    ->boolean(),
+
                 IconColumn::make('have_product_catalog_visible')
                     ->boolean(),
                 IconColumn::make('product_catalog_visible')
                     ->boolean(),
                 IconColumn::make('tone_of_website_visible')
                     ->boolean(),
-                IconColumn::make('other_tone_of_website_visible')
-                    ->boolean(),
+
                 IconColumn::make('need_multi_language_visible')
                     ->boolean(),
                 IconColumn::make('languages_for_website_visible')

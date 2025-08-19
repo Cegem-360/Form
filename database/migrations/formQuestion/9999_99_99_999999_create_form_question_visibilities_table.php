@@ -42,11 +42,10 @@ return new class extends Migration
             $table->boolean('use_video_or_animation_visible')->default(true);
             $table->boolean('own_company_videos_visible')->default(true);
             $table->boolean('main_pages_visible')->default(true);
-            $table->boolean('other_pages_visible')->default(true);
+
             $table->boolean('have_product_catalog_visible')->default(true);
             $table->boolean('product_catalog_visible')->default(true);
             $table->boolean('tone_of_website_visible')->default(true);
-            $table->boolean('other_tone_of_website_visible')->default(true);
             $table->boolean('need_multi_language_visible')->default(true);
             $table->boolean('languages_for_website_visible')->default(true);
             $table->boolean('call_to_actions_visible')->default(true);

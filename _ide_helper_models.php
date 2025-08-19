@@ -210,11 +210,11 @@ namespace App\Models{
  * @property bool $use_video_or_animation_visible
  * @property bool $own_company_videos_visible
  * @property bool $main_pages_visible
- * @property bool $other_pages_visible
+ * @property int $other_pages_visible
  * @property bool $have_product_catalog_visible
  * @property bool $product_catalog_visible
  * @property bool $tone_of_website_visible
- * @property bool $other_tone_of_website_visible
+ * @property int $other_tone_of_website_visible
  * @property bool $need_multi_language_visible
  * @property bool $languages_for_website_visible
  * @property bool $call_to_actions_visible

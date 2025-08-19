@@ -36,7 +36,7 @@ final class FormQuestionVisibility extends Model
         'formating_milestone_visible',
         'visual_feeling_visible',
         'tone_of_website_visible',
-        'other_tone_of_website_visible',
+
         'have_exist_design_visible',
         'design_files_visible',
         'inspire_websites_visible',
@@ -52,7 +52,7 @@ final class FormQuestionVisibility extends Model
         'use_video_or_animation_visible',
         'own_company_videos_visible',
         'main_pages_visible',
-        'other_pages_visible',
+
         'have_product_catalog_visible',
         'product_catalog_visible',
         'need_multi_language_visible',
@@ -103,7 +103,7 @@ final class FormQuestionVisibility extends Model
             'formating_milestone_visible' => 'boolean',
             'visual_feeling_visible' => 'boolean',
             'tone_of_website_visible' => 'boolean',
-            'other_tone_of_website_visible' => 'boolean',
+
             'have_exist_design_visible' => 'boolean',
             'design_files_visible' => 'boolean',
             'inspire_websites_visible' => 'boolean',
@@ -119,7 +119,7 @@ final class FormQuestionVisibility extends Model
             'use_video_or_animation_visible' => 'boolean',
             'own_company_videos_visible' => 'boolean',
             'main_pages_visible' => 'boolean',
-            'other_pages_visible' => 'boolean',
+
             'have_product_catalog_visible' => 'boolean',
             'product_catalog_visible' => 'boolean',
             'need_multi_language_visible' => 'boolean',

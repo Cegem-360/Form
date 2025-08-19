@@ -53,9 +53,7 @@ final class Theme
                 TextInput::make('tone_of_website')
                     ->visible($visibility->tone_of_website_visible)
                     ->maxLength(255),
-                Textarea::make('other_tone_of_website')
-                    ->columnSpanFull()
-                    ->visible($visibility->other_tone_of_website_visible),
+
                 Toggle::make('have_exist_design')
                     ->columnSpanFull()
                     ->live()

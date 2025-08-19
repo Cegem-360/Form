@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Dashboard\Resources\ProjectResource\Pages;
 
 use App\Filament\Dashboard\Resources\ProjectResource;
-use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 final class ListProjects extends ListRecords
@@ -14,8 +13,6 @@ final class ListProjects extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            CreateAction::make(),
-        ];
+        return [];
     }
 }

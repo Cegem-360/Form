@@ -32,7 +32,6 @@ it('has fillable attributes', function (): void {
         'formating_milestone',
         'visual_fealing',
         'tone_of_website',
-        'other_tone_of_website',
         'have_exist_design',
         'design_files',
         'inspire_websites',
@@ -45,7 +44,7 @@ it('has fillable attributes', function (): void {
         'use_video_or_animation',
         'own_company_videos',
         'main_pages',
-        'other_pages',
+
         'have_product_catalog',
         'product_catalog',
         'need_multi_language',

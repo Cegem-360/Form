@@ -92,8 +92,6 @@ final class Website
                         ->fileAttachmentsVisibility('public'),
                     TextInput::make('tone_of_website')
                         ->maxLength(255),
-                    Textarea::make('other_tone_of_website')
-                        ->columnSpanFull(),
                     Toggle::make('have_exist_design')
                         ->required(),
                     FileUpload::make('design_files')
@@ -187,9 +185,9 @@ final class Website
                                 ->fileAttachmentsDirectory('pages/attachments')
                                 ->fileAttachmentsVisibility('public'),
                         ])
-                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null),
-                    Textarea::make('other_pages')
-                        ->columnSpanFull(),
+                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                        ->addActionLabel(__('New Page')),
+
                     Toggle::make('have_product_catalog')
                         ->required(),
                     FileUpload::make('product_catalog')

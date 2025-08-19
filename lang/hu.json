@@ -55,7 +55,7 @@
     "Other pages": "Egyéb oldalak",
     "Perefered font types": "Preferált betűtípusok",
     "Own company images": "Saját céges képek",
-    "Have product catalog": "Van termék katalógusunk",
+    "Have product catalog": "Van termék katalógus",
     "Tone of website": "Weboldal hangvétele",
     "Other tone of website": "Egyéb weboldal hangvétele",
     "Source of content": "Weboldal tartalomához forrás(url)",
@@ -256,5 +256,6 @@
     "This password reset link will expire in :count minutes.": "Ez a jelszó visszaállító link :count perc múlva lejár.",
     "Reset Password Notification": "Jelszó visszaállító értesítés",
     "Contact Channels": "Kapcsolattartó csatornák",
-    "Length": "Hossz"
+    "Length": "Hossz",
+    "New Page": "Új oldal"
 }
