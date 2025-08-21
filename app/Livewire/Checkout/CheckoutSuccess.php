@@ -43,8 +43,10 @@ final class CheckoutSuccess extends Component
             'currency' => StripeCurrency::HUF,
         ]);
         Session::forget('request_quote');
-        Auth::user()->removeRole(RolesEnum::GUEST);
-        Auth::user()->assignRole(RolesEnum::USER);
+        if (Auth::user()->hasRole(RolesEnum::GUEST)) {
+            Auth::user()->removeRole(RolesEnum::GUEST);
+            Auth::user()->assignRole(RolesEnum::USER);
+        }
     }
 
     public function render()

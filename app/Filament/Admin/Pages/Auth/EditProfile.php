@@ -7,6 +7,7 @@ namespace App\Filament\Admin\Pages\Auth;
 use App\Enums\ClientType;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,26 +33,38 @@ final class EditProfile extends \Filament\Auth\Pages\EditProfile
             ->components([
                 $this->getNameFormComponent(),
                 $this->getEmailFormComponent(),
+                TextInput::make('phone')
+                    ->label('Phone')
+                    ->tel()
+                    ->maxLength(20)
+                    ->unique(ignoreRecord: true)
+                    ->live(debounce: 500),
                 Select::make('client_type')
                     ->options(ClientType::class)
+                    ->searchable(false)
                     ->required()
                     ->live(debounce: 500)
                     ->enum(ClientType::class),
+                TextInput::make('billing_address')
+                    ->label('Billing Address')
+                    ->live()
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL),
                 TextInput::make('company_name')
-                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->live(debounce: 500),
                 TextInput::make('company_address')
-                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(255)
                     ->unique(ignoreRecord: true)
                     ->live(debounce: 500),
                 TextInput::make('company_vat_number')
-                    ->required(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
-                    ->visible(fn ($get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(13)
                     ->unique(ignoreRecord: true)
                     ->live(debounce: 500)

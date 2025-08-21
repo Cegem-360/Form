@@ -53,7 +53,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
     public function payWithStripe(): Action
     {
         return Action::make('payWithStripe')
-            ->extraAttributes(['class' => 'bg-[#2563eb]!'])
+            ->extraAttributes(['class' => 'py-3 text-lg text-white transition-all duration-200 shadow-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-pink-500 hover:to-indigo-500 rounded-xl'])
             ->action(function () {
                 $data = $this->form->getState();
                 unset($data['terms'], $data['privacy']);
@@ -62,9 +62,11 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'phone' => $data['phone'],
+                    'client_type' => $data['client_type'] ?? ClientType::INDIVIDUAL,
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
                     'company_vat_number' => $data['company_vat_number'] ?? null,
+                    'billing_address' => $data['billing_address'] ?? null,
                 ]);
                 Notification::make()
                     ->title(__('Order finalized successfully'))
@@ -101,6 +103,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
     public function finalizeOrder(): Action
     {
         return Action::make('finalizeOrder')
+            ->extraAttributes(['class' => 'py-3 text-lg text-white transition-all duration-200 shadow-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-pink-500 hover:to-indigo-500 rounded-xl'])
             ->label(__('Finalize Order'))
             ->action(function (): void {
                 $data = $this->form->getState();
@@ -111,9 +114,11 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'name' => $data['name'],
                     'email' => $data['email'],
                     'phone' => $data['phone'],
+                    'client_type' => $data['client_type'] ?? ClientType::INDIVIDUAL,
                     'company_name' => $data['company_name'] ?? null,
                     'company_address' => $data['company_address'] ?? null,
                     'company_vat_number' => $data['company_vat_number'] ?? null,
+                    'billing_address' => $data['billing_address'] ?? null,
                 ]);
 
                 Notification::make()

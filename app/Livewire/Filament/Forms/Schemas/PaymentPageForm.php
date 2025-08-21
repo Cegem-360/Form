@@ -32,6 +32,7 @@ final class PaymentPageForm
                     ->live()
                     ->required(),
                 Select::make('client_type')
+                    ->enum(ClientType::class)
                     ->label('Legal form')
                     ->live()
                     ->required()
@@ -39,22 +40,22 @@ final class PaymentPageForm
                 TextInput::make('billing_address')
                     ->label('Billing Address')
                     ->live()
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL->value),
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::INDIVIDUAL),
                 TextInput::make('company_name')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(255),
                 TextInput::make('company_address')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(255),
                 TextInput::make('company_vat_number')
-                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
-                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY->value)
+                    ->live(condition: fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->visible(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
+                    ->required(fn (Get $get): bool => $get('client_type') === ClientType::COMPANY)
                     ->maxLength(255),
                 Select::make('payment_method')
                     ->label('Payment Method')
@@ -63,7 +64,7 @@ final class PaymentPageForm
                         'bank_transfer' => __('Bank Transfer'),
                     ])
                     ->default('stripe')
-                    ->afterStateUpdated(fn ($state) => $requestQuote->update(['payment_method' => $state]))
+                    ->afterStateUpdated(fn ($state): int => $requestQuote->update(['payment_method' => $state]))
                     ->required()
                     ->live(),
                 Checkbox::make('terms')
