@@ -32,6 +32,7 @@ final class ProjectTable
                     ProjectStatus::PENDING => 'warning',
                     ProjectStatus::COMPLETED => 'success',
                     ProjectStatus::CANCELLED => 'danger',
+                    default => 'primary',
                 }),
 
                 TextColumn::make('garanty_end_date')

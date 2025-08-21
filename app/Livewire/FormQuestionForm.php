@@ -24,7 +24,7 @@ final class FormQuestionForm extends Component implements HasForms
 
     public ?string $token;
 
-    public function mount(?string $token = null): void
+    public function mount(?string $token = null)
     {
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
@@ -33,7 +33,6 @@ final class FormQuestionForm extends Component implements HasForms
         }
 
         $this->form->fill($this->post->toArray());
-
     }
 
     public function form(Schema $schema): Schema

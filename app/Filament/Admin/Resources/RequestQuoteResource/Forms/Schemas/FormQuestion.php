@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Compan
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\DesignPagesSpecifications;
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Theme;
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Webshop;
+use App\Models\FormQuestion as Model;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Schemas\Components\Wizard;
@@ -51,7 +52,7 @@ final class FormQuestion
                 ->submitAction(self::submitButtonAction($data)),
         ])
             ->statePath('data')
-            ->model(self::class);
+            ->model(Model::class);
     }
 
     public static function submitButtonAction($data): Action

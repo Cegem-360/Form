@@ -27,38 +27,38 @@ final class Theme
                     ->columnSpan(1)
                     ->live()
                     ->inline()
-                    ->visible($visibility->have_exist_website_visible),
+                    ->visible($visibility?->have_exist_website_visible),
                 Toggle::make('is_exact_deadline')
                     ->columnSpan(2)
                     ->live()
-                    ->visible($visibility->is_exact_deadline_visible),
+                    ->visible($visibility?->is_exact_deadline_visible),
                 TextInput::make('exist_website_url')
-                    ->visible(fn (Get $get): bool => $visibility->exist_website_url_visible && $get('have_exist_website'))
+                    ->visible(fn (Get $get): bool => $visibility?->exist_website_url_visible && $get('have_exist_website'))
                     ->url(),
                 DatePicker::make('deadline')
-                    ->visible(fn (Get $get): bool => $visibility->deadline_visible && $get('is_exact_deadline')),
+                    ->visible(fn (Get $get): bool => $visibility?->deadline_visible && $get('is_exact_deadline')),
                 MarkdownEditor::make('formating_milestone')
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('attachments')
                     ->fileAttachmentsVisibility('public')
-                    ->visible($visibility->formating_milestone_visible),
+                    ->visible($visibility?->formating_milestone_visible),
                 MarkdownEditor::make('visual_feeling')
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('attachments')
                     ->fileAttachmentsVisibility('public')
-                    ->visible($visibility->visual_feeling_visible),
+                    ->visible($visibility?->visual_feeling_visible),
                 TextInput::make('tone_of_website')
-                    ->visible($visibility->tone_of_website_visible)
+                    ->visible($visibility?->tone_of_website_visible)
                     ->maxLength(255),
                 Toggle::make('have_exist_design')
                     ->columnSpanFull()
                     ->live()
-                    ->visible($visibility->have_exist_design_visible),
+                    ->visible($visibility?->have_exist_design_visible),
                 FileUpload::make('design_files')
                     ->columnSpanFull()
-                    ->visible(fn (Get $get): bool => $visibility->design_files_visible && $get('have_exist_design'))
+                    ->visible(fn (Get $get): bool => $visibility?->design_files_visible && $get('have_exist_design'))
                     ->downloadable()
                     ->multiple()
                     ->disk('public')
@@ -66,7 +66,7 @@ final class Theme
                     ->visibility('public'),
                 Repeater::make('banned_elements')
                     ->columnSpanFull()
-                    ->visible($visibility->banned_elements_visible)
+                    ->visible($visibility?->banned_elements_visible)
                     ->defaultItems(3)
                     ->collapsible()
                     ->collapsed()
@@ -81,12 +81,12 @@ final class Theme
                     ->compact()
                     ->schema([
                         ColorPicker::make('primary_color')
-                            ->visible($visibility->primary_color_visible),
+                            ->visible($visibility?->primary_color_visible),
                         ColorPicker::make('secondary_color')
-                            ->visible($visibility->secondary_color_visible),
+                            ->visible($visibility?->secondary_color_visible),
                         Repeater::make('additional_colors')
                             ->columnSpanFull()
-                            ->visible($visibility->additional_colors_visible)
+                            ->visible($visibility?->additional_colors_visible)
                             ->defaultItems(3)
                             ->collapsible()
                             ->collapsed()
@@ -99,7 +99,7 @@ final class Theme
                             ->itemLabel(fn (array $state): ?string => $state['description'] ?? null),
                     ]),
                 Repeater::make('prefered_font_types')
-                    ->visible($visibility->prefered_font_types_visible)
+                    ->visible($visibility?->prefered_font_types_visible)
                     ->schema([
                         TextInput::make('font_type_name')
                             ->required(),

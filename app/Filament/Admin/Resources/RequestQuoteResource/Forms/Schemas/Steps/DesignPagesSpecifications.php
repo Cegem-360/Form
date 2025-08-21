@@ -20,7 +20,7 @@ final class DesignPagesSpecifications
     {
         return Step::make('Design pages Specifications')->schema([
             FileUpload::make('own_company_images')
-                ->visible($visibility->own_company_images_visible)
+                ->visible($visibility?->own_company_images_visible)
                 ->maxSize(2048)
                 ->maxFiles(10)
                 ->multiple()
@@ -30,9 +30,9 @@ final class DesignPagesSpecifications
                 ->visibility('public')
                 ->preserveFilenames(),
             Toggle::make('use_video_or_animation')
-                ->visible($visibility->use_video_or_animation_visible),
+                ->visible($visibility?->use_video_or_animation_visible),
             FileUpload::make('own_company_videos')
-                ->visible($visibility->own_company_videos_visible)
+                ->visible($visibility?->own_company_videos_visible)
                 ->maxSize(2048)
                 ->multiple()
                 ->downloadable()
@@ -41,7 +41,7 @@ final class DesignPagesSpecifications
                 ->visibility('public')
                 ->preserveFilenames(),
             Repeater::make('main_pages')
-                ->visible($visibility->main_pages_visible)
+                ->visible($visibility?->main_pages_visible)
                 ->defaultItems(3)
                 ->collapsible()
                 ->collapsed()
@@ -59,9 +59,9 @@ final class DesignPagesSpecifications
 
             Toggle::make('have_product_catalog')
                 ->live()
-                ->visible($visibility->have_product_catalog_visible),
+                ->visible($visibility?->have_product_catalog_visible),
             FileUpload::make('product_catalog')
-                ->visible(fn (Get $get): bool => $visibility->product_catalog_visible && $get('have_product_catalog'))
+                ->visible(fn (Get $get): bool => $visibility?->product_catalog_visible && $get('have_product_catalog'))
                 ->maxSize(2048)
                 ->multiple()
                 ->downloadable()
@@ -71,20 +71,20 @@ final class DesignPagesSpecifications
                 ->preserveFilenames(),
             Toggle::make('need_multi_language')
                 ->live()
-                ->visible($visibility->need_multi_language_visible),
+                ->visible($visibility?->need_multi_language_visible),
             Textarea::make('languages_for_website')
-                ->visible(fn (Get $get): bool => $visibility->languages_for_website_visible && $get('need_multi_language'))
+                ->visible(fn (Get $get): bool => $visibility?->languages_for_website_visible && $get('need_multi_language'))
                 ->maxLength(255),
             RichEditor::make('call_to_actions')
-                ->visible($visibility->call_to_actions_visible),
+                ->visible($visibility?->call_to_actions_visible),
             Toggle::make('have_blog')
                 ->live()
-                ->visible($visibility->have_blog_visible),
+                ->visible($visibility?->have_blog_visible),
             TextInput::make('exist_blog_count')
-                ->visible(fn (Get $get): bool => $visibility->exist_blog_count_visible && $get('have_blog'))
+                ->visible(fn (Get $get): bool => $visibility?->exist_blog_count_visible && $get('have_blog'))
                 ->numeric(),
             Select::make('importance_of_seo')
-                ->visible($visibility->importance_of_seo_visible)
+                ->visible($visibility?->importance_of_seo_visible)
                 ->options([
                     '1' => '1',
                     '2' => '2',
@@ -93,9 +93,9 @@ final class DesignPagesSpecifications
                     '5' => '5',
                 ]),
             Toggle::make('have_payed_advertising')
-                ->visible($visibility->have_payed_advertising_visible),
+                ->visible($visibility?->have_payed_advertising_visible),
             RichEditor::make('other_expectation_or_request')
-                ->visible($visibility->other_expectation_or_request_visible)
+                ->visible($visibility?->other_expectation_or_request_visible)
                 ->columnSpanFull(),
         ]);
     }

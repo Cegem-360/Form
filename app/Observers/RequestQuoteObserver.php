@@ -22,35 +22,30 @@ final class RequestQuoteObserver
     public function created(RequestQuote $requestQuote): void
     {
         $websites = $requestQuote->websites;
-        if (! is_null($websites)) {
-            $remove_keys = [];
-            foreach ($websites as $key => $website) {
-                if (isset($website['required']) && $website['required'] === false) {
-                    $remove_keys[] = $key;
-                }
-            }
-
-            foreach ($remove_keys as $key) {
-                unset($websites[$key]);
+        $remove_keys = [];
+        foreach ($websites as $key => $website) {
+            if (isset($website['required']) && $website['required'] === false) {
+                $remove_keys[] = $key;
             }
         }
 
-        $updateData = ['websites' => $websites];
+        foreach ($remove_keys as $key) {
+            unset($websites[$key]);
+        }
+
+        $requestQuote->update(['websites' => $websites]);
 
         if (Auth::check()) {
             $user = Auth::user();
-            $updateData = array_merge($updateData, [
+            $requestQuote->update([
                 'name' => $user->name,
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'client_type' => $user->client_type ?? null,
                 'company_name' => $user->company_name ?? null,
                 'company_address' => $user->company_address ?? null,
-                'website_type_id' => $user->website_type_id ?? null,
             ]);
         }
-
-        $requestQuote->update($updateData);
 
         $this->sendToNotionSync($requestQuote);
 

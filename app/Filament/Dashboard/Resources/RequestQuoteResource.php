@@ -230,10 +230,15 @@ final class RequestQuoteResource extends Resource
                     ->sortable(),
                 IconColumn::make('is_multilangual')
                     ->boolean(),
-                TextColumn::make('price')
+                TextColumn::make('deposit_price')
                     ->label('Deposit Price')
                     ->state(function (Model $record): string|false {
                         return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
+                    }),
+                TextColumn::make('total_price')
+                    ->label(__('Total Price'))
+                    ->state(function (Model $record): string|false {
+                        return Number::currency($record->getTotalPriceAttribute(), 'HUF', 'hu_HU', 0);
                     }),
                 TextColumn::make('created_at')
                     ->dateTime()
