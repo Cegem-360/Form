@@ -79,7 +79,7 @@ final class SyncPermissions extends Command
         try {
             foreach ($guardNames as $guard) {
                 foreach ($names as $name) {
-                    $perm = Permission::firstOrCreate(['name' => $name, 'guard_name' => $guard]);
+                    $perm = Permission::query()->firstOrCreate(['name' => $name, 'guard_name' => $guard]);
                     if ($perm->wasRecentlyCreated ?? false) {
                         $created++;
                     }

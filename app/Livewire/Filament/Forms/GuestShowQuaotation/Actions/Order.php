@@ -21,7 +21,7 @@ final class Order extends Component
 
                 $data['user_id'] = Auth::id();
                 unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
-                $requestQuote = RequestQuote::create($data);
+                $requestQuote = RequestQuote::query()->create($data);
                 if (isset($component->form->getState()['requestQuoteFunctionalities'])) {
                     $requestQuote->requestQuoteFunctionalities()->sync($component->form->getState()['requestQuoteFunctionalities']);
                 }

@@ -42,18 +42,18 @@ final class RequestQuoteFactory extends Factory
             ];
         }
 
-        $website_type_id = WebsiteType::firstOrCreate([
+        $website_type_id = WebsiteType::query()->firstOrCreate([
             'name' => $this->faker->randomElement(['weboldal', 'webshop', 'landing page']),
         ])->id;
 
         // Biztosítsuk, hogy legalább 3 nyelv legyen
-        if (WebsiteLanguage::count() < 3) {
-            WebsiteLanguage::factory()->count(3 - WebsiteLanguage::count())->create();
+        if (WebsiteLanguage::query()->count() < 3) {
+            WebsiteLanguage::factory()->count(3 - WebsiteLanguage::query()->count())->create();
         }
 
         $languages = [];
         $default_language = WebsiteLanguage::all()->random(1)->first();
-        $otherLanguages = WebsiteLanguage::where('id', '!=', $default_language->id)->get();
+        $otherLanguages = WebsiteLanguage::query()->where('id', '!=', $default_language->id)->get();
         if ($otherLanguages->count() < 2) {
             foreach ($otherLanguages as $language) {
                 $languages[] = $language->name;

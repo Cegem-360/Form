@@ -26,7 +26,7 @@ final class OrderObserver
             Mail::to($order->user->email)->send(new OrderTransactionDetailsMail($order));
         }
 
-        Project::create([
+        Project::query()->create([
             'request_quote_id' => $order->requestQuote->id,
             'user_id' => $order->user->id,
             'name' => $order->requestQuote->quotation_name,

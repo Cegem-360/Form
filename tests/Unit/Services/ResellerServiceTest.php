@@ -15,7 +15,7 @@ use Spatie\Permission\Models\Role;
 
 describe('ResellerService', function (): void {
     beforeEach(function (): void {
-        Option::firstOrCreate([
+        Option::query()->firstOrCreate([
             'name' => 'request_quote',
             'options' => [
                 ['key' => 'language_percent', 'value' => 0.15],
@@ -24,7 +24,7 @@ describe('ResellerService', function (): void {
     });
 
     it('creates commission for reseller on successful payment', function (): void {
-        Role::firstOrCreate(['name' => RolesEnum::RESELLER]);
+        Role::query()->firstOrCreate(['name' => RolesEnum::RESELLER]);
         // Szükséges kapcsolódó rekordok létrehozása
         $language = WebsiteLanguage::factory()->create();
         $websiteType = WebsiteType::factory()->create();
@@ -34,8 +34,8 @@ describe('ResellerService', function (): void {
 
         $requestQuote = RequestQuote::factory()->create([
             'user_id' => $reseller->id,
-            'default_language' => $language->id,
-            'languages' => [$language->name],
+            'default_language' => null,
+            'languages' => null,
             'website_type_id' => $websiteType->id,
         ]);
         $project = Project::factory()->create([

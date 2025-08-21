@@ -207,7 +207,7 @@ final class NotionService
                 $defaultLanguage = $requestQuote->default_language;
                 // Ha szám, akkor id, különben név
                 if (is_numeric($defaultLanguage)) {
-                    $langModel = WebsiteLanguage::find($defaultLanguage);
+                    $langModel = WebsiteLanguage::query()->find($defaultLanguage);
                     $defaultLanguageName = $langModel ? $langModel->name : (string) $defaultLanguage;
                 } else {
                     $defaultLanguageName = $defaultLanguage;

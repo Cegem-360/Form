@@ -26,18 +26,18 @@ final class ResellerService
         }
 
         $user = $requestQuote->user;
-        if (! $user || ! $user->hasRole(RolesEnum::RESELLER->value)) {
+        if (! $user || ! $user->hasRole(RolesEnum::RESELLER)) {
             return;
         }
 
         // Project keresése az árajánlat alapján
-        $project = Project::where('request_quote_id', $requestQuote->id)->first();
+        $project = Project::query()->where('request_quote_id', $requestQuote->id)->first();
         if (! $project) {
             return;
         }
 
         // Ha már van jutalék, ne hozzunk létre újat
-        if (ProjectCommission::where('project_id', $project->id)->where('user_id', $user->id)->exists()) {
+        if (ProjectCommission::query()->where('project_id', $project->id)->where('user_id', $user->id)->exists()) {
             return;
         }
 
@@ -45,7 +45,7 @@ final class ResellerService
         $percent = $user->default_commission_percent ?? 10;
         $commissionAmount = (int) round($order->amount * ($percent / 100));
 
-        ProjectCommission::create([
+        ProjectCommission::query()->create([
             'project_id' => $project->id,
             'user_id' => $user->id,
             'commission_amount' => $commissionAmount,

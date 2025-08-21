@@ -29,7 +29,7 @@ final class PdfOption extends Model
         return $this->belongsTo(WebsiteType::class);
     }
 
-    public function deliveryDeadLine(): Attribute
+    protected function deliveryDeadLine(): Attribute
     {
         return Attribute::make(
             get: fn (string $value): string => $value === null ? 'Vállalási határidő
@@ -41,7 +41,7 @@ A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információ
     }
 
     #[Scope]
-    public function webShop(Builder $query): Builder
+    protected function webShop(Builder $query): Builder
     {
         return $query->whereHas('websiteType', function ($q) {
             return $q->whereName('Webshop');
@@ -49,7 +49,7 @@ A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információ
     }
 
     #[Scope]
-    public function webSite(Builder $query): Builder
+    protected function webSite(Builder $query): Builder
     {
         return $query->whereHas('websiteType', function ($q) {
             return $q->whereName('Weboldal');
@@ -57,7 +57,7 @@ A weboldal a szükséges anyagok (szövegek, képek, logók, egyéb információ
     }
 
     #[Scope]
-    public function landingPage(Builder $query): Builder
+    protected function landingPage(Builder $query): Builder
     {
         return $query->whereHas('websiteType', function ($q) {
             return $q->whereName('Landing Page');

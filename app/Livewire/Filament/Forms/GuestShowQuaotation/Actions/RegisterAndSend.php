@@ -47,7 +47,7 @@ final class RegisterAndSend extends Component
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
 
-                $user = User::create([
+                $user = User::query()->create([
                     'name' => $validatedfillDataForRegister['name'],
                     'email' => $validatedfillDataForRegister['email'],
                     'phone' => $validatedfillDataForRegister['phone'],
@@ -61,7 +61,7 @@ final class RegisterAndSend extends Component
                 Auth::loginUsingId($user->id, true);
                 $data['user_id'] = Auth::id();
 
-                $requestQuote = RequestQuote::create($data);
+                $requestQuote = RequestQuote::query()->create($data);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))

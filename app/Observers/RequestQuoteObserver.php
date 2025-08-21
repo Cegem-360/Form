@@ -7,6 +7,7 @@ namespace App\Observers;
 use App\Models\RequestQuote;
 use App\Services\NotionService;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 final class RequestQuoteObserver
@@ -21,18 +22,35 @@ final class RequestQuoteObserver
     public function created(RequestQuote $requestQuote): void
     {
         $websites = $requestQuote->websites;
-        $remove_keys = [];
-        foreach ($websites as $key => $website) {
-            if (isset($website['required']) && $website['required'] === false) {
-                $remove_keys[] = $key;
+        if (! is_null($websites)) {
+            $remove_keys = [];
+            foreach ($websites as $key => $website) {
+                if (isset($website['required']) && $website['required'] === false) {
+                    $remove_keys[] = $key;
+                }
+            }
+
+            foreach ($remove_keys as $key) {
+                unset($websites[$key]);
             }
         }
 
-        foreach ($remove_keys as $key) {
-            unset($websites[$key]);
+        $updateData = ['websites' => $websites];
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            $updateData = array_merge($updateData, [
+                'name' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'client_type' => $user->client_type ?? null,
+                'company_name' => $user->company_name ?? null,
+                'company_address' => $user->company_address ?? null,
+                'website_type_id' => $user->website_type_id ?? null,
+            ]);
         }
 
-        $requestQuote->update(['websites' => $websites]);
+        $requestQuote->update($updateData);
 
         $this->sendToNotionSync($requestQuote);
 

@@ -23,7 +23,7 @@ final class StripeEventListener
             Log::info('Payment succeeded:', [
                 'payload' => $event->payload,
             ]);
-            $order = Order::create([
+            $order = Order::query()->create([
                 'request_quote_id' => $event->payload['data']['object']['metadata']['request_quote_id'],
             ]);
             // Reseller commission létrehozása

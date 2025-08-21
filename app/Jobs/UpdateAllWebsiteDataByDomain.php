@@ -28,7 +28,7 @@ final class UpdateAllWebsiteDataByDomain implements ShouldQueue
     public function __construct($id, ?array $fieldIds = null)
     {
         $this->fieldIds = $fieldIds;
-        $this->domain = Domain::find($id);
+        $this->domain = Domain::query()->find($id);
         $this->form = FormQuestion::whereDomainId($id)->first();
     }
 
@@ -40,7 +40,7 @@ final class UpdateAllWebsiteDataByDomain implements ShouldQueue
         // Update website data by domain at the wordpress site like https://
         // for test purposes, we will use the Http facade to send a POST request to the domain's URL (test domain "http://end-website.cegem360.hu/wp-json/wp/v2/posts")
 
-        $systemChatParameters = SystemChatParameter::when($this->fieldIds, function ($query) {
+        $systemChatParameters = SystemChatParameter::query()->when($this->fieldIds, function ($query) {
             return $query->whereIn('form_field_id', $this->fieldIds);
         })->get();
 

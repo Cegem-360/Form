@@ -204,7 +204,7 @@ final class RequestQuoteResource extends Resource
                     ->multiple()
                     ->visible(fn ($get) => $get('is_multilangual'))
                     ->options(function (Get $get) {
-                        return WebsiteLanguage::whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
+                        return WebsiteLanguage::query()->whereNot('id', '=', $get('default_language'))->pluck('name', 'id');
                     })
                     ->searchable(),
 

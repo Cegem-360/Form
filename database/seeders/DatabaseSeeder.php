@@ -74,7 +74,7 @@ final class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'email_verified_at' => Carbon::now(),
         ]);
-        User::find($superAdmin->id)->assignRole(RolesEnum::SUPER_ADMIN);
+        User::query()->find($superAdmin->id)->assignRole(RolesEnum::SUPER_ADMIN);
 
     }
 }

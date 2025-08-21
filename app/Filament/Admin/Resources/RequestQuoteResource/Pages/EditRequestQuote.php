@@ -62,7 +62,7 @@ final class EditRequestQuote extends EditRecord
                     ])
                     ->action(function (array $data, RequestQuote $record) {
 
-                        $project = Project::create([
+                        $project = Project::query()->create([
                             'request_quote_id' => $record->id,
                             'user_id' => $record->user_id,
                             'name' => $data['project_name'],

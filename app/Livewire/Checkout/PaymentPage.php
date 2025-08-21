@@ -121,7 +121,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     ->success()
                     ->send();
 
-                $order = Order::firstOrCreate([
+                $order = Order::query()->firstOrCreate([
                     'request_quote_id' => $this->requestQuote->id,
                     'user_id' => Auth::user()->id,
                 ], [

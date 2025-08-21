@@ -14,7 +14,7 @@ final class OptionSeeder extends Seeder
      */
     public function run(): void
     {
-        Option::create([
+        Option::query()->create([
             'name' => 'request_quote',
             'options' => [
                 [

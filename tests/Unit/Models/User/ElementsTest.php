@@ -9,22 +9,18 @@ use Livewire\Livewire;
 
 use function Pest\Livewire\livewire;
 
-covers(User::class);
+/* it('can render page', function (): void {
+    livewire(ListUsers::class)->assertSuccessful();
+}); */
 
-it('can render page', function (): void {
-    // livewire(ListUsers::class)->assertSuccessful();
-});
 describe('User Model', function (): void {
     test('Admin can create a user', function (): void {
         $user = $this->createAdmin();
         $this->assertInstanceOf(User::class, $user);
         $this->assertNotNull($user->id);
         Livewire::actingAs($user)->test(EditUser::class, ['record' => $user->id])->assertSuccessful();
-        dump(User::all());
     });
-});
 
-describe('User Model', function (): void {
     test('to array', function (): void {
         $user = User::factory()->create()->refresh();
 
@@ -39,14 +35,13 @@ describe('User Model', function (): void {
                 'company_address',
                 'company_vat_number',
                 'default_commission_percent',
+                'client_type',
                 'created_at',
                 'updated_at',
                 'stripe_id',
                 'pm_type',
                 'pm_last_four',
                 'trial_ends_at',
-
             ]);
     });
-
 })->group('user');

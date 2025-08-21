@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\ProjectResource\Schemas;
 
 use App\Enums\ProjectStatus;
-use App\Models\RequestQuote;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
@@ -23,18 +23,10 @@ final class ProjectForm
                 Select::make('user_id')
                     ->preload()
                     ->relationship('user', 'name'),
-                TextInput::make('company_name')
-                    ->label('Company Name')
-                    ->default(fn ($record) => $record?->user?->company_name)
-                    ->disabled(),
                 Select::make('request_quote_id')
                     ->preload()
                     ->live()
                     ->label('Quotation Name')
-                    ->afterStateUpdated(function ($state, Set $set): void {
-                        $requestQuote = RequestQuote::find($state);
-                        $set('company_name', $requestQuote?->company_name);
-                    })
                     ->relationship('requestQuote')
                     ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s (%s)', $record->quotation_name, $record->company_name)),
                 TextInput::make('name')
@@ -46,6 +38,7 @@ final class ProjectForm
                     ->label('Project Status')
                     ->options(ProjectStatus::class)
                     ->enum(ProjectStatus::class)
+                    ->afterStateUpdated(fn ($state, Set $set, Get $get): mixed => $state === ProjectStatus::COMPLETED ? $set('garanty_end_date', now()->addMonths($get('garanty'))) : null)
                     ->required(),
                 RichEditor::make('project_goal')
                     ->columnSpanFull(),
@@ -56,9 +49,11 @@ final class ProjectForm
                 TextInput::make('garanty')
                     ->numeric(),
                 DatePicker::make('garanty_end_date')->disabled(),
-                Select::make('contact')
-                    ->relationship('contact', 'name'),
+                /*  Select::make('contact')
+                    ->preload()
+                    ->relationship('contact', 'name'), */
                 Select::make('support_pack_id')
+                    ->preload()
                     ->relationship('supportPack', 'name'),
                 /*   Select::make('contact_channel_id')
                     ->relationship('contactChannel', 'name'), */

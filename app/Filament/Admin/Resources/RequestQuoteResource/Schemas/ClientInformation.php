@@ -35,11 +35,11 @@ final class ClientInformation
                             })
                             ->afterStateUpdated(function (Set $set, $state): void {
                                 $set('request_quote_functionalities', []);
-                                if (WebsiteType::find($state)->name === 'Webshop') {
+                                if (WebsiteType::query()->find($state)->name === 'Webshop') {
                                     $set('websites', self::webshop());
-                                } elseif (WebsiteType::find($state)->name === 'Weboldal') {
+                                } elseif (WebsiteType::query()->find($state)->name === 'Weboldal') {
                                     $set('websites', self::website());
-                                } elseif (WebsiteType::find($state)->name === 'Landing Page') {
+                                } elseif (WebsiteType::query()->find($state)->name === 'Landing Page') {
                                     $set('websites', self::landingPage());
                                 } else {
                                     $set('websites', []);

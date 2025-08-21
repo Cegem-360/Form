@@ -43,7 +43,7 @@ final class RegisterAndOrder extends Component
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                     'password_confirmation' => ['required', 'string', 'min:8'],
                 ])->validate();
-                $user = User::create([
+                $user = User::query()->create([
                     'name' => $validatedfillDataForRegister['name'],
                     'email' => $validatedfillDataForRegister['email'],
                     'phone' => $validatedfillDataForRegister['phone'],
@@ -57,7 +57,7 @@ final class RegisterAndOrder extends Component
                 Auth::loginUsingId($user->id, true);
                 $dataTmp['user_id'] = Auth::id();
 
-                $requestQuote = RequestQuote::create($dataTmp);
+                $requestQuote = RequestQuote::query()->create($dataTmp);
 
                 Notification::make()
                     ->title(__('Quotation created and order placed'))

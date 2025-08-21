@@ -7,7 +7,9 @@ namespace App\Filament\Admin\Resources\FormQuestionResource\Schemas\Form;
 use App\Filament\Admin\Resources\FormQuestionResource\Schemas\Form\Sections\ProjectUser\ProjectUser;
 use App\Filament\Admin\Resources\FormQuestionResource\Schemas\Form\Sections\Visibilities\Tabs\Visibility;
 use App\Filament\Admin\Resources\FormQuestionResource\Schemas\Form\Sections\Visibilities\Tabs\Website;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 final class FormQuestionForm
@@ -21,6 +23,21 @@ final class FormQuestionForm
                     ->tabs([
                         Website::make(),
                         Visibility::make(),
+                        Tab::make('Project functions')
+                            ->icon('heroicon-o-rectangle-stack')
+                            ->schema([
+                                CheckboxList::make('project_functions')
+                                    ->label('Project Functions'),
+                                /* ->options(function ($state, $component) {
+                                        $model = $component->getRecord();
+                                        if ($model && $model->project && $model->project->requestQuote) {
+                                            return $model->project->requestQuote->requestQuoteFunctionalities
+                                                ->toArray();
+                                        }
+
+                                        return [];
+                                    }), */
+                            ]),
                     ]),
             ])->columns(1);
     }

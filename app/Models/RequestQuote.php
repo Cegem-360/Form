@@ -87,21 +87,6 @@ final class RequestQuote extends Model
         return $this->hasMany(PdfOption::class);
     }
 
-    public function getTotalPriceAttribute(): int
-    {
-        $total = $this->getTotalPriceAttributeNoLanguages();
-
-        if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
-
-            $tmp = $total;
-            foreach ($this->languages as $language) {
-                $total += (int) round($tmp * $this->requestQuotePercent());
-            }
-        }
-
-        return $total;
-    }
-
     public function getTotalPriceAttributeNoLanguages(): int
     {
         $total = 0;
@@ -119,39 +104,15 @@ final class RequestQuote extends Model
         return $total + $this->requestQuoteFunctionalities->sum('price');
     }
 
-    #[Scope]
-    public function webShop(Builder $query): Builder
-    {
-        return $query->whereHas('websiteType', function ($q) {
-            return $q->whereName('Webshop');
-        });
-    }
-
-    #[Scope]
-    public function webSite(Builder $query): Builder
-    {
-        return $query->whereHas('websiteType', function ($q) {
-            return $q->whereName('Weboldal');
-        });
-    }
-
-    #[Scope]
-    public function landingPage(Builder $query): Builder
-    {
-        return $query->whereHas('websiteType', function ($q) {
-            return $q->whereName('Landing Page');
-        });
-    }
-
     public function getLanguages(): Collection
     {
         // Ha minden elem szám, akkor id-k, különben nevek
         if (is_array($this->languages) && $this->languages !== []) {
             if (is_numeric($this->languages[0])) {
-                return WebsiteLanguage::whereIn('id', $this->languages)->get();
+                return WebsiteLanguage::query()->whereIn('id', $this->languages)->get();
             }
 
-            return WebsiteLanguage::whereIn('name', $this->languages)->get();
+            return WebsiteLanguage::query()->whereIn('name', $this->languages)->get();
 
         }
 
@@ -173,6 +134,45 @@ final class RequestQuote extends Model
     {
         // Ha már ki van fizetve, nem lehet újra megrendelni
         return ! $this->isPayed();
+    }
+
+    public function getTotalPriceAttribute(): int
+    {
+        $total = $this->getTotalPriceAttributeNoLanguages();
+
+        if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
+
+            $tmp = $total;
+            foreach ($this->languages as $language) {
+                $total += (int) round($tmp * $this->requestQuotePercent());
+            }
+        }
+
+        return $total;
+    }
+
+    #[Scope]
+    protected function webShop(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Webshop');
+        });
+    }
+
+    #[Scope]
+    protected function webSite(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Weboldal');
+        });
+    }
+
+    #[Scope]
+    protected function landingPage(Builder $query): Builder
+    {
+        return $query->whereHas('websiteType', function ($q) {
+            return $q->whereName('Landing Page');
+        });
     }
 
     protected function casts(): array

@@ -6,6 +6,7 @@ namespace App\Observers;
 
 use App\Models\Project;
 use App\Models\ProjectCommission;
+use App\Models\RequestQuote;
 use App\Models\User;
 
 final class ProjectObserver
@@ -20,11 +21,14 @@ final class ProjectObserver
         if ($user === null) {
             return;
         }
+        $request_quote = $project->requestQuote;
 
-        ProjectCommission::create([
+        $request_quote = RequestQuote::query()->where('id', $request_quote->id)->first();
+
+        ProjectCommission::query()->create([
             'project_id' => $project->id,
             'user_id' => $project->user_id,
-            'commission_amount' => $project->requestQuote->getTotalPriceAttribute() * $user->default_commission_percent / 100,
+            'commission_amount' => $request_quote->getTotalPriceAttribute() * $user->default_commission_percent / 100,
             'commission_percent' => $user->default_commission_percent,
             'commission_paid_amount' => 0,
         ]);
@@ -44,6 +48,6 @@ final class ProjectObserver
      */
     public function deleted(Project $project): void
     {
-        ProjectCommission::where('project_id', $project->id)->delete();
+        ProjectCommission::query()->where('project_id', $project->id)->delete();
     }
 }

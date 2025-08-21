@@ -12,12 +12,12 @@ beforeEach(function (): void {
     Queue::fake();
 
     // Létrehozunk egy WebsiteType-ot minden teszthez
-    $this->websiteType = WebsiteType::create(['name' => 'Test Website Type']);
+    $this->websiteType = WebsiteType::query()->create(['name' => 'Test Website Type']);
 });
 
 it('can create and configure SendRequestQuoteToNotion job', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Teszt Ügyfél',
         'email' => 'test@example.com',
         'website_type_id' => $this->websiteType->id,
@@ -36,7 +36,7 @@ it('can create and configure SendRequestQuoteToNotion job', function (): void {
 
 it('can manually dispatch SendRequestQuoteToNotion job', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Manual Test',
         'email' => 'manual@test.com',
         'website_type_id' => $this->websiteType->id,
@@ -53,7 +53,7 @@ it('can manually dispatch SendRequestQuoteToNotion job', function (): void {
 
 it('SendRequestQuoteToNotion job has correct configuration', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Config Test',
         'website_type_id' => $this->websiteType->id,
     ]);
@@ -68,7 +68,7 @@ it('SendRequestQuoteToNotion job has correct configuration', function (): void {
 
 it('job can be instantiated and has correct properties', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Success Test',
         'website_type_id' => $this->websiteType->id,
     ]);
@@ -83,7 +83,7 @@ it('job can be instantiated and has correct properties', function (): void {
 
 it('job can handle method call', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Handle Test',
         'website_type_id' => $this->websiteType->id,
     ]);
@@ -97,7 +97,7 @@ it('job can handle method call', function (): void {
 
 it('job failed method can be called', function (): void {
     // Arrange
-    $requestQuote = RequestQuote::create([
+    $requestQuote = RequestQuote::query()->create([
         'name' => 'Failed Test',
         'website_type_id' => $this->websiteType->id,
     ]);

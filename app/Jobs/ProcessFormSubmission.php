@@ -30,7 +30,7 @@ final class ProcessFormSubmission implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->data = FormQuestion::find($data);
+        $this->data = FormQuestion::query()->find($data);
     }
 
     /**

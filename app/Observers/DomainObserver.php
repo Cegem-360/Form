@@ -11,7 +11,7 @@ final class DomainObserver
 {
     public function created(Domain $domain): void
     {
-        FormQuestion::create([
+        FormQuestion::query()->create([
             'domain_id' => $domain->id,
             'activities' => [
                 ['name' => 'Web development'],

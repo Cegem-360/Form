@@ -36,7 +36,7 @@ final class EditProject extends EditRecord
                                 'name' => $page['name'],
                             ];
                         })->toArray();
-                        $formQuestion = FormQuestion::create([
+                        $formQuestion = FormQuestion::query()->create([
                             'project_id' => $record->id,
                             'user_id' => $record->user_id,
                             'company_name' => $record->requestQuote->company_name,

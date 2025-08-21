@@ -19,7 +19,7 @@ final class SendEmailToMe extends Component
             ->action(function () use ($data, $component): void {
                 $data = $component->form->getState();
                 unset($data['requestQuoteFunctionalities'],$data['consent'], $data['privacy_policy']);
-                $record = RequestQuote::create($data);
+                $record = RequestQuote::query()->create($data);
                 Notification::make()
                     ->title('Quotation created and email sent')
                     ->success()

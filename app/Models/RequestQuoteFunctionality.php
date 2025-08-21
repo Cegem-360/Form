@@ -32,31 +32,31 @@ final class RequestQuoteFunctionality extends Model
     ];
 
     #[Scope]
-    public function webShop(Builder $query): Builder
+    protected function webShop(Builder $query): Builder
     {
         return $query->whereWebsiteEngine('Webáruház');
     }
 
     #[Scope]
-    public function webSite(Builder $query): Builder
+    protected function webSite(Builder $query): Builder
     {
         return $query->whereWebsiteEngine('Weboldal');
     }
 
     #[Scope]
-    public function landingPage(Builder $query): Builder
+    protected function landingPage(Builder $query): Builder
     {
         return $query->whereWebsiteEngine('Landing Page');
     }
 
     #[Scope]
-    public function notDefault(Builder $query): Builder
+    protected function notDefault(Builder $query): Builder
     {
         return $query->whereDefault(false);
     }
 
     #[Scope]
-    public function default(Builder $query): Builder
+    protected function default(Builder $query): Builder
     {
         return $query->whereDefault(true);
     }
