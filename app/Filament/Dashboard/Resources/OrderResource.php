@@ -78,13 +78,13 @@ final class OrderResource extends Resource
             })
             ->defaultSort('created_at', 'desc')
             ->columns([
-                TextColumn::make('requestQuote.name')
+                TextColumn::make('requestQuote.quotation_name')
                     ->label(__('Request quote'))
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('amount')
                     ->numeric()
-                    ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu_HU', 0))
+                    ->formatStateUsing(fn (int $state): string => Number::currency($state, 'HUF', 'hu', 0))
                     ->sortable(),
                 TextColumn::make('currency')
                     ->searchable(),

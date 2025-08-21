@@ -52,7 +52,6 @@ final class Theme
                 TextInput::make('tone_of_website')
                     ->visible($visibility->tone_of_website_visible)
                     ->maxLength(255),
-
                 Toggle::make('have_exist_design')
                     ->columnSpanFull()
                     ->live()
@@ -65,7 +64,6 @@ final class Theme
                     ->disk('public')
                     ->directory('design_files')
                     ->visibility('public'),
-
                 Repeater::make('banned_elements')
                     ->columnSpanFull()
                     ->visible($visibility->banned_elements_visible)

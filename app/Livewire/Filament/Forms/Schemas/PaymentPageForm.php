@@ -64,7 +64,7 @@ final class PaymentPageForm
                         'bank_transfer' => __('Bank Transfer'),
                     ])
                     ->default('stripe')
-                    ->afterStateUpdated(fn ($state): int => $requestQuote->update(['payment_method' => $state]))
+                    ->afterStateUpdated(fn (mixed $state) => $requestQuote->update(['payment_method' => $state]))
                     ->required()
                     ->live(),
                 Checkbox::make('terms')

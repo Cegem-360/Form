@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\ProjectResource\Schemas;
 
+use App\Enums\ProjectStatus;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -26,22 +27,20 @@ final class ProjectTable
                 TextColumn::make('end_date')
                     ->date()
                     ->sortable(),
-                TextColumn::make('status'),
-                TextColumn::make('garanty')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('status')->badge()->color(fn (ProjectStatus $state): string => match ($state) {
+                    ProjectStatus::INACTIVE => 'gray',
+                    ProjectStatus::PENDING => 'warning',
+                    ProjectStatus::COMPLETED => 'success',
+                    ProjectStatus::CANCELLED => 'danger',
+                }),
+
                 TextColumn::make('garanty_end_date')
                     ->date()
                     ->sortable(),
-                TextColumn::make('contact')
-                    ->numeric()
+                TextColumn::make('supportPack.name')
                     ->sortable(),
-                TextColumn::make('support_pack_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('contact_channel_id')
-                    ->numeric()
-                    ->sortable(),
+                /* TextColumn::make('garanty')
+                    ->sortable(), */
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

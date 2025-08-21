@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[ObservedBy(RequestQuoteObserver::class)]
 final class RequestQuote extends Model
@@ -43,7 +44,6 @@ final class RequestQuote extends Model
         'project_description',
         'billing_address',
         'is_payed',
-
     ];
 
     public function requestQuotePercent(): ?float
@@ -55,6 +55,11 @@ final class RequestQuote extends Model
     public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
+    }
+
+    public function order(): HasOne
+    {
+        return $this->hasOne(Order::class);
     }
 
     public function requestQuoteFunctionalities(): BelongsToMany

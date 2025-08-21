@@ -161,7 +161,8 @@
     "Garanty end date": "Garancia lejárati dátuma",
     "Contact": "Kapcsolat",
     "Contact Channel": "Kapcsolat csatorna",
-    "Support Pack": "Támogatási csomag",
+    "Support Pack": "Támogatási Csomag",
+    "Support pack": "Támogatási csomag",
     "ACTIVE": "Aktív",
     "INACTIVE": "Inaktív",
     "PENDING": "Függőben",
@@ -257,5 +258,7 @@
     "Reset Password Notification": "Jelszó visszaállító értesítés",
     "Contact Channels": "Kapcsolattartó csatornák",
     "Length": "Hossz",
-    "New Page": "Új oldal"
+    "New Page": "Új oldal",
+    "End The Project": "Projekt lezárása",
+    "Project Functions": "Projekt funkciók"
 }

@@ -554,6 +554,7 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @property-read int $total_price
+ * @property-read \App\Models\Order|null $order
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
  * @property-read int|null $pdf_options_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WebsiteLanguage> $requestLanguages
@@ -706,6 +707,7 @@ namespace App\Models{
  * @property string $email
  * @property \Carbon\CarbonImmutable|null $email_verified_at
  * @property string $password
+ * @property string|null $billing_address
  * @property string|null $company_name
  * @property string|null $company_address
  * @property string|null $company_vat_number
@@ -734,6 +736,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User role($roles, $guard = null, $without = false)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereBillingAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereClientType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereCompanyName($value)

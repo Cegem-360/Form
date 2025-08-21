@@ -27,16 +27,16 @@ final class FormQuestionForm
                             ->icon('heroicon-o-rectangle-stack')
                             ->schema([
                                 CheckboxList::make('project_functions')
-                                    ->label('Project Functions'),
-                                /* ->options(function ($state, $component) {
+                                    ->label(__('Project Functions'))
+                                    ->options(function ($state, $component) {
                                         $model = $component->getRecord();
-                                        if ($model && $model->project && $model->project->requestQuote) {
-                                            return $model->project->requestQuote->requestQuoteFunctionalities
-                                                ->toArray();
+                                        if ($model && $model->projectQuoteFunctionalities()) {
+                                            return $model->projectQuoteFunctionalities()->pluck('name', 'id')->toArray();
                                         }
 
                                         return [];
-                                    }), */
+                                    })
+                                    ->disabled(),
                             ]),
                     ]),
             ])->columns(1);

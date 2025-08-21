@@ -92,7 +92,6 @@ final class Project extends Model
             'contact' => 'integer',
             'completed_project_elements' => 'json',
             'project_not_contained_elements' => 'json',
-
             'tests' => 'json',
             'solved_problems' => 'json',
             'start_date' => 'date',

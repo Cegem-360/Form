@@ -8,6 +8,7 @@ use App\Enums\FormQuestionStatus;
 use App\Observers\FormQuestionObserver;
 use Database\Factories\FormQuestionFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -106,6 +107,11 @@ final class FormQuestion extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function projectQuoteFunctionalities(): Collection
+    {
+        return $this->project->requestQuote->requestQuoteFunctionalities;
     }
 
     protected function casts(): array

@@ -258,7 +258,7 @@ final class RequestQuoteResource extends Resource
                     })
                     ->requiresConfirmation()
                     ->visible(function (RequestQuote $record): bool {
-                        return ! $record->is_payed;
+                        return ! $record->order()->exists();
                     })
                     ->icon('heroicon-o-check'),
             ])
