@@ -1,6 +1,6 @@
 <div class="min-h-screen py-10 bg-gray-50">
     <div class="flex flex-col max-w-5xl mx-auto overflow-hidden bg-white shadow-lg rounded-2xl md:flex-row">
-        @dump($order)
+
         <!-- Bal oldal: Kép -->
         <div class="flex items-center justify-center bg-gray-100 md:w-1/2">
             <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80"

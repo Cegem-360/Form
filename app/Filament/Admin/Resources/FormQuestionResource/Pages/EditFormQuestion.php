@@ -26,20 +26,20 @@ final class EditFormQuestion extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             Action::make('Generate and View pdf')
-                ->action(function (FormQuestion $formQuestion): void {
-                    /*  $pdf = Pdf::loadView('pdf.form-question', ['formQuestion' => $formQuestion], encoding: 'UTF-8');
-                     $pdf->setPaper('A4', 'portrait');
-                     $pdf->setOption('isHtml5ParserEnabled', true);
-                     $pdf->setOption('isUnicodeEnabled', true);
+                ->action(function (FormQuestion $formQuestion) {
+                    $pdf = Pdf::loadView('pdf.form-question', ['formQuestion' => $formQuestion], encoding: 'UTF-8');
+                    $pdf->setPaper('A4', 'portrait');
+                    $pdf->setOption('isHtml5ParserEnabled', true);
+                    $pdf->setOption('isUnicodeEnabled', true);
 
-                     $pdfContent = $pdf->output();
+                    $pdfContent = $pdf->output();
 
-                     // Save the PDF to a temporary location
-                     $filePath = 'pdfs/form-question-'.$formQuestion->id.'-'.time().'.pdf';
-                     Storage::disk('public')->put($filePath, $pdfContent);
+                    // Save the PDF to a temporary location
+                    $filePath = 'pdfs/form-question-'.$formQuestion->id.'-'.time().'.pdf';
+                    Storage::disk('public')->put($filePath, $pdfContent);
 
-                     // Return the URL to the frontend
-                     return redirect(Storage::url($filePath)); */
+                    // Return the URL to the frontend
+                    return redirect(Storage::url($filePath));
                 }),
             /*  Action::make('Send selected data to (ai) process')
                 ->form([

@@ -16,6 +16,7 @@ use Filament\Schemas\Components\Utilities\Set;
 final class Visibility
 {
     public static $exceptions = [
+        'form_question_id',
         'products_csv_file_visible',
         'highlighted_categories_visible',
         'bruto_netto_visible',
@@ -43,7 +44,8 @@ final class Visibility
                                     ->label('All set to true')
                                     ->action(function (Set $set, ?FormQuestion $record): void {
                                         $fields = (new FormQuestionVisibility)->getFillable();
-                                        $data = [];
+
+                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
                                         foreach ($fields as $field) {
                                             $set($field, true);
                                             $data[$field] = true;
@@ -61,6 +63,7 @@ final class Visibility
                                     ->label('All website fields to true')
                                     ->action(function (Set $set, ?FormQuestion $record): void {
                                         $fields = (new FormQuestionVisibility)->getFillable();
+                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
                                         $data = [];
                                         foreach ($fields as $field) {
                                             if (in_array($field, self::$exceptions, true)) {
@@ -83,6 +86,7 @@ final class Visibility
                                     ->label('All set to false')
                                     ->action(function (Set $set, ?FormQuestion $record): void {
                                         $fields = (new FormQuestionVisibility)->getFillable();
+                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
                                         $data = [];
                                         foreach ($fields as $field) {
                                             $set($field, false);

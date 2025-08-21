@@ -16,7 +16,21 @@ final class Webshop
 {
     public static function make($visibility): Step
     {
-        return Step::make('Webshop')->schema([
+        $stepVisible = (
+            $visibility?->products_csv_file_visible
+            || $visibility?->highlighted_categories_visible
+            || $visibility?->bruto_netto_visible
+            || $visibility?->store_address_visible
+            || $visibility?->shipping_address_visible
+            || $visibility?->parcel_points_visible
+            || $visibility?->have_contracted_accountant_visible
+            || $visibility?->contracted_accountants_visible
+            || $visibility?->payment_methods_visible
+            || $visibility?->have_contracted_online_bank_card_payment_visible
+            || $visibility?->online_bank_card_payment_options_visible
+        );
+
+        return Step::make('Webshop')->visible($stepVisible)->schema([
             FileUpload::make('products_csv_file')
                 ->visible($visibility?->products_csv_file_visible)
                 ->maxSize(2048)
@@ -37,7 +51,6 @@ final class Webshop
                         ->maxLength(255)
                         ->required(),
                     RichEditor::make('description')
-
                         ->fileAttachmentsDisk('public')
                         ->fileAttachmentsDirectory('categories/attachments')
                         ->fileAttachmentsVisibility('public'),
@@ -73,7 +86,6 @@ final class Webshop
                 ->reorderableWithDragAndDrop()
                 ->schema([
                     TextInput::make('name')
-
                         ->maxLength(255)
                         ->required(),
                 ])
