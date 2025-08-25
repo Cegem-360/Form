@@ -12,7 +12,6 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Set;
-use Livewire\Component;
 
 final class Visibility
 {
@@ -49,7 +48,7 @@ final class Visibility
                     )->headerActions([
                         Action::make('all_set_true')
                             ->label('All set to true')
-                            ->action(function (Set $set, ?FormQuestion $record, Component $livewire): void {
+                            ->action(function (Set $set, ?FormQuestion $record): void {
                                 $fields = (new FormQuestionVisibility)->getFillable();
 
                                 $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
@@ -65,8 +64,6 @@ final class Visibility
                                         ->success()
                                         ->send();
                                 }
-                                /*  dd($livewire); */
-
                             }),
                         Action::make('website')
                             ->label('All website fields to true')
