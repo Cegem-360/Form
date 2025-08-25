@@ -76,7 +76,7 @@ final class Visibility
                                         continue;
                                     }
 
-                                    $set((string) $field, true);
+                                    $set($field, true);
                                     $data[$field] = true;
                                 }
 
@@ -96,7 +96,7 @@ final class Visibility
                                 $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
                                 $data = [];
                                 foreach ($fields as $field) {
-                                    $set($field, false, shouldCallUpdatedHooks: true);
+                                    $set($field, false);
                                     $data[$field] = false;
                                 }
 
