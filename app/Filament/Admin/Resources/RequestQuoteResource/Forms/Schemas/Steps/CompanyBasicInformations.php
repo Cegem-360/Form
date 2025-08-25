@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps;
 
+use App\Models\FormQuestionVisibility;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -11,7 +12,7 @@ use Filament\Schemas\Components\Wizard\Step;
 
 final class CompanyBasicInformations
 {
-    public static function make($visibility): Step
+    public static function make(FormQuestionVisibility $visibility): Step
     {
         return Step::make('Company basic informations')
             ->columns(3)

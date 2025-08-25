@@ -8,8 +8,7 @@ use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Compan
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\DesignPagesSpecifications;
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Theme;
 use App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps\Webshop;
-use App\Models\FormQuestion as Model;
-use Filament\Actions\Action;
+use App\Models\FormQuestionVisibility;
 use Filament\Forms\Components\Checkbox;
 use Filament\Schemas\Components\Wizard;
 use Filament\Schemas\Components\Wizard\Step;
@@ -17,7 +16,7 @@ use Filament\Schemas\Schema;
 
 final class FormQuestion
 {
-    public static function configure(Schema $schema, $visibility, $data): Schema
+    public static function configure(Schema $schema, FormQuestionVisibility $visibility, $data): Schema
     {
         return $schema->components([
             Wizard::make([
@@ -48,17 +47,7 @@ final class FormQuestion
                         ->required()
                         ->accepted(true),
                 ]), ])
-                ->skippable()
-                ->submitAction(self::submitButtonAction($data)),
-        ])
-            ->statePath('data')
-            ->model(Model::class);
-    }
-
-    public static function submitButtonAction($data): Action
-    {
-
-        return Action::make('submit')
-            ->view('filament.forms.components.form-question-submit-button', ['data' => $data]);
+                ->skippable(),
+        ]);
     }
 }
