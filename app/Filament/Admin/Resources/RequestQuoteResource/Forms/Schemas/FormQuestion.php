@@ -16,7 +16,7 @@ use Filament\Schemas\Schema;
 
 final class FormQuestion
 {
-    public static function configure(Schema $schema, FormQuestionVisibility $visibility, $data): Schema
+    public static function configure(Schema $schema, FormQuestionVisibility $visibility): Schema
     {
         return $schema->components([
             Wizard::make([

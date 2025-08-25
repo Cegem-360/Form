@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Utilities\Set;
+use Livewire\Component;
 
 final class Visibility
 {
@@ -34,80 +35,82 @@ final class Visibility
     {
         return Tab::make('Visibility')
             ->schema([
-                Section::make('visibility')->id('visibility')
+                Section::make('visibility')
                     ->relationship('visibility')
-                    ->schema([
-                        Section::make('All field')
-                            ->id('all_field')
-                            ->headerActions([
-                                Action::make('all_set_true')
-                                    ->label('All set to true')
-                                    ->action(function (Set $set, ?FormQuestion $record): void {
-                                        $fields = (new FormQuestionVisibility)->getFillable();
+                    ->live()
+                    ->schema(
+                        array_map(
+                            fn (string $field): Toggle => Toggle::make($field)->live(),
+                            array_filter(
+                                (new FormQuestionVisibility)->getFillable(),
+                                fn ($field) => $field !== 'form_question_id'
+                            )
+                        ),
+                    )->headerActions([
+                        Action::make('all_set_true')
+                            ->label('All set to true')
+                            ->action(function (Set $set, ?FormQuestion $record, Component $livewire): void {
+                                $fields = (new FormQuestionVisibility)->getFillable();
 
-                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
-                                        foreach ($fields as $field) {
-                                            $set($field, true);
-                                            $data[$field] = true;
-                                        }
+                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                foreach ($fields as $field) {
+                                    $set($field, true);
+                                    $data[$field] = true;
+                                }
 
-                                        if ($record instanceof FormQuestion) {
-                                            $record->visibility()->updateOrCreate([], $data);
-                                            Notification::make()
-                                                ->title('Mentés sikeres')
-                                                ->success()
-                                                ->send();
-                                        }
-                                    }),
-                                Action::make('website')
-                                    ->label('All website fields to true')
-                                    ->action(function (Set $set, ?FormQuestion $record): void {
-                                        $fields = (new FormQuestionVisibility)->getFillable();
-                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
-                                        $data = [];
-                                        foreach ($fields as $field) {
-                                            if (in_array($field, self::$exceptions, true)) {
-                                                continue;
-                                            }
+                                if ($record instanceof FormQuestion) {
+                                    $record->visibility()->updateOrCreate([], $data);
+                                    Notification::make()
+                                        ->title('Mentés sikeres')
+                                        ->success()
+                                        ->send();
+                                }
+                                /*  dd($livewire); */
 
-                                            $set($field, true);
-                                            $data[$field] = true;
-                                        }
+                            }),
+                        Action::make('website')
+                            ->label('All website fields to true')
+                            ->action(function (Set $set, ?FormQuestion $record): void {
+                                $fields = (new FormQuestionVisibility)->getFillable();
+                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                $data = [];
+                                foreach ($fields as $field) {
+                                    if (in_array($field, self::$exceptions, true)) {
+                                        continue;
+                                    }
 
-                                        if ($record instanceof FormQuestion) {
-                                            $record->visibility()->updateOrCreate([], $data);
-                                            Notification::make()
-                                                ->title('Mentés sikeres')
-                                                ->success()
-                                                ->send();
-                                        }
-                                    }),
-                                Action::make('all_set_false')
-                                    ->label('All set to false')
-                                    ->action(function (Set $set, ?FormQuestion $record): void {
-                                        $fields = (new FormQuestionVisibility)->getFillable();
-                                        $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
-                                        $data = [];
-                                        foreach ($fields as $field) {
-                                            $set($field, false);
-                                            $data[$field] = false;
-                                        }
+                                    $set((string) $field, true);
+                                    $data[$field] = true;
+                                }
 
-                                        if ($record instanceof FormQuestion) {
-                                            $record->visibility()->updateOrCreate([], $data);
-                                            Notification::make()
-                                                ->title('Mentés sikeres')
-                                                ->success()
-                                                ->send();
-                                        }
-                                    }),
-                            ])
-                            ->collapsible()
-                            ->collapsed()
-                            ->schema(
-                                array_map(fn (string $field): Toggle => Toggle::make($field)->live(), (new FormQuestionVisibility)->getFillable()),
-                            ),
+                                if ($record instanceof FormQuestion) {
+                                    $record->visibility()->updateOrCreate([], $data);
+                                    Notification::make()
+                                        ->title('Mentés sikeres')
+                                        ->success()
+                                        ->send();
+                                }
 
+                            }),
+                        Action::make('all_set_false')
+                            ->label('All set to false')
+                            ->action(function (Set $set, ?FormQuestion $record): void {
+                                $fields = (new FormQuestionVisibility)->getFillable();
+                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                $data = [];
+                                foreach ($fields as $field) {
+                                    $set($field, false, shouldCallUpdatedHooks: true);
+                                    $data[$field] = false;
+                                }
+
+                                if ($record instanceof FormQuestion) {
+                                    $record->visibility()->updateOrCreate([], $data);
+                                    Notification::make()
+                                        ->title('Mentés sikeres')
+                                        ->success()
+                                        ->send();
+                                }
+                            }),
                     ]),
             ]);
     }

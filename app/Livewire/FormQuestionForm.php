@@ -33,7 +33,9 @@ final class FormQuestionForm extends Component implements HasActions, HasSchemas
         $this->token = $token;
         $this->post = FormQuestion::whereToken($this->token)->first();
         if (! $this->post instanceof FormQuestion) {
-            $this->redirect(route('form.expired'));
+            $this->redirect(route('form.expired'), navigate: true);
+
+            return;
         }
 
         $this->form->fill($this->post->attributesToArray());
@@ -44,46 +46,55 @@ final class FormQuestionForm extends Component implements HasActions, HasSchemas
     {
         $visibility = $this->post->visibility()->first();
 
-        return SchemasFormQuestion::configure($schema, $visibility, $this->data)->statePath('data');
+        return SchemasFormQuestion::configure($schema, $visibility)
+            ->statePath('data')
+            ->model($this->post);
     }
 
     public function updateAndCloseAction(): Action
     {
-        return Action::make('update_and_close')
+        return Action::make('updateAndCloseAction')
             ->label('Submit and Close')
             ->action(function () {
                 $data = $this->form->getState();
                 $data['status'] = FormQuestionStatus::SUBMITTED;
-
+                unset($data['consent'],$data['privacy_policy'],$data['consent_start']);
                 $this->post->update($data);
                 $this->form->saveRelationships();
 
                 Notification::make()
-                    ->title('Submission successful')
+                    ->title(__('Submission successful'))
                     ->success()
                     ->icon('heroicon-o-check-circle')
                     ->send();
 
-                return $this->redirect(route('filament.dashboard.resources.form-questions.view', ['record' => $this->post->getKey()]));
+                return $this->redirect(
+                    route('filament.admin.resources.form-questions.view', ['record' => $this->post->getKey()]),
+                );
             });
     }
 
     public function updateAndDraftAction(): Action
     {
-        return Action::make('update_and_draft')
+        return Action::make('updateAndDraftAction')
             ->label('Save as Draft')
             ->action(function () {
                 $data = $this->form->getState();
-                dd($data);
-                $this->post->update($data);
                 $data['status'] = FormQuestionStatus::TEMPORARILY_SAVED;
+                unset($data['consent'],$data['privacy_policy'],$data['consent_start']);
+                $this->post->update($data);
                 $this->form->saveRelationships();
 
                 Notification::make()
-                    ->title('Save successful')
+                    ->title(__('Save successful'))
                     ->success()
                     ->icon('heroicon-o-check-circle')
                     ->send();
+
+                return $this->redirect(
+                    route('filament.admin.resources.form-questions.view', ['record' => $this->post->getKey()]),
+
+                );
             });
     }
 
