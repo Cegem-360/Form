@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\FormQuestionResource;
 use App\Models\FormQuestion;
 use Filament\Actions\Action;
 use Filament\Actions\CreateAction;
+use Filament\Actions\EditAction;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Str;
 
@@ -19,7 +20,7 @@ final class ViewFormQuestion extends ViewRecord
     {
         return [
             Action::make('view')
-                ->label('View')
+                ->label(__('View'))
                 ->icon('heroicon-o-eye')
                 ->url(function (FormQuestion $record): string {
                     $token = Str::random(60);
@@ -36,6 +37,7 @@ final class ViewFormQuestion extends ViewRecord
                     return route('kerdoiv', ['token' => $token]);
 
                 }, true),
+            EditAction::make(),
             CreateAction::make(),
         ];
     }
