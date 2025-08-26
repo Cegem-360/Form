@@ -15,5 +15,7 @@ final class SupportPack extends Model
 
     protected $fillable = [
         'name',
+        'description',
+        'price',
     ];
 }

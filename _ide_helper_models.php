@@ -90,7 +90,7 @@ namespace App\Models{
  * @property bool $have_product_catalog
  * @property array<array-key, mixed>|null $product_catalog
  * @property bool|null $need_multi_language
- * @property string|null $languages_for_website
+ * @property array<array-key, mixed>|null $languages_for_website
  * @property array<array-key, mixed>|null $call_to_actions
  * @property bool $have_blog
  * @property string|null $exist_blog_count
