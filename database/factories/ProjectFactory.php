@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Enums\ProjectStatus;
 use App\Models\Project;
+use App\Models\SupportPack;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,7 +50,7 @@ final class ProjectFactory extends Factory
 
             // 4.
             'garanty' => $this->faker->boolean,
-            'support_pack_id' => $this->faker->randomDigitNotNull,
+            'support_pack_id' => $this->faker->randomElement(SupportPack::class),
             'contact_channel_id' => $this->faker->randomDigitNotNull,
 
             'created_by' => $this->faker->randomDigitNotNull, // user_id

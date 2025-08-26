@@ -21,6 +21,8 @@ final class SupportPackFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
+            'description' => $this->faker->sentence(),
+            'price' => $this->faker->numberBetween(5000, 10000),
         ];
     }
 }
