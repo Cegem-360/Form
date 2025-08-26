@@ -49,21 +49,6 @@ Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(
         return response()->file(storage_path('app/'.$filename));
     })->name('storage');
 
-    Route::get('/google-docs/{project}', function ($projectId) {
-        $project = App\Models\Project::findOrFail($projectId);
-        $service = new App\Services\ProjectCompletionDocumentService($project);
-        
-        try {
-            $googleDocUrl = $service->exportForGoogleDocs();
-            
-            // Redirect to the created Google Doc
-            return redirect($googleDocUrl);
-            
-        } catch (\Exception $e) {
-            // If Google Doc creation fails, fall back to PDF download
-            return $service->generatePdf();
-        }
-    })->name('google-docs');
 });
 
 

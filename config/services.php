@@ -40,4 +40,10 @@ return [
         'key' => env('OPEN_API_KEY'),
     ],
 
+    'google_drive' => [
+        'enabled' => env('GOOGLE_DRIVE_ENABLED', false),
+        'application_name' => env('GOOGLE_APPLICATION_NAME', 'Laravel Project Completion'),
+        'credentials_path' => env('GOOGLE_APPLICATION_CREDENTIALS', storage_path('app/google-credentials.json')),
+    ],
+
 ];

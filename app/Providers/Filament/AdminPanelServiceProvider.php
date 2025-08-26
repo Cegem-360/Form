@@ -46,6 +46,7 @@ final class AdminPanelServiceProvider extends PanelProvider
                 'Project',
                 'Reseller',
                 'Settings',
+                'Beállítások',
             ])
             ->brandLogo(fn () => view('filament.dashboard.logo'))
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')

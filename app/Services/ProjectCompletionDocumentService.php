@@ -16,7 +16,6 @@ final class ProjectCompletionDocumentService
         private Project $project
     ) {}
 
-
     /**
      * Generate PDF document for project completion
      */
@@ -48,8 +47,26 @@ final class ProjectCompletionDocumentService
     {
         $data = $this->prepareGoogleDocsData();
         $googleDriveService = new GoogleDriveService();
-        
+
         return $googleDriveService->createProjectCompletionDocument($data);
+    }
+
+    /**
+     * Save PDF to storage
+     */
+    public function savePdfToStorage(): string
+    {
+        $data = $this->prepareDocumentData();
+
+        $pdf = Pdf::loadView('pdf.project-completion', $data);
+        $pdf->setPaper('A4', 'portrait');
+        // Use global configuration from config/dompdf.php which has convert_entities disabled
+
+        $filename = 'project-completions/project-completion-'.$this->project->id.'-'.now()->format('Y-m-d-His').'.pdf';
+
+        Storage::put($filename, $pdf->output());
+
+        return $filename;
     }
 
     /**
@@ -125,24 +142,6 @@ final class ProjectCompletionDocumentService
                 'Készítés dátuma' => $data['document_generated_at']->format('Y. m. d. H:i'),
             ],
         ];
-    }
-
-    /**
-     * Save PDF to storage
-     */
-    public function savePdfToStorage(): string
-    {
-        $data = $this->prepareDocumentData();
-
-        $pdf = Pdf::loadView('pdf.project-completion', $data);
-        $pdf->setPaper('A4', 'portrait');
-        // Use global configuration from config/dompdf.php which has convert_entities disabled
-
-        $filename = 'project-completions/project-completion-'.$this->project->id.'-'.now()->format('Y-m-d-His').'.pdf';
-
-        Storage::put($filename, $pdf->output());
-
-        return $filename;
     }
 
     /**
@@ -247,5 +246,4 @@ final class ProjectCompletionDocumentService
 
         return $value;
     }
-
 }

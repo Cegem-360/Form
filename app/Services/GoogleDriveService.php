@@ -56,13 +56,18 @@ final class GoogleDriveService
      */
     private function setupClient(): void
     {
-        $this->client->setApplicationName('Laravel Project Completion');
+        // Check if Google Drive is enabled
+        if (!config('services.google_drive.enabled')) {
+            throw new Exception('Google Drive integration is disabled. Enable it in the settings.');
+        }
+
+        $this->client->setApplicationName(config('services.google_drive.application_name'));
         
-        // Set up authentication - you'll need to configure this
-        $credentialsPath = storage_path('app/google-credentials.json');
+        // Set up authentication
+        $credentialsPath = config('services.google_drive.credentials_path');
         
         if (!file_exists($credentialsPath)) {
-            throw new Exception('Google credentials file not found at: ' . $credentialsPath);
+            throw new Exception('Google credentials file not found. Please upload the credentials file in the Google Drive settings.');
         }
         
         $this->client->setAuthConfig($credentialsPath);
