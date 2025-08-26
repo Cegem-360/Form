@@ -31,6 +31,16 @@ final class RequestQuoteFunctionality extends Model
         'default' => 'boolean',
     ];
 
+    public function requestQuotes(): BelongsToMany
+    {
+        return $this->belongsToMany(RequestQuote::class);
+    }
+
+    public function websiteType(): BelongsTo
+    {
+        return $this->belongsTo(WebsiteType::class);
+    }
+
     #[Scope]
     protected function webShop(Builder $query): Builder
     {
