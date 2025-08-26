@@ -19,8 +19,9 @@ return [
 
     /*
      * Dejavu Sans font is missing glyphs for converted entities, turn it off if you need to show € and £.
+     * Disabled for better UTF-8 character support including Hungarian characters.
      */
-    'convert_entities' => true,
+    'convert_entities' => false,
 
     'options' => [
         /**
@@ -178,10 +179,11 @@ return [
          * The default font family
          *
          * Used if no suitable fonts can be found. This must exist in the font folder.
+         * DejaVu Sans supports international characters including Hungarian.
          *
          * @var string
          */
-        'default_font' => 'serif',
+        'default_font' => 'dejavu sans',
 
         /**
          * Image DPI setting

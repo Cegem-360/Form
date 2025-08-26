@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\ProjectResource\Pages;
 
-use App\Enums\ProjectStatus;
 use App\Filament\Admin\Resources\ProjectResource;
-use App\Models\FormQuestion;
-use App\Models\Project;
-use App\Models\WebsiteLanguage;
-use Filament\Actions\Action;
+use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\ConvertToStarter;
+use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\EndTheProject;
+use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateCompletionDocument;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
-use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Schemas\Components\Utilities\Get;
 
 final class EditProject extends EditRecord
 {
@@ -24,65 +20,18 @@ final class EditProject extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('EndTheProject')
-                ->label(__('End The Project'))
-                ->color('success')
-                ->action(function (Project $record, Get $get) {
-                    $record->update(['status' => ProjectStatus::COMPLETED,
-                        'garanty_end_date' => now()->addMonth(),
-                    ]);
-                    Notification::make()
-                        ->success()
-                        ->title(__('The project has been ended successfully.'))
-                        ->send();
-
-                    return $this->redirect($this->getResource()::getUrl('edit', ['record' => $record->getKey()]));
-                })
-                ->visible(fn ($record): bool => $record->status !== ProjectStatus::COMPLETED),
+            EndTheProject::make(component: $this),
             ViewAction::make(),
             DeleteAction::make(),
+            GenerateCompletionDocument::make(component: $this),
             ActionGroup::make([
-                Action::make('convertToStarter')
-                    ->label('Convert to Starter')
-                    ->action(function (array $data, Project $record): void {
-
-                        $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
-                            return [
-                                'name' => $page['name'],
-                            ];
-                        })->toArray();
-
-                        $isMultilangual = (bool) ($record->requestQuote->is_multilangual ?? false);
-                        $defaultLanguage = $record->requestQuote->default_language ?? null;
-                        $languageIds = $record->requestQuote->languages ?? [];
-                        $languages = collect($languageIds)
-                            ->map(fn (int $id) => WebsiteLanguage::query()->find(id: $id)?->name)
-                            ->filter()
-                            ->values();
-
-                        if ($defaultLanguage && $languages->contains($defaultLanguageName = WebsiteLanguage::query()->find($defaultLanguage)?->name)) {
-                            $languages = $languages->reject(fn (string $name): bool => $name === $defaultLanguageName)->prepend($defaultLanguageName)->values();
-                        }
-
-                        $languages = $languages->all();
-
-                        $formQuestion = FormQuestion::query()->create([
-                            'project_id' => $record->id,
-                            'user_id' => $record->user_id,
-                            'company_name' => $record->user->company_name,
-                            'contact_email' => $record->requestQuote->email,
-                            'contact_name' => $record->requestQuote->name,
-                            'contact_phone' => $record->requestQuote->phone,
-                            'need_multi_language' => $isMultilangual,
-                            'languages_for_website' => $languages,
-                            'main_pages' => $pages,
-                        ]);
-
-                        $this->redirect(route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]));
-
-                    })
-                    ->color('primary'),
-
+                ConvertToStarter::make(component: $this),
+                // üzemeltetési megbízási szerződés
+                // szerződés csak akkor ha aláírják
+                // support pack kell egy mező  hány havonta  menjen ki és kell end_date
+                // passive status ->nincs action
+                // support pack status??
+                // 3. gomb feltöltés
             ]),
         ];
     }

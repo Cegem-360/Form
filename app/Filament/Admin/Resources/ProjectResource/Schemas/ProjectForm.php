@@ -9,8 +9,6 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,7 +36,7 @@ final class ProjectForm
                     ->label('Project Status')
                     ->options(ProjectStatus::class)
                     ->enum(ProjectStatus::class)
-                    ->afterStateUpdated(fn ($state, Set $set, Get $get): mixed => $state === ProjectStatus::COMPLETED ? $set('garanty_end_date', now()->addMonths($get('garanty'))) : null)
+                    ->live()
                     ->required(),
                 RichEditor::make('project_goal')
                     ->columnSpanFull(),
@@ -47,9 +45,10 @@ final class ProjectForm
 
                 TextInput::make('solved_problems'),
                 TextInput::make('garanty')
+                    ->live()
                     ->label(__('Garanty (in months)'))
                     ->numeric(),
-                DatePicker::make('garanty_end_date')->disabled(),
+                DatePicker::make('garanty_end_date')->disabled()->live(),
                 Select::make('support_pack_id')
                     ->preload()
                     ->relationship('supportPack', 'name'),

@@ -31,6 +31,42 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
     return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 })->name('quotation.pdf');
 
+// Project PDF routes
+Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(function (): void {
+
+    Route::get('/completion/{project}', function ($projectId) {
+        $project = App\Models\Project::findOrFail($projectId);
+        $service = new App\Services\ProjectCompletionDocumentService($project);
+
+        return $service->generatePdf();
+    })->name('completion');
+
+    Route::get('/storage/{project}', function ($projectId) {
+        $project = App\Models\Project::findOrFail($projectId);
+        $service = new App\Services\ProjectCompletionDocumentService($project);
+        $filename = $service->savePdfToStorage();
+
+        return response()->file(storage_path('app/'.$filename));
+    })->name('storage');
+
+    Route::get('/google-docs/{project}', function ($projectId) {
+        $project = App\Models\Project::findOrFail($projectId);
+        $service = new App\Services\ProjectCompletionDocumentService($project);
+        
+        try {
+            $googleDocUrl = $service->exportForGoogleDocs();
+            
+            // Redirect to the created Google Doc
+            return redirect($googleDocUrl);
+            
+        } catch (\Exception $e) {
+            // If Google Doc creation fails, fall back to PDF download
+            return $service->generatePdf();
+        }
+    })->name('google-docs');
+});
+
+
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
 
     Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {

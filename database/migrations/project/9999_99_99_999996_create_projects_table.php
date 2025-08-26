@@ -34,7 +34,7 @@ return new class extends Migration
             $table->json('project_not_contained_elements')->nullable();
             $table->json('solved_problems')->nullable();
             $table->integer('garanty')->nullable();
-            $table->date('garanty_end_date')->virtualAs('DATE_ADD(start_date, INTERVAL garanty DAY)')->nullable();
+            $table->date('garanty_end_date')->virtualAs('DATE_ADD(start_date, INTERVAL garanty MONTH)')->nullable();
 
             $table->foreignIdFor(User::class, 'contact')->nullable();
             $table->foreignIdFor(SupportPack::class)->nullable();
