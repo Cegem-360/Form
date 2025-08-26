@@ -39,7 +39,9 @@ final class CheckoutSuccess extends Component
             'customer_name' => $requestQuote->user->name,
             'customer_email' => $requestQuote->user->email,
             'amount' => $requestQuote->getTotalPriceAttribute(),
-            'status' => TransactionStatus::PENDING,
+            'status' => $requestQuote->payment_method === 'stripe'
+                ? TransactionStatus::COMPLETED
+                : TransactionStatus::PENDING,
             'currency' => StripeCurrency::HUF,
         ]);
         Session::forget('request_quote');

@@ -59,6 +59,7 @@ final class RequestQuoteForm
                                 ->columnSpanFull(),
                             Select::make('payment_method')
                                 ->options([
+                                    'stripe' => 'Stripe',
                                     'credit_card' => 'Credit Card',
                                     'paypal' => 'PayPal',
                                     'bank_transfer' => 'Bank Transfer',

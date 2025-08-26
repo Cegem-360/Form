@@ -12,6 +12,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -188,8 +189,26 @@ final class Website
                         ->preserveFilenames(),
 
                     Toggle::make('need_multi_language'),
-                    Textarea::make('languages_for_website')
-                        ->maxLength(255),
+                    TagsInput::make('languages_for_website')
+                        ->label('Weboldal nyelvei')
+                        ->placeholder('Új nyelv hozzáadása...')
+                        ->suggestions([
+                            'Magyar',
+                            'Angol',
+                            'Német',
+                            'Francia',
+                            'Spanyol',
+                            'Olasz',
+                            'Román',
+                            'Szlovák',
+                            'Horvát',
+                            'Szerb',
+                            'Ukrán',
+                            'Orosz',
+                            'Lengyel',
+                            'Cseh',
+                        ])
+                        ->splitKeys(['Tab', ',', 'Enter']),
                     RichEditor::make('call_to_actions'),
                     Toggle::make('have_blog')
                         ->required(),

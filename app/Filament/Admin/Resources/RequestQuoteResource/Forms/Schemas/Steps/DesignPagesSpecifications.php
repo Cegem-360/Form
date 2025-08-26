@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Forms\Schemas\Steps;
 
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Wizard\Step;
 
@@ -72,9 +74,27 @@ final class DesignPagesSpecifications
             Toggle::make('need_multi_language')
                 ->live()
                 ->visible($visibility?->need_multi_language_visible),
-            Textarea::make('languages_for_website')
-                ->visible(fn (Get $get): bool => $visibility?->languages_for_website_visible && $get('need_multi_language'))
-                ->maxLength(255),
+            TagsInput::make('languages_for_website')
+                ->label('Weboldal nyelvei')
+                ->placeholder('Új nyelv hozzáadása...')
+                ->suggestions([
+                    'Magyar',
+                    'Angol',
+                    'Német',
+                    'Francia',
+                    'Spanyol',
+                    'Olasz',
+                    'Román',
+                    'Szlovák',
+                    'Horvát',
+                    'Szerb',
+                    'Ukrán',
+                    'Orosz',
+                    'Lengyel',
+                    'Cseh',
+                ])
+                ->splitKeys(['Tab', ',', 'Enter'])
+                ->visible(fn (Get $get): bool => $visibility?->languages_for_website_visible && $get('need_multi_language')),
             RichEditor::make('call_to_actions')
                 ->visible($visibility?->call_to_actions_visible),
             Toggle::make('have_blog')
@@ -97,6 +117,22 @@ final class DesignPagesSpecifications
             RichEditor::make('other_expectation_or_request')
                 ->visible($visibility?->other_expectation_or_request_visible)
                 ->columnSpanFull(),
+
+            Section::make('Kért funkciók')
+                ->schema([
+                    CheckboxList::make('project_functions')
+                        ->label(__('Project Functions'))
+                        ->options(function ($state, $component) {
+                            $model = $component->getRecord();
+                            if ($model && $model->projectQuoteFunctionalities()) {
+                                return $model->projectQuoteFunctionalities()->pluck('name', 'id')->toArray();
+                            }
+
+                            return [];
+                        })
+                        ->disabled(),
+                ]),
+
         ]);
     }
 }

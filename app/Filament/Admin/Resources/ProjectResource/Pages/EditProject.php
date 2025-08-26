@@ -8,6 +8,7 @@ use App\Enums\ProjectStatus;
 use App\Filament\Admin\Resources\ProjectResource;
 use App\Models\FormQuestion;
 use App\Models\Project;
+use App\Models\WebsiteLanguage;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
@@ -47,6 +48,21 @@ final class EditProject extends EditRecord
                                 'name' => $page['name'],
                             ];
                         })->toArray();
+
+                        $isMultilangual = (bool) ($record->requestQuote->is_multilangual ?? false);
+                        $defaultLanguage = $record->requestQuote->default_language ?? null;
+                        $languageIds = $record->requestQuote->languages ?? [];
+                        $languages = collect($languageIds)
+                            ->map(fn ($id) => WebsiteLanguage::find($id)?->name)
+                            ->filter()
+                            ->values();
+
+                        if ($defaultLanguage && $languages->contains($defaultLanguageName = WebsiteLanguage::find($defaultLanguage)?->name)) {
+                            $languages = $languages->reject(fn ($name) => $name === $defaultLanguageName)->prepend($defaultLanguageName)->values();
+                        }
+
+                        $languages = $languages->all();
+
                         $formQuestion = FormQuestion::query()->create([
                             'project_id' => $record->id,
                             'user_id' => $record->user_id,
@@ -54,6 +70,8 @@ final class EditProject extends EditRecord
                             'contact_email' => $record->requestQuote->email,
                             'contact_name' => $record->requestQuote->name,
                             'contact_phone' => $record->requestQuote->phone,
+                            'need_multi_language' => $isMultilangual,
+                            'languages_for_website' => $languages,
                             'main_pages' => $pages,
                         ]);
 

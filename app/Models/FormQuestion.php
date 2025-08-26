@@ -140,6 +140,7 @@ final class FormQuestion extends Model
             'main_pages' => 'array',
             'product_catalog' => 'array',
             'call_to_actions' => 'array',
+            'languages_for_website' => 'array',
 
             // dates
             'deadline' => 'date',

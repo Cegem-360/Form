@@ -226,7 +226,19 @@
                         </div>
                         <div>
                             <div class="text-xs text-gray-500">Nyelvek</div>
-                            <div class="font-medium">{{ $record->languages_for_website ?? '-' }}</div>
+                            <div class="font-medium">
+                                @if (is_array($record->languages_for_website) && count($record->languages_for_website))
+                                    <div class="flex flex-wrap gap-1">
+                                        @foreach ($record->languages_for_website as $language)
+                                            <span class="px-2 py-1 text-xs bg-gray-100 rounded">{{ $language }}</span>
+                                        @endforeach
+                                    </div>
+                                @elseif(!empty($record->languages_for_website))
+                                    {{ $record->languages_for_website }}
+                                @else
+                                    -
+                                @endif
+                            </div>
                         </div>
                         <div>
                             <div class="text-xs text-gray-500">Call to actions</div>
