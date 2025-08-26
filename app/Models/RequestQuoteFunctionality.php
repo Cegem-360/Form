@@ -26,11 +26,6 @@ final class RequestQuoteFunctionality extends Model
         'default',
     ];
 
-    protected $casts = [
-        'price' => 'integer',
-        'default' => 'boolean',
-    ];
-
     public function requestQuotes(): BelongsToMany
     {
         return $this->belongsToMany(RequestQuote::class);
@@ -39,6 +34,14 @@ final class RequestQuoteFunctionality extends Model
     public function websiteType(): BelongsTo
     {
         return $this->belongsTo(WebsiteType::class);
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'price' => 'integer',
+            'default' => 'boolean',
+        ];
     }
 
     #[Scope]
@@ -69,15 +72,5 @@ final class RequestQuoteFunctionality extends Model
     protected function default(Builder $query): Builder
     {
         return $query->whereDefault(true);
-    }
-
-    public function requestQuotes(): BelongsToMany
-    {
-        return $this->belongsToMany(RequestQuote::class);
-    }
-
-    public function websiteType(): BelongsTo
-    {
-        return $this->belongsTo(WebsiteType::class);
     }
 }

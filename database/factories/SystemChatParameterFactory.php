@@ -29,10 +29,10 @@ final class SystemChatParameterFactory extends Factory
     public function definition(): array
     {
         return [
-            'form_field_name' => $this->faker->text,
+            'form_field_name' => $this->faker->text(),
             'form_field_id' => $this->faker->randomNumber(),
             'role' => $this->faker->randomElement(OpenAIRole::cases())->value,
-            'content' => $this->faker->sentence,
+            'content' => $this->faker->sentence(),
         ];
     }
 }

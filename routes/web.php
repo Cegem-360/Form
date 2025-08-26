@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\NotionController;
-use App\Livewire\NotionUpload;
 use App\Http\Middleware\EnsureHasRequestQuote;
 use App\Livewire\Cart\CartShow;
 use App\Livewire\Checkout\CheckoutSuccess;
@@ -11,6 +10,7 @@ use App\Livewire\Checkout\CheckoutUnsuccess;
 use App\Livewire\Checkout\PaymentPage;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
+use App\Livewire\NotionUpload;
 use App\Models\RequestQuote;
 use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
 use Illuminate\Support\Facades\Route;

@@ -25,4 +25,11 @@ final class WebsiteTypePrice extends Model
     {
         return $this->belongsTo(WebsiteType::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'price' => 'integer',
+        ];
+    }
 }

@@ -73,10 +73,8 @@ namespace App\Models{
  * @property string|null $formating_milestone
  * @property string|null $visual_feeling
  * @property string|null $tone_of_website
- * @property string|null $other_tone_of_website
  * @property bool $have_exist_design
  * @property array<array-key, mixed>|null $design_files
- * @property string|null $inspire_websites
  * @property array<array-key, mixed>|null $banned_elements
  * @property string|null $primary_color
  * @property string|null $secondary_color
@@ -86,7 +84,6 @@ namespace App\Models{
  * @property bool|null $use_video_or_animation
  * @property array<array-key, mixed>|null $own_company_videos
  * @property array<array-key, mixed>|null $main_pages
- * @property string|null $other_pages
  * @property bool $have_product_catalog
  * @property array<array-key, mixed>|null $product_catalog
  * @property bool|null $need_multi_language
@@ -147,7 +144,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereHighlightedCategories($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereImportanceOfSeo($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereInspireWebsites($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereIsExactDeadline($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereLanguagesForWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereLogo($value)
@@ -155,8 +151,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereNeedMultiLanguage($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOnlineBankCardPaymentOptions($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOtherExpectationOrRequest($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOtherPages($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOtherToneOfWebsite($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOwnCompanyImages($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereOwnCompanyVideos($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestion whereParcelPoints($value)
@@ -191,7 +185,6 @@ namespace App\Models{
  * @property bool $contact_phone_visible
  * @property bool $logo_visible
  * @property bool $activities_visible
- * @property int $contact_position_visible
  * @property bool $have_exist_website_visible
  * @property bool $exist_website_url_visible
  * @property bool $is_exact_deadline_visible
@@ -200,7 +193,6 @@ namespace App\Models{
  * @property bool $visual_feeling_visible
  * @property bool $have_exist_design_visible
  * @property bool $design_files_visible
- * @property int $inspire_websites_visible
  * @property bool $banned_elements_visible
  * @property bool $primary_color_visible
  * @property bool $secondary_color_visible
@@ -210,11 +202,9 @@ namespace App\Models{
  * @property bool $use_video_or_animation_visible
  * @property bool $own_company_videos_visible
  * @property bool $main_pages_visible
- * @property int $other_pages_visible
  * @property bool $have_product_catalog_visible
  * @property bool $product_catalog_visible
  * @property bool $tone_of_website_visible
- * @property int $other_tone_of_website_visible
  * @property bool $need_multi_language_visible
  * @property bool $languages_for_website_visible
  * @property bool $call_to_actions_visible
@@ -250,7 +240,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactEmailVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactNameVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactPhoneVisible($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContactPositionVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereContractedAccountantsVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereDeadlineVisible($value)
@@ -269,7 +258,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereHighlightedCategoriesVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereImportanceOfSeoVisible($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereInspireWebsitesVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereIsExactDeadlineVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereLanguagesForWebsiteVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereLogoVisible($value)
@@ -277,8 +265,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereNeedMultiLanguageVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOnlineBankCardPaymentOptionsVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherExpectationOrRequestVisible($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherPagesVisible($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOtherToneOfWebsiteVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOwnCompanyImagesVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereOwnCompanyVideosVisible($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|FormQuestionVisibility whereParcelPointsVisible($value)
@@ -448,10 +434,8 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $end_date
  * @property \App\Enums\ProjectStatus $status
  * @property string|null $project_goal
- * @property string|null $original_project_goals
  * @property array<array-key, mixed>|null $completed_project_elements
  * @property array<array-key, mixed>|null $project_not_contained_elements
- * @property string|null $completed_elements
  * @property array<array-key, mixed>|null $solved_problems
  * @property int|null $garanty
  * @property string|null $garanty_end_date
@@ -473,7 +457,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCompletedElements($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereCompletedProjectElements($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContact($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereContactChannelId($value)
@@ -485,7 +468,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOrderId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereOriginalProjectGoals($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectGoal($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereProjectNotContainedElements($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Project whereRequestQuoteId($value)
@@ -661,6 +643,8 @@ namespace App\Models{
 /**
  * @property int $id
  * @property string $name
+ * @property string|null $description
+ * @property int|null $price
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
  * @method static \Database\Factories\SupportPackFactory factory($count = null, $state = [])
@@ -668,8 +652,10 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SupportPack whereUpdatedAt($value)
  */
 	final class SupportPack extends \Eloquent {}

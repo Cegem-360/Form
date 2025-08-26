@@ -14,6 +14,7 @@ use BackedEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ReplicateAction;
 use Filament\Actions\ViewAction;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -76,12 +77,11 @@ final class RequestQuoteResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([])
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                ReplicateAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -18,4 +18,11 @@ final class SupportPack extends Model
         'description',
         'price',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'price' => 'integer',
+        ];
+    }
 }

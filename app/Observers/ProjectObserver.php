@@ -21,6 +21,7 @@ final class ProjectObserver
         if ($user === null) {
             return;
         }
+
         $request_quote = $project->requestQuote;
 
         $request_quote = RequestQuote::query()->where('id', $request_quote->id)->first();

@@ -15,6 +15,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Schemas\Components\Utilities\Get;
 
 final class EditProject extends EditRecord
 {
@@ -26,8 +27,10 @@ final class EditProject extends EditRecord
             Action::make('EndTheProject')
                 ->label(__('End The Project'))
                 ->color('success')
-                ->action(function (Project $record) {
-                    $record->update(['status' => ProjectStatus::COMPLETED]);
+                ->action(function (Project $record, Get $get) {
+                    $record->update(['status' => ProjectStatus::COMPLETED,
+                        'garanty_end_date' => now()->addMonth(),
+                    ]);
                     Notification::make()
                         ->success()
                         ->title(__('The project has been ended successfully.'))
@@ -35,13 +38,13 @@ final class EditProject extends EditRecord
 
                     return $this->redirect($this->getResource()::getUrl('edit', ['record' => $record->getKey()]));
                 })
-                ->visible(fn ($record) => $record->status !== ProjectStatus::COMPLETED),
+                ->visible(fn ($record): bool => $record->status !== ProjectStatus::COMPLETED),
             ViewAction::make(),
             DeleteAction::make(),
             ActionGroup::make([
                 Action::make('convertToStarter')
                     ->label('Convert to Starter')
-                    ->action(function (array $data, Project $record) {
+                    ->action(function (array $data, Project $record): void {
 
                         $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
                             return [
@@ -53,12 +56,12 @@ final class EditProject extends EditRecord
                         $defaultLanguage = $record->requestQuote->default_language ?? null;
                         $languageIds = $record->requestQuote->languages ?? [];
                         $languages = collect($languageIds)
-                            ->map(fn ($id) => WebsiteLanguage::find($id)?->name)
+                            ->map(fn (int $id) => WebsiteLanguage::query()->find(id: $id)?->name)
                             ->filter()
                             ->values();
 
-                        if ($defaultLanguage && $languages->contains($defaultLanguageName = WebsiteLanguage::find($defaultLanguage)?->name)) {
-                            $languages = $languages->reject(fn ($name) => $name === $defaultLanguageName)->prepend($defaultLanguageName)->values();
+                        if ($defaultLanguage && $languages->contains($defaultLanguageName = WebsiteLanguage::query()->find($defaultLanguage)?->name)) {
+                            $languages = $languages->reject(fn (string $name): bool => $name === $defaultLanguageName)->prepend($defaultLanguageName)->values();
                         }
 
                         $languages = $languages->all();
@@ -75,7 +78,7 @@ final class EditProject extends EditRecord
                             'main_pages' => $pages,
                         ]);
 
-                        return redirect()->route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]);
+                        $this->redirect(route('filament.admin.resources.form-questions.edit', ['record' => $formQuestion->id]));
 
                     })
                     ->color('primary'),

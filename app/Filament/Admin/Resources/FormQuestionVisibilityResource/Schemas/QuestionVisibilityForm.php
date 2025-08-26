@@ -15,7 +15,7 @@ final class QuestionVisibilityForm
         return $schema
             ->components([
                 Select::make('form_question_id')
-                    ->relationship('formQuestion', 'id')
+                    ->relationship('formQuestion', 'company_name')
                     ->required(),
                 Toggle::make('token_visible')
                     ->required(),

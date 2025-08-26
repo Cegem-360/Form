@@ -31,13 +31,13 @@ final class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->company,
+            'name' => $this->faker->company(),
             'contact' => User::factory(),
-            'start_date' => $this->faker->date,
-            'end_date' => $this->faker->date,
+            'start_date' => $this->faker->date(),
+            'end_date' => $this->faker->date(),
 
             'status' => $this->faker->randomElement(ProjectStatus::class),
-            'project_goal' => $this->faker->sentence,
+            'project_goal' => $this->faker->sentence(),
 
             // 2.
 
@@ -49,12 +49,12 @@ final class ProjectFactory extends Factory
             'solved_problems' => $this->faker->numberBetween(0, 50),
 
             // 4.
-            'garanty' => $this->faker->boolean,
+            'garanty' => $this->faker->boolean(),
             'support_pack_id' => $this->faker->randomElement(SupportPack::class),
-            'contact_channel_id' => $this->faker->randomDigitNotNull,
+            'contact_channel_id' => $this->faker->randomDigitNotNull(),
 
-            'created_by' => $this->faker->randomDigitNotNull, // user_id
-            'updated_by' => $this->faker->randomDigitNotNull, // user_id
+            'created_by' => $this->faker->randomDigitNotNull(), // user_id
+            'updated_by' => $this->faker->randomDigitNotNull(), // user_id
 
         ];
     }

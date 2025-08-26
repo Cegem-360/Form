@@ -6,8 +6,11 @@ use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
 use RectorLaravel\Rector\MethodCall\ValidationRuleArrayStringValueToArrayRector;
 use RectorLaravel\Set\LaravelSetList;
+use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
+    ->withSetProviders(LaravelSetProvider::class)
+    ->withComposerBased(laravel: true)
     ->withRules([
         ValidationRuleArrayStringValueToArrayRector::class,
     ])

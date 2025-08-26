@@ -17,8 +17,7 @@ final class QuestionVisibilityTable
     {
         return $table
             ->columns([
-                TextColumn::make('formQuestion.id')
-                    ->numeric()
+                TextColumn::make('formQuestion.company_name')
                     ->sortable(),
                 IconColumn::make('token_visible')
                     ->boolean(),
@@ -64,14 +63,12 @@ final class QuestionVisibilityTable
                     ->boolean(),
                 IconColumn::make('main_pages_visible')
                     ->boolean(),
-
                 IconColumn::make('have_product_catalog_visible')
                     ->boolean(),
                 IconColumn::make('product_catalog_visible')
                     ->boolean(),
                 IconColumn::make('tone_of_website_visible')
                     ->boolean(),
-
                 IconColumn::make('need_multi_language_visible')
                     ->boolean(),
                 IconColumn::make('languages_for_website_visible')

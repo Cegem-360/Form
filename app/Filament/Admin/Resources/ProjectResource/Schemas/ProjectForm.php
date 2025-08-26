@@ -47,16 +47,12 @@ final class ProjectForm
 
                 TextInput::make('solved_problems'),
                 TextInput::make('garanty')
+                    ->label(__('Garanty (in months)'))
                     ->numeric(),
                 DatePicker::make('garanty_end_date')->disabled(),
-                /*  Select::make('contact')
-                    ->preload()
-                    ->relationship('contact', 'name'), */
                 Select::make('support_pack_id')
                     ->preload()
                     ->relationship('supportPack', 'name'),
-                /*   Select::make('contact_channel_id')
-                    ->relationship('contactChannel', 'name'), */
             ]);
     }
 }

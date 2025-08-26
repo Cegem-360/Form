@@ -42,7 +42,7 @@ final class Visibility
                             fn (string $field): Toggle => Toggle::make($field)->live(),
                             array_filter(
                                 (new FormQuestionVisibility)->getFillable(),
-                                fn ($field) => $field !== 'form_question_id'
+                                fn (string $field): bool => $field !== 'form_question_id'
                             )
                         ),
                     )->headerActions([
@@ -51,7 +51,7 @@ final class Visibility
                             ->action(function (Set $set, ?FormQuestion $record): void {
                                 $fields = (new FormQuestionVisibility)->getFillable();
 
-                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                $fields = array_filter($fields, fn (string $field): bool => $field !== 'form_question_id');
                                 foreach ($fields as $field) {
                                     $set($field, true);
                                     $data[$field] = true;
@@ -69,7 +69,8 @@ final class Visibility
                             ->label('All website fields to true')
                             ->action(function (Set $set, ?FormQuestion $record): void {
                                 $fields = (new FormQuestionVisibility)->getFillable();
-                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                $fields = array_filter($fields, fn (string $field): bool => $field !== 'form_question_id');
+
                                 $data = [];
                                 foreach ($fields as $field) {
                                     if (in_array($field, self::$exceptions, true)) {
@@ -93,7 +94,8 @@ final class Visibility
                             ->label('All set to false')
                             ->action(function (Set $set, ?FormQuestion $record): void {
                                 $fields = (new FormQuestionVisibility)->getFillable();
-                                $fields = array_filter($fields, fn ($field) => $field !== 'form_question_id');
+                                $fields = array_filter($fields, fn (string $field): bool => $field !== 'form_question_id');
+
                                 $data = [];
                                 foreach ($fields as $field) {
                                     $set($field, false);

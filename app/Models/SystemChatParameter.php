@@ -21,7 +21,10 @@ final class SystemChatParameter extends Model
         'content',
     ];
 
-    protected $casts = [
-        'role' => OpenAIRole::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'role' => OpenAIRole::class,
+        ];
+    }
 }
