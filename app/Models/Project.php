@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[ObservedBy(ProjectObserver::class)]
@@ -83,6 +84,11 @@ final class Project extends Model
     public function requestQuote(): BelongsTo
     {
         return $this->belongsTo(RequestQuote::class);
+    }
+
+    public function requestQuoteFunctionalities(): BelongsToMany
+    {
+        return $this->requestQuote->requestQuoteFunctionalities();
     }
 
     protected function casts(): array

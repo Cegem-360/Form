@@ -17,6 +17,7 @@ use App\Services\ProjectCompletionDocumentService;
 use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 require_once __DIR__.'/auth.php';
 
@@ -49,7 +50,8 @@ Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(
         $service = new ProjectCompletionDocumentService($project);
         $filename = $service->savePdfToStorage();
 
-        return response()->file(storage_path('app/'.$filename));
+        // Use Storage::path() to get the correct absolute path according to the disk configuration
+        return response()->file(Storage::path($filename));
     })->name('storage');
 
 });

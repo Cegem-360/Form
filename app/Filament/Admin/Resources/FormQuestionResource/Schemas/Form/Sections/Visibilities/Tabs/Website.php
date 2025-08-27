@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\FormQuestionResource\Schemas\Form\Sections\Visibilities\Tabs;
 
 use App\Enums\FormQuestionStatus;
+use Filament\Actions\Action;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -18,6 +19,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
 
 final class Website
 {
@@ -44,7 +47,15 @@ final class Website
                         ->default(FormQuestionStatus::UNFILLED)
                         ->required()
                         ->enum(FormQuestionStatus::class),
-                    TextInput::make('token'),
+                    TextInput::make('token')
+                        ->live()
+                        ->suffixAction(
+                            Action::make('generateToken')
+                                ->icon('heroicon-m-arrow-path')
+                                ->action(function (Set $set) {
+                                    $set('token', Str::random(32));
+                                })
+                        ),
                     TextInput::make('company_name') // 1. page
                         ->maxLength(255),
                     TextInput::make('contact_name') // 1. page

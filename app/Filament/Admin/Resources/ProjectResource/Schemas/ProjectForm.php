@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\ProjectResource\Schemas;
 
 use App\Enums\ProjectStatus;
+use App\Models\RequestQuoteFunctionality;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 final class ProjectForm
@@ -40,10 +43,23 @@ final class ProjectForm
                     ->required(),
                 RichEditor::make('project_goal')
                     ->columnSpanFull(),
-                TextInput::make('completed_project_elements'),
-                TextInput::make('project_not_contained_elements'),
+                CheckboxList::make('requestQuoteFunctionalities')
+                    ->columnSpanFull()
+                    ->columns(4)
+                    ->searchable(false)
+                    ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Builder $query, Model $record) {
+                        return $query->where('website_type_id', $record->requestQuote->website_type_id)?->notDefault();
+                    })
+                    ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))
+                    ->disabled()
+                /*  ->descriptions(function (Model $record) {
+                        return RequestQuoteFunctionality::whereWebsiteTypeId($record->requestQuote->website_type_id)->notDefault()->pluck('description', 'id')->toArray();
+                    }) */,
+                /*  TextInput::make('completed_project_elements'),
+                TextInput::make('project_not_contained_elements'), */
 
-                TextInput::make('solved_problems'),
+                RichEditor::make('solved_problems')
+                    ->columnSpanFull(),
                 TextInput::make('garanty')
                     ->live()
                     ->label(__('Garanty (in months)'))

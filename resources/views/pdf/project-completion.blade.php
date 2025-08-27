@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        @if (!empty($completed_elements))
+        {{--  @if (!empty($completed_elements))
             <div class="section">
                 <div class="section-title">Teljesített Elemek</div>
                 <div class="list-section">
@@ -190,22 +190,18 @@
                     </ul>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         @if (!empty($solved_problems))
             <div class="section">
                 <div class="section-title">Megoldott Problémák</div>
                 <div class="list-section">
-                    <ul>
-                        @foreach ($solved_problems as $problem)
-                            <li>{{ is_array($problem) ? implode(' - ', $problem) : $problem }}</li>
-                        @endforeach
-                    </ul>
+                    {!! $solved_problems !!}
                 </div>
             </div>
         @endif
 
-        @if (!empty($not_contained_elements))
+        {{-- @if (!empty($not_contained_elements))
             <div class="section">
                 <div class="section-title">Nem Tartalmazott Elemek</div>
                 <div class="list-section">
@@ -217,7 +213,7 @@
                     </ul>
                 </div>
             </div>
-        @endif
+        @endif --}}
 
         @if ($garanty_info)
             <div class="section">
