@@ -11,8 +11,11 @@ use App\Livewire\Checkout\PaymentPage;
 use App\Livewire\FormQuestionForm;
 use App\Livewire\GuestShowQuaotationForm;
 use App\Livewire\NotionUpload;
+use App\Models\Project;
 use App\Models\RequestQuote;
+use App\Services\ProjectCompletionDocumentService;
 use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 require_once __DIR__.'/auth.php';
@@ -34,23 +37,22 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
 // Project PDF routes
 Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(function (): void {
 
-    Route::get('/completion/{project}', function ($projectId) {
-        $project = App\Models\Project::findOrFail($projectId);
-        $service = new App\Services\ProjectCompletionDocumentService($project);
+    Route::get('/completion/{project}', function ($projectId): Response {
+        $project = Project::query()->findOrFail($projectId);
+        $service = new ProjectCompletionDocumentService($project);
 
         return $service->generatePdf();
     })->name('completion');
 
     Route::get('/storage/{project}', function ($projectId) {
-        $project = App\Models\Project::findOrFail($projectId);
-        $service = new App\Services\ProjectCompletionDocumentService($project);
+        $project = Project::query()->findOrFail($projectId);
+        $service = new ProjectCompletionDocumentService($project);
         $filename = $service->savePdfToStorage();
 
         return response()->file(storage_path('app/'.$filename));
     })->name('storage');
 
 });
-
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
 

@@ -60,7 +60,7 @@ final class Website
                         ->maxSize(2048)
                         ->maxFiles(1)
                         ->downloadable(),
-                    Repeater::make('activities')// serveces etc. 1. page
+                    /* Repeater::make('activities')// serveces etc. 1. page
                         ->defaultItems(3)
                         ->collapsible()
                         ->collapsed()
@@ -69,7 +69,7 @@ final class Website
                             TextInput::make('name')
                                 ->maxLength(255)
                                 ->required(),
-                        ]),
+                        ]), */
                 ])
                 ->description('The Company basic informations')
                 ->collapsible()

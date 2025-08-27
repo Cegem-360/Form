@@ -141,7 +141,7 @@ final class RequestQuote extends Model
         return ! $this->isPayed();
     }
 
-    protected function getTotalPriceAttribute(): int
+    public function getTotalPriceAttribute(): int
     {
         $total = $this->getTotalPriceAttributeNoLanguages();
 

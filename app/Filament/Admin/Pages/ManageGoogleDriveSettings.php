@@ -140,15 +140,15 @@ final class ManageGoogleDriveSettings extends Page
         $envContent = file_get_contents($envPath);
 
         foreach ($values as $key => $value) {
-            $pattern = "/^{$key}=.*$/m";
-            $replacement = "{$key}={$value}";
+            $pattern = sprintf('/^%s=.*$/m', $key);
+            $replacement = sprintf('%s=%s', $key, $value);
 
             if (preg_match($pattern, $envContent)) {
                 // Key exists, update it
                 $envContent = preg_replace($pattern, $replacement, $envContent);
             } else {
                 // Key doesn't exist, add it
-                $envContent .= "\n{$replacement}";
+                $envContent .= PHP_EOL.$replacement;
             }
         }
 

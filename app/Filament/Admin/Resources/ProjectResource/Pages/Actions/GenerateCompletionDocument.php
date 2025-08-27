@@ -44,8 +44,8 @@ final class GenerateCompletionDocument
 
                 return route('project.pdf.completion', ['project' => $project->id]);
             }, true)
-            ->disabled(fn () => ! $component->getRecord()->end_date)
-            ->tooltip(fn () => ! $component->getRecord()->end_date ? 'A projekt befejezési dátuma nincs beállítva!' : null);
+            ->disabled(fn (): bool => ! $component->getRecord()->end_date)
+            ->tooltip(fn (): ?string => $component->getRecord()->end_date ? null : 'A projekt befejezési dátuma nincs beállítva!');
     }
 
     private static function googleDocsAction(EditRecord|ViewRecord $component): Action
@@ -53,14 +53,14 @@ final class GenerateCompletionDocument
         return Action::make('exportToGoogleDocs')
             ->label('Google Docs Export')
             ->icon('heroicon-o-cloud-arrow-up')
-            ->action(function () use ($component) {
+            ->action(function () use ($component): void {
                 /** @var Project $project */
                 $project = $component->getRecord();
-                
+
                 try {
                     $service = new ProjectCompletionDocumentService($project);
                     $googleDocUrl = $service->exportForGoogleDocs();
-                    
+
                     Notification::make()
                         ->title('Sikeresen feltöltve!')
                         ->body('A projekt teljesítési igazolás sikeresen létrejött a Google Drive-on.')
@@ -71,17 +71,17 @@ final class GenerateCompletionDocument
                                 ->url($googleDocUrl, shouldOpenInNewTab: true),
                         ])
                         ->send();
-                        
-                } catch (Exception $e) {
+
+                } catch (Exception $exception) {
                     Notification::make()
                         ->title('Hiba történt!')
-                        ->body('Nem sikerült feltölteni a Google Drive-ra: ' . $e->getMessage())
+                        ->body('Nem sikerült feltölteni a Google Drive-ra: '.$exception->getMessage())
                         ->danger()
                         ->send();
                 }
             })
-            ->disabled(fn () => ! $component->getRecord()->end_date)
-            ->tooltip(fn () => ! $component->getRecord()->end_date ? 'A projekt befejezesi datuma nincs beallitva!' : null);
+            ->disabled(fn (): bool => ! $component->getRecord()->end_date)
+            ->tooltip(fn (): ?string => $component->getRecord()->end_date ? null : 'A projekt befejezesi datuma nincs beallitva!');
     }
 
     private static function saveToStorageAction(EditRecord|ViewRecord $component): Action
@@ -99,7 +99,7 @@ final class GenerateCompletionDocument
 
                 return route('project.pdf.storage', ['project' => $project->id]);
             }, true)
-            ->disabled(fn () => ! $component->getRecord()->end_date)
-            ->tooltip(fn () => ! $component->getRecord()->end_date ? 'A projekt befejezési dátuma nincs beállítva!' : null);
+            ->disabled(fn (): bool => ! $component->getRecord()->end_date)
+            ->tooltip(fn (): ?string => $component->getRecord()->end_date ? null : 'A projekt befejezési dátuma nincs beállítva!');
     }
 }

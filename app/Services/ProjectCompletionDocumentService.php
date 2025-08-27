@@ -237,7 +237,7 @@ final class ProjectCompletionDocumentService
         }
 
         if (is_array($value)) {
-            return array_map(fn ($item) => $this->ensureUtf8Encoding($item), $value);
+            return array_map(fn ($item): mixed => $this->ensureUtf8Encoding($item), $value);
         }
 
         if (is_object($value) && method_exists($value, '__toString')) {

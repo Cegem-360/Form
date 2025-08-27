@@ -129,7 +129,7 @@
                         <div class="md:col-span-2">
                             <div class="text-xs text-gray-500">Preferált betűtípusok</div>
                             <div class="font-medium">
-                                @if (is_array($record->prefered_font_types))
+                                {{--  @if (is_array($record->prefered_font_types))
                                     <ul class="flex flex-wrap gap-2">
                                         @foreach ($record->prefered_font_types as $font)
                                             <li class="px-2 py-1 text-xs bg-gray-100 rounded">{{ $font }}</li>
@@ -137,7 +137,7 @@
                                     </ul>
                                 @else
                                     -
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                         <div class="md:col-span-2">
@@ -230,7 +230,8 @@
                                 @if (is_array($record->languages_for_website) && count($record->languages_for_website))
                                     <div class="flex flex-wrap gap-1">
                                         @foreach ($record->languages_for_website as $language)
-                                            <span class="px-2 py-1 text-xs bg-gray-100 rounded">{{ $language }}</span>
+                                            <span
+                                                class="px-2 py-1 text-xs bg-gray-100 rounded">{{ $language }}</span>
                                         @endforeach
                                     </div>
                                 @elseif(!empty($record->languages_for_website))
