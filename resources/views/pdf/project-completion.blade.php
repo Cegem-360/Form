@@ -251,7 +251,8 @@
                     @if ($support_pack->price)
                         <div class="info-row">
                             <div class="info-label">Ár:</div>
-                            <div class="info-value">{{ $support_pack->price }}</div>
+                            <div class="info-value">{{ Number::currency($support_pack->price, 'HUF', 'hu', 0) }}/
+                                ...periodus()</div>
                         </div>
                     @endif
                 </div>
