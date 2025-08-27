@@ -139,7 +139,7 @@ final class PdfOptionSeeder extends Seeder
                             átadása.</li>
                     </ul>
                 </li>
-                <li>Garancia időszak:
+                <li>Teszt időszak:
                     <ul class="pl-8 list-disc">
                         <li>Bizonyos időszakra (1 hónap) ingyenes hibajavítások biztosítása.</li>
                     </ul>

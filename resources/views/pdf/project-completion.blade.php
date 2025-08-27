@@ -217,10 +217,10 @@
 
         @if ($garanty_info)
             <div class="section">
-                <div class="section-title">Garancia Információ</div>
+                <div class="section-title">Teszt időszakró Információ</div>
                 <div class="info-grid">
                     <div class="info-row">
-                        <div class="info-label">Garancia:</div>
+                        <div class="info-label">Teszt időszak:</div>
                         <div class="info-value">{{ $garanty_info }} {{ __('Month') }}</div>
                     </div>
 
@@ -252,7 +252,7 @@
                         <div class="info-row">
                             <div class="info-label">Ár:</div>
                             <div class="info-value">{{ Number::currency($support_pack->price, 'HUF', 'hu', 0) }}/
-                                ...periodus()</div>
+                                ...periodus</div>
                         </div>
                     @endif
                 </div>
