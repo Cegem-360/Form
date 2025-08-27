@@ -180,6 +180,7 @@ final class ProjectCompletionDocumentService
             'support_pack' => $this->project->supportPack ? (object) [
                 'name' => $this->ensureUtf8Encoding($this->project->supportPack->name ?? ''),
                 'description' => $this->ensureUtf8Encoding($this->project->supportPack->description ?? ''),
+                'price' => $this->ensureUtf8Encoding($this->project->supportPack->price ?? ''),
             ] : null,
             'completion_date' => $this->project->end_date ?? now(),
             'start_date' => $this->project->start_date,
@@ -188,6 +189,7 @@ final class ProjectCompletionDocumentService
             'not_contained_elements' => $this->ensureUtf8Encoding($this->project->project_not_contained_elements ?? []),
             'solved_problems' => $this->ensureUtf8Encoding($this->project->solved_problems ?? []),
             'garanty_info' => $this->ensureUtf8Encoding($this->project->garanty ?? ''),
+            'garanty_end_date' => $this->ensureUtf8Encoding($this->project->garanty_end_date ?? ''),
             'document_generated_at' => now(),
             'document_number' => $this->generateDocumentNumber(),
         ];

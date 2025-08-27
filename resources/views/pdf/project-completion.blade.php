@@ -150,7 +150,7 @@
                 </div>
                 <div class="info-row">
                     <div class="info-label">Státusz:</div>
-                    <div class="info-value">{{ $project->status?->value ?? 'Befejezett' }}</div>
+                    <div class="info-value">{{ __($project->status?->value) ?? 'Befejezett' }}</div>
                 </div>
             </div>
         </div>
@@ -221,8 +221,15 @@
                 <div class="info-grid">
                     <div class="info-row">
                         <div class="info-label">Garancia:</div>
-                        <div class="info-value">{{ $garanty_info }}</div>
+                        <div class="info-value">{{ $garanty_info }} {{ __('Month') }}</div>
                     </div>
+
+                    @if (!empty($garanty_end_date))
+                        <div class="info-row">
+                            <div class="info-label">Garancia vége:</div>
+                            <div class="info-value">{{ $garanty_end_date }}</div>
+                        </div>
+                    @endif
                 </div>
             </div>
         @endif
@@ -239,6 +246,12 @@
                         <div class="info-row">
                             <div class="info-label">Leírás:</div>
                             <div class="info-value">{{ $support_pack->description }}</div>
+                        </div>
+                    @endif
+                    @if ($support_pack->price)
+                        <div class="info-row">
+                            <div class="info-label">Ár:</div>
+                            <div class="info-value">{{ $support_pack->price }}</div>
                         </div>
                     @endif
                 </div>

@@ -59,6 +59,7 @@ final class ProjectForm
                 TextInput::make('project_not_contained_elements'), */
 
                 RichEditor::make('solved_problems')
+                    ->label(__('Project summary'))
                     ->columnSpanFull(),
                 TextInput::make('garanty')
                     ->live()
