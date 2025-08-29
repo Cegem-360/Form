@@ -88,6 +88,37 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
         return $pdf->stream('maintenance-contract-' . $project->id . '.pdf');
     })->name('maintenance-contract');
 
+    Route::get('/maintenance-quote/{project}', function ($projectId): Response {
+        $project = Project::query()->findOrFail($projectId);
+
+        // Load relationships
+        $project->load([
+            'user',
+            'contact',
+            'requestQuote',
+            'order',
+            'supportPack',
+            'contactChannel',
+        ]);
+
+        // Prepare data for PDF
+        $data = [
+            'project' => $project,
+            'request_quote' => $project->requestQuote,
+            'client' => $project->user,
+            'contact_person' => $project->contact,
+            'order' => $project->order,
+            'support_pack' => $project->supportPack,
+            'document_generated_at' => now(),
+        ];
+
+        // Generate PDF dynamically
+        $pdf = Pdf::loadView('pdf.maintenance-quote', $data);
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('maintenance-quote-' . $project->id . '.pdf');
+    })->name('maintenance-quote');
+
 });
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {

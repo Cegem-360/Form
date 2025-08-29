@@ -9,6 +9,7 @@ use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\ConvertToStarter;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\EndTheProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateCompletionDocument;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateExampleDocument;
+use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateMaintenanceQuote;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
@@ -28,6 +29,7 @@ final class EditProject extends EditRecord
             GenerateExampleDocument::make(component: $this),
             ActionGroup::make([
                 ConvertToStarter::make(component: $this),
+                GenerateMaintenanceQuote::make(component: $this),
                 // üzemeltetési megbízási szerződés
                 // szerződés csak akkor ha aláírják
                 // support pack kell egy mező  hány havonta  menjen ki és kell end_date
