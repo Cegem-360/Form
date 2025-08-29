@@ -51,6 +51,7 @@
     "Use video or animation": "Videó vagy animáció legyen a dizájnban",
     "Own company videos": "Saját céges videók",
     "Main pages": "Főoldalak",
+    "Pages": "Oldalak",
     "Description": "Leírás",
     "Other pages": "Egyéb oldalak",
     "Perefered font types": "Preferált betűtípusok",
@@ -270,5 +271,11 @@
     "Month": "Hónap",
     "Project summary": "Projekt összefoglaló",
     "Test interval (months)": "Teszt intervallum (hónapokban)",
-    "Test interval end date": "Teszt intervallum vége"
+    "Test interval end date": "Teszt intervallum vége",
+    "Contracted accountants": "Szerződéses számlázó rendszerek",
+    "New Font": "Új betűtípus",
+    "Element": "Elem neve",
+    "New Color": "Új szín",
+    "Font type name": "Betűtípus neve",
+    "Font Types": "Betűtípusok"
 }

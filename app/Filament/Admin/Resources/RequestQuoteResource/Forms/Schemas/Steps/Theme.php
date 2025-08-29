@@ -78,11 +78,14 @@ final class Theme
                     ])
                     ->itemLabel(fn (array $state): ?string => $state['element'] ?? null),
                 Section::make(__('Colors and Fonts'))->columns(2)
+                    ->columnSpanFull()
                     ->compact()
                     ->schema([
                         ColorPicker::make('primary_color')
+                            ->translateLabel()
                             ->visible($visibility?->primary_color_visible),
                         ColorPicker::make('secondary_color')
+                            ->translateLabel()
                             ->visible($visibility?->secondary_color_visible),
                         Repeater::make('additional_colors')
                             ->columnSpanFull()
@@ -96,19 +99,27 @@ final class Theme
                                     ->required(),
                                 TextInput::make('description'),
                             ])
+                            ->addActionLabel(__('New Color'))
                             ->itemLabel(fn (array $state): ?string => $state['description'] ?? null),
                     ]),
-                Repeater::make('prefered_font_types')
-                    ->visible($visibility?->prefered_font_types_visible)
+                Section::make(__('Font Types'))
+                    ->columnSpanFull()
+                    ->columns(2)
                     ->schema([
-                        TextInput::make('font_type_name')
-                            ->required(),
-                    ])
-                    ->defaultItems(3)
-                    ->collapsible()
-                    ->collapsed()
-                    ->reorderableWithDragAndDrop()
-                    ->itemLabel(fn (array $state): ?string => $state['font_type_name'] ?? null),
+                        Repeater::make('prefered_font_types')
+                            ->columnSpanFull()
+                            ->visible($visibility?->prefered_font_types_visible)
+                            ->schema([
+                                TextInput::make('font_type_name')
+                                    ->required(),
+                            ])
+                            ->defaultItems(3)
+                            ->collapsible()
+                            ->collapsed()
+                            ->reorderableWithDragAndDrop()
+                            ->addActionLabel(__('New Font'))
+                            ->itemLabel(fn (array $state): ?string => $state['font_type_name'] ?? null),
+                    ]),
             ]);
     }
 }

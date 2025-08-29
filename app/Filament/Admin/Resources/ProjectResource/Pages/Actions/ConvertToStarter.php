@@ -21,6 +21,8 @@ final class ConvertToStarter
                 $pages = collect($record->requestQuote->websites)->map(function (array $page): array {
                     return [
                         'name' => $page['name'],
+                        'description' => $page['description'] ?? null,
+                        'images' => $page['images'] ?? [],
                     ];
                 })->toArray();
 

@@ -184,6 +184,11 @@ final class Website
                                 ->fileAttachmentsDisk('public')
                                 ->fileAttachmentsDirectory('pages/attachments')
                                 ->fileAttachmentsVisibility('public'),
+                            FileUpload::make('images')
+                                ->image()
+                                ->downloadable()
+                                ->reorderable()
+                                ->multiple(),
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
                         ->addActionLabel(__('New Page')),

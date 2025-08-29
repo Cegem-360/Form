@@ -123,9 +123,10 @@ final class RequestQuoteForm
                                 ->directory('website-images')
                                 ->openable()
                                 ->downloadable()
+                                ->multiple()
                                 ->reorderable()
+                                ->image()
                                 ->maxFiles(10)
-                                ->acceptedFileTypes(['jpg', 'jpeg', 'png', 'gif'])
                                 ->helperText(__('You can upload multiple images'))
                                 ->columnSpanFull(),
                         ]),
