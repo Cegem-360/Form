@@ -63,9 +63,7 @@ final class ClientInformation
                                     ->label('')
                                     ->tooltip(function ($state): string|array|null {
                                         return match ($state) {
-                                            'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
                                             'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
-                                            'shopify' => __('Filament/pages/request-quote.website_engine_shopify_tooltip'),
                                             default => __('Filament/pages/request-quote.website_engine_tooltip'),
                                         };
                                     })
