@@ -52,7 +52,7 @@ final class Website
                         ->suffixAction(
                             Action::make('generateToken')
                                 ->icon('heroicon-m-arrow-path')
-                                ->action(function (Set $set) {
+                                ->action(function (Set $set): void {
                                     $set('token', Str::random(32));
                                 })
                         ),

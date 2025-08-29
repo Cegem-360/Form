@@ -42,23 +42,23 @@
                 <div class="mb-4">
                     <div class="mb-1 text-xs font-semibold text-gray-500">Árajánlat összeg:</div>
                     <div class="text-2xl font-bold text-green-700">
-                        {{ Number::currency($order->requestQuote->getTotalPriceAttribute(), in: 'HUF', locale: 'hu', precision: 0) }}
+                        {{ Number::currency($order->requestQuote->totalPrice, in: 'HUF', locale: 'hu', precision: 0) }}
                         <span class="font-normal text-gray-700">+ Áfa</span>
                     </div>
                     <div class="text-sm text-gray-500">
                         (Bruttó:
-                        {{ Number::currency($order->requestQuote->getTotalPriceAttribute() * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
+                        {{ Number::currency($order->requestQuote->totalPrice * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
                     </div>
                 </div>
                 <div class="mb-4">
                     <div class="mb-1 text-xs font-semibold text-gray-500">Előleg összeg:</div>
                     <div class="text-2xl font-bold text-green-700">
-                        {{ Number::currency($order->requestQuote->getTotalPriceAttribute() / 2, in: 'HUF', locale: 'hu', precision: 0) }}
+                        {{ Number::currency($order->requestQuote->totalPrice / 2, in: 'HUF', locale: 'hu', precision: 0) }}
                         <span class="font-normal text-gray-700">+ Áfa</span>
                     </div>
                     <div class="text-sm text-gray-500">
                         (Bruttó:
-                        {{ Number::currency(($order->requestQuote->getTotalPriceAttribute() / 2) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
+                        {{ Number::currency(($order->requestQuote->totalPrice / 2) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
                     </div>
                 </div>
                 <!-- Tételek listája -->

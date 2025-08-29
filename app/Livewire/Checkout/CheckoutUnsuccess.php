@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire\Checkout;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 use App\Models\RequestQuote;
 use Livewire\Component;
 
@@ -18,7 +20,7 @@ final class CheckoutUnsuccess extends Component
         $this->requestQuote = $requestQuote;
     }
 
-    public function render()
+    public function render(): View|Factory
     {
         return view('livewire.checkout.checkout-unsuccess');
     }

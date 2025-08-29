@@ -10,6 +10,7 @@ use Database\Factories\RequestQuoteFactory;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,6 +45,7 @@ final class RequestQuote extends Model
         'project_description',
         'billing_address',
         'is_payed',
+        'total_price',
     ];
 
     public function requestQuotePercent(): ?float
@@ -141,19 +143,25 @@ final class RequestQuote extends Model
         return ! $this->isPayed();
     }
 
-    public function getTotalPriceAttribute(): int
+    protected function totalPrice(): Attribute
     {
-        $total = $this->getTotalPriceAttributeNoLanguages();
 
-        if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
+        return Attribute::make(
+            get: function () {
+                $total = $this->getTotalPriceAttributeNoLanguages();
 
-            $tmp = $total;
-            foreach ($this->languages as $language) {
-                $total += (int) round($tmp * $this->requestQuotePercent());
+                if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {
+
+                    $tmp = $total;
+                    foreach ($this->languages as $language) {
+                        $total += (int) round($tmp * $this->requestQuotePercent());
+                    }
+                }
+
+                return $total;
             }
-        }
+        );
 
-        return $total;
     }
 
     #[Scope]

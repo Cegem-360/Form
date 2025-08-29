@@ -232,13 +232,13 @@ final class RequestQuoteResource extends Resource
                     ->boolean(),
                 TextColumn::make('deposit_price')
                     ->label('Deposit Price')
-                    ->state(function (Model $record): string|false {
-                        return Number::currency($record->getTotalPriceAttribute() / 2, 'HUF', 'hu_HU', 0);
+                    ->state(function (RequestQuote $record): string|false {
+                        return Number::currency($record->totalPrice / 2, 'HUF', 'hu_HU', 0);
                     }),
                 TextColumn::make('total_price')
                     ->label(__('Total Price'))
-                    ->state(function (Model $record): string|false {
-                        return Number::currency($record->getTotalPriceAttribute(), 'HUF', 'hu_HU', 0);
+                    ->state(function (RequestQuote $record): string|false {
+                        return Number::currency($record->totalPrice, 'HUF', 'hu_HU', 0);
                     }),
                 TextColumn::make('created_at')
                     ->dateTime()

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\FormQuestionResource\Pages;
 
+use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
 use App\Filament\Admin\Resources\FormQuestionResource;
 use App\Jobs\UpdateAllWebsiteDataByDomain;
 use App\Models\FormQuestion;
@@ -26,7 +28,7 @@ final class EditFormQuestion extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             Action::make('Generate and View pdf')
-                ->action(function (FormQuestion $formQuestion) {
+                ->action(function (FormQuestion $formQuestion): Redirector|RedirectResponse {
                     $pdf = Pdf::loadView('pdf.form-question', ['formQuestion' => $formQuestion], encoding: 'UTF-8');
                     $pdf->setPaper('A4', 'portrait');
                     $pdf->setOption('isHtml5ParserEnabled', true);

@@ -9,6 +9,8 @@ use App\Enums\StripeCurrency;
 use App\Enums\TransactionStatus;
 use App\Models\Order;
 use App\Models\RequestQuote;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -38,7 +40,7 @@ final class CheckoutSuccess extends Component
             'user_id' => $requestQuote->user->id,
             'customer_name' => $requestQuote->user->name,
             'customer_email' => $requestQuote->user->email,
-            'amount' => $requestQuote->getTotalPriceAttribute(),
+            'amount' => $requestQuote->totalPrice,
             'status' => $requestQuote->payment_method === 'stripe'
                 ? TransactionStatus::COMPLETED
                 : TransactionStatus::PENDING,
@@ -51,7 +53,7 @@ final class CheckoutSuccess extends Component
         }
     }
 
-    public function render()
+    public function render(): View|Factory
     {
 
         return view('livewire.checkout.checkout-success');

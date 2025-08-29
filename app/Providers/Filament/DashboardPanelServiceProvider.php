@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 use App\Filament\Dashboard\Pages\Auth\EditProfile;
 use App\Filament\Dashboard\Pages\Auth\Login;
 use App\Filament\Dashboard\Pages\Dashboard;
@@ -41,7 +43,7 @@ final class DashboardPanelServiceProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->brandLogo(fn () => view('filament.dashboard.logo'))
+            ->brandLogo(fn (): View|Factory => view('filament.dashboard.logo'))
             ->discoverResources(in: app_path('Filament/Dashboard/Resources'), for: 'App\\Filament\\Dashboard\\Resources')
             ->discoverPages(in: app_path('Filament/Dashboard/Pages'), for: 'App\\Filament\\Dashboard\\Pages')
             ->discoverClusters(in: app_path('Filament/Dashboard/Clusters'), for: 'App\\Filament\\Dashboard\\Clusters')

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 use App\Filament\Admin\Pages\Auth\EditProfile;
 use App\Filament\Admin\Pages\Auth\Login;
 use App\Filament\Admin\Pages\Dashboard;
@@ -48,7 +50,7 @@ final class AdminPanelServiceProvider extends PanelProvider
                 'Settings',
                 'Beállítások',
             ])
-            ->brandLogo(fn () => view('filament.dashboard.logo'))
+            ->brandLogo(fn (): View|Factory => view('filament.dashboard.logo'))
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->discoverClusters(in: app_path('Filament/Admin/Clusters'), for: 'App\\Filament\\Admin\\Clusters')

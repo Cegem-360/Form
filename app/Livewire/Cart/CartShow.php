@@ -29,7 +29,7 @@ final class CartShow extends Component implements HasActions, HasForms
 
         $this->requestQuote = $requestQuote;
 
-        $this->total += $this->requestQuote?->getTotalPriceAttribute();
+        $this->total += $this->requestQuote?->totalPrice;
         $this->form->fill();
     }
 

@@ -238,7 +238,7 @@
                         </td>
                         <td colspan="2" class="px-4 py-2 text-right border">
                             <h3 class="font-bold">
-                                {{ Number::currency($requestQuote->getTotalPriceAttribute(), in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($requestQuote->totalPrice, in: 'HUF', locale: 'hu', precision: 0) }}
                                 + ÁFA
                             </h3>
                         </td>
@@ -249,7 +249,7 @@
                         </td>
                         <td colspan="2" class="px-4 py-2 text-right border">
                             <h3 class="font-bold">
-                                {{ Number::currency($requestQuote->getTotalPriceAttribute() / 2, in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($requestQuote->totalPrice / 2, in: 'HUF', locale: 'hu', precision: 0) }}
                                 + ÁFA
                             </h3>
                         </td>

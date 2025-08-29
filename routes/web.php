@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\NotionController;
 use App\Http\Middleware\EnsureHasRequestQuote;
 use App\Livewire\Cart\CartShow;
@@ -25,13 +28,13 @@ Route::middleware(['auth'])->get('/', function () {
     return redirect()->route('filament.dashboard.pages.dashboard');
 })->name('home');
 
-Route::get('/form/expired', function () {
+Route::get('/form/expired', function (): View|Factory {
     return view('form.expired');
 })->name('form.expired');
 
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
 
-Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
+Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote): View|Factory {
     return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 })->name('quotation.pdf');
 
@@ -79,7 +82,7 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
         ];
 
         // Generate PDF dynamically
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.maintenance-contract', $data);
+        $pdf = Pdf::loadView('pdf.maintenance-contract', $data);
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->stream('maintenance-contract-' . $project->id . '.pdf');
@@ -89,7 +92,7 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
 
 Route::name('quotation.')->prefix('quotation')->group(function (): void {
 
-    Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote) {
+    Route::get('preview/{requestQuote}', function (RequestQuote $requestQuote): View|Factory {
         return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
 
     })->name('preview');

@@ -15,11 +15,11 @@
                 <span class="font-medium">Előleg összeg:</span>
                 <span class="text-xl font-bold text-green-700">
 
-                    {{ Number::currency($requestQuote->getTotalPriceAttribute() / 2 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
+                    {{ Number::currency($requestQuote->totalPrice / 2 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
                     <span class="font-normal text-gray-700">+ Áfa</span>
                     <span class="block text-xs font-normal text-gray-500">
                         Bruttó:
-                        {{ Number::currency(($requestQuote->getTotalPriceAttribute() / 2) * 1.27 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
+                        {{ Number::currency(($requestQuote->totalPrice / 2) * 1.27 ?? 0, in: 'HUF', locale: 'hu', precision: 0) }}
                     </span>
                 </span>
             </div>

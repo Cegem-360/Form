@@ -34,7 +34,7 @@ final class GenerateCompletionDocument
         return Action::make('generateCompletionPdf')
             ->label('PDF Letöltése')
             ->icon('heroicon-o-document-arrow-down')
-            ->url(function () use ($component) {
+            ->url(function () use ($component): ?string {
                 /** @var Project $project */
                 $project = $component->getRecord();
 
@@ -89,7 +89,7 @@ final class GenerateCompletionDocument
         return Action::make('saveCompletionToStorage')
             ->label('Mentés és Megtekintés')
             ->icon('heroicon-o-archive-box-arrow-down')
-            ->url(function () use ($component) {
+            ->url(function () use ($component): ?string {
                 /** @var Project $project */
                 $project = $component->getRecord();
 

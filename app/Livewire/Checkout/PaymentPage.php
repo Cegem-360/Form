@@ -17,6 +17,8 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
@@ -134,7 +136,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
                     'user_id' => Auth::user()->id,
                     'status' => TransactionStatus::PENDING,
                     'currency' => StripeCurrency::HUF,
-                    'amount' => $this->requestQuote->getTotalPriceAttribute(),
+                    'amount' => $this->requestQuote->totalPrice,
                 ]);
 
                 Session::put('order', $order->id);
@@ -143,7 +145,7 @@ final class PaymentPage extends Component implements HasActions, HasForms
             });
     }
 
-    public function render()
+    public function render(): View|Factory
     {
         return view('livewire.checkout.payment-page');
     }

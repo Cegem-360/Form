@@ -535,7 +535,6 @@ namespace App\Models{
  * @property bool|null $is_payed
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
- * @property-read int $total_price
  * @property-read \App\Models\Order|null $order
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
  * @property-read int|null $pdf_options_count
@@ -547,6 +546,7 @@ namespace App\Models{
  * @property-read int|null $request_quote_functionalities_default_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalitiesNotDefault
  * @property-read int|null $request_quote_functionalities_not_default_count
+ * @property-read mixed $total_price
  * @property-read \App\Models\User|null $user
  * @property-read \App\Models\WebsiteType|null $websiteType
  * @method static \Database\Factories\RequestQuoteFactory factory($count = null, $state = [])

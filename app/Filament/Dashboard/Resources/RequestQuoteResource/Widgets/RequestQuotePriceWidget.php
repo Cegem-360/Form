@@ -15,7 +15,7 @@ final class RequestQuotePriceWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        $totalPrice = $this->record?->getTotalPriceAttribute() ?? 0;
+        $totalPrice = $this->record?->totalPrice ?? 0;
         $totalPriceHtml = Number::currency($totalPrice, 'HUF', 'hu_HU', 0);
         $discount = Number::currency($totalPrice / 2, 'HUF', 'hu_HU', 0);
 

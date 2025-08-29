@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\View\Factory;
 use App\Services\NotionService;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -57,7 +59,7 @@ final class NotionUpload extends Component
         }
     }
 
-    public function render()
+    public function render(): View|Factory
     {
         return view('livewire.notion-upload');
     }

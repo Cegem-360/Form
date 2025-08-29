@@ -50,7 +50,7 @@ final class ClientInformation
                                     ->icon('heroicon-o-question-mark-circle')
                                     ->extraAttributes(['class' => 'text-gray-500'])
                                     ->label('')
-                                    ->tooltip(function ($state) {
+                                    ->tooltip(function ($state): string|array|null {
                                         return __('Filament/pages/request-quote.website_type_tooltip');
                                     })
                             ),
@@ -61,7 +61,7 @@ final class ClientInformation
                                     ->icon('heroicon-o-question-mark-circle')
                                     ->extraAttributes(['class' => 'text-gray-500'])
                                     ->label('')
-                                    ->tooltip(function ($state) {
+                                    ->tooltip(function ($state): string|array|null {
                                         return match ($state) {
                                             'wordpress' => __('Filament/pages/request-quote.website_engine_wordpress_tooltip'),
                                             'laravel' => __('Filament/pages/request-quote.website_engine_laravel_tooltip'),
