@@ -4,279 +4,180 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Projekt Teljesitesi Igazolas</title>
+        <title>Teljesítési Igazolás Weboldal Fejlesztésre</title>
         <style>
             @page {
-                margin: 2cm;
+                margin: 20mm;
             }
 
             body {
-                font-family: 'DejaVu Sans', sans-serif;
-                line-height: 1.6;
-                color: #333;
+                font-family: 'DejaVu Sans', Arial, sans-serif;
+                font-size: 12pt;
+                line-height: 1.4;
+                color: #000;
             }
 
             .header {
                 text-align: center;
-                margin-bottom: 30px;
-                padding-bottom: 20px;
-                border-bottom: 2px solid #007bff;
-            }
-
-            .header h1 {
-                color: #007bff;
-                margin-bottom: 10px;
-            }
-
-            .document-number {
-                color: #666;
-                font-size: 14px;
-            }
-
-            .section {
-                margin-bottom: 25px;
-                page-break-inside: avoid;
+                margin-bottom: 40px;
+                font-weight: bold;
+                font-size: 14pt;
             }
 
             .section-title {
-                background-color: #f8f9fa;
-                padding: 10px;
-                margin-bottom: 15px;
-                font-size: 18px;
                 font-weight: bold;
-                color: #007bff;
-                border-left: 4px solid #007bff;
+                font-size: 12pt;
+                margin: 20px 0 10px 0;
             }
 
-            .info-grid {
-                display: table;
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                border: 2px solid #000;
+            }
+
+            td, th {
+                border: 1px solid #000;
+                padding: 8px;
+                vertical-align: top;
+                font-size: 11pt;
+            }
+
+            .label-cell {
+                font-weight: bold;
+                background-color: #f5f5f5;
+                width: 35%;
+            }
+
+            .value-cell {
+                width: 65%;
+            }
+
+            .full-width {
                 width: 100%;
             }
 
-            .info-row {
-                display: table-row;
+            .price-table td {
+                text-align: left;
+                padding: 6px 8px;
             }
 
-            .info-label {
-                display: table-cell;
-                width: 40%;
-                padding: 8px;
-                font-weight: bold;
-                background-color: #f8f9fa;
-                border: 1px solid #dee2e6;
-            }
-
-            .info-value {
-                display: table-cell;
-                width: 60%;
-                padding: 8px;
-                border: 1px solid #dee2e6;
-            }
-
-            .list-section {
-                padding: 10px;
-                background-color: #f8f9fa;
-                border-radius: 5px;
-            }
-
-            .list-section ul {
-                margin: 10px 0;
-                padding-left: 20px;
-            }
-
-            .list-section li {
-                margin-bottom: 5px;
-            }
-
-            .footer {
-                margin-top: 40px;
-                padding-top: 20px;
-                border-top: 1px solid #dee2e6;
-                text-align: center;
-                font-size: 12px;
-                color: #666;
-            }
-
-            .signature-section {
-                margin-top: 50px;
-                display: table;
-                width: 100%;
-            }
-
-            .signature-box {
-                display: table-cell;
-                width: 45%;
-                text-align: center;
-                padding: 20px;
-            }
-
-            .signature-line {
-                border-bottom: 1px solid #000;
-                margin: 40px auto 10px;
-                width: 200px;
+            .price-right {
+                text-align: right;
             }
         </style>
     </head>
 
     <body>
         <div class="header">
-            <h1>PROJEKT TELJESÍTÉSI IGAZOLÁS</h1>
-            <div class="document-number">Dokumentum száma: {{ $document_number }}</div>
-            <div>Kiállítás dátuma: {{ $document_generated_at->format('Y. m. d.') }}</div>
+            TELJESÍTÉSI IGAZOLÁS WEBOLDAL FEJLESZTÉSRE
         </div>
 
-        <div class="section">
-            <div class="section-title">Projekt Információk</div>
-            <div class="info-grid">
-                <div class="info-row">
-                    <div class="info-label">Projekt neve:</div>
-                    <div class="info-value">{{ $project->name }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Projekt azonosító:</div>
-                    <div class="info-value">#{{ $project->id }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Kezdés dátuma:</div>
-                    <div class="info-value">{{ $start_date ? $start_date->format('Y. m. d.') : 'Nincs megadva' }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Befejezés dátuma:</div>
-                    <div class="info-value">{{ $completion_date->format('Y. m. d.') }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Projekt időtartama:</div>
-                    <div class="info-value">{{ $project_duration }} nap</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Státusz:</div>
-                    <div class="info-value">{{ __($project->status?->value) ?? 'Befejezett' }}</div>
-                </div>
-            </div>
-        </div>
+        <div class="section-title">I. Megrendelő és Vállalkozó adatai</div>
+        <table>
+            <tr>
+                <td class="label-cell">Megrendelő:</td>
+                <td class="value-cell">{{ $request_quote->company_name ?? $client->name ?? 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Teljesítést igazoló</td>
+                <td class="value-cell">{{ $contact_person->name ?? 'N/A' }}</td>
+            </tr>
+        </table>
 
-        <div class="section">
-            <div class="section-title">Ügyfél Adatok</div>
-            <div class="info-grid">
-                <div class="info-row">
-                    <div class="info-label">Ügyfél neve:</div>
-                    <div class="info-value">{{ $client->name ?? 'N/A' }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Email cím:</div>
-                    <div class="info-value">{{ $client->email ?? 'N/A' }}</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-label">Kapcsolattartó:</div>
-                    <div class="info-value">{{ $contact_person->name ?? 'N/A' }}</div>
-                </div>
-                @if ($request_quote)
-                    <div class="info-row">
-                        <div class="info-label">Cégnév:</div>
-                        <div class="info-value">{{ $request_quote->company_name ?? 'N/A' }}</div>
-                    </div>
-                @endif
-            </div>
-        </div>
+        <table>
+            <tr>
+                <td class="label-cell">Vállalkozó:</td>
+                <td class="value-cell">Cégem 360 Kft.</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Szerződést teljesítő neve:</td>
+                <td class="value-cell">Tóth Tamás</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Vállalkozó székhelye, telephelye:</td>
+                <td class="value-cell">1182 Budapest, Gulipán utca 6.</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Vállalkozó adószáma:</td>
+                <td class="value-cell">14286249-2-43</td>
+            </tr>
+        </table>
 
-        {{--  @if (!empty($completed_elements))
-            <div class="section">
-                <div class="section-title">Teljesített Elemek</div>
-                <div class="list-section">
-                    <ul>
-                        @foreach ($completed_elements as $element)
-                            <li>{{ is_array($element) ? implode(' - ', $element) : $element }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif --}}
-
-        @if (!empty($solved_problems))
-            <div class="section">
-                <div class="section-title">Megoldott Problémák</div>
-                <div class="list-section">
-                    {!! $solved_problems !!}
-                </div>
-            </div>
-        @endif
-
-        {{-- @if (!empty($not_contained_elements))
-            <div class="section">
-                <div class="section-title">Nem Tartalmazott Elemek</div>
-                <div class="list-section">
-                    <p>Az alábbi elemek nem képezték a projekt részét:</p>
-                    <ul>
-                        @foreach ($not_contained_elements as $element)
-                            <li>{{ is_array($element) ? implode(' - ', $element) : $element }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        @endif --}}
-
-        @if ($garanty_info)
-            <div class="section">
-                <div class="section-title">Teszt időszakró Információ</div>
-                <div class="info-grid">
-                    <div class="info-row">
-                        <div class="info-label">Teszt időszak:</div>
-                        <div class="info-value">{{ $garanty_info }} {{ __('Month') }}</div>
-                    </div>
-
-                    @if (!empty($garanty_end_date))
-                        <div class="info-row">
-                            <div class="info-label">Garancia vége:</div>
-                            <div class="info-value">{{ $garanty_end_date }}</div>
-                        </div>
+        <div class="section-title">II. Szerződés adatai</div>
+        <table class="price-table">
+            <tr>
+                <td class="label-cell">Szerződés tárgya:</td>
+                <td class="value-cell">{{ $document_generated_at->format('Y. m. d.') }}-én kelt, {{ $document_number }} sorszámú árajánlat alapján {{ $project->name ?? 'weboldal' }} angol nyelvű változat elkészítése</td>
+            </tr>
+            <tr>
+                <td class="label-cell">A vállalkozói díj összesen:</td>
+                <td class="value-cell">
+                    @if($order && $order->total_amount)
+                        Nettó: {{ Number::currency($order->total_amount, 'HUF', 'hu', 0) }}<br>
+                        ÁFA (27%): {{ Number::currency($order->total_amount * 0.27, 'HUF', 'hu', 0) }}<br>
+                        Bruttó: {{ Number::currency($order->total_amount * 1.27, 'HUF', 'hu', 0) }}
+                    @else
+                        Nettó: 376.000,- Ft<br>
+                        ÁFA (27%): 101.520,- Ft<br>
+                        Bruttó: 477.520,- Ft
                     @endif
+                </td>
+            </tr>
+        </table>
+
+        <div class="section-title">III. Teljesítés adatai</div>
+        <table>
+            <tr>
+                <td class="label-cell">Szerződés teljesítésének ellenértéke (nettó+ÁFA=bruttó):</td>
+                <td class="value-cell">
+                    @if($order && $order->total_amount)
+                        Nettó: {{ Number::currency($order->total_amount * 0.6, 'HUF', 'hu', 0) }}<br>
+                        ÁFA (27%): {{ Number::currency($order->total_amount * 0.6 * 0.27, 'HUF', 'hu', 0) }}<br>
+                        Bruttó: {{ Number::currency($order->total_amount * 0.6 * 1.27, 'HUF', 'hu', 0) }}
+                    @else
+                        Nettó: 226.400,- Ft<br>
+                        ÁFA (27%): 61.128,- Ft<br>
+                        Bruttó: 287.528,- Ft
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <td class="label-cell">A Szerződés teljesítésének időpontja:</td>
+                <td class="value-cell">{{ $completion_date->format('Y. m. d.') }}</td>
+            </tr>
+            <tr>
+                <td class="label-cell">A Szerződés keretében ellátott feladat rövid összefoglalása:</td>
+                <td class="value-cell">A weboldal fejlesztési munkát az árajánlatban foglaltak szerint elvégezték.</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 40px;">
+            <p style="text-align: justify; line-height: 1.6; margin-bottom: 30px;">
+                A Vállalkozó a Vállalkozási Szerződésben vállalt teljesítést adott határidőre, a Szerződésben 
+                foglaltak szerint elvégezte. A Vállalkozó a jelen teljesítési igazolás alapján jogosult nettó 
+                {{ $order && $order->total_amount ? Number::currency($order->total_amount * 0.6, 'HUF', 'hu', 0) : '226.400,-' }}Ft + 
+                27% ÁFA, azaz összesen bruttó {{ $order && $order->total_amount ? Number::currency($order->total_amount * 0.6 * 1.27, 'HUF', 'hu', 0) : '287.528,-' }}Ft 
+                összegű számlájának a Megrendelőhöz való benyújtására, amelyhez jelen aláírt igazolás másolatát kell 
+                csatolnia a Vállalkozónak.
+            </p>
+            
+            <div style="margin-bottom: 40px;">
+                <div style="text-align: left; margin-bottom: 30px;">
+                    Budapest, {{ $completion_date->format('Y.m.d.') }}
                 </div>
             </div>
-        @endif
 
-        @if ($support_pack)
-            <div class="section">
-                <div class="section-title">Support Csomag</div>
-                <div class="info-grid">
-                    <div class="info-row">
-                        <div class="info-label">Csomag neve:</div>
-                        <div class="info-value">{{ $support_pack->name }}</div>
-                    </div>
-                    @if ($support_pack->description)
-                        <div class="info-row">
-                            <div class="info-label">Leírás:</div>
-                            <div class="info-value">{{ $support_pack->description }}</div>
-                        </div>
-                    @endif
-                    @if ($support_pack->price)
-                        <div class="info-row">
-                            <div class="info-label">Ár:</div>
-                            <div class="info-value">{{ Number::currency($support_pack->price, 'HUF', 'hu', 0) }}/
-                                ...periodus</div>
-                        </div>
-                    @endif
+            <div style="text-align: right; margin-top: 80px;">
+                <div style="border-bottom: 2px dotted #000; width: 300px; margin-left: auto; margin-bottom: 10px;"></div>
+                <div style="text-align: center; width: 300px; margin-left: auto;">
+                    <div style="font-weight: bold;">Megrendelő képviseletében</div>
+                    <div>{{ $contact_person->name ?? 'Példa János' }}</div>
                 </div>
-            </div>
-        @endif
-
-        <div class="signature-section">
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div>Megrendelő</div>
-                <div>{{ $client->name ?? '' }}</div>
-            </div>
-            <div style="display: table-cell; width: 10%;"></div>
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div>Kivitelező</div>
-                <div>{{ config('app.name') }}</div>
             </div>
         </div>
 
-        <div class="footer">
-            <p>Ez a dokumentum igazolja, hogy a fent részletezett projekt sikeresen teljesítésre került.</p>
-            <p>Dokumentum generálva: {{ $document_generated_at->format('Y. m. d. H:i:s') }}</p>
-        </div>
     </body>
 
 </html>

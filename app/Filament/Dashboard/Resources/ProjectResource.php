@@ -90,16 +90,18 @@ final class ProjectResource extends Resource
                     ->sortable(),
                 TextColumn::make('status'),
                 TextColumn::make('garanty')
+                    ->label(__('Test interval (months)'))
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('garanty_end_date')
+                    ->label(__('Test interval end date'))
                     ->date()
                     ->sortable(),
                 TextColumn::make('contact')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('support_pack_id.name')
-                    ->label('Support Pack')
+                    ->label(__('Support Pack'))
                     ->sortable(),
                 TextColumn::make('contact_channel_id.name')
                     ->label('Contact Channel')

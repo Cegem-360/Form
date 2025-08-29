@@ -161,8 +161,8 @@
     "Garanty end date": "Garancia lejárati dátuma",
     "Contact": "Kapcsolat",
     "Contact Channel": "Kapcsolat csatorna",
-    "Support Pack": "Támogatási Csomag",
-    "Support pack": "Támogatási csomag",
+    "Support Pack": "Üzemeltetési Csomag",
+    "Support pack": "Üzemeltetési csomag",
     "ACTIVE": "Aktív",
     "INACTIVE": "Inaktív",
     "PENDING": "Függőben",
@@ -268,5 +268,7 @@
     "Garanty (in months)": "Garancia (hónapokban)",
     "The project has been ended successfully.": "A projekt sikeresen lezárult.",
     "Month": "Hónap",
-    "Project summary": "Projekt összefoglaló"
+    "Project summary": "Projekt összefoglaló",
+    "Test interval (months)": "Teszt intervallum (hónapokban)",
+    "Test interval end date": "Teszt intervallum vége"
 }

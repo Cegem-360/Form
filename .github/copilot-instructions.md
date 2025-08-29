@@ -15,6 +15,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - livewire/livewire (LIVEWIRE) - v3
 - larastan/larastan (LARASTAN) - v3
 - laravel/pint (PINT) - v1
+- laravel/sail (SAIL) - v1
 - pestphp/pest (PEST) - v4
 - rector/rector (RECTOR) - v2
 - alpinejs (ALPINEJS) - v3
@@ -84,7 +85,6 @@ This application is a Laravel application and its main Laravel ecosystems packag
 
 ## PHP
 
-- Always use strict typing at the head of a `.php` file: `declare(strict_types=1);`.
 - Always use curly braces for control structures, even if it has one line.
 
 ### Constructors
@@ -475,8 +475,6 @@ it('may reset the password', function () {
     Notification::assertSent(ResetPassword::class);
 });
 </code-snippet>
-
-
 
 <code-snippet name="Pest Smoke Testing Example" lang="php">
 $pages = visit(['/', '/about', '/contact']);

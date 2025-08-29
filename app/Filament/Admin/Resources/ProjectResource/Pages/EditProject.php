@@ -8,6 +8,7 @@ use App\Filament\Admin\Resources\ProjectResource;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\ConvertToStarter;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\EndTheProject;
 use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateCompletionDocument;
+use App\Filament\Admin\Resources\ProjectResource\Pages\Actions\GenerateExampleDocument;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
@@ -24,6 +25,7 @@ final class EditProject extends EditRecord
             ViewAction::make(),
             DeleteAction::make(),
             GenerateCompletionDocument::make(component: $this),
+            GenerateExampleDocument::make(component: $this),
             ActionGroup::make([
                 ConvertToStarter::make(component: $this),
                 // üzemeltetési megbízási szerződés

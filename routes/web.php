@@ -36,7 +36,7 @@ Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote) {
 })->name('quotation.pdf');
 
 // Project PDF routes
-Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(function (): void {
+Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(function (): void {
 
     Route::get('/completion/{project}', function ($projectId): Response {
         $project = Project::query()->findOrFail($projectId);
@@ -53,6 +53,37 @@ Route::middleware(['auth'])->prefix('project-pdf')->name('project.pdf.')->group(
         // Use Storage::path() to get the correct absolute path according to the disk configuration
         return response()->file(Storage::path($filename));
     })->name('storage');
+
+    Route::get('/maintenance-contract/{project}', function ($projectId): Response {
+        $project = Project::query()->findOrFail($projectId);
+
+        // Load relationships
+        $project->load([
+            'user',
+            'contact',
+            'requestQuote',
+            'order',
+            'supportPack',
+            'contactChannel',
+        ]);
+
+        // Prepare data for PDF (project and quote data available but not displayed)
+        $data = [
+            'project' => $project,
+            'request_quote' => $project->requestQuote,
+            'client' => $project->user,
+            'contact_person' => $project->contact,
+            'order' => $project->order,
+            'support_pack' => $project->supportPack,
+            'document_generated_at' => now(),
+        ];
+
+        // Generate PDF dynamically
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.maintenance-contract', $data);
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream('maintenance-contract-' . $project->id . '.pdf');
+    })->name('maintenance-contract');
 
 });
 
