@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Services\ProjectCompletionDocumentService;
 use App\Models\Project;
 use App\Models\User;
+use App\Services\ProjectCompletionDocumentService;
 
 it('can download project completion pdf from storage', function (): void {
     // Create test data
@@ -17,7 +17,7 @@ it('can download project completion pdf from storage', function (): void {
 
     // Test the route
     $response = $this->actingAs($user)
-        ->get('/project-pdf/storage/' . $project->id);
+        ->get('/project-pdf/storage/'.$project->id);
 
     $response->assertStatus(200)
         ->assertHeader('Content-Type', 'application/pdf');

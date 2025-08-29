@@ -2,9 +2,6 @@
 
 declare(strict_types=1);
 
-use Illuminate\Contracts\View\View;
-use Illuminate\Contracts\View\Factory;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\NotionController;
 use App\Http\Middleware\EnsureHasRequestQuote;
 use App\Livewire\Cart\CartShow;
@@ -17,7 +14,10 @@ use App\Livewire\NotionUpload;
 use App\Models\Project;
 use App\Models\RequestQuote;
 use App\Services\ProjectCompletionDocumentService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use FiveamCode\LaravelNotionApi\NotionFacade as Notion;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
@@ -85,7 +85,7 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
         $pdf = Pdf::loadView('pdf.maintenance-contract', $data);
         $pdf->setPaper('A4', 'portrait');
 
-        return $pdf->stream('maintenance-contract-' . $project->id . '.pdf');
+        return $pdf->stream('maintenance-contract-'.$project->id.'.pdf');
     })->name('maintenance-contract');
 
     Route::get('/maintenance-quote/{project}', function ($projectId): Response {
@@ -116,8 +116,29 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
         $pdf = Pdf::loadView('pdf.maintenance-quote', $data);
         $pdf->setPaper('A4', 'portrait');
 
-        return $pdf->stream('maintenance-quote-' . $project->id . '.pdf');
+        return $pdf->stream('maintenance-quote-'.$project->id.'.pdf');
     })->name('maintenance-quote');
+
+    Route::get('/website-data/{project}', function ($projectId): View|Factory {
+        $project = Project::query()->findOrFail($projectId);
+
+        // Load relationships
+        $project->load([
+            'user',
+            'contact',
+            'requestQuote.websiteType',
+            'requestQuote.requestQuoteFunctionalities',
+            'requestQuote.requestLanguages',
+            'order',
+            'supportPack',
+            'contactChannel',
+        ]);
+
+        return view('project.website-data', [
+            'project' => $project,
+            'requestQuote' => $project->requestQuote,
+        ]);
+    })->name('website-data');
 
 });
 

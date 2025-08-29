@@ -27,6 +27,7 @@ final class EditProject extends EditRecord
             DeleteAction::make(),
             GenerateCompletionDocument::make(component: $this),
             GenerateExampleDocument::make(component: $this),
+
             ActionGroup::make([
                 ConvertToStarter::make(component: $this),
                 GenerateMaintenanceQuote::make(component: $this),

@@ -17,6 +17,7 @@ final class GenerateMaintenanceQuote
             ->icon('heroicon-o-document-currency-dollar')
             ->url(function () use ($component): string {
                 $project = $component->getRecord();
+
                 return route('project.pdf.maintenance-quote', ['project' => $project->id]);
             }, true)
             ->button()

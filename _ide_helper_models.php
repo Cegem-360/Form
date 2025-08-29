@@ -538,8 +538,6 @@ namespace App\Models{
  * @property-read \App\Models\Order|null $order
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\PdfOption> $pdfOptions
  * @property-read int|null $pdf_options_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\WebsiteLanguage> $requestLanguages
- * @property-read int|null $request_languages_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalities
  * @property-read int|null $request_quote_functionalities_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\RequestQuoteFunctionality> $requestQuoteFunctionalitiesDefault

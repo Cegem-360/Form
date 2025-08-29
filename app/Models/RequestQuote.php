@@ -84,11 +84,6 @@ final class RequestQuote extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function requestLanguages(): HasMany
-    {
-        return $this->hasMany(WebsiteLanguage::class);
-    }
-
     public function pdfOptions(): HasMany
     {
         return $this->hasMany(PdfOption::class);
@@ -147,7 +142,7 @@ final class RequestQuote extends Model
     {
 
         return Attribute::make(
-            get: function () {
+            get: function (): int {
                 $total = $this->getTotalPriceAttributeNoLanguages();
 
                 if ($this->is_multilangual && is_array($this->languages) && $this->languages !== []) {

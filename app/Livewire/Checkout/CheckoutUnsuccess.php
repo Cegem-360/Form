@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire\Checkout;
 
-use Illuminate\Contracts\View\View;
-use Illuminate\Contracts\View\Factory;
 use App\Models\RequestQuote;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 final class CheckoutUnsuccess extends Component

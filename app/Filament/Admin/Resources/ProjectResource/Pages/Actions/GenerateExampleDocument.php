@@ -19,7 +19,7 @@ final class GenerateExampleDocument
             ->url(function () use ($component): string {
                 /** @var Project $project */
                 $project = $component->getRecord();
-                
+
                 return route('project.pdf.maintenance-contract', ['project' => $project->id]);
             })
             ->openUrlInNewTab();
