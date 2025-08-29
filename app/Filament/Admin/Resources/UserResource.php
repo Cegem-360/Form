@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources;
 
-use UnitEnum;
-use BackedEnum;
-use App\Models\User;
 use App\Enums\ClientType;
-use Filament\Tables\Table;
-use Filament\Schemas\Schema;
+use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
+use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
+use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
+use App\Filament\Admin\Resources\UserResource\Pages\ViewUser;
+use App\Models\User;
+use BackedEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Hash;
-use Filament\Actions\BulkActionGroup;
-use Filament\Forms\Components\Select;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Resources\Resource;
 use Filament\Schemas\Components\Utilities\Get;
-use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
-use App\Filament\Admin\Resources\UserResource\Pages\ViewUser;
-use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
-use App\Filament\Admin\Resources\UserResource\Pages\CreateUser;
+use Filament\Schemas\Schema;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Support\Facades\Hash;
+use UnitEnum;
 
 final class UserResource extends Resource
 {
