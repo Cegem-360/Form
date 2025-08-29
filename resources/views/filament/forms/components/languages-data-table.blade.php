@@ -4,7 +4,7 @@
     $record = $getRecord();
     $requestQuote = $record?->requestQuote;
     $languageIds = $requestQuote?->languages;
-    $languages = $languageIds ? WebsiteLanguage::whereIn('id', $languageIds)->get() : collect();
+    $languages = $requestQuote->getLanguages();
 @endphp
 
 <div>

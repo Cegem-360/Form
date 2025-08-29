@@ -15,7 +15,7 @@ final class ConvertToStarter
     public static function make(EditProject $component): Action
     {
         return Action::make('convertToStarter')
-            ->label('Convert to Starter')
+            ->label(__('Convert to Starter'))
             ->action(function (Project $record) use ($component): void {
 
                 $pages = collect($record->requestQuote->websites)->map(function (array $page): array {

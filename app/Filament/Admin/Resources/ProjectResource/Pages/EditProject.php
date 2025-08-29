@@ -25,12 +25,12 @@ final class EditProject extends EditRecord
             EndTheProject::make(component: $this),
             ViewAction::make(),
             DeleteAction::make(),
-            GenerateCompletionDocument::make(component: $this),
-            GenerateExampleDocument::make(component: $this),
 
             ActionGroup::make([
                 ConvertToStarter::make(component: $this),
                 GenerateMaintenanceQuote::make(component: $this),
+                GenerateCompletionDocument::make(component: $this),
+                GenerateExampleDocument::make(component: $this),
                 // üzemeltetési megbízási szerződés
                 // szerződés csak akkor ha aláírják
                 // support pack kell egy mező  hány havonta  menjen ki és kell end_date
