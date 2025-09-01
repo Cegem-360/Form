@@ -27,7 +27,9 @@
                                     <div>
                                         <div class="text-lg font-bold text-green-700">
                                             {{ Number::currency(
-                                                WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price ?? 0,
+                                                WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price -
+                                                    $this->requestQuote->discount ??
+                                                    0,
                                                 in: 'HUF',
                                                 locale: 'hu',
                                                 precision: 0,
@@ -37,7 +39,8 @@
                                         <div class="text-sm text-gray-500">
                                             (Bruttó:
                                             {{ Number::currency(
-                                                WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price *
+                                                (WebsiteTypePrice::query()->whereWebsiteTypeId($requestQuote->website_type_id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'])->first()?->price -
+                                                    $this->requestQuote->discount) *
                                                     1.27 ??
                                                     0,
                                                 in: 'HUF',
@@ -65,12 +68,12 @@
                             </div>
                             <div class=" min-w-[140px]">
                                 <div class="font-bold text-green-700">
-                                    {{ Number::currency($function->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                    {{ Number::currency($function->price - $this->requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
                                     <span class="font-normal text-gray-700">+ Áfa</span>
                                 </div>
                                 <div class="text-sm text-gray-500">
                                     (Bruttó:
-                                    {{ Number::currency($function->price * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
+                                    {{ Number::currency(($function->price - $this->requestQuote->discount) * 1.27, in: 'HUF', locale: 'hu', precision: 0) }})
                                 </div>
                             </div>
                         </li>

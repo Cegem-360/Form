@@ -12,11 +12,10 @@ use Livewire\Component;
 
 final class Order extends Component
 {
-    public static function make(array $data, Component $component): Action
+    public static function make(Component $component): Action
     {
         return Action::make('order')
-            ->action(function () use ($data, $component): void {
-
+            ->action(function () use ($component): void {
                 $data = $component->form->getState();
 
                 $data['user_id'] = Auth::id();

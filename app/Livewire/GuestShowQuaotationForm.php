@@ -59,7 +59,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
                     GraphicsInformation::make(),
                     Consent::make(),
                 ])
-                    ->skippable()
+                    ->skippable(false)
                     ->submitAction($this->submitButtonAction()),
             ])
             ->statePath('data')
@@ -81,7 +81,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function orderAction(): Action
     {
-        return Order::make($this->form->getState(), $this);
+        return Order::make($this);
     }
 
     public function registerAndSendAction(): Action

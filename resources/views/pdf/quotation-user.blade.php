@@ -158,10 +158,10 @@
                                     class="text-xs">{{ $functionality->description }}</span></td>
                             <td class="px-4 py-2 border">1 db</td>
                             <td class="px-4 py-2 border">
-                                {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($functionality->price - $requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
                             </td>
                             <td class="px-4 py-2 border">
-                                {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($functionality->price - $requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
                             </td>
                         </tr>
                     @endforeach
@@ -171,10 +171,10 @@
                                 <td class="px-4 py-2 border">{{ $page['name'] }}</td>
                                 <td class="px-4 py-2 border">{{ __(ucfirst($page['length'] ?? 'medium')) }}</td>
                                 <td class="px-4 py-2 border">
-                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price,in: 'HUF',locale: 'hu',precision: 0) }}
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price - $requestQuote->discount,in: 'HUF',locale: 'hu',precision: 0) }}
                                 </td>
                                 <td class="px-4 py-2 border">
-                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price,in: 'HUF',locale: 'hu',precision: 0) }}
+                                    {{ Number::currency(WebsiteTypePrice::whereWebsiteTypeId($requestQuote->websiteType->id)->whereWebsiteEngine($requestQuote->website_engine)->whereSize($page['length'] ?? 'medium')->first()?->price - $requestQuote->discount,in: 'HUF',locale: 'hu',precision: 0) }}
                                 </td>
                             </tr>
                         @endif
@@ -186,10 +186,10 @@
                             </td>
                             <td class="px-4 py-2 border">1 db</td>
                             <td class="px-4 py-2 border">
-                                {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($functionality->price - $requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
                             </td>
                             <td class="px-4 py-2 border">
-                                {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }}
+                                {{ Number::currency($functionality->price - $requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
                             </td>
                         </tr>
                     @endforeach

@@ -35,11 +35,7 @@ final class CartShow extends Component implements HasActions, HasForms
 
     public function form(Schema $schema): Schema
     {
-        return $schema
-            ->components([
-
-            ])
-            ->statePath('data');
+        return $schema;
     }
 
     public function checkout(): void
