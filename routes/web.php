@@ -54,16 +54,6 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
     Route::get('/maintenance-contract/{project}', function ($projectId): Response {
         $project = Project::query()->findOrFail($projectId);
 
-        // Load relationships
-        $project->load([
-            'user',
-            'contact',
-            'requestQuote',
-            'order',
-            'supportPack',
-            'contactChannel',
-        ]);
-
         // Prepare data for PDF (project and quote data available but not displayed)
         $data = [
             'project' => $project,
@@ -115,18 +105,6 @@ Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(functi
 
     Route::get('/website-data/{project}', function ($projectId): View|Factory {
         $project = Project::query()->findOrFail($projectId);
-
-        // Load relationships
-        $project->load([
-            'user',
-            'contact',
-            'requestQuote.websiteType',
-            'requestQuote.requestQuoteFunctionalities',
-            'requestQuote.requestLanguages',
-            'order',
-            'supportPack',
-            'contactChannel',
-        ]);
 
         return view('project.website-data', [
             'project' => $project,

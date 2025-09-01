@@ -155,7 +155,7 @@
                     @foreach ($requestQuote->requestQuoteFunctionalitiesDefault ?? [] as $functionality)
                         <tr>
                             <td class="px-4 py-2 border">{{ $functionality->name }}<br><span
-                                    class="text-xs">{{ $functionality->description }}</span></td>
+                                    class="text-xs">{!! $functionality->description !!}</span></td>
                             <td class="px-4 py-2 border">1 db</td>
                             <td class="px-4 py-2 border">
                                 {{ Number::currency($functionality->price - $requestQuote->discount, in: 'HUF', locale: 'hu', precision: 0) }}
@@ -182,7 +182,7 @@
                     @foreach ($requestQuote->requestQuoteFunctionalitiesNotDefault ?? [] as $functionality)
                         <tr>
                             <td class="px-4 py-2 border">{{ $functionality->name }}
-                                <br><span class="text-xs">{{ $functionality->description }}</span>
+                                <br><span class="text-xs">{!! $functionality->description !!}</span>
                             </td>
                             <td class="px-4 py-2 border">1 db</td>
                             <td class="px-4 py-2 border">

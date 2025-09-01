@@ -22,7 +22,7 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
     /**
      * Create a new message instance.
      */
-    public function __construct(public RequestQuote $requestQuote) {}
+    public function __construct(public RequestQuote $requestQuote, public $sendAtachment = false) {}
 
     /**
      * Get the message envelope.
@@ -53,7 +53,9 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
      */
     public function attachments(): ?Attachment
     {
-        /*
+        if (! $this->sendAtachment) {
+            return null;
+        }
         $template = view('pdf.quotation-user', ['requestQuote' => $this->requestQuote])->render();
         $headerHtml = view('pdf.header')->render();
         Browsershot::html($template)->showBrowserHeaderAndFooter()
@@ -69,7 +71,6 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
             ->savePdf(storage_path('app/public/quotation.pdf'));
 
         return Attachment::fromPath(storage_path('app/public/quotation.pdf'));
-        */
-        return null;
+
     }
 }

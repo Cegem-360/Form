@@ -34,7 +34,7 @@ final class EditRequestQuote extends EditRecord
     public function createPdfAndSendToCurrentUser(): void
     {
         $record = $this->record;
-        Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($record));
+        Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($record, true));
         Notification::make()
             ->title('Quotation has been sent to your email')
             ->success()
