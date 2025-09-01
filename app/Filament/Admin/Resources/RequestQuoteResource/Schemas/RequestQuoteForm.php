@@ -89,16 +89,14 @@ final class RequestQuoteForm
                                 ->searchable(),
                             Select::make('website_engine')
                                 ->options([
-                                    'wordpress' => 'Wordpress',
                                     'laravel' => 'Laravel',
-                                    'shopify' => 'Shopify',
                                 ])->required()
                                 ->searchable(),
                         ]),
                     ]),
                     Section::make('Websites')->schema([
                         Repeater::make('websites')->schema([
-                            TextInput::make('name')->required(),
+                            TextInput::make('name'),
                             ToggleButtons::make('required')
                                 ->live()
                                 ->options([
@@ -114,11 +112,9 @@ final class RequestQuoteForm
                                     'medium' => 'Medium',
                                     'large' => 'Large',
                                 ])
-                                ->inline()
-                                ->required(fn (Get $get): bool => $get('required')),
+                                ->inline(),
                             FileUpload::make('images')
                                 ->label('Images')
-                                ->visible(fn (Get $get): bool => $get('required'))
                                 ->disk('public')
                                 ->directory('website-images')
                                 ->openable()

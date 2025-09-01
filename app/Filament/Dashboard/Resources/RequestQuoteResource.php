@@ -104,9 +104,7 @@ final class RequestQuoteResource extends Resource
                     Select::make('website_engine')
                         ->live()
                         ->options([
-                            'wordpress' => 'Wordpress',
                             'laravel' => 'Laravel',
-                            'shopify' => 'Shopify',
                         ])->required()
                         ->searchable(),
                 ]),

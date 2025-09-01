@@ -44,7 +44,7 @@
                 ajánlatot.
             </li>
             <li><strong>Automatikus árajánlatkérés</strong> és <strong>egyszerű rendelésleadás</strong> egy helyen.</li>
-            <li><strong>Platformok:</strong> WordPress, egyedi Laravel, Shopify.</li>
+            <li><strong>Platformok:</strong> Kizárólag Laravel és PHP.</li>
             <li><strong>Saját fiók:</strong> ajánlatok nyomon követése, új megrendelés, előlegfizetés, dokumentumok
                 letöltése.</li>
             <li>Ügyfélszolgálatunk végig segíti a folyamatot, kérdés esetén gyorsan válaszolunk.</li>

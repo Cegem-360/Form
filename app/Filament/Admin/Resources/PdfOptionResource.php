@@ -40,8 +40,6 @@ final class PdfOptionResource extends Resource
                     ->required(),
                 Select::make('website_engine')
                     ->options([
-                        'wordpress' => 'WordPress',
-                        'shopify' => 'Shopify',
                         'laravel' => 'Laravel',
                     ]),
                 RichEditor::make('frontend_description')
@@ -51,7 +49,6 @@ final class PdfOptionResource extends Resource
                 RichEditor::make('delivery_deadline')
                     ->label('Vállalási határidő')
                     ->columnSpanFull(),
-
             ]);
     }
 

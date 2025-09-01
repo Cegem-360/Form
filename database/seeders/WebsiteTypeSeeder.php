@@ -21,8 +21,6 @@ final class WebsiteTypeSeeder extends Seeder
             'Landing Page',
         ];
         $engines = [
-            'wordpress',
-            'shopify',
             'laravel',
         ];
         $sizes = [

@@ -19,7 +19,7 @@ final class PdfOptionFactory extends Factory
      */
     public function definition(): array
     {
-        $websiteEngine = $this->faker->randomElement(['wordpress', 'shopify', 'laravel']);
+        $websiteEngine = $this->faker->randomElement(['laravel']);
         $websiteType = WebsiteType::all()->random();
 
         return [

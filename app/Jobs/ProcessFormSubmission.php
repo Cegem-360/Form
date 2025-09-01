@@ -39,7 +39,7 @@ final class ProcessFormSubmission implements ShouldQueue
     public function handle(): void
     {
         try {
-            /* dump('Job processing... Form ID:' . $this->data->id); */
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer '.config('services.openai.key'),
             ])->post('https://api.openai.com/v1/chat/completions', [
@@ -63,20 +63,16 @@ final class ProcessFormSubmission implements ShouldQueue
                 'max_tokens' => 4000,
                 'temperature' => 1.0,
             ]);
-
-            /*   dump($response->json()); */
-
             $wordpress_response = Http::withBasicAuth('tothtamas', 'Ttoth2020!')
                 ->post('https://end-website.cegem360.hu/wp-json/wp/v2/pages/2', [
                     'title' => 'Home page test',
                     'content' => $response->json()['choices'][0]['message']['content'],
                     'status' => 'publish',
                 ]);
-            /*
-                        dump($wordpress_response->getBody()->getContents()); */
+
         } catch (Exception $exception) {
             Log::error('Error processing form submission: '.$exception->getMessage());
-            /* dump('Error: '.$exception->getMessage()); */
+
         }
     }
 }

@@ -70,9 +70,7 @@ final class ClientInformation
                             )
                             ->searchable(false)
                             ->options([
-                                'wordpress' => 'Wordpress',
                                 'laravel' => 'Laravel',
-                                'shopify' => 'Shopify',
                             ])->required(),
 
                     ]),
