@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Models\RequestQuote;
+use App\Models\RequestQuoteFunctionality;
 use App\Services\NotionService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,16 @@ final class RequestQuoteObserver
             ]);
         }
 
-        $this->sendToNotionSync($requestQuote);
+        $websiteTypeId = $requestQuote->website_type_id;
+
+        $defaultFunctionalities = RequestQuoteFunctionality::query()
+            ->whereDefault(true)
+            ->whereWebsiteTypeId($websiteTypeId)
+            ->get();
+
+        $requestQuote->requestQuoteFunctionalities()->attach($defaultFunctionalities);
+
+        // $this->sendToNotionSync($requestQuote);
 
     }
 

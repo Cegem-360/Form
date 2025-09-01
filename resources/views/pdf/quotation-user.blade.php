@@ -3,7 +3,7 @@
 @use('App\Models\WebsiteTypePrice')
 <x-layouts.app>
 
-    <div class="font-sans text-gray-900 bg-white max-w-[210mm] mx-auto">
+    <div class="font-sans text-gray-900 bg-white max-w-[199.5mm] mx-auto">
         <style>
             @page {
                 size: A4;
@@ -18,7 +18,7 @@
             */
             body {
                 width: 100%;
-                max-width: 210mm;
+                max-width: 199.5mm;
                 margin: 0 auto;
             }
 
@@ -148,12 +148,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="px-4 py-2 font-bold border">
+                        <td colspan="4" class="px-4 py-2 font-bold border bg-blue-50">
                             {{ $requestQuote->website_engine }} weboldal készítés
                         </td>
-                        <td class="px-4 py-2 border"></td>
-                        <td class="px-4 py-2 border"></td>
-                        <td class="px-4 py-2 border"></td>
                     </tr>
                     @foreach ($requestQuote->requestQuoteFunctionalitiesDefault ?? [] as $functionality)
                         <tr>
@@ -184,8 +181,9 @@
                     @endforeach
                     @foreach ($requestQuote->requestQuoteFunctionalitiesNotDefault ?? [] as $functionality)
                         <tr>
-                            <td class="px-4 py-2 border">{{ $functionality->name }}<br><span
-                                    class="text-xs">{{ $functionality->description }}</span></td>
+                            <td class="px-4 py-2 border">{{ $functionality->name }}
+                                <br><span class="text-xs">{{ $functionality->description }}</span>
+                            </td>
                             <td class="px-4 py-2 border">1 db</td>
                             <td class="px-4 py-2 border">
                                 {{ Number::currency($functionality->price, in: 'HUF', locale: 'hu', precision: 0) }}

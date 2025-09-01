@@ -76,7 +76,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function createRequestQuoteAction(): Action
     {
-        return CreateRequestQuote::make($this->form->getState(), $this);
+        return CreateRequestQuote::make($this);
     }
 
     public function orderAction(): Action
