@@ -6,6 +6,7 @@ namespace App\Filament\Dashboard\Resources\RequestQuoteResource\Pages;
 
 use App\Filament\Dashboard\Resources\RequestQuoteResource;
 use App\Filament\Dashboard\Resources\RequestQuoteResource\Widgets\RequestQuotePriceWidget;
+use App\Models\RequestQuote;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Session;
@@ -35,12 +36,12 @@ final class ViewRequestQuote extends ViewRecord
                 }),
             Action::make('createPdf')
                 ->label('Árajánlat megtekintése')
-                ->openUrlInNewTab(function ($record) {
-                    $record = $this->record;
+                ->url(function (RequestQuote $record): string {
                     Session::put('requestQuote', $record->id);
 
                     return route('quotation.preview', ['requestQuote' => $record->id]);
                 })
+                ->openUrlInNewTab()
                 ->color('primary'),
 
         ];
