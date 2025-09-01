@@ -187,4 +187,4 @@ Route::get('notion-upload', NotionUpload::class)->name('notion-upload');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');
 
-require_once __DIR__.'/auth.php';
+require __DIR__.'/auth.php';
