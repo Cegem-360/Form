@@ -524,6 +524,7 @@ namespace App\Models{
  * @property string|null $company_address
  * @property string|null $company_vat_number
  * @property string|null $project_description
+ * @property int|null $discount
  * @property int $website_type_id
  * @property string|null $website_engine
  * @property array<array-key, mixed>|null $websites
@@ -561,6 +562,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCompanyVatNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereDefaultLanguage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereDiscount($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereHaveWebsiteGraphic($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|RequestQuote whereId($value)
