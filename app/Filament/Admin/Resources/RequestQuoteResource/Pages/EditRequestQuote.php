@@ -46,6 +46,10 @@ final class EditRequestQuote extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make(),
+            Action::make('createPdf')
+                ->label('Árajánlat megtekintése')
+                ->action('createPdf')
+                ->color('primary'),
             ActionGroup::make([
                 Action::make('convertToProject')
                     ->label('Convert to Project')
@@ -75,10 +79,6 @@ final class EditRequestQuote extends EditRecord
 
                     })
                     ->color('primary'),
-                Action::make('createPdf')
-                    ->label('createPdf')
-                    ->action('createPdf')
-                    ->color('secondary'),
                 Action::make('sendToEmail')
                     ->label('Send to Email')
                     ->action('createPdfAndSendToCurrentUser')

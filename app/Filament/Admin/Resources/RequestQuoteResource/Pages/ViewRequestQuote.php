@@ -4,17 +4,11 @@ declare(strict_types=1);
 
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Pages;
 
-use App\Enums\ProjectStatus;
 use App\Filament\Admin\Resources\RequestQuoteResource;
 use App\Mail\QuotationSendedToUser;
-use App\Models\Project;
-use App\Models\RequestQuote;
 use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Auth;
@@ -46,37 +40,11 @@ final class ViewRequestQuote extends ViewRecord
         return [
             EditAction::make(),
             DeleteAction::make(),
-            ActionGroup::make([
-                /*  Action::make('convertToProject')
-                    ->label('Convert to Project')
-                    ->schema([
-                        TextInput::make('project_name')
-                            ->label('Project Name')
-                            ->required()
-                            ->maxLength(255),
-                        Select::make('status')
-                            ->label('Project Status')
-                            ->options(ProjectStatus::class)
-                            ->default(ProjectStatus::PENDING)
-                            ->required(),
-                    ])
-                    ->action(function (array $data, RequestQuote $record) {
+            Action::make('createPdf')
+                ->label('Árajánlat megtekintése')
+                ->action('createPdf')
+                ->color('primary'),
 
-                        $project = Project::create([
-                            'request_quote_id' => $record->id,
-                            'user_id' => $record->user_id,
-                            'name' => $data['project_name'],
-                            'start_date' => now(),
-                            'end_date' => now()->addDays(30), // Example: 30 days from now
-                            'status' => $data['status'],
-                        ]);
-
-                        return redirect()->route('filament.admin.resources.projects.edit', ['record' => $project->id]);
-
-                    })
-                    ->color('primary'), */
-
-            ]),
         ];
     }
 }
