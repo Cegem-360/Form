@@ -43,6 +43,7 @@ final class RequestQuote extends Model
         'website_engine',
         'payment_method',
         'project_description',
+        'discount',
         'billing_address',
         'is_payed',
         'total_price',
@@ -91,19 +92,28 @@ final class RequestQuote extends Model
 
     public function getTotalPriceAttributeNoLanguages(): int
     {
+
+        // Alap árak (oldalak) kedvezménnyel egyesével
         $total = 0;
+        $discount = (is_numeric($this->discount)) ? $this->discount : 0;
 
         foreach ($this->websites ?? [] as $website) {
             if (isset($website['required']) && $website['required']) {
-                $total += $this->websiteType->websiteTypePrices()
+                $price = $this->websiteType->websiteTypePrices()
                     ->whereWebsiteEngine($this->website_engine)
                     ->whereSize($website['length'])
                     ->first()
                     ?->price ?? 0;
+                $total += $price - $discount;
             }
         }
 
-        return $total + $this->requestQuoteFunctionalities->sum('price');
+        $functionalitiesTotal = 0;
+        foreach ($this->requestQuoteFunctionalities as $functionality) {
+            $functionalitiesTotal += $functionality->price - $discount;
+        }
+
+        return $total + $functionalitiesTotal;
     }
 
     public function getLanguages(): Collection

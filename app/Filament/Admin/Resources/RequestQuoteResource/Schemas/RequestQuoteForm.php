@@ -19,6 +19,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,11 @@ final class RequestQuoteForm
                                 ->required()
                                 ->tel()
                                 ->maxLength(255),
+                            TextInput::make('discount')
+                                ->default(0)
+                                ->step(1000)
+                                ->suffixIcon(Heroicon::Calculator)
+                                ->required(),
                             RichEditor::make('project_description')
                                 ->maxLength(65535)
                                 ->columnSpanFull(),
