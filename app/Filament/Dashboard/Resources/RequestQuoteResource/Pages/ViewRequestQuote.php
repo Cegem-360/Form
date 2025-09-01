@@ -35,7 +35,12 @@ final class ViewRequestQuote extends ViewRecord
                 }),
             Action::make('createPdf')
                 ->label('Árajánlat megtekintése')
-                ->action('createPdf')
+                ->openUrlInNewTab(function ($record) {
+                    $record = $this->record;
+                    Session::put('requestQuote', $record->id);
+
+                    return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+                })
                 ->color('primary'),
 
         ];
