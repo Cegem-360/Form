@@ -39,7 +39,7 @@ final class ViewRequestQuote extends ViewRecord
                     $record = $this->record;
                     Session::put('requestQuote', $record->id);
 
-                    return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+                    return route('quotation.preview', ['requestQuote' => $record->id]);
                 })
                 ->color('primary'),
 
