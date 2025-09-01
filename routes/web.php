@@ -22,8 +22,6 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
-require_once __DIR__.'/auth.php';
-
 Route::middleware(['auth'])->get('/', function () {
     return redirect()->route('filament.dashboard.pages.dashboard');
 })->name('home');
@@ -192,3 +190,5 @@ Route::get('kerdoiv/{token}', FormQuestionForm::class)->name('kerdoiv');
 Route::get('notion-upload', NotionUpload::class)->name('notion-upload');
 
 Route::view('/elkuldve', 'livewire.email-sended')->name('email-sended-to-user');
+
+require_once __DIR__.'/auth.php';
