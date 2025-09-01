@@ -38,7 +38,7 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('/login', fn () => (redirect()->route('filament.dashboard.pages.dashboard')))->name('login');
+    Route::get('/login', fn () => (route('filament.dashboard.pages.dashboard')))->name('login');
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

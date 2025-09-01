@@ -22,13 +22,9 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
-Route::middleware(['auth'])->get('/', function () {
-    return redirect()->route('filament.dashboard.pages.dashboard');
-})->name('home');
+Route::middleware(['auth'])->get('/', fn () => redirect()->route('filament.dashboard.pages.dashboard'))->name('home');
 
-Route::get('/form/expired', function (): View|Factory {
-    return view('form.expired');
-})->name('form.expired');
+Route::get('/form/expired', fn (): View|Factory => view('form.expired'))->name('form.expired');
 
 Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
 
