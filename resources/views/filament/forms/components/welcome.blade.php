@@ -23,7 +23,7 @@
                             class="px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Belépés
                         </a>
-                        <a href="{{ route('register') }}"
+                        <a href="{{ route('filament.dashboard.auth.register') }}"
                             class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                             Regisztráció
                         </a>
