@@ -31,7 +31,7 @@ final class WebsiteInformation
                                     ->components([
                                         Text::make(' Ideális választás a lényegre törő, gyorsan áttekinthető aloldalakhoz, mint például egy szolgáltatás rövid bemutatása vagy egy kapcsolati oldal. Maximum 2 szakaszt tartalmaz, melyekben 1-1 szövegdoboz és 1-1 kép helyezhető el.')
                                             ->weight(FontWeight::Bold),
-                                        Image::make(url: Storage::url(path: 'website_previews/short_preview.png'), alt: 'Rövid méretű előnézet')
+                                        Image::make(url: Storage::url(path: 'website_previews/short_preview.webp'), alt: 'Rövid méretű előnézet')
                                             ->alignCenter()
                                             ->imageSize('22rem'),
                                     ])
@@ -41,7 +41,7 @@ final class WebsiteInformation
                                         Text::make('Ez az opció lehetőséget biztosít részletesebb információk megjelenítésére, elegendő térrel egy termék vagy szolgáltatás komplexebb leírásához. Tartalmazhat maximum 5 képet, 5 szövegdobozt és 2 bannert, biztosítva az optimális egyensúlyt a szöveg és a vizuális elemek között.')
                                             ->weight(FontWeight::Bold),
                                         Image::make(
-                                            url: Storage::url(path: 'website_previews/medium_preview.png'),
+                                            url: Storage::url(path: 'website_previews/medium_preview.webp'),
                                             alt: 'Közepes méretű előnézet')
                                             ->alignCenter()
                                             ->imageSize('22rem'),
@@ -52,7 +52,7 @@ final class WebsiteInformation
                                         Text::make('A legátfogóbb választás, tökéletes részletes termékoldalakhoz, szolgáltatásbemutatókhoz, amelyek alapos tájékoztatást nyújtanak. Akár 10 kép és 10 szövegdoboz, 5 banner, valamint olyan elemek, mint „előnyeink” szekció, egyedi kép-szöveg kompozíciók, visszaszámláló, "rólunk mondták" idézetek, értékelések, valamint termék- és szolgáltatáskategóriák behúzása is beilleszthető.')
                                             ->weight(FontWeight::Bold),
                                         Image::make(
-                                            url: Storage::url(path: 'website_previews/large_preview.png'),
+                                            url: Storage::url(path: 'website_previews/large_preview.webp'),
                                             alt: 'Nagy méretű előnézet')
                                             ->alignCenter()
                                             ->imageSize('22rem'),

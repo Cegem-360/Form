@@ -129,9 +129,9 @@ final class RequestQuoteResource extends Resource
                                 ->inline()
                                 ->afterStateUpdated(function ($state, Set $set, Get $get): void {
                                     $set('image', match ($state) {
-                                        'short' => 'website_previews/short_preview.png',
-                                        'medium' => 'website_previews/medium_preview.png',
-                                        'large' => 'website_previews/large_preview.png',
+                                        'short' => 'website_previews/short_preview.webp',
+                                        'medium' => 'website_previews/medium_preview.webp',
+                                        'large' => 'website_previews/large_preview.webp',
                                         default => null,
                                     });
                                 })
