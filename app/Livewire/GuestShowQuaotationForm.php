@@ -96,7 +96,7 @@ final class GuestShowQuaotationForm extends Component implements HasActions, Has
 
     public function sendEmailToMeAction(): Action
     {
-        return SendEmailToMe::make($this->form->getState(), $this);
+        return SendEmailToMe::make($this);
     }
 
     public function create(): void
