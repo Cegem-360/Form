@@ -11,7 +11,9 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Wizard\Step;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 
 final class Consent
 {
@@ -58,13 +60,17 @@ final class Consent
                 Checkbox::make('consent')
                     ->live()
                     ->default(false)
-                    ->label('I agree to the terms and conditions(note:later has link)')
+                    ->label(fn (): Htmlable => new HtmlString(
+                        __('I agree to the terms and conditions').' <a href="https://cegem360.hu/altalanos-szerzodesi-feltetelek-cegem360/" target="_blank">Link</a>'
+                    ))
                     ->required()
                     ->helperText(__('You must agree to the terms and conditions to proceed.'))
                     ->rules(['accepted']),
                 Checkbox::make('privacy_policy')
                     ->live()
-                    ->label('I agree to the processing of my personal data in accordance with the privacy policy(note:later has link)')
+                    ->label(fn (): Htmlable => new HtmlString(
+                        __('I agree to the processing of my personal data in accordance with the privacy policy').' <a href="https://cegem360.hu/adatvedelmi-tajekoztato/" target="_blank">Link</a>'
+                    ))
                     ->default(false)
                     ->helperText(__('You must agree to the processing of your personal data in accordance with the privacy policy to proceed.'))
                     ->required()

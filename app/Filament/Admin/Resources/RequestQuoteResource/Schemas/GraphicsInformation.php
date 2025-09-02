@@ -20,6 +20,7 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Wizard\Step;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\HtmlString;
 
 final class GraphicsInformation
 {
@@ -68,7 +69,15 @@ final class GraphicsInformation
                 ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null)
                 ->descriptions(function (Get $get) {
-                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))->notDefault()->pluck('description', 'id')->toArray();
+                    return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))
+                        ->notDefault()
+                        ->get()
+                        ->mapWithKeys(function ($functionality): array {
+                            return [
+                                $functionality->id => new HtmlString($functionality->description),
+                            ];
+                        })
+                        ->toArray();
                 }),
             Toggle::make('is_multilangual')
                 ->live(),
