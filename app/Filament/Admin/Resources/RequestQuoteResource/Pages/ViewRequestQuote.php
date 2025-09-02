@@ -6,6 +6,7 @@ namespace App\Filament\Admin\Resources\RequestQuoteResource\Pages;
 
 use App\Filament\Admin\Resources\RequestQuoteResource;
 use App\Mail\QuotationSendedToUser;
+use App\Models\RequestQuote;
 use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -13,6 +14,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 final class ViewRequestQuote extends ViewRecord
 {
@@ -42,7 +44,12 @@ final class ViewRequestQuote extends ViewRecord
             DeleteAction::make(),
             Action::make('createPdf')
                 ->label('Árajánlat megtekintése')
-                ->action('createPdf')
+                ->url(function (RequestQuote $record): string {
+                    Session::put('requestQuote', $record->id);
+
+                    return route('quotation.preview', ['requestQuote' => $record->id]);
+                })
+                ->openUrlInNewTab()
                 ->color('primary'),
 
         ];
