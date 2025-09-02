@@ -4,8 +4,8 @@
         <div class="font-bold">Árazás</div>
         <div>Az ajánlatunkban feltüntetésre kerülő díjak minden esetben ÁFA nélküli nettó díjak.</div>
         <div class="font-bold">Üzemeltetési költség</div>
-        <div>A weboldal üzemeltetése félévente esedékes, ennek díja 20.000 Ft + ÁFA. Az üzemeltetés magába foglalja a
-            weboldal keretrendszerének (CMS) és bővítményeinek frissítését, illetve a weboldal gyorsítását.</div>
+        <div>Havi alap karbantartási csomagunk tartalmazza a biztonsági frissítések telepítését, a heti mentések
+            készítését és a negyedéves teljesítmény ellenőrzést. Ennek díja havi 50 000 Ft + ÁFA.</div>
         <div class="font-bold">Support díj</div>
         <div>Esetleges egyéb support szolgáltatásunk óradíja munkanapokon 8 és 16 óra között: 20.000 Ft + ÁFA / óra.
         </div>
@@ -20,6 +20,9 @@
         <div class="font-bold">Bővítés, módosítás</div>
         <div>A díjak nem tartalmazzák az átadásra kerülő rendszer módosításának vagy bővítésének díjait, a jelen
             ajánlatban nem definiált új fejlesztéseket. Az ilyen feladatokra külön megállapodás keretében vállalkozunk.
+            Komplexebb fejlesztések, mint az új funkciók programozása, projekt alapú árazással történnek, melynek díja a
+            fejlesztés komplexitásától függően kerül meghatározásra. Egyszerűbb módosítások, mint a szöveg- vagy
+            képcsere, óradíja 20 000 Ft + ÁFA.
         </div>
     </div>
 </div>
