@@ -37,6 +37,17 @@ final class ViewRequestQuote extends ViewRecord
             ->send();
     }
 
+    public function sendToCurrentUser(): void
+    {
+        $record = $this->record;
+        $requestQuote = RequestQuote::query()->find($record->id);
+        Mail::to(Auth::user()->email)->send(new QuotationSendedToUser($requestQuote));
+        Notification::make()
+            ->title('Quotation has been sent to your email')
+            ->success()
+            ->send();
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -51,6 +62,10 @@ final class ViewRequestQuote extends ViewRecord
                 })
                 ->openUrlInNewTab()
                 ->color('primary'),
+            Action::make('sendToCurrentUser')
+                ->label('Árajánlat PDF küldése e-mailben')
+                ->action('sendToCurrentUser')
+                ->color('success'),
 
         ];
     }
