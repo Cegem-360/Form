@@ -21,9 +21,16 @@ final class WebsiteInformation
     {
         return
                 Step::make('Website Informations')->schema([
-                    Repeater::make('websites')->schema([
-                        Grid::make(2)->columnSpan(1)
-                            ->schema([
+                    Repeater::make('websites')
+                        ->deletable(false)
+                        ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
+                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
+                        ->minItems(1)
+                        ->maxItems(30)
+                        ->collapsible()
+                        ->defaultItems(10)
+                        ->schema([
+                            Grid::make(2)->columnSpan(1)->schema([
                                 Section::make()->schema(
                                     Website::make(),
                                 ),
@@ -59,15 +66,7 @@ final class WebsiteInformation
                                     ])
                                     ->visible(fn (Get $get): bool => $get('required') && $get('length') === 'large'),
                             ]),
-                    ])
-                        ->deletable(false)
-                        ->addActionLabel(__('Filament/pages/request-quote.repeter_webpage_add_test'))
-                        ->itemLabel(fn (array $state): ?string => $state['name'] ?? null)
-                        ->minItems(1)
-                        ->maxItems(30)
-                        ->collapsible()
-                        ->defaultItems(10),
-
+                        ]),
                 ]);
     }
 }

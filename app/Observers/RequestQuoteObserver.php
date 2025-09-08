@@ -8,8 +8,10 @@ use App\Models\RequestQuote;
 use App\Models\RequestQuoteFunctionality;
 use App\Services\NotionService;
 use Exception;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 final class RequestQuoteObserver
 {
@@ -56,7 +58,29 @@ final class RequestQuoteObserver
             ->get();
 
         $requestQuote->requestQuoteFunctionalities()->attach($defaultFunctionalities);
-
+        try {
+            Mail::raw(
+                sprintf(
+                    "New RequestQuote created\n\nID: %d\nName: %s\nEmail: %s\nPhone: %s\nWebsite type ID: %s\nCreated at: %s",
+                    $requestQuote->id,
+                    (string) ($requestQuote->name ?? '-'),
+                    (string) ($requestQuote->email ?? '-'),
+                    (string) ($requestQuote->phone ?? '-'),
+                    (string) ($requestQuote->website_type_id ?? '-'),
+                    $requestQuote->created_at?->toDateTimeString() ?? now()->toDateTimeString()
+                ),
+                function (Message $message): void {
+                    $message
+                        ->to('tamas@cegem360.hu')
+                        ->subject(__('New RequestQuote created'));
+                }
+            );
+        } catch (Exception $exception) {
+            Log::error('Failed to send RequestQuote created email', [
+                'request_quote_id' => $requestQuote->id,
+                'error' => $exception->getMessage(),
+            ]);
+        }
         // $this->sendToNotionSync($requestQuote);
 
     }
