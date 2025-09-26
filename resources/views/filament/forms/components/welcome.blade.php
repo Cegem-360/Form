@@ -15,17 +15,17 @@
                 @auth
                     <a href="{{ route('filament.dashboard.pages.dashboard') }}"
                         class="px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                        Vissza a dashboardra
+                        {{ __('Back to dashboard') }}
                     </a>
                 @else
                     <div class="flex gap-2">
                         <a href="{{ route('login') }}"
                             class="px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                            Belépés
+                            {{ __('Login') }}
                         </a>
                         <a href="{{ route('filament.dashboard.auth.register') }}"
                             class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                            Regisztráció
+                            {{ __('Register') }}
                         </a>
                     </div>
                 @endauth
@@ -36,26 +36,27 @@
     <!-- Keskenyebb tartalom rész középre igazítva -->
     <div class="max-w-3xl p-8 mx-auto bg-white rounded-b-lg shadow">
 
-        <h1 class="mb-4 text-2xl font-bold text-center">Üdvözöljük az automatikus weboldal-ajánlatkérő rendszerben!</h1>
-        <p class="mb-4">Pár perc alatt hivatalos árajánlatot kaphat weboldal, webshop vagy landing page fejlesztésre –
-            magánszemélyeknek és cégeknek egyaránt.</p>
+        <h1 class="mb-4 text-2xl font-bold text-center">
+            {{ __('Welcome to the automatic website quote request system!') }}
+        </h1>
+        <p class="mb-4">
+            {{ __('In just a few minutes, you can receive an official quote for website, webshop, or landing page development for both individuals and companies.') }}
+        </p>
         <ul class="mb-4 space-y-1 list-disc list-inside">
-            <li>Gyors és <strong>átlátható folyamat</strong> – néhány kérdés megválaszolása után azonnal látja az
-                ajánlatot.
+            <li>
+                {{ __('Fast and') }} <strong>{{ __('transparent process') }}</strong>
+                – {{ __('after answering a few questions, you will immediately see the quote') }}.
             </li>
-            <li><strong>Automatikus árajánlatkérés</strong> és <strong>egyszerű rendelésleadás</strong> egy helyen.</li>
-            <li><strong>Platformok:</strong> Kizárólag Laravel és PHP.</li>
-            <li><strong>Saját fiók:</strong> ajánlatok nyomon követése, új megrendelés, előlegfizetés, dokumentumok
-                letöltése.</li>
-            <li>Ügyfélszolgálatunk végig segíti a folyamatot, kérdés esetén gyorsan válaszolunk.</li>
+            <li><strong>{{ __('Automatic quote request') }}</strong> {{ __('and') }} <strong>{{ __('simple order placement') }}</strong> {{ __('in one place') }}.</li>
+            <li><strong>{{ __('Platforms') }}:</strong> {{ __('Exclusively Laravel and PHP') }}.</li>
+            <li><strong>{{ __('Own account') }}:</strong> {{ __('track quotes, new order, advance payment, download documents') }}.</li>
+            <li>{{ __('Our customer service assists throughout the process, we respond quickly to any questions') }}.</li>
         </ul>
         <div class="mb-4 text-center">
-            <span class="text-lg font-semibold text-blue-700">1. Töltse ki az űrlapot &rarr; 2. Tekintse meg
-                ajánlatunkat
-                &rarr; 3. Rendelje meg online!</span>
+            <span class="text-lg font-semibold text-blue-700">{{ __('1. Fill out the form') }} &rarr; {{ __('2. Review our quote') }} &rarr; {{ __('3. Order online!') }}</span>
         </div>
         <div class="mt-4 text-center text-gray-600">
-            <span>Bízza ránk webes projektjét – egyszerűen, gyorsan, biztonságosan!</span>
+            <span>{{ __('Trust us with your web project - simply, quickly, safely!') }}</span>
         </div>
     </div>
 </div>

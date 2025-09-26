@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Console\Commands\SyncPermissions;
-use App\Policies\PermissionPolicy;
-use App\Policies\RolePolicy;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Tables\Table;
 use FiveamCode\LaravelNotionApi\NotionFacade;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -35,8 +29,6 @@ final class AppServiceProvider extends ServiceProvider
     {
         Cashier::calculateTaxes();
         Number::useCurrency('HUF');
-        /*   Gate::policy(Role::class, RolePolicy::class);
-          Gate::policy(Permission::class, PermissionPolicy::class); */
         $this->migrationsCustomPath();
 
         Table::configureUsing(fn (Table $table): Table => $table->defaultNumberLocale('hu'));
@@ -49,14 +41,6 @@ final class AppServiceProvider extends ServiceProvider
             $toggleButtons->translateLabel();
 
         });
-
-        // Register lightweight permissions sync command so tests and seeders can call it.
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                SyncPermissions::class,
-            ]);
-        }
-
     }
 
     private function migrationsCustomPath(): void

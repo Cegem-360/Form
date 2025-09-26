@@ -24,6 +24,11 @@ final class RequestQuoteObserver
      */
     public function created(RequestQuote $requestQuote): void
     {
+        // Skip all actions if running from console
+        if (app()->runningInConsole()) {
+            return;
+        }
+
         $websites = $requestQuote->websites;
         $remove_keys = [];
         foreach ($websites as $key => $website) {
@@ -81,8 +86,6 @@ final class RequestQuoteObserver
                 'error' => $exception->getMessage(),
             ]);
         }
-        // $this->sendToNotionSync($requestQuote);
-
     }
 
     /**
