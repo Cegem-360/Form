@@ -73,4 +73,5 @@ final class RequestQuoteFunctionality extends Model
     {
         return $query->whereDefault(true);
     }
+
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\RequestQuoteResource\Schemas;
 
 use App\Enums\ClientType;
+use App\Models\RequestQuoteFunctionality;
 use App\Models\WebsiteLanguage;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
@@ -21,8 +22,8 @@ use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
 
 final class RequestQuoteForm
 {
@@ -143,7 +144,17 @@ final class RequestQuoteForm
                         CheckboxList::make('request_quote_functionalities')
                             ->relationship(name: 'requestQuoteFunctionalities',
                                 modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('website_type_id', $get('website_type_id')))
-                            ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name))
+                            ->getOptionLabelFromRecordUsing(fn (RequestQuoteFunctionality $record): string => __($record->name))
+                            ->descriptions(function (Get $get) {
+                                return RequestQuoteFunctionality::where('website_type_id', $get('website_type_id'))
+                                    ->get()
+                                    ->mapWithKeys(function ($functionality): array {
+                                        return [
+                                            $functionality->id => new HtmlString(__($functionality->description)),
+                                        ];
+                                    })
+                                    ->toArray();
+                            })
                             ->columns(4),
                         Toggle::make('is_multilangual')
                             ->live(),

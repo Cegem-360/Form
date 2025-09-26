@@ -33,7 +33,7 @@ final class GraphicsInformation
                     ->maxLength(255)
                     ->required(),
                 Section::make()->columnSpanFull()->components([
-                    Text::make('Kérjük, írja le részletesen weboldal-projektjét, maximum 20 000 karakter terjedelemben. Itt lehetősége van megosztani velünk elképzeléseit a weboldal céljával, célközönségével, kívánt hangulatával, preferált színeivel vagy stílusával kapcsolatban, valamint bármilyen egyéb, releváns információt, amely segíthet a projekt megértésében. A weboldal specifikus funkcióit, valamint a nyelvesítési igényeket kérjük, az oldal alján található külön beállítási lehetőségeknél adja meg.'),
+                    Text::make(__('graphics_project_description')),
                 ]),
                 Toggle::make('have_website_graphic')
                     ->columnSpanFull()
@@ -42,15 +42,11 @@ final class GraphicsInformation
                     ->hidden(true)
                     ->disabled(),
                 Section::make()
-                    ->heading('Rendelkezik már kész grafikai tervvel vagy látványtervvel (UI) a weboldalához?')
+                    ->heading(__('graphics_ui_question'))
                     ->components([
-                        Text::make(Html::make('<h3 class="text-lg font-medium"> Mi is az a grafikai terv / látványterv (UI)? </h3>')),
+                        Text::make(Html::make('<h3 class="text-lg font-medium"> '.__('graphics_ui_what_is_title').' </h3>')),
                         Html::make(null)
-                            ->content(
-                                '<p> A grafikai terv vagy látványterv (User Interface – UI) a weboldal vizuális megjelenését, elrendezését és felhasználói
-                        felületét mutatja be még a fejlesztés megkezdése előtt. Ez magában foglalja a színsémákat, tipográfiát, képek és
-                        szövegek elrendezését, gombok megjelenését, valamint minden olyan vizuális összetevőt,
-                        amely meghatározza a felhasználói élményt, így egyfajta „digitális tervrajzot” biztosítva a weboldalhoz.</p>'),
+                            ->content('<p> '.__('graphics_ui_explanation').' </p>'),
 
                     ]),
                 ToggleButtons::make('have_website_graphic')
@@ -66,7 +62,7 @@ final class GraphicsInformation
                 ->relationship(name: 'requestQuoteFunctionalities', modifyQueryUsing: function (Get $get, Builder $query) {
                     return $query->whereWebsiteTypeId($get('website_type_id'))?->notDefault();
                 })
-                ->getOptionLabelFromRecordUsing(fn (Model $record): string => sprintf('%s', $record->name))
+                ->getOptionLabelFromRecordUsing(fn (Model $record): string => __($record->name))
                 ->disabled(fn ($get): bool => $get('website_type_id') === null)
                 ->descriptions(function (Get $get) {
                     return RequestQuoteFunctionality::whereWebsiteTypeId($get('website_type_id'))
@@ -74,7 +70,7 @@ final class GraphicsInformation
                         ->get()
                         ->mapWithKeys(function ($functionality): array {
                             return [
-                                $functionality->id => new HtmlString($functionality->description),
+                                $functionality->id => new HtmlString(__($functionality->description)),
                             ];
                         })
                         ->toArray();

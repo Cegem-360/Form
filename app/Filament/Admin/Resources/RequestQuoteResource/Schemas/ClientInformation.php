@@ -26,13 +26,12 @@ final class ClientInformation
                             ->live()
                             ->required()
                             ->searchable(false)
-                            ->preload()
-                            ->relationship('websiteType', 'name', function ($query) {
-                                $order = ['weboldal', 'webshop', 'landing page'];
-
-                                return $query->whereIn('name', $order)
-                                    ->orderByRaw("FIELD(name, '".implode("','", $order)."')");
+                            ->options(function () {
+                                return WebsiteType::all()->pluck('name', 'id')->mapWithKeys(function ($name, $id) {
+                                    return [$id => __($name)];
+                                });
                             })
+
                             ->afterStateUpdated(function (Set $set, $state): void {
                                 $set('request_quote_functionalities', []);
                                 if (WebsiteType::query()->find($state)->name === 'Webshop') {
@@ -50,7 +49,7 @@ final class ClientInformation
                                     ->icon('heroicon-o-question-mark-circle')
                                     ->extraAttributes(['class' => 'text-gray-500'])
                                     ->label('')
-                                    ->tooltip(function ($state): string|array|null {
+                                    ->tooltip(function (): string|array|null {
                                         return __('Filament/pages/request-quote.website_type_tooltip');
                                     })
                             ),
@@ -82,37 +81,37 @@ final class ClientInformation
     {
         return [
             [
-                'name' => 'Főoldal',
+                'name' => __('Főoldal'),
                 'length' => 'medium',
                 'required' => '1',
             ],
             [
-                'name' => 'Kapcsolat',
+                'name' => __('Kapcsolat'),
                 'length' => 'medium',
                 'required' => '1',
             ],
             [
-                'name' => 'Termékeink',
+                'name' => __('Termékeink'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Rólunk',
+                'name' => __('Rólunk'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Szolgáltatások',
+                'name' => __('Szolgáltatások'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Blog',
+                'name' => __('Blog'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Gyakori kérdések',
+                'name' => __('Gyakori kérdések'),
                 'length' => 'medium',
                 'required' => '0',
             ],
@@ -123,45 +122,43 @@ final class ClientInformation
     {
         return [
             [
-                'name' => 'Főoldal',
+                'name' => __('Főoldal'),
                 'length' => 'medium',
                 'required' => '1',
             ],
             [
-                'name' => 'Webshop',
+                'name' => __('Webshop'),
                 'length' => 'medium',
                 'required' => '1',
             ],
             [
-                'name' => 'Rólunk',
+                'name' => __('Rólunk'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Szolgáltatások',
+                'name' => __('Szolgáltatások'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Blog',
+                'name' => __('Blog'),
                 'length' => 'medium',
                 'required' => '0',
             ],
             [
-                'name' => 'Gyakori kérdések',
+                'name' => __('Gyakori kérdések'),
                 'length' => 'medium',
                 'required' => '0',
             ],
-
         ];
-
     }
 
     public static function landingPage(): array
     {
         return [
             [
-                'name' => 'Főoldal',
+                'name' => __('Főoldal'),
                 'length' => 'medium',
                 'required' => '1',
             ],

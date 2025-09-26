@@ -51,7 +51,7 @@ final class Website
                 ->required()
                 ->columnSpanFull(),
             FileUpload::make('images')
-                ->label('Adott oldalhoz esetleges igényelt képek feltöltése')
+                ->label(__('Adott oldalhoz esetleges igényelt képek feltöltése'))
                 ->visible(fn ($get) => $get('required'))
                 ->image()
                 ->multiple()
