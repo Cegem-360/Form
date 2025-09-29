@@ -524,7 +524,7 @@ namespace App\Models{
  * @property string|null $company_address
  * @property string|null $company_vat_number
  * @property string|null $project_description
- * @property int|null $discount
+ * @property int $discount
  * @property int $website_type_id
  * @property string|null $website_engine
  * @property array<array-key, mixed>|null $websites

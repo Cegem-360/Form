@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection as SupportCollection;
 
 #[ObservedBy(RequestQuoteObserver::class)]
 final class RequestQuote extends Model
@@ -116,7 +117,7 @@ final class RequestQuote extends Model
         return $total + $functionalitiesTotal;
     }
 
-    public function getLanguages(): Collection
+    public function getLanguages(): Collection|SupportCollection
     {
         // Ha minden elem szám, akkor id-k, különben nevek
         if (is_array($this->languages) && $this->languages !== []) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\NotionController;
 use App\Http\Middleware\EnsureHasRequestQuote;
+use App\Http\Middleware\SetLocale;
 use App\Livewire\Cart\CartShow;
 use App\Livewire\Checkout\CheckoutSuccess;
 use App\Livewire\Checkout\CheckoutUnsuccess;
@@ -23,16 +24,17 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 // Routes WITHOUT locale prefix (default)
-
+Route::middleware(['auth'])->get('/', fn () => redirect()->route('filament.dashboard.pages.dashboard'))->name('home');
 // Routes WITH locale prefix
-Route::prefix('{locale}')
+Route::prefix('{locale?}')
     ->where(['locale' => 'en|de|hu'])
+    ->middleware(SetLocale::class)
     ->group(function (): void {
         Route::middleware(['auth'])->get('/', fn () => redirect()->route('filament.dashboard.pages.dashboard'))->name('home');
 
         Route::get('/form/expired', fn (): View|Factory => view('form.expired'))->name('form.expired');
 
-        Route::get('arajanlat', GuestShowQuaotationForm::class)->name('quotation');
+        Route::get('/arajanlat', GuestShowQuaotationForm::class)->name('quotation');
 
         Route::get('pdf/{requestQuote}', function (RequestQuote $requestQuote): View|Factory {
             return view('pdf.quotation-user', ['requestQuote' => $requestQuote]);
