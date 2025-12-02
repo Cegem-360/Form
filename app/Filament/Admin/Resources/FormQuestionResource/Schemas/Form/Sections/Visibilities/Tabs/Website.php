@@ -96,12 +96,10 @@ final class Website
                     DatePicker::make('deadline'),
                     MarkdownEditor::make('formating_milestone')->label('Kiemelt értékeink')
                         ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('attachments')
-                        ->fileAttachmentsVisibility('public'),
+                        ->fileAttachmentsDirectory('attachments'),
                     MarkdownEditor::make('visual_feeling')
                         ->fileAttachmentsDisk('public')
-                        ->fileAttachmentsDirectory('attachments')
-                        ->fileAttachmentsVisibility('public'),
+                        ->fileAttachmentsDirectory('attachments'),
                     TextInput::make('tone_of_website')
                         ->maxLength(255),
                     Toggle::make('have_exist_design')
