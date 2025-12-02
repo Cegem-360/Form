@@ -109,9 +109,9 @@ final class FormQuestion extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function projectQuoteFunctionalities(): Collection
+    public function projectQuoteFunctionalities(): ?Collection
     {
-        return $this->project->requestQuote->requestQuoteFunctionalities;
+        return $this->project?->requestQuote?->requestQuoteFunctionalities;
     }
 
     protected function casts(): array

@@ -30,8 +30,10 @@ final class FormQuestionForm
                                     ->label(__('Project Functions'))
                                     ->options(function ($state, $component) {
                                         $model = $component->getRecord();
-                                        if ($model && $model->projectQuoteFunctionalities()) {
-                                            return $model->projectQuoteFunctionalities()->pluck('name', 'id')->toArray();
+                                        $functionalities = $model?->projectQuoteFunctionalities();
+
+                                        if ($functionalities !== null && $functionalities->isNotEmpty()) {
+                                            return $functionalities->pluck('name', 'id')->toArray();
                                         }
 
                                         return [];
