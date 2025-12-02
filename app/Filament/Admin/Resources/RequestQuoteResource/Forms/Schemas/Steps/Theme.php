@@ -41,13 +41,11 @@ final class Theme
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('attachments')
-                    ->fileAttachmentsVisibility('public')
                     ->visible($visibility?->formating_milestone_visible),
                 MarkdownEditor::make('visual_feeling')
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
                     ->fileAttachmentsDirectory('attachments')
-                    ->fileAttachmentsVisibility('public')
                     ->visible($visibility?->visual_feeling_visible),
                 TextInput::make('tone_of_website')
                     ->visible($visibility?->tone_of_website_visible)
