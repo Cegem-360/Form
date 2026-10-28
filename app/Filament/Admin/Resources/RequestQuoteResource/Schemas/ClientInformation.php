@@ -23,6 +23,7 @@ final class ClientInformation
                         ->view('filament.forms.components.welcome'),
                     Grid::make(2)->gridContainer()->schema([
                         Select::make('website_type_id')
+                            ->label(__('Website type'))
                             ->live()
                             ->required()
                             ->searchable(false)

@@ -17,7 +17,7 @@ it('can download project completion pdf from storage', function (): void {
 
     // Test the route
     $response = $this->actingAs($user)
-        ->get('/project-pdf/storage/'.$project->id);
+        ->get('/hu/project-pdf/storage/'.$project->id);
 
     $response->assertStatus(200)
         ->assertHeader('Content-Type', 'application/pdf');

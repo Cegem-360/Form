@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Storage;
 
 // Routes WITHOUT locale prefix (default)
 Route::middleware(['auth'])->get('/', fn () => to_route('filament.dashboard.pages.dashboard'))->name('home');
+// A {locale?} előtag a / elé nem opcionális, ezért a prefix nélküli űrlap-lejárt oldal külön route
+Route::middleware(SetLocale::class)->get('/form/expired', fn (): View|Factory => view('form.expired'));
 // Routes WITH locale prefix
 Route::prefix('{locale?}')
     ->where(['locale' => 'en|de|hu'])
@@ -43,14 +45,14 @@ Route::prefix('{locale?}')
         // Project PDF routes
         Route::middleware([])->prefix('project-pdf')->name('project.pdf.')->group(function (): void {
 
-            Route::get('/completion/{project}', function ($projectId): Response {
+            Route::get('/completion/{project}', function (string $locale, string $projectId): Response {
                 $project = Project::query()->findOrFail($projectId);
                 $service = new ProjectCompletionDocumentService($project);
 
                 return $service->generatePdf();
             })->name('completion');
 
-            Route::get('/storage/{project}', function ($projectId) {
+            Route::get('/storage/{project}', function (string $locale, string $projectId) {
                 $project = Project::query()->findOrFail($projectId);
                 $service = new ProjectCompletionDocumentService($project);
                 $filename = $service->savePdfToStorage();
@@ -59,7 +61,7 @@ Route::prefix('{locale?}')
                 return response()->file(Storage::path($filename));
             })->name('storage');
 
-            Route::get('/maintenance-contract/{project}', function ($projectId): Response {
+            Route::get('/maintenance-contract/{project}', function (string $locale, string $projectId): Response {
                 $project = Project::query()->findOrFail($projectId);
 
                 // Prepare data for PDF (project and quote data available but not displayed)
@@ -80,7 +82,7 @@ Route::prefix('{locale?}')
                 return $pdf->stream('maintenance-contract-'.$project->id.'.pdf');
             })->name('maintenance-contract');
 
-            Route::get('/maintenance-quote/{project}', function ($projectId): Response {
+            Route::get('/maintenance-quote/{project}', function (string $locale, string $projectId): Response {
                 $project = Project::query()->findOrFail($projectId);
 
                 // Prepare data for PDF
@@ -101,7 +103,7 @@ Route::prefix('{locale?}')
                 return $pdf->stream('maintenance-quote-'.$project->id.'.pdf');
             })->name('maintenance-quote');
 
-            Route::get('/website-data/{project}', function ($projectId): View|Factory {
+            Route::get('/website-data/{project}', function (string $locale, string $projectId): View|Factory {
                 $project = Project::query()->findOrFail($projectId);
 
                 return view('project.website-data', [

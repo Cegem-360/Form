@@ -14,13 +14,7 @@ it('can access project pdf storage route', function (): void {
 
     actingAs($user);
 
-    $response = get('/project-pdf/storage/'.$project->id);
-
-    // This will help us see what exactly happens
-    if ($response->status() !== 200) {
-        dump($response->status());
-        dump($response->getContent());
-    }
+    $response = get('/hu/project-pdf/storage/'.$project->id);
 
     $response->assertStatus(200);
 });

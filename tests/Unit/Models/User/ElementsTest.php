@@ -30,6 +30,7 @@ describe('User Model', function (): void {
                 'phone',
                 'email',
                 'email_verified_at',
+                'billing_address',
                 'company_name',
                 'company_address',
                 'company_vat_number',
