@@ -146,7 +146,7 @@ final class RequestQuoteForm
                                 modifyQueryUsing: fn (Get $get, Builder $query) => $query->where('website_type_id', $get('website_type_id')))
                             ->getOptionLabelFromRecordUsing(fn (RequestQuoteFunctionality $record): string => __($record->name))
                             ->descriptions(function (Get $get) {
-                                return RequestQuoteFunctionality::where('website_type_id', $get('website_type_id'))
+                                return RequestQuoteFunctionality::query()->where('website_type_id', $get('website_type_id'))
                                     ->get()
                                     ->mapWithKeys(function ($functionality): array {
                                         return [

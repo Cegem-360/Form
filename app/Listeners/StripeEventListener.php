@@ -27,7 +27,7 @@ final class StripeEventListener
                 'request_quote_id' => $event->payload['data']['object']['metadata']['request_quote_id'],
             ]);
             // Reseller commission létrehozása
-            app(ResellerService::class)->createCommissionIfReseller($order);
+            resolve(ResellerService::class)->createCommissionIfReseller($order);
         }
     }
 }

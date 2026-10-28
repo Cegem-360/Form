@@ -24,7 +24,7 @@ final class ConvertToStarter
                         'description' => $page['description'] ?? null,
                         'images' => $page['images'] ?? [],
                     ];
-                })->toArray();
+                })->all();
 
                 $isMultilangual = (bool) ($record->requestQuote->is_multilangual ?? false);
                 $defaultLanguage = $record->requestQuote->default_language ?? null;

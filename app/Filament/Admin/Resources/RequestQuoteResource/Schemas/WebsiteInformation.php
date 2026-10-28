@@ -24,14 +24,14 @@ final class WebsiteInformation
                 Step::make('Website Informations')->schema([
                     Repeater::make('websites')
                         ->live()
-                        ->deletable(function (Get $get) {
+                        ->deletable(function (Get $get): bool {
                             $websiteTypeId = $get('website_type_id');
 
                             if (! $websiteTypeId) {
                                 return true;
                             }
 
-                            $websiteType = WebsiteType::find($websiteTypeId);
+                            $websiteType = WebsiteType::query()->find($websiteTypeId);
                             if (! $websiteType) {
                                 return true;
                             }

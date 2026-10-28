@@ -28,7 +28,7 @@ final class EditRequestQuote extends EditRecord
     {
         $record = $this->record;
 
-        return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+        return to_route('quotation.preview', ['requestQuote' => $record->id]);
     }
 
     public function createPdfAndSendToCurrentUser(): void
@@ -75,7 +75,7 @@ final class EditRequestQuote extends EditRecord
                             'status' => $data['status'],
                         ]);
 
-                        return redirect()->route('filament.admin.resources.projects.edit', ['record' => $project->id]);
+                        return to_route('filament.admin.resources.projects.edit', ['record' => $project->id]);
 
                     })
                     ->color('primary'),

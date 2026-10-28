@@ -58,15 +58,12 @@ final class Dashboard extends Page
         return $this->filterVisibleWidgets($this->getWidgets());
     }
 
-    /**
-     * @return int | string | array<string, int | string | null>
-     */
-    public function getColumns(): int|string|array
+    public function getColumns(): int
     {
         return 3;
     }
 
-    public function getTitle(): string|Htmlable
+    public function getTitle(): string
     {
         return __('Filament/pages/dashboard.title');
     }

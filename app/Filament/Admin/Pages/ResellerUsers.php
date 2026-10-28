@@ -10,14 +10,12 @@ use App\Filament\Admin\Resources\UserResource;
 use App\Models\User;
 use BackedEnum;
 use Filament\Actions\EditAction;
-use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Pages\Page;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Contracts\View\View;
 use UnitEnum;
 
 final class ResellerUsers extends Page implements HasTable

@@ -43,7 +43,7 @@ it('can manually dispatch SendRequestQuoteToNotion job', function (): void {
     ]);
 
     // Act
-    SendRequestQuoteToNotion::dispatch($requestQuote);
+    dispatch(new SendRequestQuoteToNotion($requestQuote));
 
     // Assert
     Queue::assertPushed(SendRequestQuoteToNotion::class, function ($job) use ($requestQuote): bool {

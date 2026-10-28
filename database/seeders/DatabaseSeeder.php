@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 
 final class DatabaseSeeder extends Seeder
@@ -46,7 +46,7 @@ final class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'info@cegem360.hu',
             'password' => Hash::make('password'),
-            'email_verified_at' => Carbon::now(),
+            'email_verified_at' => Date::now(),
         ]);
         User::query()->find($superAdmin->id)->assignRole(RolesEnum::SUPER_ADMIN);
 

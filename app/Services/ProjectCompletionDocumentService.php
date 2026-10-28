@@ -6,8 +6,8 @@ namespace App\Services;
 
 use App\Models\Project;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 
 final class ProjectCompletionDocumentService
@@ -208,7 +208,7 @@ final class ProjectCompletionDocumentService
 
         $endDate = $this->project->end_date ?? now();
 
-        return (int) Carbon::parse($this->project->start_date)->diffInDays($endDate);
+        return (int) Date::parse($this->project->start_date)->diffInDays($endDate);
     }
 
     /**

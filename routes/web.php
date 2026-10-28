@@ -24,13 +24,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 // Routes WITHOUT locale prefix (default)
-Route::middleware(['auth'])->get('/', fn () => redirect()->route('filament.dashboard.pages.dashboard'))->name('home');
+Route::middleware(['auth'])->get('/', fn () => to_route('filament.dashboard.pages.dashboard'))->name('home');
 // Routes WITH locale prefix
 Route::prefix('{locale?}')
     ->where(['locale' => 'en|de|hu'])
     ->middleware(SetLocale::class)
     ->group(function (): void {
-        Route::middleware(['auth'])->get('/', fn () => redirect()->route('filament.dashboard.pages.dashboard'))->name('home');
+        Route::middleware(['auth'])->get('/', fn () => to_route('filament.dashboard.pages.dashboard'))->name('home');
 
         Route::get('/form/expired', fn (): View|Factory => view('form.expired'))->name('form.expired');
 

@@ -2,16 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Enums\ClientType;
-use App\Jobs\SendRequestQuoteToNotion;
-use App\Listeners\SendRequestQuoteToNotionListener;
-use App\Models\RequestQuote;
-use App\Models\RequestQuoteFunctionality;
-use App\Models\WebsiteLanguage;
-use App\Models\WebsiteType;
-use App\Services\NotionService;
-use Illuminate\Support\Facades\Queue;
-
 /*
 beforeEach(function (): void {
     Queue::fake();

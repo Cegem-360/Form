@@ -8,8 +8,6 @@ use App\Enums\RolesEnum;
 use App\Models\Order;
 use App\Models\Project;
 use App\Models\ProjectCommission;
-use App\Models\RequestQuote;
-use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
 final class ResellerService

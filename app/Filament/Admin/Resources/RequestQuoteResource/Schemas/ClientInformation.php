@@ -27,7 +27,7 @@ final class ClientInformation
                             ->required()
                             ->searchable(false)
                             ->options(function () {
-                                return WebsiteType::all()->pluck('name', 'id')->mapWithKeys(function ($name, $id) {
+                                return WebsiteType::all()->pluck('name', 'id')->mapWithKeys(function ($name, $id): array {
                                     return [$id => __($name)];
                                 });
                             })

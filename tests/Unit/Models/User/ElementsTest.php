@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
-use App\Filament\Admin\Resources\UserResource\Pages\ListUsers;
 use App\Models\User;
 use Livewire\Livewire;
 

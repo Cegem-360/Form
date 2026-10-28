@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
 
-it('sets locale to english when /en prefix is used', function () {
+it('sets locale to english when /en prefix is used', function (): void {
     // The middleware runs even if the route doesn't exist
     $response = $this->get('/en');
 
@@ -16,30 +16,32 @@ it('sets locale to english when /en prefix is used', function () {
     expect(App::getLocale())->toBe('en');
 });
 
-it('sets default locale to hungarian when no prefix is used', function () {
+it('sets default locale to hungarian when no prefix is used', function (): void {
     $response = $this->get('/form/expired');
 
     $response->assertSuccessful();
+
     expect(App::getLocale())->toBe('hu');
 });
 
-it('sets default locale to hungarian for root path without prefix', function () {
+it('sets default locale to hungarian for root path without prefix', function (): void {
     // Create a test user for authenticated route
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->get('/');
 
     $response->assertRedirect();
+
     expect(App::getLocale())->toBe('hu');
 });
 
-it('middleware processes request and sets locale', function () {
+it('middleware processes request and sets locale', function (): void {
     // Test the middleware directly with a mock request
     $middleware = new SetLocale();
 
     // Test with English locale
     $request = Request::create('/en/test');
-    $next = function ($request) {
+    $next = function ($request): Response {
         return new Response('OK');
     };
 
@@ -75,13 +77,13 @@ dataset('locales', [
     ['', 'hu'], // no prefix should default to 'hu'
 ]);
 
-it('sets correct locale based on URL segment', function (string $prefix, string $expectedLocale) {
+it('sets correct locale based on URL segment', function (string $prefix, string $expectedLocale): void {
     $middleware = new SetLocale();
 
     $path = $prefix ? "/$prefix/test" : '/test';
     $request = Request::create($path);
 
-    $next = function ($request) {
+    $next = function ($request): Response {
         return new Response('OK');
     };
 
@@ -89,20 +91,21 @@ it('sets correct locale based on URL segment', function (string $prefix, string 
     expect(App::getLocale())->toBe($expectedLocale);
 })->with('locales');
 
-it('works correctly with actual routes', function () {
+it('works correctly with actual routes', function (): void {
     // Test with a route that actually exists
     $response = $this->get('/form/expired');
 
     $response->assertSuccessful();
+
     expect(App::getLocale())->toBe('hu');
 });
 
-it('maintains locale for nested paths', function () {
+it('maintains locale for nested paths', function (): void {
     $middleware = new SetLocale();
 
     // Test nested path with German locale
     $request = Request::create('/de/some/nested/path');
-    $next = function ($request) {
+    $next = function ($request): Response {
         return new Response('OK');
     };
 
@@ -110,11 +113,11 @@ it('maintains locale for nested paths', function () {
     expect(App::getLocale())->toBe('de');
 });
 
-it('handles empty path correctly', function () {
+it('handles empty path correctly', function (): void {
     $middleware = new SetLocale();
 
     $request = Request::create('/');
-    $next = function ($request) {
+    $next = function ($request): Response {
         return new Response('OK');
     };
 

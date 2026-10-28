@@ -16,7 +16,7 @@ trait SendsToNotion
     public function sendToNotion(): void
     {
         try {
-            $notionService = app(NotionService::class);
+            $notionService = resolve(NotionService::class);
 
             if (method_exists($this, 'toNotionData')) {
                 // Egyedi adatformátum a modelből

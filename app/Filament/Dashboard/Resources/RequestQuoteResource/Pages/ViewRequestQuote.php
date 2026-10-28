@@ -19,7 +19,7 @@ final class ViewRequestQuote extends ViewRecord
     {
         $record = $this->record;
 
-        return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+        return to_route('quotation.preview', ['requestQuote' => $record->id]);
     }
 
     protected function getHeaderActions(): array
@@ -32,7 +32,7 @@ final class ViewRequestQuote extends ViewRecord
                 ->action(function ($record) {
                     Session::put('requestQuote', $record->id);
 
-                    return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
+                    return to_route('cart.summary', ['requestQuote' => $record->id]);
                 }),
             Action::make('createPdf')
                 ->label('Árajánlat megtekintése')

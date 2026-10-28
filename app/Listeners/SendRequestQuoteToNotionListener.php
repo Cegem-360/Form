@@ -27,7 +27,7 @@ final class SendRequestQuoteToNotionListener implements ShouldQueue
     public function handle(RequestQuoteCreated $event): void
     {
         // Háttérben küldi el (aszinkron)
-        SendRequestQuoteToNotion::dispatch($event->requestQuote);
+        dispatch(new SendRequestQuoteToNotion($event->requestQuote));
 
     }
 }

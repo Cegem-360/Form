@@ -149,7 +149,7 @@ final class LanguageEditor extends Page implements HasSchemas
             $path = lang_path("{$locale}.json");
 
             return File::put($path, $formatted) !== false;
-        } catch (JsonException $e) {
+        } catch (JsonException $jsonException) {
             return false;
         }
     }

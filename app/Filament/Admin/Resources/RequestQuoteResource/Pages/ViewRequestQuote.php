@@ -24,7 +24,7 @@ final class ViewRequestQuote extends ViewRecord
     {
         $record = $this->record;
 
-        return redirect()->route('quotation.preview', ['requestQuote' => $record->id]);
+        return to_route('quotation.preview', ['requestQuote' => $record->id]);
     }
 
     public function createPdfAndSendToCurrentUser(): void

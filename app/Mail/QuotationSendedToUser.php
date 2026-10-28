@@ -56,6 +56,7 @@ final class QuotationSendedToUser extends Mailable implements ShouldQueue
         if (! $this->sendAtachment) {
             return null;
         }
+
         $template = view('pdf.quotation-user', ['requestQuote' => $this->requestQuote])->render();
         $headerHtml = view('pdf.header')->render();
         Browsershot::html($template)->showBrowserHeaderAndFooter()

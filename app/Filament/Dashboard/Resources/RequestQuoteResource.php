@@ -257,7 +257,7 @@ final class RequestQuoteResource extends Resource
                     ->action(function (RequestQuote $record) {
                         Session::put('requestQuote', $record->id);
 
-                        return redirect()->route('cart.summary', ['requestQuote' => $record->id]);
+                        return to_route('cart.summary', ['requestQuote' => $record->id]);
                     })
                     ->requiresConfirmation()
                     ->visible(function (RequestQuote $record): bool {
